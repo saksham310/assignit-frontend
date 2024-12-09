@@ -2,7 +2,7 @@
 import {z} from 'zod';
 import {loginSchema} from "@/schemas/authSchemas.ts";
 import {FormFieldProps} from "@/types/form.type.ts";
-import FormCard from "@/components/formCard.tsx";
+import FormCard from "@/components/shared/formCard.tsx";
 import {FaEye} from "react-icons/fa";
 
 import {MdMail} from "react-icons/md";
@@ -34,7 +34,7 @@ const SignInPage = () => {
 
     return <>
         <FormCard
-            title="Join Us Today"
+            title="Welcome Back"
             schema={loginSchema}
             onSubmit={onSubmit}
             fields={fields}

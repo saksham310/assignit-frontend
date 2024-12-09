@@ -2,7 +2,7 @@
 import {z} from 'zod';
 import {registerSchema} from "@/schemas/authSchemas.ts";
 import {FormFieldProps} from "@/types/form.type.ts";
-import FormCard from "@/components/formCard.tsx";
+import FormCard from "@/components/shared/formCard.tsx";
 import {FaEye, FaUser} from "react-icons/fa";
 
 import {MdMail} from "react-icons/md";
