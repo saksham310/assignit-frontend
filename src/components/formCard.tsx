@@ -7,7 +7,8 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import {FormCardProps} from "@/types/form.type.ts";
 import {z} from 'zod';
-import {useState} from "react";
+import  {useState} from "react";
+import {FaEyeSlash} from "react-icons/fa";
 
 const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLink, fields}: FormCardProps) => {
     const form = useForm<z.infer<typeof schema>>({
@@ -15,7 +16,10 @@ const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLink, fie
         defaultValues: {}
     });
     const [showPassword, setShowPassword] = useState(false);
-
+const togglePass=(val:string)=>{
+    if(val!='password') return;
+    setShowPassword(!showPassword);
+    }
     return (
         <Card className="w-full h-full md:w-[460px] bg-white shadow-none border-none p-[24px]">
             <CardHeader className="flex justify-center items-center">
@@ -24,30 +28,34 @@ const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLink, fie
             <CardContent className="p-4">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-8">
-                        {fields.map((input) => (
+                        {fields.map((input) =>
                             <FormField
                                 key={input.name} // Add a unique key for each field
                                 control={form.control}
                                 name={input.name}
                                 render={({field}) => (
                                     <FormItem>
-                                        <FormControl>
+                                        <div className="relative"><FormControl>
                                             <Input
                                                 className="h-[45px]"
                                                 placeholder={input.placeholder}
                                                 type={
-                                                input.type==='password' && showPassword ?'text' : input.type
+                                                    input.type === 'password' && showPassword ? 'text' : input.type
                                                 }
 
                                                 {...field}
                                             />
-                                            <button>{input.icon}</button>
+
                                         </FormControl>
-                                        <FormMessage />
+                                            <i onClick={()=>togglePass(input.type)} className='absolute cursor-pointer top-[14px] right-5'>
+                                                {input.type==='password' && showPassword ? <FaEyeSlash className='size-4 text-primary'/> : <input.icon className='size-4 text-primary'/>}
+                                            </i>
+                                        </div>
+                                        <FormMessage/>
                                     </FormItem>
                                 )}
                             />
-                        ))}
+                        )}
                         <Button type="submit">{btnText}</Button>
                     </form>
                 </Form>
