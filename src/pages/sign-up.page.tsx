@@ -25,7 +25,7 @@ const SignUpPage = () => {
         console.log(val);
     }
     return <>
-        <Card className='w-full h-full md:w-[460px] bg-white shadow-none border-none'>
+        <Card className='w-full h-full md:w-[460px] bg-white shadow-none border-none p-[24px]'>
             <CardHeader className='flex justify-center items-center'>
                 <CardTitle className='text-2xl font-bold'>Join Us Today</CardTitle>
             </CardHeader>
