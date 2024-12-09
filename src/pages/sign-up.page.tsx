@@ -3,7 +3,11 @@ import {z} from 'zod';
 import {registerSchema} from "@/schemas/authSchemas.ts";
 import {FormFieldProps} from "@/types/form.type.ts";
 import FormCard from "@/components/formCard.tsx";
-import {EyeIcon, Mail, User} from "lucide-react";
+import {FaEye, FaUser} from "react-icons/fa";
+
+import {MdMail} from "react-icons/md";
+
+
 
 const SignUpPage = () => {
 
@@ -13,19 +17,23 @@ const SignUpPage = () => {
     const fields:FormFieldProps[]=[
         {
             name:'username',type:'text',placeholder:'Enter your username',
-            icon:<User/>
+            icon:FaUser
+
         },
         {
             name: 'email',
             type: 'email',
             placeholder: 'Enter your email',
-            icon:<Mail/>
+            icon:MdMail
+
         },
         {
             name: 'password',
             type: 'password',
             placeholder: 'Enter your password',
-            icon:<EyeIcon/>
+            icon: FaEye,
+
+
         },
     ]
 
@@ -37,7 +45,7 @@ const SignUpPage = () => {
             fields={fields}
             btnText="Sign Up"
             footerText="Already have an account?"
-            footerLink="Sign In"
+            footerLinkText="Sign In"
         />
 
 
