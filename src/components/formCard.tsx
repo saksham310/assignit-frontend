@@ -9,12 +9,14 @@ import {FormCardProps} from "@/types/form.type.ts";
 import {z} from 'zod';
 import  {useState} from "react";
 import {FaEyeSlash} from "react-icons/fa";
+import {Link} from "react-router-dom";
 
-const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLink, fields}: FormCardProps) => {
+const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLinkText, fields}: FormCardProps) => {
     const form = useForm<z.infer<typeof schema>>({
         resolver: zodResolver(schema),
         defaultValues: {}
     });
+    const navigateTo=(footerLinkText && footerLinkText==='Sign Up')?'/sign-up':'/login';
     const [showPassword, setShowPassword] = useState(false);
 const togglePass=(val:string)=>{
     if(val!='password') return;
@@ -63,15 +65,17 @@ const togglePass=(val:string)=>{
             <div className="flex items-start justify-center px-7">
                 <Separator className="h-[2px]" />
             </div>
+            {
+                (footerText && footerLinkText) && (
             <CardContent>
                 <div className="flex flex-col items-center m-4">
                     <span className="text-sm font-light text-primary">or</span>
                     <p className="text-muted-foreground text-sm pt-2">
                         {footerText}&nbsp;
-                        <span className="text-primary cursor-pointer">{footerLink}</span>
+                        <Link to={navigateTo} className="text-primary cursor-pointer">{footerLinkText}</Link>
                     </p>
                 </div>
-            </CardContent>
+            </CardContent>)}
         </Card>
     );
 };

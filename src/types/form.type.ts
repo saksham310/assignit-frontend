@@ -8,8 +8,8 @@ export interface FormCardProps{
     onSubmit:(val:any)=>void;
     fields:FormFieldProps[];
     btnText:string;
-    footerText:string;
-    footerLink:string;
+    footerText?:string;
+    footerLinkText?:string;
 }
 
 export interface FormFieldProps{
