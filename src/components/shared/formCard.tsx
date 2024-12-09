@@ -12,9 +12,13 @@ import {FaEyeSlash} from "react-icons/fa";
 import {Link} from "react-router-dom";
 
 const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLinkText, fields}: FormCardProps) => {
+    const defaultValues = fields.reduce<Record<string, string>>((acc, field) => {
+        acc[field.name] = "";
+        return acc;
+    }, {});
     const form = useForm<z.infer<typeof schema>>({
         resolver: zodResolver(schema),
-        defaultValues: {}
+        defaultValues
     });
     const navigateTo=(footerLinkText && footerLinkText==='Sign Up')?'/sign-up':'/login';
     const [showPassword, setShowPassword] = useState(false);
