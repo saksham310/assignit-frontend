@@ -1,5 +1,7 @@
 import {z} from 'zod';
-import {ReactNode} from "react";
+import {IconType} from "react-icons";
+
+
 export interface FormCardProps{
     title:string,
     schema:z.ZodSchema;
@@ -14,5 +16,6 @@ export interface FormFieldProps{
     name:string;
     placeholder:string;
     type:string;
-    icon:ReactNode;
+    icon:IconType;
+
 }
