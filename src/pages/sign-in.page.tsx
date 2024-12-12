@@ -6,13 +6,14 @@ import FormCard from "@/components/shared/formCard.tsx";
 import {FaEye} from "react-icons/fa";
 
 import {MdMail} from "react-icons/md";
+import {useLogin} from "@/hooks/authHooks.ts";
 
 
 
 const SignInPage = () => {
-
+const {mutate}=useLogin();
     const onSubmit = (val: z.infer<typeof loginSchema>) => {
-        console.log(val);
+        mutate(val);
     }
     const fields:FormFieldProps[]=[
         {

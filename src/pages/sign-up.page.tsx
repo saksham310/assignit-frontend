@@ -6,13 +6,14 @@ import FormCard from "@/components/shared/formCard.tsx";
 import {FaEye, FaUser} from "react-icons/fa";
 
 import {MdMail} from "react-icons/md";
+import {useRegister} from "@/hooks/authHooks.ts";
 
 
 
 const SignUpPage = () => {
-
+const {mutate}=useRegister();
     const onSubmit = (val: z.infer<typeof registerSchema>) => {
-        console.log(val);
+       mutate(val);
     }
     const fields:FormFieldProps[]=[
         {
@@ -39,7 +40,7 @@ const SignUpPage = () => {
 
     return <>
         <FormCard
-            title="Join Us Today"
+            title="Start Your Project Journey"
             schema={registerSchema}
             onSubmit={onSubmit}
             fields={fields}
