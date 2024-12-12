@@ -9,6 +9,9 @@ import AuthLayout from "./layouts/AuthLayout.tsx";
 import SignUpPage from "@/pages/sign-up.page.tsx";
 import SignInPage from "@/pages/sign-in.page.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {Toaster} from "sonner";
+import {store} from "@/store/auth/authStore.ts";
+import AuthProvider from "react-auth-kit";
 const router=createBrowserRouter(
     [
         {
@@ -33,9 +36,12 @@ const router=createBrowserRouter(
 )
 const queryClient = new QueryClient();
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-     </QueryClientProvider>
-  </StrictMode>,
-)
+    <StrictMode>
+        <QueryClientProvider client={queryClient}>
+            <Toaster richColors position="top-center"/>
+            <AuthProvider store={store}>
+                <RouterProvider router={router}/>
+            </AuthProvider>
+        </QueryClientProvider>
+    </StrictMode>,
+);
