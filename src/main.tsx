@@ -38,7 +38,7 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
-            <Toaster richColors position="top-center"/>
+            <Toaster richColors position="top-right" />
             <AuthProvider store={store}>
                 <RouterProvider router={router}/>
             </AuthProvider>
