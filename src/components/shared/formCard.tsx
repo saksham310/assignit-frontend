@@ -62,7 +62,7 @@ const togglePass=(val:string)=>{
                                 )}
                             />
                         )}
-                        <Button type="submit">{btnText}</Button>
+                        <Button type="submit" disabled={form.formState.isSubmitting}>{btnText}</Button>
                     </form>
                 </Form>
             </CardContent>
