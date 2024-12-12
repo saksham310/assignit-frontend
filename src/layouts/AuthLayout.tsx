@@ -1,6 +1,5 @@
 import Logo from "@/assets/Logo.svg"
-import { Button } from "@/components/ui/button";
-import {Link, Outlet, useLocation} from "react-router-dom";
+import { Outlet, useLocation} from "react-router-dom";
 
 const AuthLayout=()=>{
     const location = useLocation();
