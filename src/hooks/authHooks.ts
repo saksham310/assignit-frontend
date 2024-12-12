@@ -43,11 +43,6 @@ export const useRegister=()=>{
                     duration: 2000,
                 });
             }
-        },
-        onError:(error)=>{
-            toast.error(error.message, {
-                duration: 2000,
-            });
         }
     })
 }
