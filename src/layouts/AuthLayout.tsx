@@ -1,10 +1,7 @@
 import Logo from "@/assets/Logo.svg"
-import { Outlet, useLocation} from "react-router-dom";
+import { Outlet} from "react-router-dom";
 
 const AuthLayout=()=>{
-    const location = useLocation();
-    const btnText=location.pathname==='/login'? "Sign Up":"Login";
-    const navigateTo=location.pathname==='/login'?'/sign-up':'/login';
     return <>
         <main className="min-h-screen bg-[#EEEBF6] p-4">
             <div className="mx-auto max-w-screen-2xl p-6">
