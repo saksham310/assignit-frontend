@@ -1,5 +1,4 @@
 
-import {z} from 'zod';
 import {loginSchema} from "@/schemas/authSchemas.ts";
 import {FormFieldProps} from "@/types/form.type.ts";
 import FormCard from "@/components/shared/formCard.tsx";
@@ -7,12 +6,13 @@ import {FaEye} from "react-icons/fa";
 
 import {MdMail} from "react-icons/md";
 import {useLogin} from "@/hooks/authHooks.ts";
+import {LoginInput} from "@/types/auth.type.ts";
 
 
 
 const SignInPage = () => {
 const {mutate}=useLogin();
-    const onSubmit = (val: z.infer<typeof loginSchema>) => {
+    const onSubmit = (val: LoginInput) => {
         mutate(val);
     }
     const fields:FormFieldProps[]=[

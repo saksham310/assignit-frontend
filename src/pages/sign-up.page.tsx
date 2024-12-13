@@ -1,5 +1,4 @@
 
-import {z} from 'zod';
 import {registerSchema} from "@/schemas/authSchemas.ts";
 import {FormFieldProps} from "@/types/form.type.ts";
 import FormCard from "@/components/shared/formCard.tsx";
@@ -7,12 +6,13 @@ import {FaEye, FaUser} from "react-icons/fa";
 
 import {MdMail} from "react-icons/md";
 import {useRegister} from "@/hooks/authHooks.ts";
+import {RegisterInput} from "@/types/auth.type.ts";
 
 
 
 const SignUpPage = () => {
 const {mutate}=useRegister();
-    const onSubmit = (val: z.infer<typeof registerSchema>) => {
+    const onSubmit = (val: RegisterInput) => {
        mutate(val);
     }
     const fields:FormFieldProps[]=[
