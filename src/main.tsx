@@ -12,7 +12,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {Toaster} from "sonner";
 import {store} from "@/store/auth/authStore.ts";
 import AuthProvider from "react-auth-kit";
-import DashboardLayout from "@/layouts/DashboardLayout.tsx";
+import DashboardWrapper from "@/layouts/DashboardWrapper.tsx";
 const router=createBrowserRouter(
     [
         {
@@ -35,7 +35,7 @@ const router=createBrowserRouter(
         },
         {
             path:'/dashboard',
-            element:<DashboardLayout/>
+            element:<DashboardWrapper/>
         }
     ]
 )
