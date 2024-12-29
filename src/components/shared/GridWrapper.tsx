@@ -1,6 +1,7 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {DataGrid} from "@/components/shared/DataGrid.tsx";
 import { ColumnDef } from "@tanstack/react-table";
+import Switcher from "@/components/shared/Switcher.tsx";
 const GridWrapper = ({ columns, data }: { columns: ColumnDef<any>[]; data: unknown[]}) => {
     return (
         <Tabs defaultValue="tasks" className="w-full">
@@ -16,7 +17,7 @@ const GridWrapper = ({ columns, data }: { columns: ColumnDef<any>[]; data: unkno
                 <TabsContent value="tasks" className="p-6">
                     <div className="flex items-center justify-between mb-3">
                         <p className="text-m font-bold">My Task Status</p>
-                        switcher
+                     <Switcher/>
                     </div>
                     <div className="mt-6 w-full overflow-hidden max-h-[calc(100vh-390px)]">
                         <DataGrid columns={columns} data={data} />

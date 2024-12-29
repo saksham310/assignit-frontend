@@ -16,15 +16,15 @@ import {
 } from "@/components/ui/table"
 import {cn} from "@/lib/utils.ts";
 
-interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[]
+interface DataTableProps<TData> {
+    columns: ColumnDef<any>[]
     data: TData[]
 }
 
-export function DataGrid<TData, TValue>({
+export function DataGrid<TData>({
                                             columns,
                                             data,
-                                        }: DataTableProps<TData, TValue>) {
+                                        }: DataTableProps<TData>) {
     const table = useReactTable({
         data,
         columns,
