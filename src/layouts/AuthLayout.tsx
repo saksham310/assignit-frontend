@@ -5,7 +5,7 @@ import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 const AuthLayout=()=>{
     const isAuthenticated = useIsAuthenticated();
     if(isAuthenticated){
-      return  <Navigate to="/dashboard" replace={true} />;
+      return  <Navigate to="/" replace={true} />;
     }else{
     return <>
         <main className="min-h-screen bg-[#EEEBF6] p-4">

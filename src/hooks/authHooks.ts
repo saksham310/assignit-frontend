@@ -23,7 +23,7 @@ const useAuth=<T extends LoginInput|RegisterInput>({mutationFn,successMessage}:A
                     duration: 2000,
                 });
                 setTimeout(() => {
-                    navigate('/dashboard');
+                    navigate('/');
                 }, 1000);
             }
         }
