@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import {
-    createBrowserRouter, redirect,
+    createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
 import './index.css'
@@ -12,13 +12,10 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {Toaster} from "sonner";
 import {store} from "@/store/auth/authStore.ts";
 import AuthProvider from "react-auth-kit";
-import DashboardLayout from "@/layouts/DashboardLayout.tsx";
+import DashboardWrapper from "@/layouts/DashboardWrapper.tsx";
+import WorkspacePage from "@/pages/Workspace.page.tsx";
 const router=createBrowserRouter(
     [
-        {
-            path:'/',
-           loader:()=>redirect('/login'),
-        },
         {
             element:<AuthLayout/>,
             children:[
@@ -34,8 +31,14 @@ const router=createBrowserRouter(
             ]
         },
         {
-            path:'/dashboard',
-            element:<DashboardLayout/>
+            path:'/',
+            element:<DashboardWrapper/>,
+            children:[
+                {
+                    path: 'workspaces/:id',
+                    element: <WorkspacePage/>,
+                }
+            ]
         }
     ]
 )
