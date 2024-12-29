@@ -1,8 +1,16 @@
 import Dashboard from "@/components/shared/Dashboard.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 import {ProjectTask} from "@/types/dashboard.type.ts";
+import {useOutletContext} from "react-router-dom";
+import {useEffect} from "react";
 
 const WorkspacePage=()=>{
+    const setTitle = useOutletContext();
+    useEffect(()=>{
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        setTitle("Workspace Summary")
+    },[]);
     const items=[
         { name: "Projects", count: 2},
         { name: "Members", count: 2},
