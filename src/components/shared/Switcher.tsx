@@ -1,21 +1,26 @@
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
+import {useParams} from "react-router-dom";
 
 interface SwitcherProps {
-    onChange?: (id: string) => void
+    onChange?: (id: string) => void,
+    data?: {
+        id:string,
+        name:string
+    }[],
 }
 
-const Switcher = ({onChange}:SwitcherProps) => {
-
+const Switcher = ({onChange,data}:SwitcherProps) => {
+    const {id}=useParams();
+    const selectedValue = data?.find(item => item.id == id)?.id
     return (
-        <Select onValueChange={onChange}>
+        <Select onValueChange={onChange} value={selectedValue}>
             <SelectTrigger className="w-auto lg:w-[175px] font-semibold  text-primary">
                 <SelectValue placeholder='Select a Workspace'/>
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="1">Workspace One </SelectItem>
-                <SelectItem value="2">Workspace Two</SelectItem>
-                <SelectItem value="3">Workspace Three</SelectItem>
-                <SelectItem value="4">Workspace Four</SelectItem>
+                {data?.map((item) => (
+                    <SelectItem key={item.id} value={item.id}>{item.name} </SelectItem>
+                ))}
             </SelectContent></Select>);
 
 

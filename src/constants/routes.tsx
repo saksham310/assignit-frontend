@@ -4,7 +4,7 @@ import SignUpPage from "@/pages/sign-up.page.tsx";
 import SignInPage from "@/pages/sign-in.page.tsx";
 import DashboardWrapper from "@/layouts/DashboardWrapper.tsx";
 import WorkspacePage from "@/pages/Workspace.page.tsx";
-
+import ProtectedRoutes from "@/constants/ProtectedRoutes.tsx";
 export const router=createBrowserRouter(
     [
         {
@@ -23,13 +23,24 @@ export const router=createBrowserRouter(
         },
         {
             path:'/',
-            element:<DashboardWrapper/>,
+            element:<ProtectedRoutes/>,
             children:[
                 {
-                    path: 'workspaces/:id',
-                    element: <WorkspacePage/>,
+                    path:'',
+                    element: <DashboardWrapper/>,
+                    children:[
+                        {
+                            path: 'workspaces/:id',
+                            element: <WorkspacePage/>,
+                        },
+                    ]
+                },
+                {
+                    path:'/create',
+                    element:<SignInPage/>
                 }
             ]
         }
+
     ]
 )
