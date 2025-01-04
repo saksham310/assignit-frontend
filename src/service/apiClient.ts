@@ -8,16 +8,29 @@ export const apiClient = axios.create({
     },
 })
 export const setHeader=(header:string) => {
-    apiClient.interceptors.request.use((config)=>{
-        if(header){
-            config.headers.Authorization = header;
-        }
-        return config;
-    },(error) => {
-        console.log(error);
-        return Promise.reject(error);
-    });
+    if (header) {
+        apiClient.defaults.headers.Authorization = header;
+    } else {
+        // Remove the token from headers if it's not available
+        delete apiClient.defaults.headers.Authorization;
+    }
 }
+apiClient.interceptors.request.use((config)=>{
+    const controller = new AbortController();
+    const token = config.headers.Authorization;
+    if(!token){
+        controller.abort();
+    }
+    // return config;
+    return {
+        ...config,
+        signal: controller.signal
+    };
+},(error) => {
+    console.log(error);
+    return Promise.reject(error);
+});
+
 
 apiClient.interceptors.response.use((res)=>{
         return res;
