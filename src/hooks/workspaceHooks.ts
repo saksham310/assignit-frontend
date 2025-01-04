@@ -1,24 +1,23 @@
-import {getWorkspaces} from "@/service/workspaceService.ts";
+import {getWorkspaceAnalytics, getWorkspaces} from "@/service/workspaceService.ts";
 import {useQuery} from "@tanstack/react-query";
-import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
 export const useGetWorkspace = () => {
-    const header=useAuthHeader();
-    const [isInterceptorReady, setInterceptorReady] = useState(false);
-    useEffect(() => {
-        if (header) {
-            setInterceptorReady(true);
-        }
-    }, [header]);
+
     return useQuery({
         queryKey:['workspaces'],
         queryFn:getWorkspaces,
-        enabled:!!header && isInterceptorReady,
     });
 }
-
+export const useGetWorkspaceAnalytics=(id:string|undefined)=>{
+    console.log("Hook time",new Date().getTime());
+    return useQuery({
+        queryKey:['workspace analytics',id],
+        queryFn:()=>getWorkspaceAnalytics(id),
+        enabled:!!id
+    })
+}
 export const useWorkspaceNavigation=()=>{
     const navigate=useNavigate();
     const {data:workspaces,isLoading} = useGetWorkspace();
