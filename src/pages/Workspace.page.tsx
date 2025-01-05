@@ -4,6 +4,7 @@ import {ProjectTask} from "@/types/dashboard.type.ts";
 import {useOutletContext, useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {useGetWorkspaceAnalytics} from "@/hooks/workspaceHooks.ts";
+import Loader from "@/components/shared/Loader.tsx";
 
 const WorkspacePage = () => {
     const setTitle = useOutletContext<(title: string) => void>();
@@ -16,7 +17,7 @@ const WorkspacePage = () => {
     const {data: workspaceAnalytics, isLoading} = useGetWorkspaceAnalytics(id);
 
     if (isLoading) {
-        return <div className='h-full w-full bg-red'>LOADING</div>
+        return <Loader/>
     }
 
     if (!workspaceAnalytics) return;
