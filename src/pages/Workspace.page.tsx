@@ -1,44 +1,53 @@
 import Dashboard from "@/components/shared/Dashboard.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 import {ProjectTask} from "@/types/dashboard.type.ts";
-import {useOutletContext} from "react-router-dom";
+import {useOutletContext, useParams} from "react-router-dom";
 import {useEffect} from "react";
+import {useGetWorkspaceAnalytics} from "@/hooks/workspaceHooks.ts";
 
-const WorkspacePage=()=>{
-    const setTitle = useOutletContext();
-    useEffect(()=>{
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
+const WorkspacePage = () => {
+    const setTitle = useOutletContext<(title: string) => void>();
+
+    useEffect(() => {
         setTitle("Workspace Summary")
-    },[]);
-    const items=[
-        { name: "Projects", count: 2},
-        { name: "Members", count: 2},
-        { name: "Sprints", count: 2},
-        { name: "Overdue", count: 2}
-    ]
-    const columns:ColumnDef<ProjectTask>[]=[
+    }, [setTitle]);
+
+    const {id} = useParams();
+    const {data: workspaceAnalytics, isLoading} = useGetWorkspaceAnalytics(id);
+
+    if (isLoading) {
+        return <div className='h-full w-full bg-red'>LOADING</div>
+    }
+
+    if (!workspaceAnalytics) return;
+
+    const analytics = ["Projects", "Members", "Sprints", "Overdue Projects"];
+    const items = analytics.map((key) => ({
+        name: key,
+        count: workspaceAnalytics[key]
+    }))
+
+    const columns: ColumnDef<ProjectTask>[] = [
         {
             accessorKey: "taskName",
             header: "Task",
-            size:150,
+            size: 150,
         },
         {
             accessorKey: "sprintName",
             header: "Sprint",
-            size:96
+            size: 96
         },
         {
             accessorKey: "status",
             header: "Status",
-            size:122
+            size: 122
         },
         {
             accessorKey: "priority",
             header: "Priority",
-            size:73
+            size: 73
         },
-
 
 
     ]
@@ -146,10 +155,9 @@ const WorkspacePage=()=>{
             priority: "High"
         }
     ];
-    return(
-        <Dashboard items={items} columns={columns} data={dummyProjectTasks} />
+    return (
+        <Dashboard items={items} columns={columns} data={dummyProjectTasks}/>
     )
-
 }
 
 export default WorkspacePage;
