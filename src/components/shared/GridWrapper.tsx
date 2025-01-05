@@ -6,7 +6,7 @@ const GridWrapper = ({ columns, data }: { columns: ColumnDef<any>[]; data: unkno
     return (
         <Tabs defaultValue="tasks" className="w-full">
             <TabsList className="gap-2 bg-[#f6f8fb] space-x-2">
-                <TabsTrigger value="tasks" className="active:bg-pink-50">
+                <TabsTrigger value="tasks">
                     Projects
                 </TabsTrigger>
                 <TabsTrigger value="members">

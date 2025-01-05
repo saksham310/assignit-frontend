@@ -32,13 +32,14 @@ export function DataGrid<TData>({
     });
 
     return (
-            <Table className='min-h-[108vh] table-fixed '>
+            <Table className='rounded-lg min-h-[108vh] table-fixed '>
                 <TableHeader className=" bg-secondary text-primary-foreground  hover:bg-secondary">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
                             {headerGroup.headers.map((header, index) =>{
 
-                                  return  <TableHead key={header.id} className={cn(columns.length -1 === index && ' w-[73px]')}>
+                                  return  <TableHead key={header.id} className={cn(columns.length -1 === index && ' w-[73px]',
+                                      'first:rounded-tl-lg last:rounded-tr-lg')}>
                                         {header.isPlaceholder
                                             ? null
                                             : flexRender(

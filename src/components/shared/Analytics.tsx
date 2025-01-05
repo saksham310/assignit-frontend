@@ -8,7 +8,7 @@ const Analytics = ({items}: {items:AnalyticCardProps[]}) => {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {items.map((item) => {
                 const Icon=ICONS[item.name];
-                return (<Card className='p-[10px] shadow-none border-none'>
+                return (<Card className='p-[10px] shadow-none border-none' key={item.name}>
                         <CardHeader className='p-1 text-sm flex flex-row justify-between items-center' >
                             <CardTitle>
                                 {item.name}

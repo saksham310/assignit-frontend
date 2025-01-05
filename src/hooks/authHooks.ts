@@ -4,6 +4,7 @@ import useSignIn from "react-auth-kit/hooks/useSignIn";
 import {toast} from "sonner";
 import {useNavigate} from "react-router-dom";
 import {AuthHookConfig, AuthResponse, LoginInput, RegisterInput} from "@/types/auth.type.ts";
+import {setHeader} from "@/service/apiClient.ts";
 
 
 
@@ -19,6 +20,7 @@ const useAuth=<T extends LoginInput|RegisterInput>({mutationFn,successMessage}:A
                 },
                 userState: res.user
             })){
+                setHeader(`Bearer ${res.token}`);
                 toast.success(successMessage, {
                     duration: 2000,
                 });

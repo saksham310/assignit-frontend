@@ -1,15 +1,12 @@
 import Sidebar from "@/components/shared/Sidebar.tsx";
-import {Navigate, Outlet} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import TopBar from "@/components/shared/TopBar.tsx";
 import {useState} from "react";
-import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import {useWorkspaceNavigation} from "@/hooks/workspaceHooks.ts";
 
 const DashboardWrapper = () => {
     const [title, setTitle] = useState<string>("Workspace Summary");
-    const isAuthenticated = useIsAuthenticated();
-    if(!isAuthenticated){
-        return  <Navigate to="/login" replace={true} />;
-    }else{
+    useWorkspaceNavigation();
     return (
         <div className="flex min-h-screen bg-white">
             <div className="fixed top-0 left-0 h-screen w-[200px] hidden lg:block p-4">
@@ -26,7 +23,7 @@ const DashboardWrapper = () => {
                 </div>
             </div>
         </div>
-    )}
+    )
 };
 
 export default DashboardWrapper;
