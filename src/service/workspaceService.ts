@@ -8,5 +8,5 @@ export const getWorkspaces = async ()=>{
 
 export const getWorkspaceAnalytics=async(id:string|undefined)=>{
     const res=await apiClient.get(`${GET_WORKSPACE_ANALYTICS}/${id}`);
-    return res.data;
+    return res.data.workspaceAnalytics;
 }
