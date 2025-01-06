@@ -30,4 +30,5 @@ export const useWorkspaceNavigation=()=>{
            navigate(targetPath);
         }
     },[isLoading, navigate, workspaces]);
+    return {isLoading};
 }
