@@ -3,10 +3,17 @@ import {Outlet} from "react-router-dom";
 import TopBar from "@/components/shared/TopBar.tsx";
 import {useState} from "react";
 import {useWorkspaceNavigation} from "@/hooks/workspaceHooks.ts";
+import Loader from "@/components/shared/Loader.tsx";
 
 const DashboardWrapper = () => {
     const [title, setTitle] = useState<string>("Workspace Summary");
-    useWorkspaceNavigation();
+    const {isLoading}=useWorkspaceNavigation();
+    if (isLoading) {
+        return(
+        <div className='w-screen h-screen flex items-center justify-center'>
+            <Loader />;
+        </div>)
+    }
     return (
         <div className="flex min-h-screen bg-white">
             <div className="fixed top-0 left-0 h-screen w-[200px] hidden lg:block p-4">
