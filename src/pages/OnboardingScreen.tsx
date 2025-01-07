@@ -6,36 +6,33 @@ import {
     Dialog,
     DialogContent,
 } from "@/components/ui/dialog";
-import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import Onboarding from "@/assets/Onboarding.svg";
+import {useCreateWorkspace} from "@/hooks/workspaceHooks.ts";
+import {CreateWorkspaceData} from "@/types/workspace.type.ts";
 
 
 const OnboardingScreen=()=>{
     const fields:FormFieldProps[]=[{
-        name:"Name",
+        name:"name",
         placeholder:"Enter your workspace name",
         type:"text",
         icon:FaPeopleGroup,
     }]
-    const user=useAuthUser();
-    console.log(user)
+    const {mutate}=useCreateWorkspace();
+    const onSubmit = (val: CreateWorkspaceData) => {
+       console.log("onboardingScreen",val)
+        mutate(val);
+    }
     return (
         <>
           <img src={Onboarding} alt=""/>
             <Dialog open={true}>
-                <DialogContent >
-                    {/*<DialogHeader className="space-y-7 px-10">*/}
-                    {/*    <DialogTitle className="text-xl">Welcome </DialogTitle>*/}
-                    {/*    /!*<DialogDescription>*!/*/}
-                    {/*    /!*    Give your workspace a name to get started.*!/*/}
-                    {/*    /!*</DialogDescription>*!/*/}
-                    {/*</DialogHeader>*/}
+                <DialogContent className="[&>button]:hidden">
                         <FormCard
                             title=" Give your workspace a name to get started."
                             schema={workspaceSchema}
                             fields={fields}
-                            onSubmit={() => {
-                            }}
+                            onSubmit={onSubmit}
                             btnText={"Create Workspace"}/>
                 </DialogContent>
             </Dialog>
