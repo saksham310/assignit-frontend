@@ -13,6 +13,7 @@ export const getWorkspaceAnalytics=async(id:string|undefined)=>{
 }
 
 export const createWorkspace = async (data:CreateWorkspaceData)=>{
+    data.role="Owner";
     const res = await  apiClient.post(`${CREATE_WORKSPACE}`, data);
     return res.data;
 }

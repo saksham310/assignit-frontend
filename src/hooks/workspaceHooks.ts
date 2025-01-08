@@ -38,7 +38,6 @@ export const useCreateWorkspace=()=>{
     return useMutation({
         mutationFn:createWorkspace,
         onSuccess:(data)=>{
-            console.log("DATAAA",data);
             toast.success("Workspace Created Successfully!", {
                 duration: 2000,
             });
