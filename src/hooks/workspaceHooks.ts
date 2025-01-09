@@ -5,10 +5,9 @@ import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
 
 export const useGetWorkspace = () => {
-
     return useQuery({
         queryKey:['workspaces'],
-        queryFn:getWorkspaces,
+        queryFn:getWorkspaces
     });
 }
 export const useGetWorkspaceAnalytics=(id:string|undefined)=>{
