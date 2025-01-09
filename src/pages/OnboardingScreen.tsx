@@ -26,8 +26,8 @@ const OnboardingScreen=()=>{
     return (
         <>
           <img src={Onboarding} alt=""/>
-            <Dialog open={true}>
-                <DialogContent className="[&>button]:hidden">
+            <Dialog open={true} >
+                <DialogContent className="[&>button]:hidden max-w-fit">
                         <FormCard
                             title=" Give your workspace a name to get started."
                             schema={workspaceSchema}

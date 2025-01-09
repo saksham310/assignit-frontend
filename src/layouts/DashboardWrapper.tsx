@@ -20,11 +20,11 @@ const DashboardWrapper = () => {
                 <Sidebar />
             </div>
             <div className="flex-1 lg:ml-[200px]">
-                <div className="px-6 py-4">
+                <div className="px-6 py-3">
                     <TopBar title={title} />
                 </div>
                 <div className="px-6 pb-4">
-                    <div className="bg-[#f6f8fb] rounded-lg p-8 lg:h-[calc(100vh-76px)] md:min-h-[calc(100vh-80px)]">
+                    <div className="bg-[#f6f8fb] flex flex-col rounded-lg p-7 lg:h-[calc(100vh-68px)] md:min-h-[calc(100vh-80px)]">
                         <Outlet context={setTitle} />
                     </div>
                 </div>
