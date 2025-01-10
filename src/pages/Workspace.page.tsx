@@ -111,6 +111,30 @@ const WorkspacePage = () => {
             endDate: "2024-11-30",
             progress: <Progress value={10} className="w-full" />,
         },
+        {
+            projectName: "AI-Powered Analytics Dashboard",
+            startDate: "2024-04-01",
+            endDate: "2024-11-30",
+            progress: <Progress value={10} className="w-full" />,
+        },
+        {
+            projectName: "AI-Powered Analytics Dashboard",
+            startDate: "2024-04-01",
+            endDate: "2024-11-30",
+            progress: <Progress value={10} className="w-full" />,
+        },
+        {
+            projectName: "AI-Powered Analytics Dashboard",
+            startDate: "2024-04-01",
+            endDate: "2024-11-30",
+            progress: <Progress value={10} className="w-full" />,
+        },
+        {
+            projectName: "AI-Powered Analytics Dashboard",
+            startDate: "2024-04-01",
+            endDate: "2024-11-30",
+            progress: <Progress value={10} className="w-full" />,
+        },
     ];
 
     return (
