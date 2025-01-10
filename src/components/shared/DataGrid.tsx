@@ -75,7 +75,7 @@ export function DataGrid<TData>({
             //         )}
             //     </TableBody>
             // </Table>
-        <Table className='rounded-lg table-fixed overflow-y-auto'>
+        <Table className='rounded-lg table-fixed h-full  overflow-y-auto'>
             <TableHeader className=" text-primary-foreground hover:bg-secondary">
                 {table.getHeaderGroups().map((headerGroup) => (
                     <TableRow key={headerGroup.id}>

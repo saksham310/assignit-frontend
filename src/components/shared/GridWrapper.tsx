@@ -1,10 +1,11 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {DataGrid} from "@/components/shared/DataGrid.tsx";
 import { ColumnDef } from "@tanstack/react-table";
+import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
 const GridWrapper = ({ columns, data }: { columns: ColumnDef<any>[]; data: unknown[]}) => {
     return (
        <div className={'h-full'}>
-           <Tabs defaultValue="tasks" className="w-full  h-full flex flex-col ">
+           <Tabs defaultValue="tasks" className="w-full  h-full flex flex-col  gap-0.5">
                <div>
                    < TabsList className="gap-2 bg-[#f6f8fb] space-x-2">
                    <TabsTrigger value="tasks">
@@ -15,14 +16,18 @@ const GridWrapper = ({ columns, data }: { columns: ColumnDef<any>[]; data: unkno
                    </TabsTrigger>
                </TabsList>
                </div>
-               <div className="bg-white rounded-lg mt-4 h-[calc(100dvh-16em)]">
-                   <TabsContent value="tasks" className="p-6">
-                       <p className="text-m font-semibold">Project Summary</p>
-                       <div className={'grid grid-cols-3 gap-x-5'}>
-                           <div className="mt-6 w-full col-span-2 overflow-y-auto scrollbar h-[calc(100dvh-23em)]">
-                               <DataGrid columns={columns} data={data}/>
-                           </div>
-                           <div className={'col-span-1'}>PIE</div>
+               <div className="bg-white px-5 py-10 rounded-lg mt-4 h-[calc(100dvh-16em)]">
+                   <TabsContent value="tasks" className="p-1 ">
+                       <div className={'grid grid-cols-1 lg:grid-cols-3 3xl:grid-cols-1 gap-5'}>
+                           <Card className={' col-span-2   '}>
+                               <CardHeader className="text-m font-semibold">Project Summary</CardHeader>
+                               <CardContent className={''}>
+                                   <div className="h-full lg:h-[calc(100dvh-22em)] 2xl:h-auto  w-full overflow-y-auto scrollbar ">
+                                       <DataGrid columns={columns} data={data}/>
+                                   </div>
+                               </CardContent>
+                           </Card>
+                           <div className={'col-span-1 border-2'}>PIE</div>
                        </div>
                    </TabsContent>
 
