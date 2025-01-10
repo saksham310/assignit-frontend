@@ -1,4 +1,4 @@
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {login, register} from "@/service/authService.ts";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import {toast} from "sonner";
@@ -10,9 +10,11 @@ import {setHeader} from "@/service/apiClient.ts";
 
 const useAuth=<T extends LoginInput|RegisterInput>({mutationFn,successMessage}:AuthHookConfig<T>)=>{
     const navigate=useNavigate();
+    const queryClient = useQueryClient();
     const signIn = useSignIn();
     const handleSuccess=(res:AuthResponse)=>{
         {
+            queryClient.invalidateQueries({queryKey:['workspaces','workspace analytics']});
             if (signIn({
                 auth: {
                     token: res.token,

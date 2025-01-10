@@ -19,3 +19,9 @@ export interface AuthHookConfig<T> {
     mutationFn: (data: T) => Promise<AuthResponse>;
     successMessage: string;
 }
+
+export interface User{
+    id: number;
+    username: string;
+    email: string;
+}

@@ -5,6 +5,7 @@ import SignInPage from "@/pages/sign-in.page.tsx";
 import DashboardWrapper from "@/layouts/DashboardWrapper.tsx";
 import WorkspacePage from "@/pages/Workspace.page.tsx";
 import ProtectedRoutes from "@/constants/ProtectedRoutes.tsx";
+import OnboardingScreen from "@/pages/OnboardingScreen.tsx";
 export const router=createBrowserRouter(
     [
         {
@@ -37,7 +38,7 @@ export const router=createBrowserRouter(
                 },
                 {
                     path:'/create',
-                    element:<SignInPage/>
+                    element:<OnboardingScreen/>
                 }
             ]
         }

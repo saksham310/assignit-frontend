@@ -29,7 +29,7 @@ const togglePass=(val:string)=>{
     return (
         <Card className="w-full h-full md:w-[460px] bg-white shadow-none border-none p-[24px]">
             <CardHeader className="flex justify-center items-center">
-                <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+                <CardTitle className="text-xl font-semibold">{title}</CardTitle>
             </CardHeader>
             <CardContent className="p-4">
                 <Form {...form}>

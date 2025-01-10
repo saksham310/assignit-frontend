@@ -12,9 +12,14 @@ interface DashboardProps {
 const Dashboard = ({items,columns,data}:DashboardProps) => {
 
     return (
-        <div className="grid grid-cols-1 gap-10 mb-2 haha">
-            <Analytics items={items} />
-            <GridWrapper columns={columns} data={data} />
+        <div className="grid grid-cols-1 gap-10 h-full ">
+            <div className='flex flex-col gap-10'>
+                <Analytics items={items} />
+                <div className={'flex-1'}>
+                    <GridWrapper columns={columns} data={data} />
+                </div>
+            </div>
+
         </div>
     );
 }

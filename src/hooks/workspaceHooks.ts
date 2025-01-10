@@ -1,17 +1,16 @@
-import {getWorkspaceAnalytics, getWorkspaces} from "@/service/workspaceService.ts";
-import {useQuery} from "@tanstack/react-query";
+import {createWorkspace, getWorkspaceAnalytics, getWorkspaces} from "@/service/workspaceService.ts";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
+import {toast} from "sonner";
 
 export const useGetWorkspace = () => {
-
     return useQuery({
         queryKey:['workspaces'],
-        queryFn:getWorkspaces,
+        queryFn:getWorkspaces
     });
 }
 export const useGetWorkspaceAnalytics=(id:string|undefined)=>{
-    console.log("Hook time",new Date().getTime());
     return useQuery({
         queryKey:['workspace analytics',id],
         queryFn:()=>getWorkspaceAnalytics(id),
@@ -30,4 +29,23 @@ export const useWorkspaceNavigation=()=>{
            navigate(targetPath);
         }
     },[isLoading, navigate, workspaces]);
+    return {isLoading};
+}
+
+export const useCreateWorkspace=()=>{
+    const navigate=useNavigate();
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn:createWorkspace,
+        onSuccess:()=>{
+            queryClient.invalidateQueries({queryKey:['workspaces']});
+            toast.success("Workspace Created Successfully!", {
+                duration: 2000,
+            });
+            setTimeout(() => {
+                navigate('/');
+            }, 1000);
+        }
+
+    })
 }

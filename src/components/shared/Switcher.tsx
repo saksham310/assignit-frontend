@@ -14,8 +14,8 @@ const Switcher = ({onChange,data}:SwitcherProps) => {
     const selectedValue = data?.find(item => item.id == id)?.id
     return (
         <Select onValueChange={onChange} value={selectedValue}>
-            <SelectTrigger className="w-auto lg:w-[175px] font-semibold">
-                <SelectValue placeholder='Select a Workspace'/>
+            <SelectTrigger className="w-auto lg:w-[175px] font-medium text-sm ">
+                <SelectValue  placeholder='Select a Workspace'/>
             </SelectTrigger>
             <SelectContent>
                 {data?.map((item) => (

@@ -9,7 +9,10 @@ const WorkspaceSwitcher=()=>{
         navigate(`/workspaces/${id}`)
     }
     return <>
-        <Switcher onChange={onChange} data={data} />
+        <div>
+            <Switcher onChange={onChange} data={data} />
+        </div>
+
     </>
 }
 export default WorkspaceSwitcher;

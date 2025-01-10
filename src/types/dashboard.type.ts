@@ -1,11 +1,13 @@
+import {ReactNode} from "react";
+
 export interface AnalyticCardProps{
     name: string,
     count:number
 }
 
-export type ProjectTask={
-    taskName:string,
-    sprintName:string,
-    status:string,
-    priority:string
+export type ProjectSummary={
+    projectName:string,
+    startDate:string,
+    endDate:string,
+    progress:ReactNode;
 }
