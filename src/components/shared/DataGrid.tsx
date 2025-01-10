@@ -32,49 +32,6 @@ export function DataGrid<TData>({
     });
 
     return (
-            // <Table className='rounded-lg  table-fixed '>
-            //     <TableHeader className=" bg-secondary text-primary-foreground  hover:bg-secondary">
-            //         {table.getHeaderGroups().map((headerGroup) => (
-            //             <TableRow key={headerGroup.id}>
-            //                 {headerGroup.headers.map((header) =>{
-            //
-            //                       return  <TableHead key={header.id} className={cn(
-            //                           'first:rounded-tl-lg last:rounded-tr-lg ')}>
-            //                             {header.isPlaceholder
-            //                                 ? null
-            //                                 : flexRender(
-            //                                     header.column.columnDef.header,
-            //                                     header.getContext()
-            //                                 )}
-            //                         </TableHead>
-            //
-            //                 })}
-            //             </TableRow>
-            //         ))}
-            //     </TableHeader>
-            //     <TableBody>
-            //         {table.getRowModel().rows?.length ? (
-            //             table.getRowModel().rows.map((row) => (
-            //                 <TableRow
-            //                     key={row.id}
-            //                     data-state={row.getIsSelected() && "selected"}
-            //                 >
-            //                     {row.getVisibleCells().map((cell) => (
-            //                         <TableCell key={cell.id} >
-            //                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            //                         </TableCell>
-            //                     ))}
-            //                 </TableRow>
-            //             ))
-            //         ) : (
-            //             <TableRow>
-            //                 <TableCell colSpan={columns.length} className=" text-center">
-            //                     No results.
-            //                 </TableCell>
-            //             </TableRow>
-            //         )}
-            //     </TableBody>
-            // </Table>
         <Table className='rounded-lg table-fixed h-full  overflow-y-auto'>
             <TableHeader className=" text-primary-foreground hover:bg-secondary">
                 {table.getHeaderGroups().map((headerGroup) => (
