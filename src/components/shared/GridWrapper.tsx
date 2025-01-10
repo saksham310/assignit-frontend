@@ -16,18 +16,22 @@ const GridWrapper = ({ columns, data }: { columns: ColumnDef<any>[]; data: unkno
                    </TabsTrigger>
                </TabsList>
                </div>
-               <div className="bg-white px-5 py-10 rounded-lg mt-4 h-[calc(100dvh-16em)]">
+               <div className="bg-white px-5 py-10 rounded-lg mt-4 lg:h-[calc(100dvh-16em)]">
                    <TabsContent value="tasks" className="p-1 ">
                        <div className={'grid grid-cols-1 lg:grid-cols-3 3xl:grid-cols-1 gap-5'}>
                            <Card className={' col-span-2   '}>
                                <CardHeader className="text-m font-semibold">Project Summary</CardHeader>
                                <CardContent className={''}>
-                                   <div className="h-full lg:h-[calc(100dvh-22em)] 2xl:h-auto  w-full overflow-y-auto scrollbar ">
+                                   <div className="lg:h-[calc(100dvh-22em)]  2xl:h-auto  w-full overflow-y-auto scrollbar ">
                                        <DataGrid columns={columns} data={data}/>
                                    </div>
                                </CardContent>
                            </Card>
-                           <div className={'col-span-1 border-2'}>PIE</div>
+                           <Card className={' col-span-1  '}>
+                               <CardHeader className="text-m font-semibold">Assigned Tasks</CardHeader>
+                               <CardContent className={''}>
+                               </CardContent>
+                           </Card>
                        </div>
                    </TabsContent>
 
