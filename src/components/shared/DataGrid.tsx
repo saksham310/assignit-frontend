@@ -32,48 +32,89 @@ export function DataGrid<TData>({
     });
 
     return (
-            <Table className='rounded-lg min-h-[108vh] table-fixed '>
-                <TableHeader className=" bg-secondary text-primary-foreground  hover:bg-secondary">
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header, index) =>{
-
-                                  return  <TableHead key={header.id} className={cn(columns.length -1 === index && ' w-[73px]',
-                                      'first:rounded-tl-lg last:rounded-tr-lg')}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext()
-                                            )}
-                                    </TableHead>
-
-                            })}
+            // <Table className='rounded-lg  table-fixed '>
+            //     <TableHeader className=" bg-secondary text-primary-foreground  hover:bg-secondary">
+            //         {table.getHeaderGroups().map((headerGroup) => (
+            //             <TableRow key={headerGroup.id}>
+            //                 {headerGroup.headers.map((header) =>{
+            //
+            //                       return  <TableHead key={header.id} className={cn(
+            //                           'first:rounded-tl-lg last:rounded-tr-lg ')}>
+            //                             {header.isPlaceholder
+            //                                 ? null
+            //                                 : flexRender(
+            //                                     header.column.columnDef.header,
+            //                                     header.getContext()
+            //                                 )}
+            //                         </TableHead>
+            //
+            //                 })}
+            //             </TableRow>
+            //         ))}
+            //     </TableHeader>
+            //     <TableBody>
+            //         {table.getRowModel().rows?.length ? (
+            //             table.getRowModel().rows.map((row) => (
+            //                 <TableRow
+            //                     key={row.id}
+            //                     data-state={row.getIsSelected() && "selected"}
+            //                 >
+            //                     {row.getVisibleCells().map((cell) => (
+            //                         <TableCell key={cell.id} >
+            //                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            //                         </TableCell>
+            //                     ))}
+            //                 </TableRow>
+            //             ))
+            //         ) : (
+            //             <TableRow>
+            //                 <TableCell colSpan={columns.length} className=" text-center">
+            //                     No results.
+            //                 </TableCell>
+            //             </TableRow>
+            //         )}
+            //     </TableBody>
+            // </Table>
+        <Table className='rounded-lg table-fixed'>
+            <TableHeader className=" text-primary-foreground hover:bg-secondary">
+                {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => (
+                            <TableHead key={header.id} className={cn('first:rounded-tl-lg last:rounded-tr-lg')}>
+                                {header.isPlaceholder
+                                    ? null
+                                    : flexRender(
+                                        header.column.columnDef.header,
+                                        header.getContext()
+                                    )}
+                            </TableHead>
+                        ))}
+                    </TableRow>
+                ))}
+            </TableHeader>
+            <TableBody>
+                {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                        <TableRow
+                            key={row.id}
+                            data-state={row.getIsSelected() && "selected"}
+                            className="mb-4"  // Adds margin bottom to each row
+                        >
+                            {row.getVisibleCells().map((cell) => (
+                                <TableCell key={cell.id} className="p-4"> {/* Adds padding inside cells */}
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </TableCell>
+                            ))}
                         </TableRow>
-                    ))}
-                </TableHeader>
-                <TableBody>
-                    {table.getRowModel().rows?.length ? (
-                        table.getRowModel().rows.map((row) => (
-                            <TableRow
-                                key={row.id}
-                                data-state={row.getIsSelected() && "selected"}
-                            >
-                                {row.getVisibleCells().map((cell) => (
-                                    <TableCell key={cell.id} >
-                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        ))
-                    ) : (
-                        <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
+                    ))
+                ) : (
+                    <TableRow>
+                        <TableCell colSpan={columns.length} className="text-center">
+                            No results.
+                        </TableCell>
+                    </TableRow>
+                )}
+            </TableBody>
+        </Table>
     );
 }

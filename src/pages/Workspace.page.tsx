@@ -1,10 +1,12 @@
 import Dashboard from "@/components/shared/Dashboard.tsx";
 import {ColumnDef} from "@tanstack/react-table";
-import {ProjectTask} from "@/types/dashboard.type.ts";
+import {ProjectSummary} from "@/types/dashboard.type.ts";
 import {useOutletContext, useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {useGetWorkspaceAnalytics} from "@/hooks/workspaceHooks.ts";
 import Loader from "@/components/shared/Loader.tsx";
+import { Progress } from "@/components/ui/progress"
+
 
 const WorkspacePage = () => {
     const setTitle = useOutletContext<(title: string) => void>();
@@ -28,134 +30,89 @@ const WorkspacePage = () => {
         count: workspaceAnalytics[key]
     }))
 
-    const columns: ColumnDef<ProjectTask>[] = [
+    const columns: ColumnDef<ProjectSummary>[] = [
         {
-            accessorKey: "taskName",
-            header: "Task",
+            accessorKey: "projectName",
+            header: "Name",
             size: 150,
         },
         {
-            accessorKey: "sprintName",
-            header: "Sprint",
+            accessorKey: "startDate",
+            header: "Start Date",
             size: 96
         },
         {
-            accessorKey: "status",
-            header: "Status",
+            accessorKey: "endDate",
+            header: "End Date",
             size: 122
         },
         {
-            accessorKey: "priority",
-            header: "Priority",
-            size: 73
+            accessorKey: "progress",
+            header: "Task Progress",
+            size: 73,
+            cell: ({ row }) => row.original.progress
         },
 
 
     ]
-    const dummyProjectTasks: ProjectTask[] = [
+
+    const dummyProjectTasks: ProjectSummary[] = [
         {
-            taskName: "Implement login functionality",
-            sprintName: "Sprint 1",
-            status: "In Progress",
-            priority: "High"
+            projectName: "Website Redesign",
+            startDate: "2024-06-01",
+            endDate: "2025-06-01",
+            progress: <Progress value={10} className="w-auto" />,
         },
         {
-            taskName: "Design database schema",
-            sprintName: "Sprint 1",
-            status: "Completed",
-            priority: "Medium"
+            projectName: "Mobile App Development",
+            startDate: "2024-07-01",
+            endDate: "2025-01-15",
+            progress: <Progress value={50} className="w-full" />,
         },
         {
-            taskName: "Fix authentication bug",
-            sprintName: "Sprint 2",
-            status: "To Do",
-            priority: "High"
+            projectName: "E-commerce Platform Upgrade",
+            startDate: "2024-08-01",
+            endDate: "2025-02-01",
+            progress: <Progress value={30} className="w-full" />,
         },
         {
-            taskName: "Implement login functionality",
-            sprintName: "Sprint 1",
-            status: "In Progress",
-            priority: "High"
+            projectName: "Corporate Branding Overhaul",
+            startDate: "2024-09-01",
+            endDate: "2025-03-30",
+            progress: <Progress value={60} className="w-full" />,
         },
         {
-            taskName: "Design database schema",
-            sprintName: "Sprint 1",
-            status: "Completed",
-            priority: "Medium"
+            projectName: "Data Migration to Cloud",
+            startDate: "2024-10-01",
+            endDate: "2025-04-20",
+            progress: <Progress value={50} className="w-full" />,
         },
         {
-            taskName: "Fix authentication bug",
-            sprintName: "Sprint 2",
-            status: "To Do",
-            priority: "High"
+            projectName: "Internal Tools Revamp",
+            startDate: "2024-11-01",
+            endDate: "2025-05-10",
+            progress: <Progress value={45} className="w-full" />,
         },
         {
-            taskName: "Implement login functionality",
-            sprintName: "Sprint 1",
-            status: "In Progress",
-            priority: "High"
+            projectName: "Customer Support Chatbot",
+            startDate: "2024-12-01",
+            endDate: "2025-06-01",
+            progress: <Progress value={80} className="w-full" />,
         },
         {
-            taskName: "Design database schema",
-            sprintName: "Sprint 1",
-            status: "Completed",
-            priority: "Medium"
+            projectName: "SEO Optimization Campaign",
+            startDate: "2024-05-01",
+            endDate: "2024-12-01",
+            progress: <Progress value={25} className="w-full" />,
         },
         {
-            taskName: "Fix authentication bug",
-            sprintName: "Sprint 2",
-            status: "To Do",
-            priority: "High"
+            projectName: "AI-Powered Analytics Dashboard",
+            startDate: "2024-04-01",
+            endDate: "2024-11-30",
+            progress: <Progress value={10} className="w-full" />,
         },
-        {
-            taskName: "Update UI for task management page",
-            sprintName: "Sprint 2",
-            status: "In Progress",
-            priority: "Low"
-        },
-        {
-            taskName: "Write unit tests for API endpoints",
-            sprintName: "Sprint 3",
-            status: "To Do",
-            priority: "Medium"
-        },
-        {
-            taskName: "Optimize database queries",
-            sprintName: "Sprint 3",
-            status: "Blocked",
-            priority: "High"
-        },
-        {
-            taskName: "Prepare sprint retrospective slides",
-            sprintName: "Sprint 4",
-            status: "Completed",
-            priority: "Low"
-        },
-        {
-            taskName: "Integrate third-party API",
-            sprintName: "Sprint 4",
-            status: "In Progress",
-            priority: "High"
-        },
-        {
-            taskName: "Integrate third-party API",
-            sprintName: "Sprint 4",
-            status: "In Progress",
-            priority: "High"
-        },
-        {
-            taskName: "Integrate third-party API",
-            sprintName: "Sprint 4",
-            status: "In Progress",
-            priority: "High"
-        },
-        {
-            taskName: "Integrate third-party API",
-            sprintName: "Sprint 4",
-            status: "In Progress",
-            priority: "High"
-        }
     ];
+
     return (
         <Dashboard items={items} columns={columns} data={dummyProjectTasks}/>
     )

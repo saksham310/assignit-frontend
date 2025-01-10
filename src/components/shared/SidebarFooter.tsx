@@ -1,11 +1,12 @@
 
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from '../ui/dropdown-menu';
-import {ChevronUp, User2} from "lucide-react";
+import {EllipsisVertical, LogOut} from "lucide-react";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { useNavigate} from "react-router-dom";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import {User} from "@/types/auth.type.ts";
 import { useQueryClient } from '@tanstack/react-query';
+import UserAvatar from "@/components/shared/UserAvatar.tsx";
 
 const SidebarFooter=()=>{
     const query=useQueryClient();
@@ -22,17 +23,18 @@ const SidebarFooter=()=>{
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <div className='flex items-center gap-2 justify-center'>
-                <User2/> <p className='text-sm font-medium text-gray-500'>
+                <UserAvatar/> <p className='text-sm font-medium text-gray-600'>
                     {user?.username}
                 </p>
-                <ChevronUp className="ml-auto"/>
+                    <EllipsisVertical  className="m-auto size-4"/>
                     </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
                 side="right"
                 className="w-[--radix-popper-anchor-width]"
             >
-                <DropdownMenuItem> <span onClick={handleSignOut}>Sign out</span>
+                <DropdownMenuItem onClick={handleSignOut}><span className={'flex gap-2 items-center'}>
+                   Sign out <LogOut className="m-auto size-4"/></span>
             </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
