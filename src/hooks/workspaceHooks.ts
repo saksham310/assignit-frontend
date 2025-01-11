@@ -1,13 +1,14 @@
 import {createWorkspace, getWorkspaceAnalytics, getWorkspaces} from "@/service/workspaceService.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
+import {useEffect} from "react";
 
 export const useGetWorkspace = () => {
     return useQuery({
         queryKey:['workspaces'],
-        queryFn:getWorkspaces
+        queryFn:getWorkspaces,
+        staleTime: 0,
     });
 }
 export const useGetWorkspaceAnalytics=(id:string|undefined)=>{
@@ -17,35 +18,41 @@ export const useGetWorkspaceAnalytics=(id:string|undefined)=>{
         enabled:!!id
     })
 }
-export const useWorkspaceNavigation=()=>{
-    const navigate=useNavigate();
-    const {data:workspaces,isLoading} = useGetWorkspace();
-    useEffect(()=>{
-        if(isLoading) return;
-        if(workspaces){
-           const hasWorkspace=workspaces.length > 0;
-           const targetPath=hasWorkspace?`/workspaces/${workspaces[0].id}`
-           :'/create';
-           navigate(targetPath);
+
+export const useCreateWorkspace = () => {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    return useMutation({
+        mutationFn: createWorkspace,
+        onSuccess: async (data) => {
+            queryClient.invalidateQueries({queryKey: ["workspaces"]});
+            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]})
+            navigate("/");
+            console.log('navigated');
+        },
+        onError: (error) => {
+            toast.error("Failed to create workspace. Please try again.");
+            console.error("Workspace creation failed:", error);
         }
-    },[isLoading, navigate, workspaces]);
-    return {isLoading};
+    });
 }
 
-export const useCreateWorkspace=()=>{
-    const navigate=useNavigate();
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn:createWorkspace,
-        onSuccess:()=>{
-            queryClient.invalidateQueries({queryKey:['workspaces']});
-            toast.success("Workspace Created Successfully!", {
-                duration: 2000,
-            });
-            setTimeout(() => {
-                navigate('/');
-            }, 1000);
-        }
 
-    })
+export const useWorkspaceNavigate=()=>{
+    const { data: workspaces, isLoading,isFetching } = useGetWorkspace();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!isFetching && workspaces) {
+            if (workspaces.length === 0) {
+                console.log("No workspace, redirecting to /create");
+                navigate("/create");
+            } else {
+                const id = workspaces[0].id;
+                console.log("Redirecting to first workspace:", id);
+                navigate(`/workspaces/${id}`);
+            }
+        }
+    }, [isFetching, workspaces, navigate]);
+
+    return {isLoading};
 }
