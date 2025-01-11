@@ -4,6 +4,7 @@ import {useDialogStore} from "@/store/dialog.store.ts";
 import WorkspaceForm from "@/components/custom-components/WorkspaceForm.tsx";
 import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
+import {PlusCircle} from "lucide-react";
 
 interface SwitcherProps {
     onChange?: (id: string) => void,
@@ -29,16 +30,21 @@ const Switcher = ({onChange,data}:SwitcherProps) => {
             <SelectTrigger className="w-auto lg:w-[175px] font-medium text-sm ">
                 <SelectValue  placeholder='Select a Workspace'/>
             </SelectTrigger>
-            <SelectContent className="w-[100%]">
+            <SelectContent className="w-auto">
                 <div className={'max-h-72 flex flex-col'}>
                 <ScrollArea className={'flex-1 overflow-y-auto scrollbar'}>
                     {data?.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>{item.name} </SelectItem>
+                        <SelectItem key={item.id} value={item.id} className={'text-gray-400'}>{item.name} </SelectItem>
                     ))}
                 </ScrollArea>
-                <Separator/>
-                    <div className={'mt-auto'}>
-                        <SelectItem key="create" value="create" className={'font-500 '}>Create a workspace </SelectItem>
+                    <div className={'mt-4'}>
+                        <Separator/>
+                        <SelectItem key="create" value="create" className={'font-500 '}>
+                            <span className={'flex gap-x-10 p-2 items-center'}>
+                                Create a workspace
+                                <PlusCircle className={'size-4'}/>
+                            </span>
+                        </SelectItem>
                     </div>
 
                 </div>

@@ -46,15 +46,13 @@ export const useWorkspaceNavigate=()=>{
     useEffect(() => {
         if (!isFetching && workspaces) {
             if (workspaces.length === 0) {
-                console.log("No workspace, redirecting to /create");
                 navigate("/create");
             } else {
                 const id = workspaces[0].id;
-                console.log("Redirecting to first workspace:", id);
                 navigate(`/workspaces/${id}`);
             }
         }
     }, [isFetching, workspaces, navigate]);
 
-    return {isLoading};
+    return {isLoading,isFetching};
 }

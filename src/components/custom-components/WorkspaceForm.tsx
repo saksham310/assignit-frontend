@@ -7,6 +7,7 @@ import {workspaceSchema} from "@/schemas/workspaceSchemas.ts";
 import {useDialogStore} from "@/store/dialog.store.ts";
 
 
+
 const WorkspaceForm=({isOnboarding=false}:{isOnboarding:boolean})=>{
 const fields:FormFieldProps[]=[{
     name:"name",
@@ -24,6 +25,7 @@ const onSubmit = (val: CreateWorkspaceData) => {
         }
     });
 }
+
 return (
     <>              <FormCard
                     title={title}
