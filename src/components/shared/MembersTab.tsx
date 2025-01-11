@@ -7,7 +7,7 @@ const MembersTab=({ columns, data }: { columns: ColumnDef<any>[]; data: unknown[
         <Card className={' col-span-2  overflow-hidden h-full flex flex-col '}>
             <CardHeader className="text-m font-semibold ">Members</CardHeader>
             <CardContent className={'overflow-y-auto'}>
-                <div className=" h-full  w-full overflow-y-auto scrollbar ">
+                <div className=" h-full  w-full ">
                     <DataGrid columns={columns} data={data}/>
                 </div>
             </CardContent>
