@@ -1,4 +1,3 @@
-import React, {ReactNode} from "react";
 
 export interface AnalyticCardProps{
     name: string,
@@ -9,7 +8,7 @@ export type TProjectSummary={
     projectName:string,
     startDate:string,
     endDate:string,
-    progress:ReactNode;
+    progress:string;
 }
 export type TabConfig={
     value:string,
