@@ -1,9 +1,9 @@
 import {createBrowserRouter} from "react-router-dom";
 import AuthLayout from "@/layouts/AuthLayout.tsx";
-import SignUpPage from "@/pages/sign-up.page.tsx";
-import SignInPage from "@/pages/sign-in.page.tsx";
-import DashboardWrapper from "@/layouts/DashboardWrapper.tsx";
-import WorkspacePage from "@/pages/Workspace.page.tsx";
+import SignUpPage from "@/pages/SignUpPage.tsx";
+import SignInPage from "@/pages/SignInPage.tsx";
+import DashboardLayout from "@/layouts/DashboardLayout.tsx";
+import WorkspaceDashboard from "@/pages/WorkspaceDashboard.tsx";
 import ProtectedRoutes from "@/constants/ProtectedRoutes.tsx";
 import OnboardingScreen from "@/pages/OnboardingScreen.tsx";
 export const router=createBrowserRouter(
@@ -28,11 +28,11 @@ export const router=createBrowserRouter(
             children:[
                 {
                     path:'',
-                    element: <DashboardWrapper/>,
+                    element: <DashboardLayout/>,
                     children:[
                         {
                             path: 'workspaces/:id',
-                            element: <WorkspacePage/>,
+                            element: <WorkspaceDashboard/>,
                         },
                     ]
                 },

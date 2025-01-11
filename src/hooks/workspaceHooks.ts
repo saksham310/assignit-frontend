@@ -26,9 +26,11 @@ export const useCreateWorkspace = () => {
         mutationFn: createWorkspace,
         onSuccess: async (data) => {
             queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]})
+            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
+            toast.success("Successfully created workspace",{
+                duration: 2000,
+            });
             navigate("/");
-            console.log('navigated');
         },
         onError: (error) => {
             toast.error("Failed to create workspace. Please try again.");
@@ -44,15 +46,13 @@ export const useWorkspaceNavigate=()=>{
     useEffect(() => {
         if (!isFetching && workspaces) {
             if (workspaces.length === 0) {
-                console.log("No workspace, redirecting to /create");
                 navigate("/create");
             } else {
                 const id = workspaces[0].id;
-                console.log("Redirecting to first workspace:", id);
                 navigate(`/workspaces/${id}`);
             }
         }
     }, [isFetching, workspaces, navigate]);
 
-    return {isLoading};
+    return {isLoading,isFetching};
 }

@@ -1,12 +1,12 @@
-import Dashboard from "@/components/shared/Dashboard.tsx";
+import Dashboard from "@/components/custom-components/Dashboard.tsx";
 import {useOutletContext, useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {useGetWorkspaceAnalytics} from "@/hooks/workspaceHooks.ts";
-import Loader from "@/components/shared/Loader.tsx";
+import Loader from "@/components/custom-components/Loader.tsx";
 
 
 
-const WorkspacePage = () => {
+const WorkspaceDashboard = () => {
     const setTitle = useOutletContext<(title: string) => void>();
 
     useEffect(() => {
@@ -34,4 +34,4 @@ const WorkspacePage = () => {
     )
 }
 
-export default WorkspacePage;
+export default WorkspaceDashboard;

@@ -1,4 +1,3 @@
-
 import {
     ColumnDef,
     flexRender,
@@ -22,9 +21,9 @@ interface DataTableProps<TData> {
 }
 
 export function DataGrid<TData>({
-                                            columns,
-                                            data,
-                                        }: DataTableProps<TData>) {
+                                    columns,
+                                    data,
+                                }: DataTableProps<TData>) {
     const table = useReactTable({
         data,
         columns,
@@ -42,7 +41,7 @@ export function DataGrid<TData>({
                                     {headerGroup.headers.map((header) => (
                                         <TableHead
                                             key={header.id}
-                                            style={{width: `${100 / columns.length}%`}}
+                                            style={{ width: `${100 / columns.length}%` }}
                                             className={cn('first:rounded-tl-lg last:rounded-tr-lg p-4')}
                                         >
                                             {header.isPlaceholder
@@ -72,7 +71,7 @@ export function DataGrid<TData>({
                                         {row.getVisibleCells().map((cell) => (
                                             <TableCell
                                                 key={cell.id}
-                                                style={{width: `${100 / columns.length}%`}}
+                                                style={{ width: `${100 / columns.length}%` }}
                                                 className="p-4"
                                             >
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
