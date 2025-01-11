@@ -14,7 +14,7 @@ const WorkspaceDashboard = () => {
     }, [setTitle]);
 
     const {id} = useParams();
-    const {data: workspaceAnalytics, isLoading,isError} = useGetWorkspaceAnalytics(id);
+    const {data: workspaceAnalytics, isLoading} = useGetWorkspaceAnalytics(id);
 
     if (isLoading) {
         return <Loader/>

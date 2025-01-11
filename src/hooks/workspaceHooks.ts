@@ -26,9 +26,11 @@ export const useCreateWorkspace = () => {
         mutationFn: createWorkspace,
         onSuccess: async (data) => {
             queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]})
+            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
+            toast.success("Successfully created workspace",{
+                duration: 2000,
+            });
             navigate("/");
-            console.log('navigated');
         },
         onError: (error) => {
             toast.error("Failed to create workspace. Please try again.");

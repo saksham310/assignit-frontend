@@ -5,7 +5,9 @@ import {useState} from "react";
 import { useWorkspaceNavigate} from "@/hooks/workspaceHooks.ts";
 import Loader from "@/components/custom-components/Loader.tsx";
 
-const DashboardWrapper = () => {
+import ResponsiveDialog from "@/components/custom-components/ResponsiveDialog.tsx";
+
+const DashboardLayout = () => {
     const [title, setTitle] = useState<string>("Workspace Summary");
    const {isLoading} = useWorkspaceNavigate();
     if (isLoading) {
@@ -14,7 +16,8 @@ const DashboardWrapper = () => {
             <Loader />;
         </div>)
     }
-    return (
+    return (<>
+        <ResponsiveDialog/>
         <div className='flex h-screen bg-white'>
             <div className='fixed top-0 left-0 h-full w-[210px] hidden lg:block p-2'>
                 <Sidebar/>
@@ -27,7 +30,8 @@ const DashboardWrapper = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 };
 
-export default DashboardWrapper;
+export default DashboardLayout;
