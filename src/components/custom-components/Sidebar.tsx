@@ -1,7 +1,7 @@
 import Logo from '@/assets/Logo.svg';
-import WorkspaceSwitcher from "@/components/shared/WorkspaceSwitcher.tsx";
+import WorkspaceSwitcher from "@/components/custom-components/WorkspaceSwitcher.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
-import SidebarFooter from "@/components/shared/SidebarFooter.tsx";
+import SidebarFooter from "@/components/custom-components/SidebarFooter.tsx";
 import {LayoutDashboard, SettingsIcon} from "lucide-react";
 
 

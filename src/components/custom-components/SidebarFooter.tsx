@@ -6,7 +6,7 @@ import { useNavigate} from "react-router-dom";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import {User} from "@/types/auth.type.ts";
 import { useQueryClient } from '@tanstack/react-query';
-import UserAvatar from "@/components/shared/UserAvatar.tsx";
+import UserAvatar from "@/components/custom-components/UserAvatar.tsx";
 
 const SidebarFooter=()=>{
     const query=useQueryClient();

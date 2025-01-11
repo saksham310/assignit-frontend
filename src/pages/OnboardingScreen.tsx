@@ -1,6 +1,6 @@
 import {FormFieldProps} from "@/types/form.type.ts";
 import {FaPeopleGroup} from "react-icons/fa6";
-import FormCard from "@/components/shared/formCard.tsx";
+import FormCard from "@/components/custom-components/formCard.tsx";
 import {workspaceSchema} from "@/schemas/workspaceSchemas.ts";
 import {
     Dialog,

@@ -17,7 +17,7 @@ const Switcher = ({onChange,data}:SwitcherProps) => {
             <SelectTrigger className="w-auto lg:w-[175px] font-medium text-sm ">
                 <SelectValue  placeholder='Select a Workspace'/>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="w-[100%] min-h-[85px]">
                 {data?.map((item) => (
                     <SelectItem key={item.id} value={item.id}>{item.name} </SelectItem>
                 ))}

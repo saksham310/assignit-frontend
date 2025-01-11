@@ -1,9 +1,9 @@
-import Analytics from "@/components/shared/Analytics.tsx";
-import TabLayoutWrapper from "@/components/shared/TabLayoutWrapper.tsx";
+import Analytics from "@/components/custom-components/Analytics.tsx";
+import TabLayoutWrapper from "@/components/custom-components/TabLayoutWrapper.tsx";
 import {AnalyticCardProps, TProjectSummary, TabConfig} from "@/types/dashboard.type.ts";
 import { ColumnDef } from "@tanstack/react-table"
-import ProjectInsightsTab from "@/components/shared/ProjectInsightsTab.tsx";
-import MembersTab from "@/components/shared/MembersTab.tsx";
+import ProjectInsightsTab from "@/components/custom-components/ProjectInsightsTab.tsx";
+import MembersTab from "@/components/custom-components/MembersTab.tsx";
 
 interface DashboardProps {
     items:AnalyticCardProps[],

@@ -1,9 +1,9 @@
-import Sidebar from "@/components/shared/Sidebar.tsx";
+import Sidebar from "@/components/custom-components/Sidebar.tsx";
 import {Outlet} from "react-router-dom";
-import TopBar from "@/components/shared/TopBar.tsx";
+import TopBar from "@/components/custom-components/TopBar.tsx";
 import {useState} from "react";
 import { useWorkspaceNavigate} from "@/hooks/workspaceHooks.ts";
-import Loader from "@/components/shared/Loader.tsx";
+import Loader from "@/components/custom-components/Loader.tsx";
 
 const DashboardWrapper = () => {
     const [title, setTitle] = useState<string>("Workspace Summary");
