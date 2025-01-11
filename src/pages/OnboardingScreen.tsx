@@ -25,7 +25,7 @@ const OnboardingScreen=()=>{
     }
     return (
         <>
-          <img src={Onboarding} alt=""/>
+          <img src={Onboarding} alt="" className={'size-full'}/>
             <Dialog open={true} >
                 <DialogContent className="[&>button]:hidden max-w-fit">
                         <FormCard
