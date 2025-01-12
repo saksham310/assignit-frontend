@@ -3,25 +3,27 @@ import WorkspaceSwitcher from "@/components/custom-components/WorkspaceSwitcher.
 import {Separator} from "@/components/ui/separator.tsx";
 import SidebarFooter from "@/components/custom-components/SidebarFooter.tsx";
 import {LayoutDashboard, SettingsIcon} from "lucide-react";
+import {useWorkspaceStore} from "@/store/workspace.store.ts";
+import {Link, useLocation} from "react-router-dom";
 
 
 const Sidebar=()=>{
-
-
+    const currentWorkspaceId=useWorkspaceStore((state) => state.currentWorkspaceId);
+    const location = useLocation();
     return <>
         <div className='w-[200px] h-full flex flex-col '>
             <div className='w-[80px] h-[53px] mb-2'>
                 <img src={Logo} alt="Logo of Assign it"/>
             </div>
-            {/*<Separator/>*/}
             <div className='flex-1 w-full overflow-y-auto flex flex-col space-y-8 scrollbar'>
                    <WorkspaceSwitcher/>
-
-                    {navigationRoutes.map((route)=>{
+                    {getNavigationRoutes(currentWorkspaceId).map((route)=>{
                         const Icon=route.icon;
-                        return (
-                            <div className={'pl-2 text-sm flex items-center gap-2'}><Icon className={'size-4'}/>{route.label}</div>
-                        )
+                        const isActive = location.pathname === route.path;
+                        return <Link to={route.path}  className={
+                            'pl-2 text-sm ' + (isActive && 'bg-secondary p-2 rounded-md')} >
+                           <span className={'flex items-center gap-2'}> <Icon className={'size-4'}/>{route.label}</span>
+                        </Link>
                     })}
 
             </div>
@@ -34,15 +36,15 @@ const Sidebar=()=>{
 export default Sidebar;
 
 
-const navigationRoutes=[
+const getNavigationRoutes=(id:string|null)=>[
     {
         label: "Dashboard",
-        href: ``,
+        path: `/workspaces/${id}`,
         icon: LayoutDashboard,
     },
     {
         label: "Settings",
-        href: `/settings/`,
+        path: `/settings/`,
         icon: SettingsIcon
     }
 ]

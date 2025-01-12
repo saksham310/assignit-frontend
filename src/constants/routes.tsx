@@ -31,9 +31,14 @@ export const router=createBrowserRouter(
                     element: <DashboardLayout/>,
                     children:[
                         {
-                            path: 'workspaces/:id',
+                            path: '/workspaces/:id',
                             element: <WorkspaceDashboard/>,
+
                         },
+                        {
+                            path:'/settings',
+                            element:<SignInPage/>
+                        }
                     ]
                 },
                 {

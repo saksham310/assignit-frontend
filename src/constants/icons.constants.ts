@@ -5,5 +5,5 @@ export const ICONS:Record<string,LucideIcon> = {
     "Sprints":Folders,
     "Members":UsersRound,
     "Tasks":Paperclip,
-    "Overdue":TriangleAlert
+    "Overdue Projects":TriangleAlert
 };

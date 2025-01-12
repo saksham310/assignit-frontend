@@ -27,7 +27,6 @@ apiClient.interceptors.request.use((config)=>{
         signal: controller.signal
     };
 },(error) => {
-    console.log(error);
     return Promise.reject(error);
 });
 
