@@ -6,6 +6,7 @@ import DashboardLayout from "@/layouts/DashboardLayout.tsx";
 import WorkspaceDashboard from "@/pages/WorkspaceDashboard.tsx";
 import ProtectedRoutes from "@/constants/ProtectedRoutes.tsx";
 import OnboardingScreen from "@/pages/OnboardingScreen.tsx";
+import SettingsPage from "@/pages/SettingsPage.tsx";
 export const router=createBrowserRouter(
     [
         {
@@ -37,7 +38,7 @@ export const router=createBrowserRouter(
                         },
                         {
                             path:'/settings',
-                            element:<SignInPage/>
+                            element:<SettingsPage/>
                         }
                     ]
                 },
