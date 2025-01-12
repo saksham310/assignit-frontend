@@ -1,17 +1,19 @@
 import {TabConfig} from "@/types/dashboard.type.ts";
 import TabLayoutWrapper from "@/components/custom-components/shared/TabLayoutWrapper.tsx";
+import UserSettings from "@/components/custom-components/settings/UserSettings.tsx";
+import WorkspaceSettings from "@/components/custom-components/settings/WorkspaceSettings.tsx";
 
 const SettingsPage=()=>{
     const tabConfig:TabConfig[] = [
         {
             value: "account",
             label: "Account Settings",
-            component: () => <div> User Settings</div>,
+            component: () => <UserSettings/>,
         },
         {
             value: "workspace",
             label: "Workspace Settings",
-            component: () =><div> Workspace Settings</div>,
+            component: () =><WorkspaceSettings/>,
         },
     ];
     return(

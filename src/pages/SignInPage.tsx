@@ -1,5 +1,5 @@
 
-import {loginSchema} from "@/schemas/authSchemas.ts";
+import {loginSchema} from "@/schemas/auth.schema.ts";
 import {FormFieldProps} from "@/types/form.type.ts";
 import FormCard from "@/components/custom-components/forms/formCard.tsx";
 import {FaEye} from "react-icons/fa";
