@@ -22,10 +22,10 @@ export const userProfileSchema=z.object({
             {
                 message: 'File must be a valid image (JPEG, PNG, or WebP)',
             })
-}).refine((data)=>{
-    return (
-      data.password === data.confirmPassword, {
+}).refine((data)=> {
+    if(data.password && !data.confirmPassword) return false;
+    return data.password === data.confirmPassword
+}, {
     message: "Passwords don't match",
-    path: ["confirmPassword"],})
-}
+    path: ["confirmPassword"],}
 )
