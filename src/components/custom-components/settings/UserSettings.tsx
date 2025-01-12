@@ -38,13 +38,13 @@ const UserSettings=()=>{
         password:"",
         confirmPassword:"",
         image:undefined,
-    }
+    };
 const form=useForm<z.infer<typeof userProfileSchema>>({
     defaultValues,
     resolver: zodResolver(userProfileSchema),
 });
-    const onSubmit=()=>{
-        console.log('hio');
+    const onSubmit=(val:z.infer<typeof userProfileSchema>)=>{
+        if(val===defaultValues) return;
     }
     const onError = (errors: any) => {
         // Trigger toast for the first error encountered
@@ -54,7 +54,6 @@ const form=useForm<z.infer<typeof userProfileSchema>>({
             toast.error(firstErrorMessage || "Something went wrong!");
         }
     };
-    console.log(form)
     return (
         <>
 
