@@ -3,7 +3,7 @@ import {
     DialogContent,
 } from "@/components/ui/dialog";
 import Onboarding from "@/assets/Onboarding.svg";
-import WorkspaceForm from "@/components/custom-components/WorkspaceForm.tsx";
+import WorkspaceForm from "@/components/custom-components/forms/WorkspaceForm.tsx";
 
 
 const OnboardingScreen=()=>{

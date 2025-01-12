@@ -1,11 +1,11 @@
-import Sidebar from "@/components/custom-components/Sidebar.tsx";
+import Sidebar from "@/components/custom-components/layout/sidebar/Sidebar.tsx";
 import {Outlet} from "react-router-dom";
-import TopBar from "@/components/custom-components/TopBar.tsx";
+import TopBar from "@/components/custom-components/layout/TopBar.tsx";
 import {useState} from "react";
 import { useWorkspaceNavigate} from "@/hooks/workspaceHooks.ts";
-import Loader from "@/components/custom-components/Loader.tsx";
+import Loader from "@/components/custom-components/shared/Loader.tsx";
 
-import ResponsiveDialog from "@/components/custom-components/ResponsiveDialog.tsx";
+import ResponsiveDialog from "@/components/custom-components/shared/ResponsiveDialog.tsx";
 
 const DashboardLayout = () => {
     const [title, setTitle] = useState<string>("Workspace Summary");

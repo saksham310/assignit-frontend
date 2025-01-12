@@ -1,9 +1,11 @@
-import Analytics from "@/components/custom-components/Analytics.tsx";
-import TabLayoutWrapper from "@/components/custom-components/TabLayoutWrapper.tsx";
+import Analytics from "@/components/custom-components/dashboard/Analytics.tsx";
+import TabLayoutWrapper from "@/components/custom-components/shared/TabLayoutWrapper.tsx";
 import {AnalyticCardProps, TProjectSummary, TabConfig} from "@/types/dashboard.type.ts";
 import { ColumnDef } from "@tanstack/react-table"
-import ProjectInsightsTab from "@/components/custom-components/ProjectInsightsTab.tsx";
-import MembersTab from "@/components/custom-components/MembersTab.tsx";
+import ProjectInsightsTab from "@/components/custom-components/dashboard/project-insights/ProjectInsightsTab.tsx";
+import MembersTab from "@/components/custom-components/dashboard/MembersTab.tsx";
+import {Button} from "@/components/ui/button.tsx";
+import {PlusCircle, Send} from "lucide-react";
 
 interface DashboardProps {
     items:AnalyticCardProps[],
@@ -215,7 +217,12 @@ const Dashboard = ({items}:DashboardProps) => {
             <div className='flex flex-col gap-10 h-full '>
                 <Analytics items={items} />
                 <div className={'flex-1'}>
-                    <TabLayoutWrapper tabConfig={tabConfig} />
+                   <div className={'relative'}>
+                      <div className={'hidden lg:flex w-auto  items-center gap-x-4 absolute right-1'}>
+                          <Button variant={'outline'} size={'sm'} ><PlusCircle/>Add Project</Button>
+                          <Button size={'sm'} ><Send/>Invite</Button>
+                      </div>
+                       <TabLayoutWrapper tabConfig={tabConfig} /></div>
                 </div>
             </div>
 

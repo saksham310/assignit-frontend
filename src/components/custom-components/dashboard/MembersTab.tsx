@@ -1,5 +1,5 @@
 import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
-import {DataGrid} from "@/components/custom-components/DataGrid.tsx";
+import {DataGrid} from "@/components/custom-components/shared/DataGrid.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 
 const MembersTab=({ columns, data }: { columns: ColumnDef<any>[]; data: unknown[]})=>{

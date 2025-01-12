@@ -1,6 +1,6 @@
 import {useDialogStore} from "@/store/dialog.store.ts";
 import { useMediaQuery } from '@custom-react-hooks/use-media-query';
-import {Dialog, DialogContent} from "../ui/dialog";
+import {Dialog, DialogContent} from "../../ui/dialog.tsx";
 import {Drawer, DrawerContent} from "@/components/ui/drawer.tsx";
 import React from "react";
 

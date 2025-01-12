@@ -1,4 +1,4 @@
-import Switcher from "@/components/custom-components/Switcher.tsx";
+import Switcher from "@/components/custom-components/shared/Switcher.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useGetWorkspace} from "@/hooks/workspaceHooks.ts";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";

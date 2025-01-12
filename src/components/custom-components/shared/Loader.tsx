@@ -1,5 +1,5 @@
 import Lottie from 'lottie-react';
-import animation from '@/animation.json';
+import animation from '@/Animation.json';
 const Loader=()=>{
     return <>
     <div className='flex w-full h-full items-center justify-center bg-blend-overlay'>

@@ -1,6 +1,6 @@
-import ProjectSummary from "@/components/custom-components/ProjectSummary.tsx";
+import ProjectSummary from "@/components/custom-components/dashboard/project-insights/ProjectSummary.tsx";
 import {TProjectSummary} from "@/types/dashboard.type.ts";
-import AssignedTasks from "@/components/custom-components/AssignedTasks.tsx";
+import AssignedTasks from "@/components/custom-components/dashboard/project-insights/AssignedTasks.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 
 const ProjectInsightsTab=({ columns, data }: { columns: ColumnDef<TProjectSummary>[]; data: unknown[]})=>{

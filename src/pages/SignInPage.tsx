@@ -1,7 +1,7 @@
 
 import {loginSchema} from "@/schemas/authSchemas.ts";
 import {FormFieldProps} from "@/types/form.type.ts";
-import FormCard from "@/components/custom-components/formCard.tsx";
+import FormCard from "@/components/custom-components/forms/formCard.tsx";
 import {FaEye} from "react-icons/fa";
 
 import {MdMail} from "react-icons/md";
