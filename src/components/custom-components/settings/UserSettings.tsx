@@ -10,7 +10,7 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
+    FormLabel, FormMessage,
 } from "@/components/ui/form.tsx";
 import {
     AlertDialog,
@@ -32,7 +32,7 @@ import {Camera} from "lucide-react";
 import {useRef, useState} from "react";
 import {FormFieldProps} from "@/types/form.type.ts";
 import {MdMail} from "react-icons/md";
-import {FaEye} from "react-icons/fa";
+import {FaEye, FaEyeSlash} from "react-icons/fa";
 
 
 const UserSettings=()=>{
@@ -83,7 +83,8 @@ const UserSettings=()=>{
             name: 'email',
             type: 'email',
             placeholder: 'Enter your email',
-            icon:MdMail
+            icon:MdMail,
+            label:'Email'
 
         },
         {
@@ -91,10 +92,21 @@ const UserSettings=()=>{
             type: 'password',
             placeholder: 'Enter your password',
             icon: FaEye,
-
-
+            label:"New password",
+        },
+        {
+            name: 'confirmPassword',
+            type: 'password',
+            placeholder: 'Enter your password',
+            icon: FaEye,
+            label:"Confirm password",
         },
     ]
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePass=(val:string)=>{
+        if(val!='password') return;
+        setShowPassword(!showPassword);
+    }
 
     return (
         <>
@@ -126,45 +138,43 @@ const UserSettings=()=>{
                     </div>
                     <Separator className={'mt-6 mb-6'}/>
                     <p className={'font-semibold'}>Account Security</p>
-                    <div className={'flex  items-center mt-10 gap-20 w-full'}>
-                        <div className={'flex flex-col  w-full max-w-[540px]'}>
-                            <FormField name="email"
-                                        control={form.control}
-                                        render={({field}) => (
-                                            <FormItem>
-                                                <FormLabel>Email</FormLabel>
+                    <div className={'flex flex-col lg:flex-row lg:items-center mt-10 gap-20 w-full'}>
+                        {fields.map((input) =>
+                            <div className={'flex flex-col  w-full max-w-[540px]'}>
+                                <FormField
+                                    key={input.name} // Add a unique key for each field
+                                    control={form.control}
+                                    name={input.name}
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <FormLabel className={'text-sm'}>{input.label}</FormLabel>
+                                            <div className="relative">
                                                 <FormControl>
-                                                    <Input className="" {...field} />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    /></div>
-                                    <div className={'flex flex-col  w-full max-w-[540px]'}><FormField
-                                        name="password"
-                                        control={form.control}
-                                        render={({field}) => (
-                                            <FormItem>
-                                                <FormLabel>New Password</FormLabel>
-                                                <FormControl>
-                                                    <Input className="" {...field} />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    /></div>
-                                    <div className={'flex flex-col  w-full max-w-[540px]'}><FormField
-                                        name="confirmPassword"
-                                        control={form.control}
-                                        render={({field}) => (
-                                            <FormItem>
-                                                <FormLabel>Confirm new password</FormLabel>
-                                                <FormControl>
-                                                    <Input className="" {...field} />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    /></div>
-                                </div>
-                                <Separator className={'mt-6 mb-6'}/>
+                                                <Input
+                                                    className="h-[38px]"
+                                                    placeholder={input.placeholder}
+                                                    type={
+                                                        input.type === 'password' && showPassword ? 'text' : input.type
+                                                    }
+
+                                                    {...field}
+                                                />
+
+                                            </FormControl>
+                                                <i onClick={() => togglePass(input.type)}
+                                                   className='absolute cursor-pointer top-[10px] right-5'>
+                                                    {input.type === 'password' && showPassword ?
+                                                        <FaEyeSlash className='size-4 text-gray-500'/> :
+                                                        <input.icon className='size-4 text-gray-500'/>}
+                                                </i>
+                                            </div>
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                                )}
+                            </div>
+                            <Separator className={'mt-8 mb-6'}/>
                                 <AlertDialog>
                                     <AlertDialogTrigger className={'flex flex-col text-start max-w-[420px] '}>
                                         <p className={'font-semibold w-full text-red-700'}>Delete account</p>
