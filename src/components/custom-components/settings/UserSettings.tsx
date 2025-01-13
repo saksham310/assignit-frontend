@@ -10,7 +10,7 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel, FormMessage,
+    FormLabel,
 } from "@/components/ui/form.tsx";
 import {
     AlertDialog,
@@ -111,7 +111,7 @@ const UserSettings=()=>{
     return (
         <>
             <Form {...form} >
-                <form onSubmit={form.handleSubmit(onSubmit,onError)} className={'flex flex-col space-y-7 w-auto h-full '}>
+                <form onSubmit={form.handleSubmit(onSubmit,onError)} className={'flex flex-col space-y-7 w-auto h-full scrollbar'}>
                     <p className={'font-semibold'}>Profile Setting</p>
                     <div className={'flex  items-center mt-8 gap-10'}>
                         <div className={'relative  group'} onClick={handleImageClick}>
@@ -138,7 +138,7 @@ const UserSettings=()=>{
                     </div>
                     <Separator className={'mt-6 mb-6'}/>
                     <p className={'font-semibold'}>Account Security</p>
-                    <div className={'flex flex-col lg:flex-row lg:items-center mt-10 gap-20 w-full'}>
+                    <div className={'flex flex-col lg:flex-row lg:items-center mt-10  gap-10 lg:gap-20 w-full'}>
                         {fields.map((input) =>
                             <div className={'flex flex-col  w-full max-w-[540px]'}>
                                 <FormField
