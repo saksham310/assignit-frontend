@@ -28,10 +28,17 @@ import {Input} from "@/components/ui/input"
 import {Separator} from "@/components/ui/separator.tsx";
 import { Button } from "@/components/ui/button";
 import {toast} from "sonner";
+import {Camera} from "lucide-react";
+import {useRef, useState} from "react";
+import {FormFieldProps} from "@/types/form.type.ts";
+import {MdMail} from "react-icons/md";
+import {FaEye} from "react-icons/fa";
 
 
 const UserSettings=()=>{
     const user=useAuthUser<User>();
+    const imageInputRef = useRef<HTMLInputElement>(null);
+    const [previewImage, setPreviewImage] = useState("");
     const defaultValues={
         username:user?.username ?? '',
         email:user?.email ?? '',
@@ -39,13 +46,15 @@ const UserSettings=()=>{
         confirmPassword:"",
         image:undefined,
     };
-const form=useForm<z.infer<typeof userProfileSchema>>({
-    defaultValues,
-    resolver: zodResolver(userProfileSchema),
+    const form=useForm<z.infer<typeof userProfileSchema>>({
+        defaultValues,
+        resolver: zodResolver(userProfileSchema),
 });
+
     const onSubmit=(val:z.infer<typeof userProfileSchema>)=>{
         if(val===defaultValues) return;
     }
+
     const onError = (errors: any) => {
         // Trigger toast for the first error encountered
         const firstErrorKey = Object.keys(errors)[0];
@@ -54,34 +63,72 @@ const form=useForm<z.infer<typeof userProfileSchema>>({
             toast.error(firstErrorMessage || "Something went wrong!");
         }
     };
+
+    const handleImageClick=()=>{
+        imageInputRef.current?.click();
+    }
+    const handleImageChange=(e:any)=>{
+        const file = e.target.files?.[0];
+        if (file) {
+            const url=URL.createObjectURL(file);
+            setPreviewImage(url);
+            form.setValue("image", file, {
+                shouldValidate: true,
+                shouldDirty: true,
+            });
+            console.log("form",form.getValues())
+    }}
+    const fields:FormFieldProps[]=[
+        {
+            name: 'email',
+            type: 'email',
+            placeholder: 'Enter your email',
+            icon:MdMail
+
+        },
+        {
+            name: 'password',
+            type: 'password',
+            placeholder: 'Enter your password',
+            icon: FaEye,
+
+
+        },
+    ]
+
     return (
         <>
-
-                        <Form {...form} >
-                            <form onSubmit={form.handleSubmit(onSubmit,onError)} className={'flex flex-col space-y-7 w-auto h-full '}>
-                                <p className={'font-semibold'}>Profile Setting</p>
-                                <div className={'flex  items-center mt-8 gap-10'}>
-                                    <UserAvatar/>
-                                    <div className={'flex flex-col  w-full max-w-[640px]'}>
-                                        <FormField
-                                            name="username"
-                                            control={form.control}
-                                            render={({field}) => (
-                                                <FormItem>
-                                                    <FormLabel>Display Name</FormLabel>
-                                                    <FormControl>
-                                                        <Input className="" {...field} />
-                                                    </FormControl>
-                                                </FormItem>
-                                            )}
-                                        />
+            <Form {...form} >
+                <form onSubmit={form.handleSubmit(onSubmit,onError)} className={'flex flex-col space-y-7 w-auto h-full '}>
+                    <p className={'font-semibold'}>Profile Setting</p>
+                    <div className={'flex  items-center mt-8 gap-10'}>
+                        <div className={'relative  group'} onClick={handleImageClick}>
+                            <UserAvatar className={'size-24   group-hover:opacity-50'} src={previewImage}/>
+                            <p className={'absolute flex flex-col items-center top-[40%] w-full  text-xs  opacity-0' +
+                                '  group-hover:opacity-100'}><Camera className={'size-4'}/>Change image</p>
+                            <input ref={imageInputRef} type='file' accept="image/*" className={'hidden'} onChange={handleImageChange}/>
                                     </div>
-                                </div>
-                                <Separator className={'mt-6 mb-6'}/>
-                                <p className={'font-semibold'}>Account Security</p>
-                                <div className={'flex  items-center mt-10 gap-20 w-full'}>
-                                    <div className={'flex flex-col  w-full max-w-[540px]'}><FormField
-                                        name="email"
+                        <div className={'flex flex-col  w-full max-w-[640px]'}>
+                            <FormField
+                                name="username"
+                                control={form.control}
+                                render={({field}) => (
+                                    <FormItem>
+                                        <FormLabel>Display Name</FormLabel>
+                                        <FormControl>
+                                            <Input className="" {...field} />
+                                        </FormControl>
+                                    </FormItem>
+                                            )
+                            }
+                            />
+                        </div>
+                    </div>
+                    <Separator className={'mt-6 mb-6'}/>
+                    <p className={'font-semibold'}>Account Security</p>
+                    <div className={'flex  items-center mt-10 gap-20 w-full'}>
+                        <div className={'flex flex-col  w-full max-w-[540px]'}>
+                            <FormField name="email"
                                         control={form.control}
                                         render={({field}) => (
                                             <FormItem>

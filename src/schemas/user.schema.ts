@@ -12,16 +12,18 @@ export const userProfileSchema=z.object({
         }
     ),
     confirmPassword:z.string(),
-    image:z.instanceof(File)
+    image: z
+        .any()
         .optional()
         .refine(
             (file) => {
-                if (!file) return true; // Skip validation if no file
-                return ['image/jpeg', 'image/png', 'image/webp'].includes(file.type);
+                if (!file || !file[0]) return true; // Skip validation if no file
+                return ['image/jpeg', 'image/png', 'image/webp'].includes(file[0].type);
             },
             {
                 message: 'File must be a valid image (JPEG, PNG, or WebP)',
-            })
+            }
+        )
 }).refine((data)=> {
     if(data.password && !data.confirmPassword) return false;
     return data.password === data.confirmPassword
