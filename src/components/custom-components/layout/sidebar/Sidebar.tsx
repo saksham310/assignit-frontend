@@ -44,7 +44,7 @@ const getNavigationRoutes=(id:string|null)=>[
     },
     {
         label: "Settings",
-        path: `/settings/`,
+        path: `/settings`,
         icon: SettingsIcon
     }
 ]
