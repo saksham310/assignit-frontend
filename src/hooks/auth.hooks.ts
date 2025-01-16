@@ -1,10 +1,10 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {login, register} from "@/service/authService.ts";
+import {login, register} from "@/service/auth.service.ts";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import {toast} from "sonner";
 import {useNavigate} from "react-router-dom";
 import {AuthHookConfig, AuthResponse, LoginInput, RegisterInput} from "@/types/auth.type.ts";
-import {setHeader} from "@/service/apiClient.ts";
+import {setHeader} from "@/service/api.client.ts";
 
 
 

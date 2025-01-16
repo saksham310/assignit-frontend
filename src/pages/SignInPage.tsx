@@ -5,7 +5,7 @@ import FormCard from "@/components/custom-components/forms/formCard.tsx";
 import {FaEye} from "react-icons/fa";
 
 import {MdMail} from "react-icons/md";
-import {useLogin} from "@/hooks/authHooks.ts";
+import {useLogin} from "@/hooks/auth.hooks.ts";
 import {LoginInput} from "@/types/auth.type.ts";
 
 

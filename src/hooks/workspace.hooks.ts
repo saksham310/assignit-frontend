@@ -1,4 +1,4 @@
-import {createWorkspace, getWorkspaceAnalytics, getWorkspaces} from "@/service/workspaceService.ts";
+import {createWorkspace, getWorkspaceAnalytics, getWorkspaces} from "@/service/workspace.service.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useLocation, useNavigate} from "react-router-dom";
 import {toast} from "sonner";

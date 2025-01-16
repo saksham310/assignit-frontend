@@ -1,5 +1,5 @@
 import {CREATE_WORKSPACE, GET_WORKSPACE_ANALYTICS, GET_WORKSPACES} from "@/constants/api.constants.ts";
-import {apiClient} from "@/service/apiClient.ts";
+import {apiClient} from "@/service/api.client.ts";
 import {CreateWorkspaceData} from "@/types/workspace.type.ts";
 
 export const getWorkspaces = async ()=>{
