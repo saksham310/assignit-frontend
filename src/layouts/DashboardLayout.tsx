@@ -2,7 +2,7 @@ import Sidebar from "@/components/custom-components/layout/sidebar/Sidebar.tsx";
 import {Outlet} from "react-router-dom";
 import TopBar from "@/components/custom-components/layout/TopBar.tsx";
 import {useState} from "react";
-import { useWorkspaceNavigate} from "@/hooks/workspaceHooks.ts";
+import { useWorkspaceNavigate} from "@/hooks/workspace.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
 
 import ResponsiveDialog from "@/components/custom-components/shared/ResponsiveDialog.tsx";

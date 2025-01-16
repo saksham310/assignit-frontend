@@ -27,7 +27,7 @@ const Switcher = ({onChange, data}: SwitcherProps) => {
     }
 
     return (<Select onValueChange={onValChange} value={selectedValue}>
-        <SelectTrigger className="w-auto lg:w-[175px] font-medium text-sm ">
+        <SelectTrigger className="w-full lg:w-[175px] font-medium text-sm ">
             <SelectValue placeholder='Select a Workspace'/>
         </SelectTrigger>
         <SelectContent className="w-auto">

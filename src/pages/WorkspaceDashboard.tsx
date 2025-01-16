@@ -1,7 +1,7 @@
 import Dashboard from "@/components/custom-components/dashboard/Dashboard.tsx";
 import {useOutletContext, useParams} from "react-router-dom";
 import {useEffect} from "react";
-import {useGetWorkspaceAnalytics} from "@/hooks/workspaceHooks.ts";
+import {useGetWorkspaceAnalytics} from "@/hooks/workspace.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
 
 

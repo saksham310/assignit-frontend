@@ -30,8 +30,8 @@ const SidebarFooter=()=>{
                     </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-                side="right"
-                className="w-[--radix-popper-anchor-width]"
+                side="top"
+                className="w-[--radix-popper-anchor-width] min-h-12"
             >
                 <DropdownMenuItem onClick={handleSignOut}><span className={'flex gap-2 items-center'}>
                    Sign out <LogOut className="m-auto size-4"/></span>

@@ -1,4 +1,4 @@
-import {apiClient} from "@/service/apiClient.ts";
+import {apiClient} from "@/service/api.client.ts";
 import {LOGIN_API, SIGNUP_API} from "@/constants/api.constants.ts";
 import {LoginInput, RegisterInput} from "@/types/auth.type.ts";
 

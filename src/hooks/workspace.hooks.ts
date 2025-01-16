@@ -1,6 +1,6 @@
-import {createWorkspace, getWorkspaceAnalytics, getWorkspaces} from "@/service/workspaceService.ts";
+import {createWorkspace, getWorkspaceAnalytics, getWorkspaces} from "@/service/workspace.service.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {toast} from "sonner";
 import {useEffect} from "react";
 
@@ -43,8 +43,10 @@ export const useCreateWorkspace = () => {
 export const useWorkspaceNavigate=()=>{
     const { data: workspaces, isLoading,isFetching } = useGetWorkspace();
     const navigate = useNavigate();
+    const location = useLocation();
     useEffect(() => {
-        if (!isFetching && workspaces) {
+        const isDashboard=location.pathname==='/';
+        if (!isFetching && workspaces && isDashboard) {
             if (workspaces.length === 0) {
                 navigate("/create");
             } else {

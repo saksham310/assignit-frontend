@@ -17,5 +17,6 @@ export interface FormFieldProps{
     placeholder:string;
     type:string;
     icon:IconType;
+    label?:string
 
 }
