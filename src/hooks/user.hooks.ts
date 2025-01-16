@@ -11,7 +11,6 @@ export const useUpdateProfile=()=>{
     const auth=useAuthHeader();
     const user=useAuthUser<User>();
     const signIn=useSignIn();
-
     return useMutation({
         mutationFn:updateProfile,
         onSuccess:(data)=>{
@@ -23,9 +22,9 @@ export const useUpdateProfile=()=>{
                 },
                 userState: updatedUser
             })
-                toast.success("Profile updated successfully",{
-                    duration: 2000,
-                });
+            toast.success("Profile updated successfully",{
+                duration: 2000,
+            });
 
         }
     })

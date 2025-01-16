@@ -1,17 +1,11 @@
 import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
-import { useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {userProfileSchema} from "@/schemas/user.schema.ts";
 import {zodResolver} from "@hookform/resolvers/zod";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import {z} from "zod";
 import {User} from "@/types/auth.type.ts";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-} from "@/components/ui/form.tsx";
+import {Form, FormControl, FormField, FormItem, FormLabel,} from "@/components/ui/form.tsx";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -26,7 +20,7 @@ import {
 
 import {Input} from "@/components/ui/input"
 import {Separator} from "@/components/ui/separator.tsx";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import {toast} from "sonner";
 import {Camera} from "lucide-react";
 import {useRef, useState} from "react";
@@ -34,37 +28,42 @@ import {FormFieldProps} from "@/types/form.type.ts";
 import {MdMail} from "react-icons/md";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
 import {useUpdateProfile} from "@/hooks/user.hooks.ts";
+import Loader from "@/components/custom-components/shared/Loader.tsx";
 
 
-const UserSettings=()=>{
-    const user=useAuthUser<User>();
+const UserSettings = () => {
+
+    const user = useAuthUser<User>();
     const imageInputRef = useRef<HTMLInputElement>(null);
-    const {mutate}=useUpdateProfile();
+    const {mutate, isPending} = useUpdateProfile();
     const [previewImage, setPreviewImage] = useState("");
-    const defaultValues={
-        username:user?.username ?? '',
-        email:user?.email ?? '',
-        password:"",
-        confirmPassword:"",
-        image:undefined,
+
+    const defaultValues = {
+        username: user?.username ?? '',
+        email: user?.email ?? '',
+        password: "",
+        confirmPassword: "",
+        image: undefined,
     };
-    const form=useForm<z.infer<typeof userProfileSchema>>({
+    const form = useForm<z.infer<typeof userProfileSchema>>({
         defaultValues,
         resolver: zodResolver(userProfileSchema),
-});
+    });
 
-    const onSubmit=(val:z.infer<typeof userProfileSchema>)=>{
-        if(val===defaultValues) return;
-        const formData=new FormData();
-        formData.append('username',val.username);
-        formData.append('email',val.email)
-        if(val.password){
-            formData.append('password',val.password);
-        }
-        if(val.image){
+    const onSubmit = (val: z.infer<typeof userProfileSchema>) => {
+        if (val === defaultValues) return;
+        const formData = new FormData();
+        formData.append('username', val.username);
+        formData.append('email', val.email)
 
-            formData.append('image',val.image);
+        if (val.password) {
+            formData.append('password', val.password);
         }
+
+        if (val.image) {
+            formData.append('image', val.image);
+        }
+
         mutate(formData);
     }
 
@@ -77,26 +76,27 @@ const UserSettings=()=>{
         }
     };
 
-    const handleImageClick=()=>{
+    const handleImageClick = () => {
         imageInputRef.current?.click();
     }
-    const handleImageChange=(e:any)=>{
+    const handleImageChange = (e: any) => {
         const file = e.target.files?.[0];
         if (file) {
-            const url=URL.createObjectURL(file);
+            const url = URL.createObjectURL(file);
             setPreviewImage(url);
             form.setValue("image", file, {
                 shouldValidate: true,
                 shouldDirty: true,
             });
-    }}
-    const fields:FormFieldProps[]=[
+        }
+    }
+    const fields: FormFieldProps[] = [
         {
             name: 'email',
             type: 'email',
             placeholder: 'Enter your email',
-            icon:MdMail,
-            label:'Email'
+            icon: MdMail,
+            label: 'Email'
 
         },
         {
@@ -104,36 +104,41 @@ const UserSettings=()=>{
             type: 'password',
             placeholder: 'Enter your password',
             icon: FaEye,
-            label:"New password",
+            label: "New password",
         },
         {
             name: 'confirmPassword',
             type: 'password',
             placeholder: 'Enter your password',
             icon: FaEye,
-            label:"Confirm password",
+            label: "Confirm password",
         },
     ]
     const [showPassword, setShowPassword] = useState(false);
-    const togglePass=(val:string)=>{
-        if(val!='password') return;
+    const togglePass = (val: string) => {
+        if (val != 'password') return;
         setShowPassword(!showPassword);
     }
 
-    // @ts-ignore
+    if (isPending) {
+        return <Loader/>
+    }
+
     // @ts-ignore
     return (
         <>
             <Form {...form} >
-                <form onSubmit={form.handleSubmit(onSubmit,onError)} className={'flex flex-col space-y-7 w-auto h-full scrollbar'}>
+                <form onSubmit={form.handleSubmit(onSubmit, onError)}
+                      className={'flex flex-col space-y-7 w-auto h-full scrollbar'}>
                     <p className={'font-semibold'}>Profile Setting</p>
                     <div className={'flex  items-center mt-8 gap-10'}>
                         <div className={'relative  group'} onClick={handleImageClick}>
                             <UserAvatar className={'size-24   group-hover:opacity-50'} src={previewImage}/>
                             <p className={'absolute flex flex-col items-center top-[40%] w-full  text-xs  opacity-0' +
                                 '  group-hover:opacity-100'}><Camera className={'size-4'}/>Change image</p>
-                            <input ref={imageInputRef} type='file' accept="image/*" className={'hidden'} onChange={handleImageChange}/>
-                                    </div>
+                            <input ref={imageInputRef} type='file' accept="image/*" className={'hidden'}
+                                   onChange={handleImageChange}/>
+                        </div>
                         <div className={'flex flex-col  w-full max-w-[640px]'}>
                             <FormField
                                 name="username"
@@ -145,8 +150,8 @@ const UserSettings=()=>{
                                             <Input className="" {...field} />
                                         </FormControl>
                                     </FormItem>
-                                            )
-                            }
+                                )
+                                }
                             />
                         </div>
                     </div>
@@ -165,17 +170,17 @@ const UserSettings=()=>{
                                             <FormLabel className={'text-sm'}>{input.label}</FormLabel>
                                             <div className="relative">
                                                 <FormControl>
-                                                <Input
-                                                    className="h-[38px]"
-                                                    placeholder={input.placeholder}
-                                                    type={
-                                                        input.type === 'password' && showPassword ? 'text' : input.type
-                                                    }
+                                                    <Input
+                                                        className="h-[38px]"
+                                                        placeholder={input.placeholder}
+                                                        type={
+                                                            input.type === 'password' && showPassword ? 'text' : input.type
+                                                        }
 
-                                                    {...field}
-                                                />
+                                                        {...field}
+                                                    />
 
-                                            </FormControl>
+                                                </FormControl>
                                                 <i onClick={() => togglePass(input.type)}
                                                    className='absolute cursor-pointer top-[10px] right-5'>
                                                     {input.type === 'password' && showPassword ?
@@ -187,34 +192,34 @@ const UserSettings=()=>{
                                     )}
                                 />
                             </div>
-                                )}
-                            </div>
-                            <Separator className={'mt-8 mb-6'}/>
-                                <AlertDialog>
-                                    <AlertDialogTrigger className={'flex flex-col text-start max-w-[420px] '}>
-                                        <p className={'font-semibold w-full text-red-700'}>Delete account</p>
-                                    </AlertDialogTrigger>
-                                    <span className='text-gray-500 text-sm'>Permanently delete your account and remove all the access to the workspaces</span>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                            <AlertDialogDescription>
-                                                This action cannot be undone. This will permanently delete your account
-                                                and remove your data from our servers.
-                                            </AlertDialogDescription>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter>
-                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                            <AlertDialogAction
-                                                className={'bg-destructive hover:bg-destructive/80 text-destructive-foreground'}>Continue</AlertDialogAction>
-                                        </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                </AlertDialog>
-                                <div className={'flex justify-end mt-12 mr-2'}>
-                                <Button disabled={!form.formState.isDirty || form.formState.isSubmitting }>Save</Button>
-                                </div>
-                            </form>
-                        </Form>
+                        )}
+                    </div>
+                    <Separator className={'mt-8 mb-6'}/>
+                    <AlertDialog>
+                        <AlertDialogTrigger className={'flex flex-col text-start max-w-[420px] '}>
+                            <p className={'font-semibold w-full text-red-700'}>Delete account</p>
+                        </AlertDialogTrigger>
+                        <span className='text-gray-500 text-sm'>Permanently delete your account and remove all the access to the workspaces</span>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete your account
+                                    and remove your data from our servers.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                    className={'bg-destructive hover:bg-destructive/80 text-destructive-foreground'}>Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                    <div className={'flex justify-end mt-12 mr-2'}>
+                        <Button disabled={!form.formState.isDirty || form.formState.isSubmitting}>Save</Button>
+                    </div>
+                </form>
+            </Form>
 
 
         </>
