@@ -21,7 +21,7 @@ const Sidebar=()=>{
                         const Icon=route.icon;
                         const isActive = location.pathname === route.path;
                         return <Link to={route.path}  className={
-                            'pl-2 text-sm ' + (isActive && 'bg-secondary p-2 rounded-md')} >
+                            'p-2 text-sm ' + (isActive && 'bg-secondary rounded-md')} >
                            <span className={'flex items-center gap-2'}> <Icon className={'size-4'}/>{route.label}</span>
                         </Link>
                     })}
