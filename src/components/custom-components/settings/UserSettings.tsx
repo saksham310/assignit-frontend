@@ -129,7 +129,7 @@ const UserSettings = () => {
         <>
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(onSubmit, onError)}
-                      className={'flex flex-col space-y-7 w-auto h-full scrollbar'}>
+                      className={'flex flex-col space-y-7 w-auto h-full overflow-y-auto no-scrollbar'}>
                     <p className={'font-semibold'}>Profile Setting</p>
                     <div className={'flex  items-center mt-8 gap-10'}>
                         <div className={'relative  group'} onClick={handleImageClick}>
@@ -139,7 +139,7 @@ const UserSettings = () => {
                             <input ref={imageInputRef} type='file' accept="image/*" className={'hidden'}
                                    onChange={handleImageChange}/>
                         </div>
-                        <div className={'flex flex-col  w-full max-w-[640px]'}>
+                        <div className={'flex flex-col  w-full lg:max-w-[640px]'}>
                             <FormField
                                 name="username"
                                 control={form.control}
@@ -157,9 +157,9 @@ const UserSettings = () => {
                     </div>
                     <Separator className={'mt-6 mb-6'}/>
                     <p className={'font-semibold'}>Account Security</p>
-                    <div className={'flex flex-col lg:flex-row lg:items-center mt-10  gap-10 lg:gap-20 w-full'}>
+                    <div className={'flex flex-col lg:flex-row lg:items-center mt-10  gap-10 lg:gap-20 w-full scrollbar'}>
                         {fields.map((input) =>
-                            <div className={'flex flex-col  w-full max-w-[540px]'}>
+                            <div className={'flex flex-col  w-full lg:max-w-[540px]'}>
                                 <FormField
                                     key={input.name} // Add a unique key for each field
                                     control={form.control}
