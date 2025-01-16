@@ -9,10 +9,12 @@ interface UserAvatarProps {
 }
 const UserAvatar=({className,src}:UserAvatarProps)=>{
     const user=useAuthUser<User>();
+    // const image=user?.image ? user?.image : src ? src:'';
+    const image=src ? src : user?.image ? user?.image : '';
     return (
 
             <Avatar className={cn(className?className:"")}>
-                <AvatarImage src={src ? src : ''} />
+                <AvatarImage src={image} />
                 <AvatarFallback >{user?.username[0]}</AvatarFallback>
             </Avatar>
 

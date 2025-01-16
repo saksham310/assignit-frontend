@@ -29,7 +29,6 @@ const projectColumns: ColumnDef<TProjectSummary>[] = [
     {
         accessorKey: "progress",
         header: "Task Progress",
-        size: 73,
     },
 ]
 const membersColumns: ColumnDef<any>[] = [

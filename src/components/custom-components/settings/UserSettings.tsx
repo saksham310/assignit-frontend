@@ -108,6 +108,8 @@ const UserSettings=()=>{
         setShowPassword(!showPassword);
     }
 
+    // @ts-ignore
+    // @ts-ignore
     return (
         <>
             <Form {...form} >
@@ -144,6 +146,7 @@ const UserSettings=()=>{
                                 <FormField
                                     key={input.name} // Add a unique key for each field
                                     control={form.control}
+                                    //@ts-ignore
                                     name={input.name}
                                     render={({field}) => (
                                         <FormItem>
