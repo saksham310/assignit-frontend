@@ -33,11 +33,13 @@ import {useRef, useState} from "react";
 import {FormFieldProps} from "@/types/form.type.ts";
 import {MdMail} from "react-icons/md";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
+import {useUpdateProfile} from "@/hooks/user.hooks.ts";
 
 
 const UserSettings=()=>{
     const user=useAuthUser<User>();
     const imageInputRef = useRef<HTMLInputElement>(null);
+    const {mutate}=useUpdateProfile();
     const [previewImage, setPreviewImage] = useState("");
     const defaultValues={
         username:user?.username ?? '',
@@ -53,6 +55,17 @@ const UserSettings=()=>{
 
     const onSubmit=(val:z.infer<typeof userProfileSchema>)=>{
         if(val===defaultValues) return;
+        const formData=new FormData();
+        formData.append('username',val.username);
+        formData.append('email',val.email)
+        if(val.password){
+            formData.append('password',val.password);
+        }
+        if(val.image){
+
+            formData.append('image',val.image);
+        }
+        mutate(formData);
     }
 
     const onError = (errors: any) => {
@@ -76,7 +89,6 @@ const UserSettings=()=>{
                 shouldValidate: true,
                 shouldDirty: true,
             });
-            console.log("form",form.getValues())
     }}
     const fields:FormFieldProps[]=[
         {
