@@ -64,7 +64,11 @@ const UserSettings = () => {
             formData.append('image', val.image);
         }
 
-        mutate(formData);
+        mutate(formData,{
+            onSuccess: () => {
+                form.reset()
+            }
+        });
     }
 
     const onError = (errors: any) => {
@@ -129,7 +133,7 @@ const UserSettings = () => {
         <>
             <Form {...form} >
                 <form onSubmit={form.handleSubmit(onSubmit, onError)}
-                      className={'flex flex-col space-y-7 w-auto h-full overflow-y-auto no-scrollbar'}>
+                      className={'flex flex-col space-y-6  w-auto h-full overflow-y-auto no-scrollbar xl:space-y-5'}>
                     <p className={'font-semibold'}>Profile Setting</p>
                     <div className={'flex  items-center mt-8 gap-10'}>
                         <div className={'relative  group'} onClick={handleImageClick}>
@@ -215,7 +219,7 @@ const UserSettings = () => {
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
-                    <div className={'flex justify-end mt-12 mr-2'}>
+                    <div className={'flex justify-end mt-2 mr-2'}>
                         <Button disabled={!form.formState.isDirty || form.formState.isSubmitting}>Save</Button>
                     </div>
                 </form>
