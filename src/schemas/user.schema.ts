@@ -3,7 +3,11 @@ import z from 'zod'
 export const userProfileSchema=z.object({
     username:z.string().min(1, "Username is required"),
     email:z.string().email(),
-    password:z.string().optional().refine((password)=>
+    password:z.string().regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character"
+    ).
+    optional().refine((password)=>
         {
             if(!password) return true;
             return password.length >=8;
