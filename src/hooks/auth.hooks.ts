@@ -1,5 +1,5 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {login, register} from "@/service/auth.service.ts";
+import {login, register, sendOTP} from "@/service/auth.service.ts";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import {toast} from "sonner";
 import {useNavigate} from "react-router-dom";
@@ -46,4 +46,11 @@ export const useRegister=()=>{
         mutationFn:register,
         successMessage:"Registered successfully"
     });
+}
+
+export  const useGetOTP=()=>{
+    return useMutation({
+        mutationFn:sendOTP
+
+    })
 }
