@@ -6,14 +6,23 @@ import {Button} from "@/components/ui/button.tsx";
 import {useGetOTP} from "@/hooks/auth.hooks.ts";
 import {FaSpinner} from "react-icons/fa";
 import {toast} from "sonner";
+import {sendOTPSchema} from "@/schemas/auth.schema.ts";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 
-const EmailVerificationPage = () => {
-    const form=useForm();
+const EmailVerificationPage = ({handleStepChange}  :{handleStepChange:(step:number)=>void})=> {
+    const form=useForm<z.infer<typeof sendOTPSchema>>({
+        resolver: zodResolver(sendOTPSchema),
+        defaultValues:{
+            email: ''
+        }
+    });
     const {mutate,isPending}=useGetOTP();
     const onSubmit=(val:any)=>{
         mutate(val,{
             onSuccess:()=>{
                 toast.success("OTP has been sent to your email");
+                handleStepChange(2)
             }
         });
     }

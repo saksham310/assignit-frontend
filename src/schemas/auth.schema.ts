@@ -14,3 +14,7 @@ export const registerSchema=z.object({
             "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character"
         )
 })
+
+export const sendOTPSchema=z.object({
+    email:z.string().email(),
+})
