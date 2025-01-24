@@ -5,17 +5,25 @@ import {InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot} from "@/compon
 
 import {Button} from "@/components/ui/button.tsx";
 import {MailOpen} from "lucide-react";
+import {OTPSchema} from "@/schemas/auth.schema.ts";
+import {z} from "zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 const OTPVerificationPage = ({handleStepChange}  :{handleStepChange:(step:number)=>void})=>{
-    const form =useForm();
+    const form =useForm<z.infer<typeof OTPSchema>>({
+        resolver:zodResolver(OTPSchema),
+        defaultValues:{
+            'pin':""
+        }
+    });
     const onSubmit = (values:any)=>{
         console.log(values);
         handleStepChange(3);
     }
     return <>
-    <Card>
+    <Card className={'m-4 p-8'}>
       <div className={'flex items-center justify-center m-8'}>
-          <MailOpen className={'size-10'}/>
+          <MailOpen className={'size-12 text-primary'}/>
       </div>
         <CardHeader className={'space-y-8 text-center text-lg'}>
             <CardTitle>Enter your Verification Code</CardTitle>
@@ -30,7 +38,7 @@ const OTPVerificationPage = ({handleStepChange}  :{handleStepChange:(step:number
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <InputOTP maxLength={6} {...field}>
+                                    <InputOTP maxLength={4} {...field}>
                                     <InputOTPGroup>
                                         <InputOTPSlot index={0} />
                                     </InputOTPGroup>
@@ -51,7 +59,7 @@ const OTPVerificationPage = ({handleStepChange}  :{handleStepChange:(step:number
                             </FormItem>
                         )}
                     />
-                    <Button disabled={!form.formState.isValid}>Verify OTP</Button>
+                    <Button disabled={!form.formState.isDirty}>Verify OTP</Button>
                 </form>
             </Form>
         </CardContent>

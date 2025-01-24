@@ -18,3 +18,6 @@ export const registerSchema=z.object({
 export const sendOTPSchema=z.object({
     email:z.string().email(),
 })
+export const OTPSchema=z.object({
+    'pin':z.string().min(4)
+})

@@ -48,7 +48,7 @@ render={({ field }) => (
     </FormItem>
 )}
  />
-<Button disabled={isPending ||  !form.formState.isValid}>Send OTP {isPending && <FaSpinner/>}</Button>
+<Button disabled={isPending ||  !form.formState.isValid}>{!isPending && "Send OTP"} {isPending && <FaSpinner className={' animate-in spin-in repeat-infinite'}/>}</Button>
 </form>
 </Form>
 </CardContent>
