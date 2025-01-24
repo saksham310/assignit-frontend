@@ -16,7 +16,7 @@ const ResetPasswordPage = () => {
        </>
     }
     if(step === 2){
-     return <OTPVerificationPage/>
+     return <OTPVerificationPage handleStepChange={handleStepChange}/>
     }
     return <>
         Page
