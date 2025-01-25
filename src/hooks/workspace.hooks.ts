@@ -25,8 +25,8 @@ export const useCreateWorkspace = () => {
     return useMutation({
         mutationFn: createWorkspace,
         onSuccess: async (data) => {
-            queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
+            await queryClient.invalidateQueries({queryKey: ["workspaces"]});
+            await queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
             toast.success("Successfully created workspace",{
                 duration: 2000,
             });
