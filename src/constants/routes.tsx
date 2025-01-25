@@ -7,6 +7,7 @@ import WorkspaceDashboard from "@/pages/WorkspaceDashboard.tsx";
 import ProtectedRoutes from "@/constants/ProtectedRoutes.tsx";
 import OnboardingScreen from "@/pages/OnboardingScreen.tsx";
 import SettingsPage from "@/pages/SettingsPage.tsx";
+import ResetPasswordPage from "@/pages/ResetPasswordPage.tsx";
 export const router=createBrowserRouter(
     [
         {
@@ -20,6 +21,10 @@ export const router=createBrowserRouter(
                     path:'/login',
                     element: <SignInPage/>,
 
+                },
+                {
+                    path:'/reset-password',
+                    element: <ResetPasswordPage/>
                 }
             ]
         },
