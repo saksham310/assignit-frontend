@@ -34,7 +34,7 @@ const OTPVerificationPage = ({handleStepChange, email} :OTPVerificationPageProps
         });
     }
     return <>
-    <Card className={'m-4 p-8'}>
+    <Card className={'m-4 p-2 w-full md:w-[460px]'}>
       <div className={'flex items-center justify-center m-8'}>
           <MailOpen className={'size-12 text-primary'}/>
       </div>

@@ -33,7 +33,7 @@ const EmailVerificationPage = ({handleStepChange,handleEmailChange} : EmailVerif
         });
     }
     return <>
-      <Card className={'flex flex-col space-y-2 p-6 shadow-none border-none'}>
+      <Card className={'w-full md:w-[460px] flex flex-col space-y-2 p-6 shadow-none border-none'}>
           <CardHeader className={'text-center text-lg'}>
               <CardTitle >Forgot your password?</CardTitle>
               <CardDescription className={'text-gray-500 p-2'}>Don’t worry, we will send you an OTP to reset your password.</CardDescription>

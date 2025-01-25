@@ -1,5 +1,5 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {login, register, sendOTP, verifyOTP} from "@/service/auth.service.ts";
+import {login, register, resetPassword, sendOTP, verifyOTP} from "@/service/auth.service.ts";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import {toast} from "sonner";
 import {useNavigate} from "react-router-dom";
@@ -58,5 +58,19 @@ export  const useGetOTP=()=>{
 export const useVerifyOTP=()=>{
     return useMutation({
         mutationFn:verifyOTP,
+    })
+}
+export const useResetPassword=()=>{
+    const navigate=useNavigate();
+    return useMutation({
+        mutationFn:resetPassword,
+        onSuccess:()=>{
+            toast.success("Password reset successfully.",{
+                duration: 2000,
+            });
+            setTimeout(() => {
+               navigate('/login');
+            }, 1000);
+        }
     })
 }
