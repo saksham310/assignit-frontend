@@ -19,5 +19,5 @@ export const sendOTPSchema=z.object({
     email:z.string().email(),
 })
 export const OTPSchema=z.object({
-    'pin':z.string().min(4)
+    'otp':z.string().min(4)
 })

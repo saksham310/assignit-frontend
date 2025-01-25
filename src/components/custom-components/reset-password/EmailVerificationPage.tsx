@@ -10,7 +10,12 @@ import {sendOTPSchema} from "@/schemas/auth.schema.ts";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 
-const EmailVerificationPage = ({handleStepChange}  :{handleStepChange:(step:number)=>void})=> {
+interface EmailVerificationPageProps {
+    handleStepChange: (value : number) => void;
+    handleEmailChange: (value : string) => void;
+
+}
+const EmailVerificationPage = ({handleStepChange,handleEmailChange} : EmailVerificationPageProps)=> {
     const form=useForm<z.infer<typeof sendOTPSchema>>({
         resolver: zodResolver(sendOTPSchema),
         defaultValues:{
@@ -23,6 +28,7 @@ const EmailVerificationPage = ({handleStepChange}  :{handleStepChange:(step:numb
             onSuccess:()=>{
                 toast.success("OTP has been sent to your email");
                 handleStepChange(2)
+                handleEmailChange(val.email);
             }
         });
     }

@@ -8,17 +8,30 @@ import {MailOpen} from "lucide-react";
 import {OTPSchema} from "@/schemas/auth.schema.ts";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {useVerifyOTP} from "@/hooks/auth.hooks.ts";
+import {toast} from "sonner";
 
-const OTPVerificationPage = ({handleStepChange}  :{handleStepChange:(step:number)=>void})=>{
+interface OTPVerificationPageProps {
+    handleStepChange: (step: number) => void;
+    email: string;
+}
+const OTPVerificationPage = ({handleStepChange, email} :OTPVerificationPageProps)=>{
     const form =useForm<z.infer<typeof OTPSchema>>({
         resolver:zodResolver(OTPSchema),
         defaultValues:{
-            'pin':""
+            'otp':""
         }
     });
+    const {mutate}=useVerifyOTP();
     const onSubmit = (values:any)=>{
-        console.log(values);
-        handleStepChange(3);
+        const data={...values,email:email};
+        console.log(data);
+        mutate(data,{
+            onSuccess:(data)=>{
+                toast.success(data.message);
+                handleStepChange(3);
+            }
+        });
     }
     return <>
     <Card className={'m-4 p-8'}>
@@ -34,7 +47,7 @@ const OTPVerificationPage = ({handleStepChange}  :{handleStepChange:(step:number
                 <form onSubmit={form.handleSubmit(onSubmit)} className={'flex flex-col space-y-14 justify-center items-center w-full'}>
                     <FormField
                         control={form.control}
-                        name="pin"
+                        name="otp"
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>

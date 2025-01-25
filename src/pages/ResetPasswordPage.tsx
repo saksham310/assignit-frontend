@@ -5,18 +5,22 @@ import OTPVerificationPage from "@/components/custom-components/reset-password/O
 
 const ResetPasswordPage = () => {
     const [step,setStep] = useState(1);
+    const [email,setEmail]=useState('');
 
     const handleStepChange = (step : number) => {
         setStep(step);
         console.log(step);
     }
+    const handleEmailChange = (value : string) => {
+        setEmail(value);
+    }
     if(step === 1){
        return <>
-           <EmailVerificationPage handleStepChange={handleStepChange}/>
+           <EmailVerificationPage handleStepChange={handleStepChange} handleEmailChange={handleEmailChange}/>
        </>
     }
     if(step === 2){
-     return <OTPVerificationPage handleStepChange={handleStepChange}/>
+     return <OTPVerificationPage handleStepChange={handleStepChange} email={email}/>
     }
     return <>
         Page
