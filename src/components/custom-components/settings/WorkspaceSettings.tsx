@@ -1,6 +1,6 @@
 import { useForm} from "react-hook-form";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";
-import {useGetWorkspace, useUpdateWorkspace} from "@/hooks/workspace.hooks.ts";
+import {useDeleteWorkspace, useGetWorkspace, useLeaveWorkspace, useUpdateWorkspace} from "@/hooks/workspace.hooks.ts";
 import {WorkspaceData} from "@/types/workspace.type.ts";
 import {Avatar} from "@radix-ui/react-avatar";
 import {AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
@@ -21,17 +21,25 @@ import {z} from "zod";
 import {workspaceSchema} from "@/schemas/workspace.schema.ts";
 
 
-const WorkspaceSettings=()=>{
+const WorkspaceSettings=()=> {
     const isAdmin = true;
-    const currentWorkspaceId = useWorkspaceStore((state)=>state.currentWorkspaceId);
-    const {data}=useGetWorkspace();
+    const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId);
+    const {data} = useGetWorkspace();
     const currentWorkspace = data.find((item: WorkspaceData) => item.id == currentWorkspaceId);
-    const form =useForm<z.infer<typeof workspaceSchema>>({
-        defaultValues:{
-            name:currentWorkspace.name,
+    const form = useForm<z.infer<typeof workspaceSchema>>({
+        defaultValues: {
+            name: currentWorkspace.name,
         }
     });
-    const {mutate}=useUpdateWorkspace();
+    const {mutate} = useUpdateWorkspace();
+    const {mutate: leaveMutate} = useLeaveWorkspace(currentWorkspaceId);
+    const {mutate: deleteMutate} = useDeleteWorkspace();
+    const handleLeaveWorkspace = () => {
+    leaveMutate(currentWorkspaceId)
+    }
+    const handleDeleteWorkspace = () => {
+        deleteMutate(currentWorkspaceId);
+    }
     const onSubmit=(val: z.infer<typeof workspaceSchema>)=>{
         const data={
             id:currentWorkspaceId,
@@ -48,7 +56,7 @@ const WorkspaceSettings=()=>{
                <div className={'flex items-center  gap-10'}>
                    <Avatar className={'size-20 lg:size-24'}>
                        <AvatarImage src=''/>
-                       <AvatarFallback>{currentWorkspace.name[0]}</AvatarFallback>
+                       <AvatarFallback>{currentWorkspace?.name[0]}</AvatarFallback>
                    </Avatar>
                    <div className={'flex flex-col  w-full lg:max-w-[640px]'}>
                        <FormField
@@ -77,18 +85,18 @@ const WorkspaceSettings=()=>{
                                    Leave Workspace
                                </div>
                            </AlertDialogTrigger>
-                           <span className='text-gray-500 text-sm'>Permanently delete your account and remove all the access to the workspaces</span>
+                           <span className='text-gray-500 text-sm'>Permanently leave  the workspace and remove all the access to the workspaces</span>
                            <AlertDialogContent>
                                <AlertDialogHeader>
                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                                    <AlertDialogDescription>
-                                       This action cannot be undone. This will permanently delete your account
-                                       and remove your data from our servers.
+                                       This action cannot be undone. This will permanently  remove you from the workspace.
                                    </AlertDialogDescription>
                                </AlertDialogHeader>
                                <AlertDialogFooter>
                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
                                    <AlertDialogAction
+                                       onClick={handleLeaveWorkspace}
                                        className={'bg-destructive hover:bg-destructive/80 text-destructive-foreground'}>Continue</AlertDialogAction>
                                </AlertDialogFooter>
                            </AlertDialogContent>
@@ -116,6 +124,7 @@ const WorkspaceSettings=()=>{
                                <AlertDialogFooter>
                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
                                    <AlertDialogAction
+                                       onClick={handleDeleteWorkspace}
                                        className={'bg-destructive hover:bg-destructive/80 text-destructive-foreground'}>Continue</AlertDialogAction>
                                </AlertDialogFooter>
                            </AlertDialogContent>

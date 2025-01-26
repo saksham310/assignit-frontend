@@ -9,7 +9,7 @@ import ResponsiveDialog from "@/components/custom-components/shared/ResponsiveDi
 
 const DashboardLayout = () => {
     const [title, setTitle] = useState<string>("Workspace Summary");
-   const {isLoading} = useWorkspaceNavigate();
+   const {isLoading } = useWorkspaceNavigate();
     if (isLoading) {
         return(
         <div className='w-screen h-screen flex items-center justify-center'>

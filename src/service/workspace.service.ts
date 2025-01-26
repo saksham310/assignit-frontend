@@ -1,7 +1,7 @@
 import {
-    CREATE_WORKSPACE,
+    CREATE_WORKSPACE, DELETE_WORKSPACE,
     GET_WORKSPACE_ANALYTICS,
-    GET_WORKSPACES,
+    GET_WORKSPACES, LEAVE_WORKSPACE,
     UPDATE_WORKSPACE
 } from "@/constants/api.constants.ts";
 import {apiClient} from "@/service/api.client.ts";
@@ -24,5 +24,15 @@ export const createWorkspace = async (data:CreateWorkspaceData)=>{
 }
 export const updateWorkspace = async (data:{id:string|null,name:string})=>{
     const res = await apiClient.put(`${UPDATE_WORKSPACE}/${data.id}`,data);
+    return res.data;
+}
+
+export const deleteWorkspace = async (id: string | null)=>{
+    const res = await apiClient.delete(`${DELETE_WORKSPACE}/${id}`);
+    return res.data;
+}
+
+export const leaveWorkspace = async (id: string | null)=>{
+    const res = await apiClient.get(`${LEAVE_WORKSPACE}/${id}`);
     return res.data;
 }
