@@ -1,4 +1,10 @@
-import {createWorkspace, getWorkspaceAnalytics, getWorkspaces} from "@/service/workspace.service.ts";
+import {
+    createWorkspace,
+    deleteWorkspace,
+    getWorkspaceAnalytics,
+    getWorkspaces, leaveWorkspace,
+    updateWorkspace
+} from "@/service/workspace.service.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useLocation, useNavigate} from "react-router-dom";
 import {toast} from "sonner";
@@ -25,12 +31,12 @@ export const useCreateWorkspace = () => {
     return useMutation({
         mutationFn: createWorkspace,
         onSuccess: async (data) => {
-            queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
+            await queryClient.invalidateQueries({queryKey: ["workspaces"]});
+            await queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
             toast.success("Successfully created workspace",{
                 duration: 2000,
             });
-            navigate("/");
+            navigate(`/workspaces/${data.newWorkspace.id}`);
         },
         onError: (error) => {
             toast.error("Failed to create workspace. Please try again.");
@@ -57,4 +63,39 @@ export const useWorkspaceNavigate=()=>{
     }, [isFetching, workspaces, navigate]);
 
     return {isLoading,isFetching};
+}
+export const useUpdateWorkspace = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: updateWorkspace,
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ["workspaces"]});
+            await queryClient.invalidateQueries({queryKey: ["workspace analytics",]});
+        }
+    })
+}
+
+export const useDeleteWorkspace = () => {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    return useMutation({
+        mutationFn: deleteWorkspace,
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ["workspaces"]});
+            await queryClient.invalidateQueries({queryKey: ["workspace analytics",]});
+            navigate("/");
+        }
+    })
+}
+export  const useLeaveWorkspace = (id: string | null) => {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    return useMutation({mutationFn:
+        leaveWorkspace,
+        onSuccess: async () => {
+        await queryClient.invalidateQueries({queryKey: ["workspaces"]});
+        await queryClient.invalidateQueries({queryKey: ["workspace analytics",id]});
+        navigate("/");
+    }
+})
 }
