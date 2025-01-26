@@ -1,4 +1,4 @@
-import {createWorkspace, getWorkspaceAnalytics, getWorkspaces} from "@/service/workspace.service.ts";
+import {createWorkspace, getWorkspaceAnalytics, getWorkspaces, updateWorkspace} from "@/service/workspace.service.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useLocation, useNavigate} from "react-router-dom";
 import {toast} from "sonner";
@@ -57,4 +57,9 @@ export const useWorkspaceNavigate=()=>{
     }, [isFetching, workspaces, navigate]);
 
     return {isLoading,isFetching};
+}
+export const useUpdateWorkspace = () => {
+    return useMutation({
+        mutationFn: updateWorkspace,
+    })
 }

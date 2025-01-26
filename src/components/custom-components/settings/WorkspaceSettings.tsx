@@ -1,6 +1,6 @@
 import { useForm} from "react-hook-form";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";
-import {useGetWorkspace} from "@/hooks/workspace.hooks.ts";
+import {useGetWorkspace, useUpdateWorkspace} from "@/hooks/workspace.hooks.ts";
 import {WorkspaceData} from "@/types/workspace.type.ts";
 import {Avatar} from "@radix-ui/react-avatar";
 import {AvatarFallback, AvatarImage} from "@/components/ui/avatar.tsx";
@@ -17,6 +17,8 @@ import {
 import { Button } from "@/components/ui/button.tsx";
 import { LogOut, Trash2} from "lucide-react";
 import { CardContent } from "@/components/ui/card";
+import {z} from "zod";
+import {workspaceSchema} from "@/schemas/workspace.schema.ts";
 
 
 const WorkspaceSettings=()=>{
@@ -24,16 +26,24 @@ const WorkspaceSettings=()=>{
     const currentWorkspaceId = useWorkspaceStore((state)=>state.currentWorkspaceId);
     const {data}=useGetWorkspace();
     const currentWorkspace = data.find((item: WorkspaceData) => item.id == currentWorkspaceId);
-    console.log(currentWorkspace);
-    const form =useForm({
+    const form =useForm<z.infer<typeof workspaceSchema>>({
         defaultValues:{
             name:currentWorkspace.name,
         }
     });
+    const {mutate}=useUpdateWorkspace();
+    const onSubmit=(val: z.infer<typeof workspaceSchema>)=>{
+        const data={
+            id:currentWorkspaceId,
+            name:val.name,
+        }
+             mutate(data)
+    }
     return (
        <>
        <Form {...form}>
-           <form className={'flex flex-col space-y-6 gap-2  w-auto h-full overflow-y-auto no-scrollbar xl:space-y-5'}>
+           <form onSubmit={form.handleSubmit(onSubmit)}
+               className={'flex flex-col space-y-6 gap-2  w-auto h-full overflow-y-auto no-scrollbar xl:space-y-5'}>
                <p className={'font-semibold'}>Workspace Settings</p>
                <div className={'flex items-center  gap-10'}>
                    <Avatar className={'size-20 lg:size-24'}>
@@ -47,7 +57,7 @@ const WorkspaceSettings=()=>{
                            render={({field}) => (
                                <FormItem>
                                    <FormControl>
-                                       <Input className="font-bold text-black" {...field} disabled={true}/>
+                                       <Input className="font-bold text-black" {...field} disabled={!isAdmin}/>
                                    </FormControl>
                                </FormItem>
                            )
