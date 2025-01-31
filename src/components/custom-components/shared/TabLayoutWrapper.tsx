@@ -1,6 +1,11 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {TabConfig} from "@/types/dashboard.type.ts";
-const TabLayoutWrapper = ({ tabConfig}: {tabConfig:TabConfig[]}) => {
+
+interface TabLayoutWrapperProps {
+    tabConfig: TabConfig[];
+    isDashboard?: boolean;
+}
+const TabLayoutWrapper = ({ tabConfig, isDashboard} : TabLayoutWrapperProps) => {
     return (
        <div className={'h-full flex flex-col'}>
            <Tabs defaultValue={tabConfig[0].value} className="w-full  h-full flex flex-col  gap-0.5">
@@ -15,7 +20,7 @@ const TabLayoutWrapper = ({ tabConfig}: {tabConfig:TabConfig[]}) => {
                        })}
                </TabsList>
                </div>
-               <div className="bg-white px-5 py-10 rounded-lg mt-4 lg:h-[calc(100dvh-16em)]  overflow-hidden ">
+               <div className={`bg-white px-5 py-10 rounded-lg mt-4 ${isDashboard ? 'lg:h-[calc(100dvh-16em)]' : 'h-full'}  overflow-hidden `}>
                    {tabConfig.map((tab)=>{
                        return (
                            <TabsContent value={tab.value} className="p-1 h-full overflow-y-auto">

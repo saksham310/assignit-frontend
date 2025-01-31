@@ -221,7 +221,7 @@ const Dashboard = ({items}:DashboardProps) => {
                           <Button variant={'outline'} size={'sm'} ><PlusCircle/>Add Project</Button>
                           <Button size={'sm'} ><Send/>Invite</Button>
                       </div>
-                       <TabLayoutWrapper tabConfig={tabConfig} /></div>
+                       <TabLayoutWrapper tabConfig={tabConfig} isDashboard={true} /></div>
                 </div>
             </div>
 

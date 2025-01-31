@@ -3,16 +3,15 @@ import z from 'zod'
 export const userProfileSchema=z.object({
     username:z.string().min(1, "Username is required"),
     email:z.string().email(),
-    password:z.string().regex(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character"
-    ).
+    password:z.string().
     optional().refine((password)=>
         {
             if(!password) return true;
-            return password.length >=8;
+            const isValidLength = password.length >= 8;
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return isValidLength && regex.test(password);
         },{
-        message:'Password must be at least 8 characters',
+        message:"Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character",
         }
     ),
     confirmPassword:z.string(),
