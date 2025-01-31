@@ -10,6 +10,7 @@ export interface FormCardProps{
     btnText:string;
     footerText?:string;
     footerLinkText?:string;
+    forgotPasswordLink?:boolean;
 }
 
 export interface FormFieldProps{

@@ -9,6 +9,8 @@ import {toast} from "sonner";
 import {sendOTPSchema} from "@/schemas/auth.schema.ts";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {Link} from "react-router-dom";
+
 
 interface EmailVerificationPageProps {
     handleStepChange: (value : number) => void;
@@ -55,6 +57,9 @@ render={({ field }) => (
 )}
  />
 <Button disabled={isPending ||  !form.formState.isValid}>{!isPending && "Send OTP"} {isPending && <FaSpinner className={' animate-in spin-in repeat-infinite'}/>}</Button>
+    <Link to ={'/login'} >
+        <div className={'text-sm text-center'}>Back to Login</div>
+    </Link>
 </form>
 </Form>
 </CardContent>

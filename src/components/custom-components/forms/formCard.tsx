@@ -11,7 +11,7 @@ import  {useState} from "react";
 import {FaEyeSlash} from "react-icons/fa";
 import {Link} from "react-router-dom";
 
-const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLinkText, fields}: FormCardProps) => {
+const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLinkText, fields ,forgotPasswordLink}: FormCardProps) => {
     const defaultValues = fields.reduce<Record<string, string>>((acc, field) => {
         acc[field.name] = "";
         return acc;
@@ -27,6 +27,7 @@ const togglePass=(val:string)=>{
     setShowPassword(!showPassword);
     }
     return (
+        <>
         <Card className="w-full h-full md:w-[460px] bg-white shadow-none border-none p-[24px]">
             <CardHeader className="flex justify-center items-center">
                 <CardTitle className="text-xl font-semibold">{title}</CardTitle>
@@ -51,7 +52,6 @@ const togglePass=(val:string)=>{
 
                                                 {...field}
                                             />
-
                                         </FormControl>
                                             <i onClick={()=>togglePass(input.type)} className='absolute cursor-pointer top-[14px] right-5'>
                                                 {input.type==='password' && showPassword ? <FaEyeSlash className='size-4 text-primary'/> : <input.icon className='size-4 text-primary'/>}
@@ -62,7 +62,12 @@ const togglePass=(val:string)=>{
                                 )}
                             />
                         )}
-                        <Button type="submit" disabled={form.formState.isSubmitting}>{btnText}</Button>
+                        {forgotPasswordLink && (
+                            <Link to ={'/reset-password'} >
+                                <div className={'text-xs flex justify-end'}>Forgot password ?</div>
+                            </Link>
+                        )}
+                        <Button type="submit"  disabled={form.formState.isSubmitting}>{btnText}</Button>
                     </form>
                 </Form>
             </CardContent>
@@ -81,6 +86,7 @@ const togglePass=(val:string)=>{
                 </div>
             </CardContent>)}
         </Card>
+        </>
     );
 };
 

@@ -34,15 +34,18 @@ const {mutate}=useLogin();
     ]
 
     return <>
-        <FormCard
-            title="Welcome Back"
-            schema={loginSchema}
-            onSubmit={onSubmit}
-            fields={fields}
-            btnText="Login"
-            footerText="Don't have an account?"
-            footerLinkText="Sign Up"
-        />
+        <div className="flex flex-col gap-10 justify-center items-center relative">
+            <FormCard
+                title="Welcome Back"
+                schema={loginSchema}
+                onSubmit={onSubmit}
+                fields={fields}
+                btnText="Login"
+                footerText="Don't have an account?"
+                footerLinkText="Sign Up"
+                forgotPasswordLink={true}
+            />
+        </div>
 
 
     </>
