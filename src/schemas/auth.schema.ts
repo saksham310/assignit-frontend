@@ -10,7 +10,7 @@ export const registerSchema=z.object({
     email:z.string().email(),
     password:z.string().min(8, "Password must be a minimum of 8 characters")
         .regex(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[^\s]{8,}$/,
             "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character"
         )
 })
@@ -25,7 +25,7 @@ export const OTPSchema=z.object({
 export const resetPasswordSchema=z.object({
     password:z.string().min(8, "Password must be a minimum of 8 characters")
         .regex(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[^\s]{8,}$/,
             "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character"
         ),
     confirmPassword:z.string(),

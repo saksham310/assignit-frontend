@@ -8,7 +8,7 @@ export const userProfileSchema=z.object({
         {
             if(!password) return true;
             const isValidLength = password.length >= 8;
-            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            const regex =   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[^\s]{8,}$/;
             return isValidLength && regex.test(password);
         },{
         message:"Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character",
