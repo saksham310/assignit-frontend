@@ -6,6 +6,8 @@ import ProjectInsightsTab from "@/components/custom-components/dashboard/project
 import MembersTab from "@/components/custom-components/dashboard/MembersTab.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {PlusCircle, Send} from "lucide-react";
+import {useGetWorkspaceMember} from "@/hooks/workspace.hooks.ts";
+import {useParams} from "react-router-dom";
 
 interface DashboardProps {
     items:AnalyticCardProps[],
@@ -33,7 +35,7 @@ const projectColumns: ColumnDef<TProjectSummary>[] = [
 ]
 const membersColumns: ColumnDef<any>[] = [
     {
-        accessorKey: "memberName",
+        accessorKey: "name",
         header: "Name",
         size: 150,
     },
@@ -123,94 +125,98 @@ const projectData = [
         endDate: "2024-05-30",
         progress: "30%",
     },
-];const membersData = [
-    {
-        memberName: "Alice Johnson",
-        email: "alice.johnson@example.com",
-        role: "Project Manager",
-        joinDate: "2023-01-15",
-    },
-    {
-        memberName: "Bob Smith",
-        email: "bob.smith@example.com",
-        role: "Frontend Developer",
-        joinDate: "2023-07-10",
-    },
-    {
-        memberName: "Charlie Brown",
-        email: "charlie.brown@example.com",
-        role: "Backend Developer",
-        joinDate: "2023-10-01",
-    },
-    {
-        memberName: "Diana Green",
-        email: "diana.green@example.com",
-        role: "UI/UX Designer",
-        joinDate: "2023-05-20",
-    },
-    {
-        memberName: "Charlie Brown",
-        email: "charlie.brown@example.com",
-        role: "Backend Developer",
-        joinDate: "2023-10-01",
-    },
-    {
-        memberName: "Diana Green",
-        email: "diana.green@example.com",
-        role: "UI/UX Designer",
-        joinDate: "2023-05-20",
-    },
-    {
-        memberName: "Charlie Brown",
-        email: "charlie.brown@example.com",
-        role: "Backend Developer",
-        joinDate: "2023-10-01",
-    },
-    {
-        memberName: "Diana Green",
-        email: "diana.green@example.com",
-        role: "UI/UX Designer",
-        joinDate: "2023-05-20",
-    },
-    {
-        memberName: "Charlie Brown",
-        email: "charlie.brown@example.com",
-        role: "Backend Developer",
-        joinDate: "2023-10-01",
-    },
-    {
-        memberName: "Diana Green",
-        email: "diana.green@example.com",
-        role: "UI/UX Designer",
-        joinDate: "2023-05-20",
-    },
-    {
-        memberName: "Charlie Brown",
-        email: "charlie.brown@example.com",
-        role: "Backend Developer",
-        joinDate: "2023-10-01",
-    },
-    {
-        memberName: "Diana Green",
-        email: "diana.green@example.com",
-        role: "UI/UX Designer",
-        joinDate: "2023-05-20",
-    },
 ];
-const tabConfig:TabConfig[] = [
-    {
-        value: "projects",
-        label: "Projects",
-        component: () => <ProjectInsightsTab columns={projectColumns} data={projectData}/>,
-    },
-    {
-        value: "members",
-        label: "Members",
-        component: () => <MembersTab columns={membersColumns} data={membersData} />,
-    },
-];
-const Dashboard = ({items}:DashboardProps) => {
+// const membersData = [
+//     {
+//         memberName: "Alice Johnson",
+//         email: "alice.johnson@example.com",
+//         role: "Project Manager",
+//         joinDate: "2023-01-15",
+//     },
+//     {
+//         memberName: "Bob Smith",
+//         email: "bob.smith@example.com",
+//         role: "Frontend Developer",
+//         joinDate: "2023-07-10",
+//     },
+//     {
+//         memberName: "Charlie Brown",
+//         email: "charlie.brown@example.com",
+//         role: "Backend Developer",
+//         joinDate: "2023-10-01",
+//     },
+//     {
+//         memberName: "Diana Green",
+//         email: "diana.green@example.com",
+//         role: "UI/UX Designer",
+//         joinDate: "2023-05-20",
+//     },
+//     {
+//         memberName: "Charlie Brown",
+//         email: "charlie.brown@example.com",
+//         role: "Backend Developer",
+//         joinDate: "2023-10-01",
+//     },
+//     {
+//         memberName: "Diana Green",
+//         email: "diana.green@example.com",
+//         role: "UI/UX Designer",
+//         joinDate: "2023-05-20",
+//     },
+//     {
+//         memberName: "Charlie Brown",
+//         email: "charlie.brown@example.com",
+//         role: "Backend Developer",
+//         joinDate: "2023-10-01",
+//     },
+//     {
+//         memberName: "Diana Green",
+//         email: "diana.green@example.com",
+//         role: "UI/UX Designer",
+//         joinDate: "2023-05-20",
+//     },
+//     {
+//         memberName: "Charlie Brown",
+//         email: "charlie.brown@example.com",
+//         role: "Backend Developer",
+//         joinDate: "2023-10-01",
+//     },
+//     {
+//         memberName: "Diana Green",
+//         email: "diana.green@example.com",
+//         role: "UI/UX Designer",
+//         joinDate: "2023-05-20",
+//     },
+//     {
+//         memberName: "Charlie Brown",
+//         email: "charlie.brown@example.com",
+//         role: "Backend Developer",
+//         joinDate: "2023-10-01",
+//     },
+//     {
+//         memberName: "Diana Green",
+//         email: "diana.green@example.com",
+//         role: "UI/UX Designer",
+//         joinDate: "2023-05-20",
+//     },
+// ];
 
+const Dashboard = ({items}:DashboardProps) => {
+    const {id} = useParams();
+    const {data} = useGetWorkspaceMember(id);
+    const membersData = data;
+    const tabConfig:TabConfig[] = [
+        {
+            value: "projects",
+            label: "Projects",
+            component: () => <ProjectInsightsTab columns={projectColumns} data={projectData}/>,
+        },
+        {
+            value: "members",
+            label: "Members",
+            component: () => <MembersTab columns={membersColumns} data={membersData} />,
+        },
+    ];
     return (
 
             <div className='flex flex-col gap-10 h-full '>

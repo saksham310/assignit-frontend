@@ -1,7 +1,7 @@
 import {
     createWorkspace,
     deleteWorkspace,
-    getWorkspaceAnalytics,
+    getWorkspaceAnalytics, getWorkspaceMember,
     getWorkspaces, leaveWorkspace,
     updateWorkspace
 } from "@/service/workspace.service.ts";
@@ -24,7 +24,13 @@ export const useGetWorkspaceAnalytics=(id:string|undefined)=>{
         enabled:!!id
     })
 }
-
+export const useGetWorkspaceMember=(id:string|undefined)=>{
+    return useQuery({
+        queryKey:['workspace member',id],
+        queryFn:()=>getWorkspaceMember(id),
+        enabled:!!id
+    })
+}
 export const useCreateWorkspace = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();

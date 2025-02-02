@@ -6,6 +6,7 @@ export const RESET_PASSWORD='auth/reset-password';
 export const CREATE_WORKSPACE='/workspace/create';
 export const GET_WORKSPACES='/workspace/getWorkspaces';
 export const GET_WORKSPACE_ANALYTICS='/workspace/getWorkspaceAnalytics';
+export const GET_MEMBERS='/workspace/memberList';
 export const UPDATE_WORKSPACE='/workspace/update-workspace';
 export const DELETE_WORKSPACE='/workspace/delete-workspace';
 export const LEAVE_WORKSPACE='/workspace/leave-workspace';
