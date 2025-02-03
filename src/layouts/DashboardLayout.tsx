@@ -2,14 +2,14 @@ import Sidebar from "@/components/custom-components/layout/sidebar/Sidebar.tsx";
 import {Outlet} from "react-router-dom";
 import TopBar from "@/components/custom-components/layout/TopBar.tsx";
 import {useState} from "react";
-import { useWorkspaceNavigate} from "@/hooks/workspace.hooks.ts";
+import { useDashboardNavigate} from "@/hooks/dashboard.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
 
 import ResponsiveDialog from "@/components/custom-components/shared/ResponsiveDialog.tsx";
 
 const DashboardLayout = () => {
     const [title, setTitle] = useState<string>("Workspace Summary");
-   const {isLoading } = useWorkspaceNavigate();
+   const {isLoading } = useDashboardNavigate();
     if (isLoading) {
         return(
         <div className='w-screen h-screen flex items-center justify-center'>

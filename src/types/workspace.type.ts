@@ -8,6 +8,7 @@ export type WorkspaceData={
     role:string;
 }
 export type MembersData = {
+    id : number;
     name: string;
     email: string;
     role: string;
