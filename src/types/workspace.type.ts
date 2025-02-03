@@ -7,3 +7,10 @@ export type WorkspaceData={
     name:string;
     role:string;
 }
+export type MembersData = {
+    name: string;
+    email: string;
+    role: string;
+    joinDate: string;
+
+}
