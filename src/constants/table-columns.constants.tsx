@@ -29,8 +29,8 @@ export const getMembersColumns = (isAdminOwner: boolean, handleEditMember: (id: 
                     const isOwnerOrSameRole = row.original.role === "Owner" || row.original.role == currentRole;
                     return (
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button disabled={isOwnerOrSameRole}  variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
+                            <DropdownMenuTrigger asChild disabled={isOwnerOrSameRole} >
+                                <Button  variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56">
                                 <DropdownMenuRadioGroup value="bottom"

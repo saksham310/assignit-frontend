@@ -40,7 +40,7 @@ export const useDashboardData = () =>{
     const handleEditMember = (memberId:number,value: string) => {
         console.log(memberId,value);
     }
-    const isOwnerAdmin = WORKSPACE_ROLES.includes(currentRole);
+    const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole);
     const membersColumns = getMembersColumns(isOwnerAdmin,handleEditMember)
     ;
    return {isOwnerAdmin,memberData,projectData,membersColumns, projectColumns};

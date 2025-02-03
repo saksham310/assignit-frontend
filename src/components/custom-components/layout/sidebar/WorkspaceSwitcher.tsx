@@ -14,8 +14,6 @@ const WorkspaceSwitcher=()=>{
     useEffect(()=>{
         if(!!id) {
             setCurrentWorkspaceId(id);
-            setCurrentRole(id);
-
         }
         if(!!data) setWorkspaceRoles(data);
 
