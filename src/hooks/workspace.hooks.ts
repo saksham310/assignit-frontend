@@ -1,14 +1,13 @@
 import {
     createWorkspace,
     deleteWorkspace,
-    getWorkspaceAnalytics,
+    getWorkspaceAnalytics, getWorkspaceMember,
     getWorkspaces, leaveWorkspace,
     updateWorkspace
 } from "@/service/workspace.service.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
-import {useEffect} from "react";
 
 export const useGetWorkspace = () => {
     return useQuery({
@@ -24,7 +23,13 @@ export const useGetWorkspaceAnalytics=(id:string|undefined)=>{
         enabled:!!id
     })
 }
-
+export const useGetWorkspaceMember=(id:string|undefined)=>{
+    return useQuery({
+        queryKey:['workspace member',id],
+        queryFn:()=>getWorkspaceMember(id),
+        enabled:!!id
+    })
+}
 export const useCreateWorkspace = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -45,25 +50,6 @@ export const useCreateWorkspace = () => {
     });
 }
 
-
-export const useWorkspaceNavigate=()=>{
-    const { data: workspaces, isLoading,isFetching } = useGetWorkspace();
-    const navigate = useNavigate();
-    const location = useLocation();
-    useEffect(() => {
-        const isDashboard=location.pathname==='/';
-        if (!isFetching && workspaces && isDashboard) {
-            if (workspaces.length === 0) {
-                navigate("/create");
-            } else {
-                const id = workspaces[0].id;
-                navigate(`/workspaces/${id}`);
-            }
-        }
-    }, [isFetching, workspaces, navigate]);
-
-    return {isLoading,isFetching};
-}
 export const useUpdateWorkspace = () => {
     const queryClient = useQueryClient();
     return useMutation({

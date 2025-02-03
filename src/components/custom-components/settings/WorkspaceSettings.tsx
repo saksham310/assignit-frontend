@@ -19,10 +19,11 @@ import { LogOut, Trash2} from "lucide-react";
 import { CardContent } from "@/components/ui/card";
 import {z} from "zod";
 import {workspaceSchema} from "@/schemas/workspace.schema.ts";
+import { useDashboardData } from "@/hooks/dashboard.hooks";
 
 
 const WorkspaceSettings=()=> {
-    const isAdmin = true;
+   const {isOwnerAdmin}= useDashboardData();
     const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId);
     const {data} = useGetWorkspace();
     const currentWorkspace = data.find((item: WorkspaceData) => item.id == currentWorkspaceId);
@@ -65,7 +66,7 @@ const WorkspaceSettings=()=> {
                            render={({field}) => (
                                <FormItem>
                                    <FormControl>
-                                       <Input className="font-bold text-black" {...field} disabled={!isAdmin}/>
+                                       <Input className=" text-black" {...field} disabled={!isOwnerAdmin}/>
                                    </FormControl>
                                </FormItem>
                            )
@@ -102,7 +103,7 @@ const WorkspaceSettings=()=> {
                            </AlertDialogContent>
                        </AlertDialog>
                    </div>
-                   {isAdmin &&
+                   {isOwnerAdmin &&
                    <div>
                        <AlertDialog>
                            <AlertDialogTrigger className={'flex flex-col  text-start max-w-[420px] '}>
@@ -131,7 +132,7 @@ const WorkspaceSettings=()=> {
                        </AlertDialog>
                    </div>}
                </CardContent>
-               {isAdmin &&
+               {isOwnerAdmin &&
                <div className={'flex justify-end mt-2 mr-2'}>
                    <Button disabled={!form.formState.isDirty || form.formState.isSubmitting}>Save</Button>
                </div>}

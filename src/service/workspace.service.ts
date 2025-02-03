@@ -1,5 +1,5 @@
 import {
-    CREATE_WORKSPACE, DELETE_WORKSPACE,
+    CREATE_WORKSPACE, DELETE_WORKSPACE, GET_MEMBERS,
     GET_WORKSPACE_ANALYTICS,
     GET_WORKSPACES, LEAVE_WORKSPACE,
     UPDATE_WORKSPACE
@@ -17,6 +17,10 @@ export const getWorkspaceAnalytics=async(id:string|undefined)=>{
     return res.data.workspaceAnalytics;
 }
 
+export const getWorkspaceMember=async(id:string|undefined)=>{
+    const res = await apiClient.get(`${GET_MEMBERS}/${id}`);
+    return res.data.userList;
+}
 export const createWorkspace = async (data:CreateWorkspaceData)=>{
     data.role="Owner";
     const res = await  apiClient.post(`${CREATE_WORKSPACE}`, data);
