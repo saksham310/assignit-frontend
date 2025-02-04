@@ -1,40 +1,42 @@
 import axios from "axios";
-import {toast} from "sonner";
+import { toast } from "sonner";
 
+// Axios client instance setup
 export const apiClient = axios.create({
     baseURL: 'http://localhost:8080/api',
-})
-export const setHeader=(header:string) => {
-    if (header) {
-        apiClient.defaults.headers.Authorization = header;
-    } else {
-        // Remove the token from headers if it's not available
-        delete apiClient.defaults.headers.Authorization;
-    }
-}
-apiClient.interceptors.request.use((config)=>{
+});
+
+// Function to set or remove the Authorization header
+export const setHeader = (header: string) => {
+    apiClient.defaults.headers.Authorization = header ? header : ''; // Set or remove token
+};
+
+// Request interceptor for aborting requests without a token
+apiClient.interceptors.request.use((config) => {
     const controller = new AbortController();
     const token = config.headers.Authorization;
-    if(!token){
+
+    // Abort the request if there's no token
+    if (!token) {
         controller.abort();
     }
-    // return config;
+
     return {
         ...config,
-        signal: controller.signal
+        signal: controller.signal,
     };
-},(error) => {
+}, (error) => {
     return Promise.reject(error);
 });
 
+// Response interceptor for handling errors
+apiClient.interceptors.response.use((res) => {
+    return res; // Return the response if successful
+}, (err) => {
+    // Show error message using toast if the request fails
+    toast.error(err.response?.data?.message || "An error occurred", {
+        duration: 2000,
+    });
 
-apiClient.interceptors.response.use((res)=>{
-        return res;
-    },(err)=>{
-        toast.error(err.response.data.message, {
-            duration: 2000,
-        });
-        return Promise.reject(err);
-    }
-);
-
+    return Promise.reject(err); // Reject the promise to propagate the error
+});
