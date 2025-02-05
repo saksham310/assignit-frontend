@@ -8,6 +8,8 @@ import ProtectedRoutes from "@/constants/ProtectedRoutes.tsx";
 import OnboardingScreen from "@/pages/OnboardingScreen.tsx";
 import SettingsPage from "@/pages/SettingsPage.tsx";
 import ResetPasswordPage from "@/pages/ResetPasswordPage.tsx";
+import ErrorPage from "@/pages/ErrorPage.tsx";
+import JoinWorkspacePage from "@/pages/JoinWorkspacePage.tsx";
 export const router=createBrowserRouter(
     [
         {
@@ -50,8 +52,16 @@ export const router=createBrowserRouter(
                 {
                     path:'/create',
                     element:<OnboardingScreen/>
+                },
+                {
+                    path: 'invite/:code',
+                    element: <JoinWorkspacePage/>
                 }
             ]
+        },
+        {
+            path : "*",
+            element : <ErrorPage/>
         }
 
     ]
