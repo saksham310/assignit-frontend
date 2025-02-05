@@ -92,10 +92,13 @@ export const useInviteMember = () => {
     return useMutation({
         mutationFn: inviteMember,
         onMutate: async ()=>{
-            toast.info("Emails are queued. You will be notified once sent.")
+            toast.info("Email is queued. You will be notified once sent.",{
+                duration: 2000,
+            })
             closeDialog();
         },
         onSuccess:  (data) => {
+            toast.dismiss();
             toast.success(data.message,{
                 duration: 2000,
             })

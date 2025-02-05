@@ -11,20 +11,19 @@ export const setHeader = (header: string) => {
     apiClient.defaults.headers.Authorization = header ? header : ''; // Set or remove token
 };
 
+// List of public routes that don’t require authentication
+const PUBLIC_ROUTES = ["/auth/login", "/auth/signup", "/auth/reset-password"];
+
 // Request interceptor for aborting requests without a token
 apiClient.interceptors.request.use((config) => {
-    const controller = new AbortController();
     const token = config.headers.Authorization;
 
     // Abort the request if there's no token
-    if (!token) {
-        controller.abort();
+    if (!token  && !PUBLIC_ROUTES.includes(config.url || "")) {
+        // controller.abort();
+        return Promise.reject(new Error("No authentication token"));
     }
-
-    return {
-        ...config,
-        signal: controller.signal,
-    };
+        return config;
 }, (error) => {
     return Promise.reject(error);
 });
@@ -33,6 +32,9 @@ apiClient.interceptors.request.use((config) => {
 apiClient.interceptors.response.use((res) => {
     return res; // Return the response if successful
 }, (err) => {
+    if (err.message === "No authentication token") {
+        return Promise.reject(err);
+    }
     // Show error message using toast if the request fails
     toast.error(err.response?.data?.message || "An error occurred", {
         duration: 2000,

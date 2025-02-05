@@ -16,7 +16,7 @@ import {Form, FormControl, FormField, FormItem} from "@/components/ui/form.tsx";
 
 
 const SendInvitePage = () => {
-    const [emailList, setEmailList] = useState(new Set<string>());
+    const [emailList, setEmailList] = useState<string[]>([]);
 
     const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId);
 
@@ -30,27 +30,26 @@ const SendInvitePage = () => {
     });
     const handleEmailChange = (data: z.infer<typeof emailSchema>) => {
         const email = data.email.trim().toLowerCase();
-        if (emailList.size > 7) {
+        if (emailList.length >= 8) {
             toast.warning("You can send invitations to a maximum of 8 recipients at a time.")
             return;
         }
 
-        if (!!email) {
-            setEmailList(new Set(emailList).add(email));
+
+        if (email && !emailList.includes(email)) {
+            setEmailList(prevList => [...prevList, email]);
             form.reset();
         }
     }
 
     const handleRemoveEmail = (value: string) => {
-        const newEmailList = new Set(emailList)
-        newEmailList.delete(value)
-        setEmailList(newEmailList);
+        setEmailList(prevList => prevList.filter(email => email !== value));
     }
 
     const handleSendInvite = () => {
         const data = {
             id: currentWorkspaceId,
-            emails: Array.from(emailList)
+            emails:emailList
         }
         mutate(data);
     }
@@ -81,7 +80,7 @@ const SendInvitePage = () => {
             </CardContent>
             <CardContent className={'p-4 border-gray-200 '}>
                 <div className={'flex gap-2  flex-wrap'}>
-                    {Array.from(emailList).map((email) => {
+                    {emailList.map((email) => {
                         return (
                             <Badge variant={"secondary"} className={"flex gap-3 p-2 items-center font-normal"}>
                                 {email} <X size={'13'} onClick={() => handleRemoveEmail(email)}/>
