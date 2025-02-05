@@ -15,7 +15,7 @@ export const registerSchema = z.object({
         )
 })
 
-export const sendOTPSchema = z.object({
+export const emailSchema = z.object({
     email: z.string().email(),
 })
 export const OTPSchema = z.object({

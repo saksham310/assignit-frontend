@@ -2,12 +2,13 @@ import {
     createWorkspace,
     deleteWorkspace,
     getWorkspaceAnalytics, getWorkspaceMember,
-    getWorkspaces, leaveWorkspace,
+    getWorkspaces, inviteMember, leaveWorkspace,
     updateWorkspace
 } from "@/service/workspace.service.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
+import {useDialogStore} from "@/store/dialog.store.ts";
 
 export const useGetWorkspace = () => {
     return useQuery({
@@ -84,4 +85,20 @@ export  const useLeaveWorkspace = (id: string | null) => {
         navigate("/");
     }
 })
+}
+
+export const useInviteMember = () => {
+    const closeDialog=useDialogStore((state) => state.closeDialog)
+    return useMutation({
+        mutationFn: inviteMember,
+        onMutate: async ()=>{
+            toast.info("Emails are queued. You will be notified once sent.")
+            closeDialog();
+        },
+        onSuccess:  (data) => {
+            toast.success(data.message,{
+                duration: 2000,
+            })
+        },
+    })
 }

@@ -1,28 +1,43 @@
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Input} from "@/components/ui/input.tsx";
-import {useRef, useState} from "react";
+import {useState} from "react";
 import {Badge} from "@/components/ui/badge.tsx";
 import {Send, X} from "lucide-react";
 import {toast} from "sonner";
+import {useInviteMember} from "@/hooks/workspace.hooks.ts";
+import {useWorkspaceStore} from "@/store/workspace.store.ts";
+import {FaSpinner} from "react-icons/fa";
+import {useForm} from "react-hook-form";
+import {z} from "zod";
+import {emailSchema} from "@/schemas/auth.schema.ts";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Form, FormControl, FormField, FormItem} from "@/components/ui/form.tsx";
+
 
 const SendInvitePage = () => {
     const [emailList, setEmailList] = useState(new Set<string>());
-    const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleEmailChange = (value: string, event?: KeyboardEvent) => {
-        if (event && !(event.key === "Enter")) return;
+    const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId);
 
-        value = value.trim().toLowerCase();
+    const {mutate, isPending} = useInviteMember();
 
+    const form = useForm<z.infer<typeof emailSchema>>({
+        resolver: zodResolver(emailSchema),
+        defaultValues: {
+            email: ''
+        }
+    });
+    const handleEmailChange = (data: z.infer<typeof emailSchema>) => {
+        const email = data.email.trim().toLowerCase();
         if (emailList.size > 7) {
             toast.warning("You can send invitations to a maximum of 8 recipients at a time.")
             return;
         }
 
-        if (!!value) {
-            setEmailList(new Set(emailList).add(value));
-            inputRef.current!.value = '';
+        if (!!email) {
+            setEmailList(new Set(emailList).add(email));
+            form.reset();
         }
     }
 
@@ -31,15 +46,38 @@ const SendInvitePage = () => {
         newEmailList.delete(value)
         setEmailList(newEmailList);
     }
+
+    const handleSendInvite = () => {
+        const data = {
+            id: currentWorkspaceId,
+            emails: Array.from(emailList)
+        }
+        mutate(data);
+    }
+
     return <>
         <Card className={'w-full h-full md:w-[560px] bg-white shadow-none border-none '}>
             <CardHeader className={'text-center font-bold text-xl'}>
                 <CardTitle>Workspace Invitation</CardTitle>
             </CardHeader>
-            <CardContent className={'p-4  border-gray-200 flex gap-2 justify-between items-center'}>
-                <Input placeholder={'Enter email address'} ref={inputRef} type='email'
-                       onKeyDown={(event: KeyboardEvent) => handleEmailChange(inputRef.current!.value, event)}/>
-                <Button onClick={() => handleEmailChange(inputRef.current!.value)}> Add</Button>
+            <CardContent className={'p-4  border-gray-200'}>
+                <Form  {...form}>
+                    <form onSubmit={form.handleSubmit(handleEmailChange)}
+                          className={'flex justify-between items-center gap-2'}>
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({field}) => (
+                                <FormItem className={'flex-1'}>
+                                    <FormControl>
+                                        <Input placeholder="Enter your email" {...field}  />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+                        <Button disabled={!form.formState.isValid}>Add</Button>
+                    </form>
+                </Form>
             </CardContent>
             <CardContent className={'p-4 border-gray-200 '}>
                 <div className={'flex gap-2  flex-wrap'}>
@@ -53,7 +91,10 @@ const SendInvitePage = () => {
                 </div>
 
             </CardContent>
-            <Button className={'m-2 w-full'}>Send Invitation<Send/></Button>
+            <Button disabled={isPending} className={'m-2 w-full'} onClick={() => handleSendInvite()}>
+                {!isPending && (<span className={'flex gap-2 items-center'}><Send/> Send Invite</span>)}
+                {isPending && <FaSpinner className={' animate-in spin-in repeat-infinite'}/>}
+            </Button>
         </Card>
     </>
 }

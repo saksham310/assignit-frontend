@@ -3,7 +3,7 @@ import {
     DELETE_WORKSPACE,
     GET_MEMBERS,
     GET_WORKSPACE_ANALYTICS,
-    GET_WORKSPACES,
+    GET_WORKSPACES, INVITE_USER,
     LEAVE_WORKSPACE,
     UPDATE_WORKSPACE
 } from "@/constants/api.constants.ts";
@@ -52,3 +52,9 @@ export const leaveWorkspace = async (id: string | null) => {
     const res = await apiClient.get(`${LEAVE_WORKSPACE}/${id}`);
     return res.data;
 };
+
+// Invite Member to the workspace
+export  const inviteMember = async (data :{id: string | null; emails: string []}) => {
+    const res = await  apiClient.post(`${INVITE_USER}/${data.id}`, data);
+    return res.data;
+}
