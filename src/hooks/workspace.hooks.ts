@@ -47,7 +47,6 @@ export const useCreateWorkspace = () => {
         },
         onError: (error) => {
             toast.error("Failed to create workspace. Please try again.");
-            console.error("Workspace creation failed:", error);
         }
     });
 }
@@ -56,13 +55,32 @@ export const useUpdateWorkspace = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: updateWorkspace,
+        onMutate :async (data)=>{
+            await queryClient.cancelQueries({queryKey: ['workspaces']});
+            const previousWorkspaces = queryClient.getQueryData(['workspaces']);
+
+            // Update cache immediately (before API call completes)
+            queryClient.setQueryData(['workspaces'], (oldWorkspaces:any) =>
+                oldWorkspaces.map(workspace =>
+                    workspace.id === data.id
+                        ? {...workspace, ...data}
+                        : workspace
+                )
+            );
+
+            return { previousWorkspaces };
+        },
+        onError: (_err, _data, context) => {
+            // Restore old data if API call fails
+            queryClient.setQueryData(['workspaces'], context!.previousWorkspaces);
+            toast.error("Update failed");
+        },
         onSuccess: async (data) => {
             await queryClient.invalidateQueries({queryKey: ["workspaces"]});
             await queryClient.invalidateQueries({queryKey: ["workspace analytics",data.id]});
             toast.success("Successfully update workspace",{
                 duration: 2000,
             });
-          refreshPage();
         }
     })
 }
@@ -117,7 +135,6 @@ export const useJoinWorkspace = () => {
     return useMutation({
         mutationFn: joinWorkspace,
         onSuccess: async (data) => {
-            console.log("yoo")
             await queryClient.invalidateQueries({queryKey: ["workspaces"]});
             await queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
             toast.success("Successfully joined workspace",{

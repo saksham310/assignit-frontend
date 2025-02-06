@@ -52,7 +52,6 @@ const WorkspaceSettings=()=> {
     if (isPending) {
         return <Loader/>
     }
-    console.log(isOwnerAdmin)
     return (
        <>
        <Form {...form}>

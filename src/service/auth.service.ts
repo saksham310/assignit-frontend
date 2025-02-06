@@ -22,7 +22,6 @@ export const sendOTP = async (email: string) => {
 
 // Verify OTP API call
 export const verifyOTP = async (data: { email: string; otp: string }) => {
-        console.log("Verifying OTP", data);
         const res = await apiClient.post(VERIFY_OTP, data);
         return res.data;
 };
