@@ -16,6 +16,7 @@ export const LEAVE_WORKSPACE = '/workspace/leave-workspace';
 // Workspace Members APIs
 export const GET_MEMBERS = '/workspace/memberList';
 export const INVITE_USER = '/workspace/invite';
+export const JOIN_WORKSPACE = '/workspace/join';
 
 // User Profile APIs
 export const UPDATE_PROFILE = '/user/update-profile';

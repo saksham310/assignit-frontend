@@ -2,13 +2,14 @@ import {
     createWorkspace,
     deleteWorkspace,
     getWorkspaceAnalytics, getWorkspaceMember,
-    getWorkspaces, inviteMember, leaveWorkspace,
+    getWorkspaces, inviteMember, joinWorkspace, leaveWorkspace,
     updateWorkspace
 } from "@/service/workspace.service.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
+import {refreshPage} from "@/lib/utils.ts";
 
 export const useGetWorkspace = () => {
     return useQuery({
@@ -61,7 +62,7 @@ export const useUpdateWorkspace = () => {
             toast.success("Successfully update workspace",{
                 duration: 2000,
             });
-            window.location.reload()
+          refreshPage();
         }
     })
 }
@@ -108,4 +109,23 @@ export const useInviteMember = () => {
             })
         },
     })
+}
+
+export const useJoinWorkspace = () => {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    return useMutation({
+        mutationFn: joinWorkspace,
+        onSuccess: async (data) => {
+            console.log("yoo")
+            await queryClient.invalidateQueries({queryKey: ["workspaces"]});
+            await queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
+            toast.success("Successfully joined workspace",{
+                duration: 2000,
+            });
+            navigate(`/workspaces/${data.user.workspace_id}`);
+        }
+
+        }
+    )
 }
