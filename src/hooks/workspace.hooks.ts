@@ -55,9 +55,13 @@ export const useUpdateWorkspace = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: updateWorkspace,
-        onSuccess: async () => {
+        onSuccess: async (data) => {
             await queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            await queryClient.invalidateQueries({queryKey: ["workspace analytics",]});
+            await queryClient.invalidateQueries({queryKey: ["workspace analytics",data.id]});
+            toast.success("Successfully update workspace",{
+                duration: 2000,
+            });
+            window.location.reload()
         }
     })
 }

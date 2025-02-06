@@ -20,6 +20,7 @@ import { CardContent } from "@/components/ui/card";
 import {z} from "zod";
 import {workspaceSchema} from "@/schemas/workspace.schema.ts";
 import { useDashboardData } from "@/hooks/dashboard.hooks";
+import Loader from "@/components/custom-components/shared/Loader.tsx";
 
 
 const WorkspaceSettings=()=> {
@@ -32,7 +33,7 @@ const WorkspaceSettings=()=> {
             name: currentWorkspace.name,
         }
     });
-    const {mutate} = useUpdateWorkspace();
+    const {mutate,isPending} = useUpdateWorkspace();
     const {mutate: leaveMutate} = useLeaveWorkspace(currentWorkspaceId);
     const {mutate: deleteMutate} = useDeleteWorkspace();
     const handleLeaveWorkspace = () => {
@@ -48,6 +49,10 @@ const WorkspaceSettings=()=> {
         }
              mutate(data)
     }
+    if (isPending) {
+        return <Loader/>
+    }
+    console.log(isOwnerAdmin)
     return (
        <>
        <Form {...form}>
