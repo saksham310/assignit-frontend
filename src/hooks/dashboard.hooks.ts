@@ -33,7 +33,6 @@ export const useDashboardData = () =>{
     const {data} = useGetWorkspaceMember(id);
     const memberData = data as MembersData[];
     const projectData: unknown[] = [];
-
     useEffect(() => {
         if(!!id)  setCurrentRole(id as string)
     }, [id]);
@@ -41,8 +40,7 @@ export const useDashboardData = () =>{
         console.log(memberId,value);
     }
     const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole);
-    const membersColumns = getMembersColumns(isOwnerAdmin,handleEditMember)
-    ;
+    const membersColumns = getMembersColumns(isOwnerAdmin,handleEditMember);
    return {isOwnerAdmin,memberData,projectData,membersColumns, projectColumns};
 
 }
