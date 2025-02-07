@@ -4,7 +4,6 @@ import {ColumnDef} from "@tanstack/react-table";
 import {FolderKanban} from "lucide-react";
 
 const ProjectSummary=({ columns, data }: { columns: ColumnDef<any>[]; data: unknown[]})=>{
-console.log("yo data",data);
     return <>
 
             <Card className={' col-span-2  overflow-hidden h-full flex flex-col '}>

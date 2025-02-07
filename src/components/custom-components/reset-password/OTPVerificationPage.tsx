@@ -25,7 +25,6 @@ const OTPVerificationPage = ({handleStepChange, email} :OTPVerificationPageProps
     const {mutate}=useVerifyOTP();
     const onSubmit = (values:any)=>{
         const data={...values,email:email};
-        console.log(data);
         mutate(data,{
             onSuccess:(data)=>{
                 toast.success(data.message);

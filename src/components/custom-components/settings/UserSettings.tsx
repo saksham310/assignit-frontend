@@ -65,7 +65,8 @@ const UserSettings = () => {
         }
 
         mutate(formData,{
-            onSuccess: () => {
+            onSuccess: (data) => {
+                setPreviewImage(data.image)
                 form.reset()
             }
         });

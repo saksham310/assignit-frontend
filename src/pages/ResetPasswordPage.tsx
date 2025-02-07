@@ -46,7 +46,6 @@ const ResetPasswordPage = () => {
 
     const handleStepChange = (step : number) => {
         setStep(step);
-        console.log(step);
     }
     const handleEmailChange = (value : string) => {
         setEmail(value);

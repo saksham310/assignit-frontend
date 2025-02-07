@@ -6,6 +6,8 @@ import MembersTab from "@/components/custom-components/dashboard/MembersTab.tsx"
 import {Button} from "@/components/ui/button.tsx";
 import {PlusCircle, Send} from "lucide-react";
 import {useDashboardData} from "@/hooks/dashboard.hooks.ts";
+import {useDialogStore} from "@/store/dialog.store.ts";
+import SendInvitePage from "@/pages/SendInvitePage.tsx";
 
 interface DashboardProps {
     items:AnalyticCardProps[],
@@ -13,6 +15,7 @@ interface DashboardProps {
 
 const Dashboard = ({items}:DashboardProps) => {
     const {projectData,memberData,membersColumns,isOwnerAdmin,projectColumns} = useDashboardData();
+    const setOpen = useDialogStore( state => state.openDialog);
     const tabConfig:TabConfig[] = [
         {
             value: "projects",
@@ -25,6 +28,9 @@ const Dashboard = ({items}:DashboardProps) => {
             component: () => <MembersTab columns={membersColumns} data={memberData} />,
         },
     ];
+    const onInvite = () => {
+    setOpen(SendInvitePage);
+    }
     return (
 
             <div className='flex flex-col gap-10 h-full '>
@@ -34,7 +40,7 @@ const Dashboard = ({items}:DashboardProps) => {
                        {isOwnerAdmin &&
                            <div className={'hidden lg:flex w-auto  items-center gap-x-4 absolute right-1'}>
                                <Button variant={'outline'} size={'sm'}><PlusCircle/>Add Project</Button>
-                               <Button size={'sm'}><Send/>Invite</Button>
+                               <Button size={'sm'} onClick={()=> onInvite()}><Send/>Invite</Button>
                            </div>}
 
                        <TabLayoutWrapper tabConfig={tabConfig} isDashboard={true}/></div>

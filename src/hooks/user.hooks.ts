@@ -5,6 +5,7 @@ import {toast} from "sonner";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import {User} from "@/types/auth.type.ts";
+import {refreshPage} from "@/lib/utils.ts";
 
 
 export const useUpdateProfile=()=>{
@@ -25,7 +26,7 @@ export const useUpdateProfile=()=>{
             toast.success("Profile updated successfully",{
                 duration: 2000,
             });
-
+            refreshPage();
         }
     })
 }

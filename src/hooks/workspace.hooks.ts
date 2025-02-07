@@ -2,12 +2,14 @@ import {
     createWorkspace,
     deleteWorkspace,
     getWorkspaceAnalytics, getWorkspaceMember,
-    getWorkspaces, leaveWorkspace,
+    getWorkspaces, inviteMember, joinWorkspace, leaveWorkspace,
     updateWorkspace
 } from "@/service/workspace.service.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useNavigate} from "react-router-dom";
 import {toast} from "sonner";
+import {useDialogStore} from "@/store/dialog.store.ts";
+import {WorkspaceData} from "@/types/workspace.type.ts";
 
 export const useGetWorkspace = () => {
     return useQuery({
@@ -35,17 +37,16 @@ export const useCreateWorkspace = () => {
     const navigate = useNavigate();
     return useMutation({
         mutationFn: createWorkspace,
-        onSuccess: async (data) => {
-            await queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            await queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({queryKey: ["workspaces"]});
+            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
             toast.success("Successfully created workspace",{
                 duration: 2000,
             });
             navigate(`/workspaces/${data.newWorkspace.id}`);
         },
-        onError: (error) => {
+        onError: (_error) => {
             toast.error("Failed to create workspace. Please try again.");
-            console.error("Workspace creation failed:", error);
         }
     });
 }
@@ -54,9 +55,32 @@ export const useUpdateWorkspace = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: updateWorkspace,
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            await queryClient.invalidateQueries({queryKey: ["workspace analytics",]});
+        onMutate : (data)=>{
+             queryClient.cancelQueries({queryKey: ['workspaces']});
+            const previousWorkspaces = queryClient.getQueryData(['workspaces']);
+
+            // Update cache immediately (before API call completes)
+            queryClient.setQueryData(['workspaces'], (oldWorkspaces:WorkspaceData[]) =>
+                oldWorkspaces.map(workspace =>
+                    workspace.id === data.id
+                        ? {...workspace, ...data}
+                        : workspace
+                )
+            );
+
+            return { previousWorkspaces };
+        },
+        onError: (_err, _data, context) => {
+            // Restore old data if API call fails
+            queryClient.setQueryData(['workspaces'], context!.previousWorkspaces);
+            toast.error("Update failed");
+        },
+        onSuccess:(data) => {
+             queryClient.invalidateQueries({queryKey: ["workspaces"]});
+             queryClient.invalidateQueries({queryKey: ["workspace analytics",data.id]});
+            toast.success("Successfully update workspace",{
+                duration: 2000,
+            });
         }
     })
 }
@@ -66,9 +90,9 @@ export const useDeleteWorkspace = () => {
     const navigate = useNavigate();
     return useMutation({
         mutationFn: deleteWorkspace,
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            await queryClient.invalidateQueries({queryKey: ["workspace analytics",]});
+        onSuccess: () => {
+           queryClient.invalidateQueries({queryKey: ["workspaces"]});
+           queryClient.invalidateQueries({queryKey: ["workspace analytics",]});
             navigate("/");
         }
     })
@@ -78,10 +102,51 @@ export  const useLeaveWorkspace = (id: string | null) => {
     const navigate = useNavigate();
     return useMutation({mutationFn:
         leaveWorkspace,
-        onSuccess: async () => {
-        await queryClient.invalidateQueries({queryKey: ["workspaces"]});
-        await queryClient.invalidateQueries({queryKey: ["workspace analytics",id]});
+        onSuccess: () => {
+         queryClient.invalidateQueries({queryKey: ["workspaces"]});
+         queryClient.invalidateQueries({queryKey: ["workspace analytics",id]});
         navigate("/");
     }
 })
+}
+
+export const useInviteMember = () => {
+    const closeDialog=useDialogStore((state) => state.closeDialog)
+    return useMutation({
+        mutationFn: inviteMember,
+        onMutate: async ()=>{
+            toast.info("Email is queued. You will be notified once sent.",{
+                duration: 2000,
+            })
+            closeDialog();
+        },
+        onSuccess:  (data) => {
+            toast.dismiss();
+            toast.success(data.message,{
+                duration: 2000,
+            })
+        },
+    })
+}
+
+export const useJoinWorkspace = () => {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    return useMutation({
+        mutationFn: joinWorkspace,
+        onSuccess:  (data) => {
+            window.location.href ='/login';
+            queryClient.invalidateQueries({queryKey: ["workspaces"]});
+            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
+            toast.success("Successfully joined workspace",{
+                duration: 2000,
+            });
+            navigate("/");
+        },
+        onError: () => {
+            navigate("/")
+        }
+
+        }
+    )
 }

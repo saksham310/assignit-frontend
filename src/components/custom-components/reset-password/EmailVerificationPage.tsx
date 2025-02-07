@@ -6,7 +6,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {useGetOTP} from "@/hooks/auth.hooks.ts";
 import {FaSpinner} from "react-icons/fa";
 import {toast} from "sonner";
-import {sendOTPSchema} from "@/schemas/auth.schema.ts";
+import {emailSchema} from "@/schemas/auth.schema.ts";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Link} from "react-router-dom";
@@ -18,8 +18,8 @@ interface EmailVerificationPageProps {
 
 }
 const EmailVerificationPage = ({handleStepChange,handleEmailChange} : EmailVerificationPageProps)=> {
-    const form=useForm<z.infer<typeof sendOTPSchema>>({
-        resolver: zodResolver(sendOTPSchema),
+    const form=useForm<z.infer<typeof emailSchema>>({
+        resolver: zodResolver(emailSchema),
         defaultValues:{
             email: ''
         }

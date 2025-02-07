@@ -25,7 +25,9 @@ export const useWorkspaceStore = create<WorkspaceState>()(
     )
 );
 
-export const useWorkspaceRoleStore = create<WorkspaceRoleState>((set) => ({
+export const useWorkspaceRoleStore = create<WorkspaceRoleState>()(
+    persist(
+    (set) => ({
     roles: {},
     currentRole:"",
     setRoles: (workspaceData: WorkspaceData[]) =>
@@ -36,4 +38,16 @@ export const useWorkspaceRoleStore = create<WorkspaceRoleState>((set) => ({
             }, {}),
         })),
     setCurrentRoles: (id) =>   set((state) => ({ currentRole: state.roles[id] })),
-}));
+}),{
+        name: "workspace-role-storage",
+    }
+)
+);
+
+export const useJoinWorkspaceStore = create()(
+    (set) => ({
+        redirectUrl : null,
+        setRedirectUrl: (url: string) => set({ redirectUrl: url }),
+    })
+
+)
