@@ -1,7 +1,7 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useEffect} from "react";
 import {useGetWorkspace, useGetWorkspaceMember} from "@/hooks/workspace.hooks.ts";
-import {useWorkspaceRoleStore} from "@/store/workspace.store.ts";
+import {useJoinWorkspaceStore, useWorkspaceRoleStore} from "@/store/workspace.store.ts";
 import {MembersData} from "@/types/workspace.type.ts";
 import {getMembersColumns, projectColumns} from "@/constants/table-columns.constants.tsx";
 import {WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
@@ -11,8 +11,10 @@ export const useDashboardNavigate=()=>{
     const { data: workspaces, isLoading,isFetching } = useGetWorkspace();
     const navigate = useNavigate();
     const location = useLocation();
+    const setRedirectUrl = useJoinWorkspaceStore((state:any) => state.setRedirectUrl);
     useEffect(() => {
         const isDashboard=location.pathname==='/';
+        setRedirectUrl(null);
         if (!isFetching && workspaces && isDashboard) {
             if (workspaces.length === 0) {
                 navigate("/create");
