@@ -35,10 +35,20 @@ apiClient.interceptors.response.use((res) => {
     if (err.message === "No authentication token") {
         return Promise.reject(err);
     }
-    // Show error message using toast if the request fails
-    toast.error(err.response?.data?.message || "An error occurred", {
-        duration: 2000,
-    });
-
-    return Promise.reject(err); // Reject the promise to propagate the error
+    console.log(err.response.status === 422);
+    if (err.response.status === 422)
+    {
+        window.location.href= '/error';
+    }
+   else if (err.response.status === 401)
+    {
+        toast.warning("Session expired. Please re-login again.");
+        window.location.href= '/login';
+    }
+   else{
+        toast.error(err.response?.data?.message || "An error occurred", {
+            duration: 2000,
+        });
+    }
+    return Promise.reject(err);
 });
