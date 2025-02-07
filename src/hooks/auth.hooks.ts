@@ -5,6 +5,7 @@ import {toast} from "sonner";
 import {useNavigate} from "react-router-dom";
 import {AuthHookConfig, AuthResponse, LoginInput, RegisterInput} from "@/types/auth.type.ts";
 import {setHeader} from "@/service/api.client.ts";
+import {useJoinWorkspaceStore} from "@/store/workspace.store.ts";
 
 
 
@@ -12,6 +13,8 @@ const useAuth=<T extends LoginInput|RegisterInput>({mutationFn,successMessage}:A
     const navigate=useNavigate();
     const queryClient = useQueryClient();
     const signIn = useSignIn();
+    const redirectUrl = useJoinWorkspaceStore( (state:any) =>  state.redirectUrl);
+    const redirectTo = redirectUrl ? redirectUrl:'/';
     const handleSuccess=(res:AuthResponse)=>{
         {
             queryClient.invalidateQueries({queryKey:['workspaces','workspace analytics']});
@@ -27,7 +30,7 @@ const useAuth=<T extends LoginInput|RegisterInput>({mutationFn,successMessage}:A
                     duration: 2000,
                 });
                 setTimeout(() => {
-                    navigate('/');
+                    navigate(redirectTo);
                 }, 1000);
             }
         }

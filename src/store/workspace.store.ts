@@ -43,3 +43,11 @@ export const useWorkspaceRoleStore = create<WorkspaceRoleState>()(
     }
 )
 );
+
+export const useJoinWorkspaceStore = create()(
+    (set) => ({
+        redirectUrl : null,
+        setRedirectUrl: (url: string) => set({ redirectUrl: url }),
+    })
+
+)
