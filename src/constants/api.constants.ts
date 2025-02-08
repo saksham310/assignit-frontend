@@ -1,22 +1,26 @@
 // Authentication APIs
 export const LOGIN_API = '/auth/login';
-export const SIGNUP_API = '/auth/register';
-export const SEND_OTP = '/auth/send-otp';
-export const VERIFY_OTP = '/auth/verify-otp';
-export const RESET_PASSWORD = '/auth/reset-password';
+export const SIGNUP_API = '/auth/signup';
+export const SEND_OTP = '/auth/otp/send';
+export const VERIFY_OTP = '/auth/otp/verify';
+export const RESET_PASSWORD = '/auth/password/reset';
 
 // Workspace Management APIs
-export const CREATE_WORKSPACE = '/workspace/create';
-export const GET_WORKSPACES = '/workspace/getWorkspaces';
-export const GET_WORKSPACE_ANALYTICS = '/workspace/getWorkspaceAnalytics';
-export const UPDATE_WORKSPACE = '/workspace/update-workspace';
-export const DELETE_WORKSPACE = '/workspace/delete-workspace';
-export const LEAVE_WORKSPACE = '/workspace/leave-workspace';
+export const GET_WORKSPACES = '/workspaces';
+export const GET_WORKSPACE_ANALYTICS = (workspaceId:string) => `workspaces/${workspaceId}/analytics`;
+export const GET_MEMBERS =  (workspaceId:string) => `workspaces/${workspaceId}/members`;
 
-// Workspace Members APIs
-export const GET_MEMBERS = '/workspace/memberList';
-export const INVITE_USER = '/workspace/invite';
-export const JOIN_WORKSPACE = '/workspace/join';
+export const CREATE_WORKSPACE = '/workspaces';
+export const UPDATE_WORKSPACE =  (workspaceId:string) => `workspaces/${workspaceId}`;
+
+export const LEAVE_WORKSPACE =  (workspaceId:string) => `workspaces/${workspaceId}/members`;
+export const DELETE_WORKSPACE =  (workspaceId:string) => `workspaces/${workspaceId}`;
+
+
+export const INVITE_USER =  (workspaceId:string) => `workspaces/${workspaceId}/invite`;
+export const JOIN_WORKSPACE = `/workspaces/members/join`;
+
+
 
 // User Profile APIs
-export const UPDATE_PROFILE = '/user/update-profile';
+export const UPDATE_PROFILE = '/user/profile/update';
