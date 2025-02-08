@@ -1,7 +1,7 @@
 import {ColumnDef, Row} from "@tanstack/react-table";
 import {MembersData} from "@/types/workspace.type.ts";
 import {Button} from "@/components/ui/button.tsx";
-import {Edit} from "lucide-react";
+import {EllipsisVertical} from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -30,17 +30,17 @@ export const getMembersColumns = (isAdminOwner: boolean, handleEditMember: (id: 
                     return (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild disabled={isOwnerOrSameRole} >
-                                <Button  variant="ghost" size="icon"><Edit className="h-4 w-4"/></Button>
+                                <Button  variant="ghost" size="icon"><EllipsisVertical className="h-4 w-4"/></Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56">
-                                <DropdownMenuRadioGroup value="bottom"
+                                <DropdownMenuRadioGroup value={row.original.role}
                                                         onValueChange={(value) => handleEditMember(row.original.id, value)}>
                                     {WORKSPACE_ROLES.map((role) =>
-                                        <DropdownMenuRadioItem value={role} disabled={role == currentRole}>
+                                        <DropdownMenuRadioItem value={role} disabled={isOwnerOrSameRole}>
                                             {role}
                                         </DropdownMenuRadioItem>
                                     )}
-                                    <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="Remove" className={'text-red-700'}>Remove</DropdownMenuRadioItem>
                                 </DropdownMenuRadioGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>

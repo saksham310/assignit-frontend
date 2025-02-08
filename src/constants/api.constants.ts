@@ -16,6 +16,7 @@ export const UPDATE_WORKSPACE =  (workspaceId:string) => `workspaces/${workspace
 export const LEAVE_WORKSPACE =  (workspaceId:string) => `workspaces/${workspaceId}/members`;
 export const DELETE_WORKSPACE =  (workspaceId:string) => `workspaces/${workspaceId}`;
 
+export const UPDATE_MEMBERS = (workspaceId:string) => `workspaces/${workspaceId}/members/role`;
 
 export const INVITE_USER =  (workspaceId:string) => `workspaces/${workspaceId}/invite`;
 export const JOIN_WORKSPACE = `/workspaces/members/join`;

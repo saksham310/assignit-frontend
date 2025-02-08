@@ -2,7 +2,7 @@ import {
     createWorkspace,
     deleteWorkspace,
     getWorkspaceAnalytics, getWorkspaceMember,
-    getWorkspaces, inviteMember, joinWorkspace, leaveWorkspace,
+    getWorkspaces, inviteMember, joinWorkspace, leaveWorkspace, updateMemberRole,
     updateWorkspace
 } from "@/service/workspace.service.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
@@ -149,4 +149,15 @@ export const useJoinWorkspace = () => {
 
         }
     )
+}
+
+export const useUpdateMemberRole = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: updateMemberRole,
+        onSuccess:  async () => {
+             toast.success("Successfully updated member role",{duration: 2000});
+             await queryClient.invalidateQueries({queryKey: ['workspace member']})
+        }
+    })
 }

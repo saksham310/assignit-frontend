@@ -4,7 +4,7 @@ import {
     GET_MEMBERS,
     GET_WORKSPACE_ANALYTICS,
     GET_WORKSPACES, INVITE_USER, JOIN_WORKSPACE,
-    LEAVE_WORKSPACE,
+    LEAVE_WORKSPACE, UPDATE_MEMBERS,
     UPDATE_WORKSPACE
 } from "@/constants/api.constants.ts";
 import { apiClient } from "@/service/api.client.ts";
@@ -52,6 +52,13 @@ export const leaveWorkspace = async (id: string | null) => {
     const res = await apiClient.delete(LEAVE_WORKSPACE(id as string));
     return res.data;
 };
+
+// Update the role of the user
+export const updateMemberRole = async (data :{ id: number ; newRole: string;workspaceId:string|undefined }) => {
+    const res = await apiClient.put(UPDATE_MEMBERS(data.workspaceId as string),data);
+    return res.data;
+}
+
 
 // Invite Member to the workspace
 export  const inviteMember = async (data :{id: string | null; emails: string []}) => {

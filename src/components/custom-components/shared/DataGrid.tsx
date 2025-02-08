@@ -72,7 +72,7 @@ export function DataGrid<TData>({
                                             <TableCell
                                                 key={cell.id}
                                                 style={{ width: `${100 / columns.length}%` }}
-                                                className="p-4"
+                                                className="p-2"
                                             >
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </TableCell>
