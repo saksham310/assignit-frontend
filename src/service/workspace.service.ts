@@ -18,13 +18,13 @@ export const getWorkspaces = async () => {
 
 // Fetch workspace analytics by ID
 export const getWorkspaceAnalytics = async (id: string | undefined) => {
-    const res = await apiClient.get(`${GET_WORKSPACE_ANALYTICS}/${id}`);
+    const res = await apiClient.get(GET_WORKSPACE_ANALYTICS(id as string));
     return res.data.workspaceAnalytics;
 };
 
 // Fetch workspace members by workspace ID
 export const getWorkspaceMember = async (id: string | undefined) => {
-    const res = await apiClient.get(`${GET_MEMBERS}/${id}`);
+    const res = await apiClient.get(GET_MEMBERS(id as string));
     return res.data.userList;
 };
 
@@ -37,25 +37,25 @@ export const createWorkspace = async (data: CreateWorkspaceData) => {
 
 // Update workspace details (ID & Name)
 export const updateWorkspace = async (data: { id: string | null; name: string }) => {
-    const res = await apiClient.put(`${UPDATE_WORKSPACE}/${data.id}`, data);
+    const res = await apiClient.put(UPDATE_WORKSPACE(data.id as string), data);
     return res.data;
 };
 
 // Delete a workspace by ID
 export const deleteWorkspace = async (id: string | null) => {
-    const res = await apiClient.delete(`${DELETE_WORKSPACE}/${id}`);
+    const res = await apiClient.delete(DELETE_WORKSPACE(id as string));
     return res.data;
 };
 
 // Leave a workspace by ID
 export const leaveWorkspace = async (id: string | null) => {
-    const res = await apiClient.get(`${LEAVE_WORKSPACE}/${id}`);
+    const res = await apiClient.delete(LEAVE_WORKSPACE(id as string));
     return res.data;
 };
 
 // Invite Member to the workspace
 export  const inviteMember = async (data :{id: string | null; emails: string []}) => {
-    const res = await  apiClient.post(`${INVITE_USER}/${data.id}`, data);
+    const res = await  apiClient.post(INVITE_USER(data.id as string), data);
     return res.data;
 }
 
