@@ -38,9 +38,9 @@ export function DataGrid<TData>({
 
     return (
         <>
-            <div className="w-full h-full flex flex-col gap-3">
+            <div className="w-full h-full flex flex-col gap-3  ">
                 {search &&
-                    ( <Input className={'w-full md:w-[260px] ml-auto '}
+                    ( <Input className={'w-full md:w-[260px] ml-auto  h-[45px]'}
                              value={(table.getColumn(searchValue)?.getFilterValue() as string) ?? ""}
                              onChange={(event) =>
                                  table.getColumn(searchValue)?.setFilterValue(event.target.value)
@@ -50,10 +50,11 @@ export function DataGrid<TData>({
                            />
                     )
                 }
-                <div className="w-full">
+                <div className="w-full overflow-auto scrollbar [&::-webkit-scrollbar-track]:mt-[3.5rem]
+">
                     <div className="[&_table]:w-full ">
                         <Table>
-                            <TableHeader className="bg-secondary">
+                            <TableHeader className="bg-secondary sticky top-0 z-10  ">
                                 {table.getHeaderGroups().map((headerGroup) => (
                                     <TableRow key={headerGroup.id}>
                                         {headerGroup.headers.map((header) => (
@@ -76,12 +77,6 @@ export function DataGrid<TData>({
                                     </TableRow>
                                 ))}
                             </TableHeader>
-                        </Table>
-                    </div>
-                </div>
-                <div className="flex-grow overflow-y-auto scrollbar">
-                    <div className="[&_table]:w-full  ">
-                        <Table>
                             <TableBody>
                                 {table.getRowModel().rows.length ? (
                                     table.getRowModel().rows.map((row) => (
