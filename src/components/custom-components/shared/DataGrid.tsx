@@ -41,8 +41,11 @@ export function DataGrid<TData>({
                                     {headerGroup.headers.map((header) => (
                                         <TableHead
                                             key={header.id}
-                                            style={{ width: `${100 / columns.length}%` }}
                                             className={cn('first:rounded-tl-lg last:rounded-tr-lg p-4')}
+                                            style={{
+                                                minWidth: header.column.columnDef.size,
+                                                maxWidth: header.column.columnDef.size,
+                                            }}
                                         >
                                             {header.isPlaceholder
                                                 ? null
@@ -58,7 +61,7 @@ export function DataGrid<TData>({
                     </Table>
                 </div>
             </div>
-            <div className="flex-grow overflow-auto scrollbar">
+            <div className="flex-grow overflow-y-auto scrollbar">
                 <div className="[&_table]:w-full">
                     <Table>
                         <TableBody>
@@ -71,8 +74,11 @@ export function DataGrid<TData>({
                                         {row.getVisibleCells().map((cell) => (
                                             <TableCell
                                                 key={cell.id}
-                                                style={{ width: `${100 / columns.length}%` }}
-                                                className="p-4"
+                                                className="p-2"
+                                                style={{
+                                                    minWidth: cell.column.columnDef.size,
+                                                    maxWidth: cell.column.columnDef.size,
+                                                }}
                                             >
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </TableCell>
@@ -93,3 +99,4 @@ export function DataGrid<TData>({
         </div>
     );
 }
+
