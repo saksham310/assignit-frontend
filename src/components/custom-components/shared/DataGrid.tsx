@@ -35,13 +35,13 @@ export function DataGrid<TData>({
             <div className="w-full">
                 <div className="[&_table]:w-full">
                     <Table>
-                        <TableHeader className="bg-background">
+                        <TableHeader className="bg-secondary">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => (
                                         <TableHead
                                             key={header.id}
-                                            className={cn('first:rounded-tl-lg last:rounded-tr-lg p-4')}
+                                            className={cn('first:rounded-tl-lg last:rounded-tr-lg p-4 text-black')}
                                             style={{
                                                 minWidth: header.column.columnDef.size,
                                                 maxWidth: header.column.columnDef.size,
