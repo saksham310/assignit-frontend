@@ -50,7 +50,7 @@ export function DataGrid<TData>({
                            />
                     )
                 }
-                <div className="flex-grow overflow-y-auto scrollbar min-h-[200px]">
+                <div className="w-full">
                     <div className="[&_table]:w-full ">
                         <Table>
                             <TableHeader className="bg-secondary">
