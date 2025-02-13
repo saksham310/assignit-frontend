@@ -38,11 +38,11 @@ export const getMembersColumns = (isAdminOwner: boolean, handleEditMember: (id: 
                                     <DropdownMenuRadioGroup value={row.original.role}
                                                             onValueChange={(value) => handleEditMember(row.original.id, value)}>
                                         {WORKSPACE_ROLES.map((role) =>
-                                            <DropdownMenuRadioItem value={role} disabled={isOwnerOrSameRole}>
+                                            <DropdownMenuRadioItem value={role} disabled={isOwnerOrSameRole} className={'text-xs'}>
                                                 {role}
                                             </DropdownMenuRadioItem>
                                         )}
-                                        <DropdownMenuRadioItem value="Remove" className={'text-red-700'}>Remove</DropdownMenuRadioItem>
+                                        <DropdownMenuRadioItem value="Remove" className={'text-red-700 text-xs'}>Remove</DropdownMenuRadioItem>
                                     </DropdownMenuRadioGroup>
                                 </DropdownMenuContent>
                             </DropdownMenu></div>

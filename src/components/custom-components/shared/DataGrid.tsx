@@ -87,7 +87,7 @@ export function DataGrid<TData>({
                                             {row.getVisibleCells().map((cell) => (
                                                 <TableCell
                                                     key={cell.id}
-                                                    className="p-2"
+                                                    className="p-2 text-xs"
                                                     style={{
                                                         minWidth: cell.column.columnDef.size,
                                                         maxWidth: cell.column.columnDef.size,
