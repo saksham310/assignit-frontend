@@ -40,7 +40,7 @@ export function DataGrid<TData>({
         <>
             <div className="w-full h-full flex flex-col gap-3  ">
                 {search &&
-                    ( <Input className={'w-full md:w-[260px] ml-auto  h-[45px]'}
+                    ( <Input className={'w-full md:w-[260px] text-xs h-[35px]'}
                              value={(table.getColumn(searchValue)?.getFilterValue() as string) ?? ""}
                              onChange={(event) =>
                                  table.getColumn(searchValue)?.setFilterValue(event.target.value)
@@ -87,7 +87,7 @@ export function DataGrid<TData>({
                                             {row.getVisibleCells().map((cell) => (
                                                 <TableCell
                                                     key={cell.id}
-                                                    className="p-2 text-xs"
+                                                    className="p-2 text-xs border-b"
                                                     style={{
                                                         minWidth: cell.column.columnDef.size,
                                                         maxWidth: cell.column.columnDef.size,
