@@ -5,6 +5,7 @@ import SidebarFooter from "@/components/custom-components/layout/sidebar/Sidebar
 import {LayoutDashboard, SettingsIcon} from "lucide-react";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";
 import {Link, useLocation} from "react-router-dom";
+import ProjectList from "@/components/custom-components/layout/sidebar/ProjectList.tsx";
 
 
 const Sidebar=()=>{
@@ -25,7 +26,7 @@ const Sidebar=()=>{
                            <span className={'flex items-center gap-2'}> <Icon className={'size-4'}/>{route.label}</span>
                         </Link>
                     })}
-
+            <ProjectList/>
             </div>
             <Separator className='mb-4'/>
             <SidebarFooter/>
