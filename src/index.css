@@ -74,6 +74,11 @@
     .scrollbar::-webkit-scrollbar-thumb{
         background-color:purple !important;
     }
+    /* For Firefox */
+    .scrollbar {
+        scrollbar-width: thin;  /* Makes the scrollbar thinner */
+        scrollbar-color: purple transparent;  /* Sets thumb color and track color */
+    }
 
     /* Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {

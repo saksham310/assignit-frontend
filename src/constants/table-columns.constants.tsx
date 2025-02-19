@@ -15,17 +15,18 @@ import {useWorkspaceRoleStore} from "@/store/workspace.store.ts";
 
 
 export const getMembersColumns = (isAdminOwner: boolean, handleEditMember: (id: number, value: string) => void): ColumnDef<MembersData>[] => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const currentRole = useWorkspaceRoleStore((state) => state.currentRole);
     return [
         {accessorKey: "name", header: "Name", size: 80},
         {accessorKey: "email", header: "Email", size: 130},
-        {accessorKey: "role", header: "Role", size: 85},
-        {accessorKey: "joinDate", header: "Joined At", size: 73},
+        {accessorKey: "role", header: "Role", size: 75},
+        {accessorKey: "joinDate", header: "Joined At", size: 63},
         ...(isAdminOwner
             ? [{
                 id: "actions",
                 header: "Actions",
-                size:20,
+                size:30,
                 cell: ({row}: { row: Row<MembersData> }) => {
                     const isOwnerOrSameRole = row.original.role === "Owner" || row.original.role == currentRole;
                     return (
