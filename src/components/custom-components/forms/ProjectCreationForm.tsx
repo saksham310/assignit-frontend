@@ -22,10 +22,15 @@ const ProjectCreationForm = () => {
     });
 
     const handleStepChange = (value:string) => {
-        if (value === 'custom') setStep(1)
+
+        if (value === 'custom') {
+            setStep(1)
+            return
+        }
+        setStep(0)
     }
     if (step === 1) {
-       return  <CustomStatusForm/>
+       return  <CustomStatusForm handleStepChange={handleStepChange}/>
     }
         return (<>
             <div className={'w-full md:w-[480px] h-[350px] flex flex-col space-y-2 gap-4 overflow-auto'}>
@@ -87,7 +92,7 @@ const ProjectCreationForm = () => {
                         />
                         <div className="flex flex-col space-y-6">
                             <Label>Status</Label>
-                            <RadioGroup defaultValue={'default'} className={'flex items-center gap-10'} onValueChange={(value)=>handleStepChange(value)}>
+                            <RadioGroup defaultValue={"default"} className={'flex items-center gap-10'} onValueChange={(value)=>handleStepChange(value)}>
                                 <div className="flex items-center space-x-2">
                                     <RadioGroupItem value="default" id="r1"/>
                                     <Label htmlFor="r1">Default</Label>
