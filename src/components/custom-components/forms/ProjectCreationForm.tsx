@@ -17,14 +17,15 @@ import CustomStatusForm from "@/components/custom-components/forms/CustomStatusF
 
 const ProjectCreationForm = () => {
     const [step, setStep] = useState(0);
+    const [value, setValue] = useState<string>('default');
     const form = useForm<z.infer<typeof ProjectSchema>>({
         resolver: zodResolver(ProjectSchema)
     });
 
     const handleStepChange = (value:string) => {
-
         if (value === 'custom') {
             setStep(1)
+            setValue('custom')
             return
         }
         setStep(0)
@@ -50,49 +51,81 @@ const ProjectCreationForm = () => {
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="dueDate"
-                            render={({field}) => (
-                                <FormItem className="flex flex-col">
-                                    <FormLabel>End Date</FormLabel>
-                                    <Popover modal={true}>
-                                        <PopoverTrigger asChild>
-                                            <FormControl>
-                                                <Button
-                                                    variant={"outline"}
-                                                    className={cn(
-                                                        " pl-3 text-left font-normal",
-                                                        !field.value && "text-gray-500"
-                                                    )}
-                                                >
-                                                    {field.value ? (
-                                                        format(field.value, "PPP")
-                                                    ) : (
-                                                        <span>Select a date</span>
-                                                    )}
-                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50"/>
-                                                </Button>
-                                            </FormControl>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar
-                                                mode="single"
-                                                selected={field.value}
-                                                onSelect={field.onChange}
-                                                disabled={(date) =>
-                                                    date < new Date()
-                                                }
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
-                                </FormItem>
-                            )}
-                        />
+                        <div className={'flex justify-between items-center gap-4'}>
+                            <FormField
+                                control={form.control}
+                                name="startDate"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col w-full">
+                                        <FormLabel>Start Date</FormLabel>
+                                        <Popover modal={true}>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button
+                                                        variant={"outline"}
+                                                        className={cn(
+                                                            "pl-3 text-left font-normal",
+                                                            !field.value && "text-gray-500"
+                                                        )}
+                                                    >
+                                                        {field.value ? format(field.value, "yyyy-MM-dd") : <span>Select a date</span>}
+                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0" align="start">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={field.value}
+                                                    onSelect={field.onChange}
+                                                    disabled={(date) => date < new Date()} // Disable past dates
+                                                    initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="dueDate"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col w-full">
+                                        <FormLabel>End Date</FormLabel>
+                                        <Popover modal={true}>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
+                                                    <Button
+                                                        variant={"outline"}
+                                                        className={cn(
+                                                            "pl-3 text-left font-normal",
+                                                            !field.value && "text-gray-500"
+                                                        )}
+                                                    >
+                                                        {field.value ? format(field.value, "yyyy-MM-dd") : <span>Select a date</span>}
+                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                    </Button>
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0" align="start">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={field.value}
+                                                    onSelect={field.onChange}
+                                                    disabled={(date) =>
+                                                        !form.watch("startDate") || date < form.watch("startDate")
+                                                    } // Disable dates before startDate
+                                                    initialFocus
+                                                />
+                                            </PopoverContent>
+                                        </Popover>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
                         <div className="flex flex-col space-y-6">
                             <Label>Status</Label>
-                            <RadioGroup defaultValue={"default"} className={'flex items-center gap-10'} onValueChange={(value)=>handleStepChange(value)}>
+                            <RadioGroup defaultValue={value} className={'flex items-center gap-10'} onValueChange={(value)=>handleStepChange(value)}>
                                 <div className="flex items-center space-x-2">
                                     <RadioGroupItem value="default" id="r1"/>
                                     <Label htmlFor="r1">Default</Label>
