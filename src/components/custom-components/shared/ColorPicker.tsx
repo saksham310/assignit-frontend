@@ -10,8 +10,8 @@ interface ColorPickerProps {
 
 const ColorPicker = ({setColor, color}: ColorPickerProps) => {
     return <>
-        <Popover modal={true}>
-            <PopoverTrigger asChild>
+        <Popover>
+            <PopoverTrigger>
                 <div className={'size-5 rounded-xl flex items-center justify-center'}
                      style={{
                          border: `1px solid ${color}`
@@ -20,7 +20,8 @@ const ColorPicker = ({setColor, color}: ColorPickerProps) => {
                     <div className="size-4 rounded-full" style={{backgroundColor: color}}></div>
                 </div>
             </PopoverTrigger>
-            <PopoverContent className={'w-fit'}>
+            <PopoverContent className={'w-fit'}  onOpenAutoFocus={(e) => e.preventDefault()}
+                            onCloseAutoFocus={(e) => e.preventDefault()} >
                 <HexColorPicker color={color} onChange={setColor}/>
             </PopoverContent>
         </Popover>

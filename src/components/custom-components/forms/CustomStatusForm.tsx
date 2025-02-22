@@ -16,7 +16,15 @@ const CustomStatusForm = ({handleStepChange}: CustomStatusProps) => {
 
 
     const onStatusChange = (newStatus: Status) => {
-        setStatusList((prev) => [...prev, newStatus]); // Update state
+
+        if (!newStatus.id) {
+            setStatusList((prev) => [...prev, newStatus]); // Add new status
+        }else{
+            setStatusList((prev) =>
+                prev.map((status) =>  status.id === newStatus.id ? {...status,...newStatus} : status)
+            );
+        }
+
     };
 
     const saveCustomStatus = () => {

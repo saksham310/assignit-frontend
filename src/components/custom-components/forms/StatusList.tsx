@@ -53,7 +53,8 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
                         >
                             <div className="size-4 rounded-full" style={{backgroundColor: status.color}}></div>
                         </div>
-                        <Input defaultValue={status.name} readOnly placeholder={'Add status'} className={'w-full'}/>
+                        <Input value={status.name}
+                               onChange={(e) => onStatusChange({ ...status, name: e.target.value })}  placeholder={'Add status'} className={'w-full'}/>
                     </div>
                 ))}
                 <div className={'flex items-center gap-3'}>
