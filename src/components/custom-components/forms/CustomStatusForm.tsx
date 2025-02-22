@@ -15,9 +15,9 @@ const CustomStatusForm = ({handleStepChange}: CustomStatusProps) => {
     const completedList = statusList.filter(status => status.type === 'Completed');
 
 
-    const onStatusChange = (newStatus: Status) => {
+    const onStatusChange = (newStatus: Status,isNewStatus:boolean) => {
 
-        if (!newStatus.id) {
+        if (isNewStatus) {
             setStatusList((prev) => [...prev, newStatus]); // Add new status
         }else{
             setStatusList((prev) =>
@@ -28,7 +28,12 @@ const CustomStatusForm = ({handleStepChange}: CustomStatusProps) => {
     };
 
     const saveCustomStatus = () => {
-        console.log(statusList);
+        const formattedStatusList = statusList.map(({ id, ...rest }) => ({
+            ...rest,
+            id: id?.startsWith("temp-") ? undefined : id, // Remove only temporary IDs
+        }));
+
+        console.log(formattedStatusList);
         handleStepChange('default')
     }
     return (

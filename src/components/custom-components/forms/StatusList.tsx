@@ -7,7 +7,7 @@ import ColorPicker from "@/components/custom-components/shared/ColorPicker.tsx";
 interface StatusListProps {
     title: string;
     statuses: Status[];
-    onStatusChange: (status: Status) => void;
+    onStatusChange: (status: Status, isNewStatus:boolean) => void;
 }
 
 const statusColor = {
@@ -23,13 +23,14 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
     const handleNewStatus = () => {
         if (lableRef.current) {
             const newStatus: Status = {
+                id : `temp-${crypto.randomUUID()}`,
                 name: lableRef.current!.value,
                 type: title.replace(" ", "_") as StatusType,
                 color: color,
 
             }
             if (newStatus.name) {
-                onStatusChange(newStatus);
+                onStatusChange(newStatus,true);
                 lableRef.current!.value = '';
             }
         }
@@ -37,7 +38,7 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
 
     }
     const handleStatusChange = (status:Status, field:'name'|'color',value:string) => {
-        onStatusChange({ ...status, [field]: value })
+        onStatusChange({ ...status, [field]: value },false)
     }
 
     const handleInput = (e: any) => {
