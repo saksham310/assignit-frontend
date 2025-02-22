@@ -26,24 +26,27 @@ export const getMembersColumns = (isAdminOwner: boolean, handleEditMember: (id: 
             ? [{
                 id: "actions",
                 header: "Actions",
-                size:30,
+                size: 30,
                 cell: ({row}: { row: Row<MembersData> }) => {
                     const isOwnerOrSameRole = row.original.role === "Owner" || row.original.role == currentRole;
                     return (
                         <div className={'flex justify-center items-center'}>
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild disabled={isOwnerOrSameRole}  >
-                                    <Button  variant="ghost" size="icon"><EllipsisVertical className="h-4 w-4 "/></Button>
+                                <DropdownMenuTrigger asChild disabled={isOwnerOrSameRole}>
+                                    <Button variant="ghost" size="icon"><EllipsisVertical
+                                        className="h-4 w-4 "/></Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56">
                                     <DropdownMenuRadioGroup value={row.original.role}
                                                             onValueChange={(value) => handleEditMember(row.original.id, value)}>
                                         {WORKSPACE_ROLES.map((role) =>
-                                            <DropdownMenuRadioItem value={role} disabled={isOwnerOrSameRole} className={'text-xs'}>
+                                            <DropdownMenuRadioItem value={role} disabled={isOwnerOrSameRole}
+                                                                   className={'text-xs'} key={role}>
                                                 {role}
                                             </DropdownMenuRadioItem>
                                         )}
-                                        <DropdownMenuRadioItem value="Remove" className={'text-red-700 text-xs'}>Remove</DropdownMenuRadioItem>
+                                        <DropdownMenuRadioItem value="Remove"
+                                                               className={'text-red-700 text-xs'}>Remove</DropdownMenuRadioItem>
                                     </DropdownMenuRadioGroup>
                                 </DropdownMenuContent>
                             </DropdownMenu></div>

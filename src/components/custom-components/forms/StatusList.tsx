@@ -2,6 +2,7 @@ import {Input} from "@/components/ui/input.tsx";
 import {useRef, useState} from "react";
 import {Status, StatusType} from "@/types/project.types.ts";
 import {Label} from "@/components/ui/label.tsx";
+import ColorPicker from "@/components/custom-components/shared/ColorPicker.tsx";
 
 interface StatusListProps {
     title: string;
@@ -14,33 +15,30 @@ const statusColor = {
     'In Progress': '#f9d171',
     'Completed': '#008844'
 }
-const StatusList = ({title, statuses,onStatusChange}: StatusListProps) => {
-    const colorRef = useRef<HTMLInputElement>(null);
+const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
     const lableRef = useRef<HTMLInputElement>(null);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const [color, setColor] = useState(statusColor[title]);
-    const handleNewStatus = ( )=> {
-        if(lableRef.current && colorRef.current){
-            const newStatus:Status = {
-                name:lableRef.current!.value,
-                type:title.replace(" ", "_") as StatusType,
-                color:colorRef.current!.value,
+    const handleNewStatus = () => {
+        if (lableRef.current) {
+            const newStatus: Status = {
+                name: lableRef.current!.value,
+                type: title.replace(" ", "_") as StatusType,
+                color: color,
 
             }
-            if(newStatus.name){
+            if (newStatus.name) {
                 onStatusChange(newStatus);
-                lableRef.current!.value='';
+                lableRef.current!.value = '';
             }
         }
 
 
     }
-    const handleColorChange = (e: any) => {
-        setColor(e.target.value)
-    }
-    const handleInput = (e:any) =>{
-        if(e.code === "Enter") handleNewStatus()
+
+    const handleInput = (e: any) => {
+        if (e.code === "Enter") handleNewStatus()
     }
     return (
         <>
@@ -48,14 +46,22 @@ const StatusList = ({title, statuses,onStatusChange}: StatusListProps) => {
                 <Label>{title}</Label>
                 {statuses.map((status) => (
                     <div className={'flex items-center gap-3'} key={status.name}>
-                        <input type='color' className={'size-8  outline-0'}  defaultValue={status.color}/>
-                        <Input defaultValue={status.name}  readOnly placeholder={'Add status'} className={'w-full'}/>
+                        <div className={'size-5 rounded-xl flex items-center justify-center'}
+                             style={{
+                                 border: `1px solid ${status.color}`
+                             }}
+                        >
+                            <div className="size-4 rounded-full" style={{backgroundColor: status.color}}></div>
+                        </div>
+                        <Input defaultValue={status.name} readOnly placeholder={'Add status'} className={'w-full'}/>
                     </div>
                 ))}
                 <div className={'flex items-center gap-3'}>
-                    <input type='color' className={'size-8  outline-0'} ref={colorRef} value={color} onChange={handleColorChange}/>
+
+                    <ColorPicker setColor={setColor} color={color}/>
                     <Input ref={lableRef}
-                        placeholder={'Add status'} className={'w-full border-dashed'}  onKeyDown={(e) => handleInput(e)}/>
+                           placeholder={'Add status'} className={'w-full border-dashed'}
+                           onKeyDown={(e) => handleInput(e)}/>
                 </div>
             </div>
         </>
