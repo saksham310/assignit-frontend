@@ -10,7 +10,7 @@ export const useCreateProject = () => {
         mutationFn:createProject,
         onSuccess:async (data)=>{
             await queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            await queryClient.invalidateQueries({queryKey: ["workspace analytics", data.project.workspace_id]});
+            await queryClient.invalidateQueries({queryKey: ["workspace analytics",String(data.project.workspace_id)]});
             closeDialog();
             toast.success(data.message,{
                 duration: 2000,

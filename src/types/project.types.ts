@@ -6,6 +6,13 @@ export interface Status {
     type: StatusType
     color: string
 }
+export interface ProjectCreationPayload {
+    name: string
+    startDate: Date
+    dueDate: Date
+    customStatus: Status[]
+    workspaceId: string | null
+}
 
 export const statuses: Status[] = [
 {name:'To Do', type:'To_Do', color : '#90a9d0' },

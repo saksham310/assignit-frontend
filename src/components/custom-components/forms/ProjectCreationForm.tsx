@@ -49,7 +49,6 @@ const ProjectCreationForm = () => {
             workspaceId: currentWorkspaceId,
 
         }
-        console.log(data)
         mutate(data)
     }
     if (step === 1) {
