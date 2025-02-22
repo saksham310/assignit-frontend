@@ -7,8 +7,9 @@ import {ChevronLeft} from "lucide-react";
 
 interface CustomStatusProps {
     handleStepChange: (value : string) => void;
+    handleStatusList: (status :Status[]) => void;
 }
-const CustomStatusForm = ({handleStepChange}: CustomStatusProps) => {
+const CustomStatusForm = ({handleStepChange,handleStatusList}: CustomStatusProps) => {
     const [statusList, setStatusList] = useState<Status[]>(statuses);
     const todoList = statusList.filter(status => status.type === 'To_Do');
     const inprogressList = statusList.filter(status => status.type === 'In_Progress');
@@ -33,7 +34,7 @@ const CustomStatusForm = ({handleStepChange}: CustomStatusProps) => {
             id: id?.startsWith("temp-") ? undefined : id, // Remove only temporary IDs
         }));
 
-        console.log(formattedStatusList);
+        handleStatusList(formattedStatusList)
         handleStepChange('default')
     }
     return (

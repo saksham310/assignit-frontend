@@ -14,10 +14,16 @@ import {Label} from "@/components/ui/label.tsx";
 import {RadioGroupItem, RadioGroup} from "@/components/ui/radio-group.tsx";
 import {useState} from "react";
 import CustomStatusForm from "@/components/custom-components/forms/CustomStatusForm.tsx";
+import {Status} from "@/types/project.types.ts";
+import {useWorkspaceStore} from "@/store/workspace.store.ts";
+import {useCreateProject} from "@/hooks/project.hooks.ts";
 
 const ProjectCreationForm = () => {
     const [step, setStep] = useState(0);
+    const [statusList, setStatusList] = useState<Status[]>([]);
     const [value, setValue] = useState<string>('default');
+    const currentWorkspaceId = useWorkspaceStore(state => state.currentWorkspaceId);
+    const {mutate} = useCreateProject();
     const form = useForm<z.infer<typeof ProjectSchema>>({
         resolver: zodResolver(ProjectSchema)
     });
@@ -30,14 +36,30 @@ const ProjectCreationForm = () => {
         }
         setStep(0)
     }
+    const handleStatusList = (status: Status[]) => {
+        setStatusList(status)
+    }
+    const handleCreateProject = (values: z.infer<typeof ProjectSchema>) => {
+        console.log(statusList)
+        const data = {
+            ...values,
+            dueDate: new Date(values.dueDate),
+            startDate: new Date(values.startDate),
+            customStatus: statusList,
+            workspaceId: currentWorkspaceId,
+
+        }
+        console.log(data)
+        mutate(data)
+    }
     if (step === 1) {
-       return  <CustomStatusForm handleStepChange={handleStepChange}/>
+       return  <CustomStatusForm handleStepChange={handleStepChange} handleStatusList={handleStatusList}/>
     }
         return (<>
             <div className={'w-full md:w-[480px] h-[350px] flex flex-col space-y-2 gap-4 overflow-auto'}>
                 <h1 className={'font-semibold text-xl'}>Create a new project</h1>
                 <Form {...form}>
-                    <form className={'flex flex-col space-y-6 h-full w-full'}>
+                    <form className={'flex flex-col space-y-6 h-full w-full'} onSubmit={form.handleSubmit(handleCreateProject)}>
                         <FormField
                             key="name"
                             control={form.control}
@@ -46,7 +68,7 @@ const ProjectCreationForm = () => {
                                 <FormItem>
                                     <FormLabel>Project Name</FormLabel>
                                     <FormControl>
-                                        <Input  {...field}/>
+                                        <Input  placeholder="Enter your project name" {...field}/>
                                     </FormControl>
                                 </FormItem>
                             )}
