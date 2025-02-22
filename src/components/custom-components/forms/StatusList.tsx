@@ -36,6 +36,9 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
 
 
     }
+    const handleStatusChange = (status:Status, field:'name'|'color',value:string) => {
+        onStatusChange({ ...status, [field]: value })
+    }
 
     const handleInput = (e: any) => {
         if (e.code === "Enter") handleNewStatus()
@@ -46,15 +49,9 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
                 <Label>{title}</Label>
                 {statuses.map((status) => (
                     <div className={'flex items-center gap-3'} key={status.name}>
-                        <div className={'size-5 rounded-xl flex items-center justify-center'}
-                             style={{
-                                 border: `1px solid ${status.color}`
-                             }}
-                        >
-                            <div className="size-4 rounded-full" style={{backgroundColor: status.color}}></div>
-                        </div>
+                        <ColorPicker setColor={(color) => handleStatusChange(status,'color',color)} color={status.color}/>
                         <Input value={status.name}
-                               onChange={(e) => onStatusChange({ ...status, name: e.target.value })}  placeholder={'Add status'} className={'w-full'}/>
+                               onChange={(e) => handleStatusChange(status,'name',e.target.value)}  placeholder={'Add status'} className={'w-full'}/>
                     </div>
                 ))}
                 <div className={'flex items-center gap-3'}>
