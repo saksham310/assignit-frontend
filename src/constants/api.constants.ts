@@ -25,3 +25,6 @@ export const JOIN_WORKSPACE = `/workspaces/members/join`;
 
 // User Profile APIs
 export const UPDATE_PROFILE = '/user/profile/update';
+
+// Project Management APIs
+export const CREATE_PROJECT = '/projects'

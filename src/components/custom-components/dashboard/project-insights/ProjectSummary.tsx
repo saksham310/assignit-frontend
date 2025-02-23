@@ -14,7 +14,7 @@ const ProjectSummary=({ columns, data }: { columns: ColumnDef<any>[]; data: unkn
                         <DataGrid columns={columns} data={data}/>
                     </div>  )}
                     {data?.length < 1 && (
-                        <div className={'flex md:mt-20 flex-col gap-8 mx-auto items-center justify-center text-gray-400'}>
+                        <div className={'flex md:mt-40 flex-col gap-8 mx-auto items-center justify-center text-gray-400'}>
                             <FolderKanban className={'md:size-24'}/>
 
                            <p className={"text-sm "}> Your projects will be shown here</p></div>

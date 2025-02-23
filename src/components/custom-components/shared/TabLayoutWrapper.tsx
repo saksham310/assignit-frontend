@@ -5,32 +5,34 @@ interface TabLayoutWrapperProps {
     tabConfig: TabConfig[];
     isDashboard?: boolean;
 }
-const TabLayoutWrapper = ({ tabConfig, isDashboard} : TabLayoutWrapperProps) => {
+
+const TabLayoutWrapper = ({tabConfig, isDashboard}: TabLayoutWrapperProps) => {
     return (
-       <div className={'h-full flex flex-col'}>
-           <Tabs defaultValue={tabConfig[0].value} className="w-full  h-full flex flex-col  gap-0.5">
-               <div>
-                   < TabsList className="gap-2 bg-[#f6f8fb] space-x-2">
-                       {tabConfig.map((tab)=>{
-                           return (
-                               <TabsTrigger value={tab.value}>
-                                   {tab.label}
-                               </TabsTrigger>
-                           )
-                       })}
-               </TabsList>
-               </div>
-               <div className={`bg-white p-4 rounded-lg mt-4 ${isDashboard ? 'lg:h-[calc(100dvh-16em)]' : 'h-full'}  overflow-hidden `}>
-                   {tabConfig.map((tab)=>{
-                       return (
-                           <TabsContent value={tab.value} className="p-1 h-full overflow-y-auto">
-                               <tab.component/>
-                           </TabsContent>
-                       )
-                   })}
-               </div>
-           </Tabs>
-       </div>
+        <div className={'h-full flex flex-col'}>
+            <Tabs defaultValue={tabConfig[0].value} className="w-full  h-full flex flex-col  gap-0.5">
+                <div>
+                    < TabsList className="gap-2 bg-[#f6f8fb] space-x-2">
+                        {tabConfig.map((tab) => {
+                            return (
+                                <TabsTrigger value={tab.value} key={tab.value}>
+                                    {tab.label}
+                                </TabsTrigger>
+                            )
+                        })}
+                    </TabsList>
+                </div>
+                <div
+                    className={`bg-white p-4 rounded-lg mt-4 ${isDashboard ? 'lg:h-[calc(100dvh-16em)]' : 'h-full'}  overflow-hidden `}>
+                    {tabConfig.map((tab) => {
+                        return (
+                            <TabsContent key={tab.value} value={tab.value} className="p-1 h-full overflow-y-auto">
+                                <tab.component/>
+                            </TabsContent>
+                        )
+                    })}
+                </div>
+            </Tabs>
+        </div>
     );
 };
 export default TabLayoutWrapper;

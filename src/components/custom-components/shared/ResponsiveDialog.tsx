@@ -13,7 +13,7 @@ const ResponsiveDialog = () => {
     if (isDesktop) {
         return (
             <Dialog open={isOpen} onOpenChange={closeDialog}>
-                <DialogContent className="max-w-fit">
+                <DialogContent className="max-w-fit max-h-full">
                     {component ? React.createElement(component) : null}
                 </DialogContent>
             </Dialog>
