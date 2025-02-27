@@ -31,7 +31,7 @@ const CustomStatusForm = ({handleStepChange,handleStatusList}: CustomStatusProps
     const saveCustomStatus = () => {
         const formattedStatusList = statusList.map(({ id, ...rest }) => ({
             ...rest,
-            id: id?.startsWith("temp-") ? undefined : id, // Remove only temporary IDs
+            id: typeof id === "string" && id?.startsWith("temp-") ? undefined : id, // Remove only temporary IDs
         }));
 
         handleStatusList(formattedStatusList)

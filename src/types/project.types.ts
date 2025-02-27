@@ -1,7 +1,7 @@
 export type StatusType = "To_Do" | "In_Progress" | "Completed"
 
 export interface Status {
-    id?: string;
+    id?: string | number |undefined;
     name: string
     type: StatusType
     color: string
@@ -15,7 +15,7 @@ export interface ProjectCreationPayload {
 }
 
 export const statuses: Status[] = [
-{name:'To Do', type:'To_Do', color : '#90a9d0' },
-{name:'In Progress', type:'In_Progress', color : '#f9d171' },
-{name:'Completed', type:'Completed', color : '#008844' },
+{id:1,name:'To Do', type:'To_Do', color : '#90a9d0' },
+{id:2,name:'In Progress', type:'In_Progress', color : '#f9d171' },
+{id:3,name:'Completed', type:'Completed', color : '#008844' },
 ]

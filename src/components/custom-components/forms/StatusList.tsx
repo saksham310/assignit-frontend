@@ -16,22 +16,22 @@ const statusColor = {
     'Completed': '#008844'
 }
 const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
-    const lableRef = useRef<HTMLInputElement>(null);
+    const labelRef = useRef<HTMLInputElement>(null);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const [color, setColor] = useState(statusColor[title]);
     const handleNewStatus = () => {
-        if (lableRef.current) {
+        if (labelRef.current) {
             const newStatus: Status = {
                 id : `temp-${crypto.randomUUID()}`,
-                name: lableRef.current!.value,
+                name: labelRef.current!.value,
                 type: title.replace(" ", "_") as StatusType,
                 color: color,
 
             }
             if (newStatus.name) {
                 onStatusChange(newStatus,true);
-                lableRef.current!.value = '';
+                labelRef.current!.value = '';
             }
         }
 
@@ -58,7 +58,7 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
                 <div className={'flex items-center gap-3'}>
 
                     <ColorPicker setColor={setColor} color={color}/>
-                    <Input ref={lableRef}
+                    <Input ref={labelRef}
                            placeholder={'Add status'} className={'w-full border-dashed'}
                            onKeyDown={(e) => handleInput(e)}/>
                 </div>
