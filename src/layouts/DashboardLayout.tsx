@@ -19,10 +19,10 @@ const DashboardLayout = () => {
     return (<>
         <ResponsiveDialog/>
         <div className='flex h-screen bg-white'>
-            <div className='fixed top-0 left-0 h-full w-[210px] hidden lg:block p-2'>
+            <div className='fixed top-0 left-0 h-full w-[230px] hidden lg:block p-3'>
                 <Sidebar/>
             </div>
-            <div className='flex-1 lg:ml-[210px] flex flex-col h-dvh'>
+            <div className='flex-1 lg:ml-[230px] flex flex-col h-dvh'>
                 <div  className="px-4 py-3 "><TopBar title={title}/></div>
                 <div className='flex-1 p-6 bg-[#f6f8fb] rounded-lg overflow-y-auto scrollbar'>
                     <Outlet context={setTitle}/>
