@@ -1,5 +1,5 @@
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {createProject} from "@/service/project.service.ts";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {createProject, getProjects} from "@/service/project.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
 
@@ -11,11 +11,19 @@ export const useCreateProject = () => {
         onSuccess:async (data)=>{
             await queryClient.invalidateQueries({queryKey: ["workspaces"]});
             await queryClient.invalidateQueries({queryKey: ["workspace analytics",String(data.project.workspace_id)]});
+            await queryClient.invalidateQueries({queryKey:['projects']})
             closeDialog();
             toast.success(data.message,{
                 duration: 2000,
             });
         }
 
+    })
+}
+
+export const useGetProjects = () => {
+    return useQuery({
+        queryKey:['projects'],
+        queryFn:getProjects,
     })
 }
