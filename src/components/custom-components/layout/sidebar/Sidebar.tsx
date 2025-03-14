@@ -16,7 +16,7 @@ const Sidebar = () => {
             <div className='w-[80px] h-[53px] mb-2'>
                 <img src={Logo} alt="Logo of Assign it"/>
             </div>
-            <div className='flex-1 w-full overflow-y-auto flex flex-col space-y-8 scrollbar'>
+            <div className='flex-1 w-full overflow-y-auto flex flex-col space-y-2 scrollbar'>
                 <WorkspaceSwitcher/>
                 {getNavigationRoutes(currentWorkspaceId).map((route) => {
                     const Icon = route.icon;

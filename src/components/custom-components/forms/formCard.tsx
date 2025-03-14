@@ -34,7 +34,7 @@ const togglePass=(val:string)=>{
             </CardHeader>
             <CardContent className="p-4">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-8">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col space-y-5">
                         {fields.map((input) =>
                             <FormField
                                 key={input.name} // Add a unique key for each field

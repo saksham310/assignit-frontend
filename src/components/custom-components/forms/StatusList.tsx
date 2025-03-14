@@ -63,7 +63,9 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
                     <ColorPicker setColor={setColor} color={color}/>
                     <Input ref={labelRef}
                            placeholder={'Add status'} className={'w-full border-dashed'}
-                           onKeyDown={(e) => handleInput(e)}/>
+                           onKeyDown={(e) => handleInput(e)}
+                           onBlur={()=>handleNewStatus()}
+                    />
                 </div>
             </div>
         </>

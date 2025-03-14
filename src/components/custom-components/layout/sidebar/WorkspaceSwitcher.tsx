@@ -25,7 +25,7 @@ const WorkspaceSwitcher=()=>{
         navigate(`/workspaces/${id}`)
     }
     return <>
-        <div>
+        <div className={'mb-3'}>
             <Switcher onChange={onChange} data={data} />
         </div>
 
