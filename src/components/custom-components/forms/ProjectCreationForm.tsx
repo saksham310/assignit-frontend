@@ -40,7 +40,6 @@ const ProjectCreationForm = () => {
         setStatusList(status)
     }
     const handleCreateProject = (values: z.infer<typeof ProjectSchema>) => {
-        console.log(statusList)
         const data = {
             ...values,
             dueDate: new Date(values.dueDate),

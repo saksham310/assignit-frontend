@@ -28,5 +28,5 @@ export const UPDATE_PROFILE = '/user/profile/update';
 
 // Project Management APIs
 export const GET_PROJECTS = '/projects'
-
+export const CREATE_SPRINT = '/projects/sprint';
 export const CREATE_PROJECT = '/projects'
