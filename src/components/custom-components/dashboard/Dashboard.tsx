@@ -9,6 +9,7 @@ import {useDashboardData} from "@/hooks/dashboard.hooks.ts";
 import {useDialogStore} from "@/store/dialog.store.ts";
 import SendInvitePage from "@/pages/SendInvitePage.tsx";
 import ProjectCreationForm from "@/components/custom-components/forms/ProjectCreationForm.tsx";
+import TaskDetailPage from "@/pages/TaskDetailPage.tsx";
 
 interface DashboardProps {
     items: AnalyticCardProps[],
@@ -33,7 +34,7 @@ const Dashboard = ({items}: DashboardProps) => {
         setOpen(SendInvitePage);
     }
     const onAddProject = () => {
-        setOpen(ProjectCreationForm)
+        setOpen(TaskDetailPage)
     }
     return (
 
