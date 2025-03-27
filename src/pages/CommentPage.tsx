@@ -2,30 +2,30 @@ import {Textarea} from "@/components/ui/textarea.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import Comments from "@/components/custom-components/shared/Comments.tsx";
 
-const comments: Array<{ name: string, comment: string, createdAt: string }> = [
+const comments: Array<{ name: string, message: string, createdAt: string }> = [
     {
         name: 'John Doe',
-        comment: "I will be doing the UI part of the code.",
+        message: "I will be doing the UI part of the code.",
         createdAt: '2025-03-27T10:00:00Z' // Specific date
     },
     {
         name: 'Jane Smith',
-        comment: "I will handle the backend API integration.",
+        message: "I will handle the backend API integration.",
         createdAt: '2025-03-26T14:30:00Z' // Specific date
     },
     {
         name: 'Michael Brown',
-        comment: "I can work on the database schema and models.",
+        message: "I can work on the database schema and models.",
         createdAt: '2025-03-23T08:45:00Z' // Specific date
     },
     {
         name: 'Emily Davis',
-        comment: "I'll take care of the authentication flow.",
+        message: "I'll take care of the authentication flow.",
         createdAt: '2025-03-22T16:20:00Z' // Specific date
     },
     {
         name: 'Chris Wilson',
-        comment: "I will review and optimize the frontend performance.",
+        message: "I will review and optimize the frontend performance.",
         createdAt: '2025-03-21T11:15:00Z' // Specific date
     }
 ];
@@ -35,7 +35,7 @@ const CommentPage = () => {
     <div className={'h-full flex flex-col p-2 space-y-4'}>
         <div className="flex-1 min-h-0 overflow-y-auto space-y-7">
             {comments.map((comment, i) => (
-                <Comments key={i} comment={comment} />
+                <Comments key={i} comment={comment} type = 'comment' />
             ))}
         </div>
         <div className={'relative'}>

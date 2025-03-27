@@ -6,6 +6,7 @@ import {Separator} from "@/components/ui/separator.tsx";
 import Editor from "@/editor/Editor.tsx";
 import {Tabs,TabsList,TabsTrigger,TabsContent} from "@/components/ui/tabs.tsx";
 import CommentPage from "@/pages/CommentPage.tsx";
+import ActivityPage from "@/pages/ActivityPage.tsx";
 
 const TaskDetailPage = () => {
     return <>
@@ -91,8 +92,8 @@ const TaskDetailPage = () => {
                             <TabsContent value="comments" className="flex-1 flex flex-col h-full overflow-hidden">
                                 <CommentPage />
                             </TabsContent>
-                            <TabsContent value={'activity'} key="activity">
-                                Activity
+                            <TabsContent value={'activity'} key="activity" className={'h-full gap-0 overflow-hidden'}>
+                                <ActivityPage/>
                             </TabsContent>
                         </Tabs>
                     </Card>
