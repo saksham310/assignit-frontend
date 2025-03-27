@@ -1,9 +1,10 @@
 import {Badge} from "@/components/ui/badge.tsx";
-import {Card, CardContent,} from "@/components/ui/card.tsx";
+import {Card, CardContent, CardHeader,} from "@/components/ui/card.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover.tsx";
-import {AlertCircle, User} from "lucide-react";
+import {AlertCircle, MessageSquare, User,History} from "lucide-react";
 import {Separator} from "@/components/ui/separator.tsx";
 import Editor from "@/editor/Editor.tsx";
+import {Tabs,TabsList,TabsTrigger,TabsContent} from "@/components/ui/tabs.tsx";
 
 const TaskDetailPage = () => {
     return <>
@@ -69,10 +70,27 @@ const TaskDetailPage = () => {
                             </div>
                         </CardContent>
                     </Card>
-
                     <Editor/>
                 </div>
-                <Card className={'shadow-none p-2'}>SIDE CONTENT</Card>
+                <div className={"md:w-[400px] max-h-[650px] p-2"}>
+                    <Card className={'shadow-none w-full h-full'}>
+                        <Tabs defaultValue="comments" className="h-full flex flex-col">
+                            <CardHeader className=" border-b px-4 py-3">
+                                <TabsList className="grid w-full grid-cols-2 shadow-none bg-slate-50 ">
+                                    <TabsTrigger value="comments" className="flex items-center gap-2 shadow-none">
+                                        <MessageSquare className="h-4 w-4" />
+                                        Comments
+                                    </TabsTrigger>
+                                    <TabsTrigger value="activity" className="flex items-center gap-2">
+                                        <History className="h-4 w-4" />
+                                        Activity
+                                    </TabsTrigger>
+                                </TabsList>
+                            </CardHeader>
+                        </Tabs>
+                    </Card>
+                </div>
+
             </div>
         </div>
     </>

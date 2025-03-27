@@ -34,7 +34,7 @@ const Dashboard = ({items}: DashboardProps) => {
         setOpen(SendInvitePage);
     }
     const onAddProject = () => {
-        setOpen(TaskDetailPage)
+        setOpen(ProjectCreationForm)
     }
     return (
 

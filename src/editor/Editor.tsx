@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import Quill from "quill";
 
-const Editor = () => {
+const Editor = ({initalValue = ""}) => {
     const editorRef = useRef<HTMLDivElement | null>(null);
     const quillRef = useRef<Quill | null>(null);
 
@@ -21,16 +21,20 @@ const Editor = () => {
                         ],
                     },
                 });
+                quillRef.current.root.innerHTML = initalValue
             }
         }
 
         return () => {
-            // No need to reset quillRef.current as it only gets initialized once
         };
-    }, []);
+    }, [initalValue]);
+    const test = () =>{
+        const editorContent = quillRef.current!.root.innerHTML;
+        console.log(editorContent);
+    }
     return (
-        <div className="editor-wrapper h-full max-h-[400px]">
-            <div ref={editorRef} className="h-64 border border-gray-300" />
+        <div className="editor-wrapper h-full max-h-[420px] w-full">
+            <div ref={editorRef} className="h-64 border border-gray-300"  onBlur={test}/>
         </div>
     );
 };
