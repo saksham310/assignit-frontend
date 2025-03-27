@@ -5,6 +5,7 @@ import {AlertCircle, MessageSquare, User,History} from "lucide-react";
 import {Separator} from "@/components/ui/separator.tsx";
 import Editor from "@/editor/Editor.tsx";
 import {Tabs,TabsList,TabsTrigger,TabsContent} from "@/components/ui/tabs.tsx";
+import CommentPage from "@/pages/CommentPage.tsx";
 
 const TaskDetailPage = () => {
     return <>
@@ -87,6 +88,12 @@ const TaskDetailPage = () => {
                                     </TabsTrigger>
                                 </TabsList>
                             </CardHeader>
+                            <TabsContent value="comments" className="flex-1 flex flex-col h-full overflow-hidden">
+                                <CommentPage />
+                            </TabsContent>
+                            <TabsContent value={'activity'} key="activity">
+                                Activity
+                            </TabsContent>
                         </Tabs>
                     </Card>
                 </div>

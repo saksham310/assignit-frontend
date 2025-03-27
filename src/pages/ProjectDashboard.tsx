@@ -4,7 +4,6 @@ import {useOutletContext} from "react-router-dom";
 import {useEffect} from "react";
 import {PlusCircle} from "lucide-react";
 import {Button} from "@/components/ui/button.tsx";
-import ProjectCreationForm from "@/components/custom-components/forms/ProjectCreationForm.tsx";
 import {useDialogStore} from "@/store/dialog.store.ts";
 import SprintCreationForm from "@/components/custom-components/forms/SprintCreationForm.tsx";
 
