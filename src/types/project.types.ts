@@ -19,3 +19,6 @@ export const statuses: Status[] = [
 {id:2,name:'In Progress', type:'In_Progress', color : '#f9d171' },
 {id:3,name:'Completed', type:'Completed', color : '#008844' },
 ]
+
+export const bugTypes = ['frontend', 'backend', 'database']
+export type BugType = typeof bugTypes[number]

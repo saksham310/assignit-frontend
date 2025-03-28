@@ -1,20 +1,50 @@
 import {Badge} from "@/components/ui/badge.tsx";
 import {Card, CardContent, CardHeader,} from "@/components/ui/card.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover.tsx";
-import {AlertCircle, MessageSquare, User,History} from "lucide-react";
+import {AlertCircle, MessageSquare, User, History} from "lucide-react";
 import {Separator} from "@/components/ui/separator.tsx";
 import Editor from "@/editor/Editor.tsx";
-import {Tabs,TabsList,TabsTrigger,TabsContent} from "@/components/ui/tabs.tsx";
+import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs.tsx";
 import CommentPage from "@/pages/CommentPage.tsx";
 import ActivityPage from "@/pages/ActivityPage.tsx";
+import {useState} from "react";
+import {BugType, bugTypes} from "@/types/project.types.ts";
+import {colorMap} from "@/lib/utils.ts";
 
 const TaskDetailPage = () => {
+    const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
+        frontend: 0,
+        backend: 0,
+        database: 0,
+    })
+    const totalBugs = bugTypes.reduce((acc, index) => acc + bugCounts[index], 0);
+    const incrementBug = (category: keyof typeof bugCounts) => {
+        setBugCounts((prev) => ({
+            ...prev,
+            [category]: prev[category] + 1,
+        }))
+    }
+
+    const decrementBug = (category: keyof typeof bugCounts) => {
+        setBugCounts((prev) => ({
+            ...prev,
+            [category]: Math.max(0, prev[category] - 1),
+        }))
+    }
+
     return <>
         <div className={'w-screen py-4 mx-auto flex flex-col h-screen '}>
             <div className={'sticky top-0 bg-background pt-2 pb-4 z-10  flex flex-col gap-6'}>
-                <div className={'flex items-center gap-2'}>
+                <div className={'flex items-center gap-2 '}>
                     <Badge variant={'outline'}>Task Id</Badge>
-                    <Badge variant={'outline'}>Status</Badge>
+                    {totalBugs > 0 && <Badge variant={'outline'}
+                                             className={'border-red-500 font-normal inline-flex items-center gap-1 bg-red-50 text-red-700  '}>
+                        <AlertCircle className="size-4"/>
+                        <span>
+                        {totalBugs}  {totalBugs === 1 ? "Bug" : "Bugs"}
+                      </span>
+                    </Badge>}
+
                 </div>
                 <h1 className={'font-bold'}>
                     TASK NAME
@@ -65,10 +95,32 @@ const TaskDetailPage = () => {
                                 </div>
                             </div>
                             <Separator className="my-6"/>
-                            <div>
+                            <div className={'flex items-center gap-6 text-sm'}>
                                 <div className={'flex items-center gap-1 text-sm'}><AlertCircle
                                     className="h-4 w-4"/> Bug Cycle :
                                 </div>
+                                {bugTypes.map((type) => (
+                                    <div className="inline-flex items-center">
+                                        <button
+                                            onClick={() => decrementBug(type)}
+                                            disabled={bugCounts[type] === 0}
+                                            className="h-7 w-7 inline-flex items-center justify-center rounded-l-md border bg-slate-50 hover:bg-slate-100 disabled:opacity-50"
+                                        >
+                                            -
+                                        </button>
+                                        <div
+                                            className={`h-7 px-2 inline-flex items-center justify-center border-t border-b ${colorMap[type]} text-gray-700 text-xs font-medium`}>
+                                            <span className="mr-1">{type}</span>
+                                            {bugCounts[type]}
+                                        </div>
+                                        <button
+                                            onClick={() => incrementBug(type)}
+                                            className="h-7 w-7 inline-flex items-center justify-center rounded-r-md border bg-slate-50 hover:bg-slate-100"
+                                        >
+                                            +
+                                        </button>
+                                    </div>
+                                ))}
                             </div>
                         </CardContent>
                     </Card>
@@ -80,17 +132,17 @@ const TaskDetailPage = () => {
                             <CardHeader className=" border-b px-4 py-3">
                                 <TabsList className="grid w-full grid-cols-2 shadow-none bg-slate-50 ">
                                     <TabsTrigger value="comments" className="flex items-center gap-2 shadow-none">
-                                        <MessageSquare className="h-4 w-4" />
+                                        <MessageSquare className="h-4 w-4"/>
                                         Comments
                                     </TabsTrigger>
                                     <TabsTrigger value="activity" className="flex items-center gap-2">
-                                        <History className="h-4 w-4" />
+                                        <History className="h-4 w-4"/>
                                         Activity
                                     </TabsTrigger>
                                 </TabsList>
                             </CardHeader>
                             <TabsContent value="comments" className="flex-1 flex flex-col h-full overflow-hidden">
-                                <CommentPage />
+                                <CommentPage/>
                             </TabsContent>
                             <TabsContent value={'activity'} key="activity" className={'h-full gap-0 overflow-hidden'}>
                                 <ActivityPage/>
