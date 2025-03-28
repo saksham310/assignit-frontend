@@ -7,17 +7,22 @@ interface UserAvatarProps {
     className?: string;
     src?: string;
     name?: string;
+    avatarColor?: string;
 }
 
-const UserAvatar = ({className, src, name}: UserAvatarProps) => {
+const UserAvatar = ({className, src, name,avatarColor}: UserAvatarProps) => {
     const user = useAuthUser<User>();
     const image = src ? src : user?.image ? user?.image : '';
     const username = name ? name : user?.username ? user?.username : ''
+    const color = avatarColor ? avatarColor : ''
+    console.log(color)
     return (
 
         <Avatar className={cn(className ? className : "")}>
             <AvatarImage src={image}/>
-            <AvatarFallback>{username[0].toUpperCase()}</AvatarFallback>
+            <AvatarFallback
+            style={{background:avatarColor}}
+            >{username[0].toUpperCase()}</AvatarFallback>
         </Avatar>
 
     )

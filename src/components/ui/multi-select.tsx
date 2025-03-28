@@ -25,6 +25,7 @@ import {
     CommandList,
     CommandSeparator,
 } from "@/components/ui/command";
+import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 
 /**
  * Variants for the multi-select component to handle different styles.
@@ -62,11 +63,12 @@ interface MultiSelectProps
      */
     options: {
         /** The text to display for the option. */
-        label: string;
+        id: string;
         /** The unique value associated with the option. */
-        value: string;
+        name: string;
         /** Optional icon component to display alongside the option. */
-        icon?: React.ComponentType<{ className?: string }>;
+        image?:string;
+        avatarColor?: string;
     }[];
 
     /**
@@ -174,7 +176,7 @@ export const MultiSelect = React.forwardRef<
             if (selectedValues.length === options.length) {
                 handleClear();
             } else {
-                const allValues = options.map((option) => option.value);
+                const allValues = options.map((option) => option.name);
                 setSelectedValues(allValues);
                 onValueChange(allValues);
             }
@@ -200,28 +202,23 @@ export const MultiSelect = React.forwardRef<
                     >
                         {selectedValues.length > 0 ? (
                             <div className="flex justify-between items-center w-full">
-                                <div className="flex flex-wrap items-center">
+                                <div className="flex flex-wrap items-center gap-1">
                                     {selectedValues.slice(0, maxCount).map((value) => {
-                                        const option = options.find((o) => o.value === value);
-                                        const IconComponent = option?.icon;
+                                        const option = options.find((o) => o.name === value);
                                         return (
-                                            <div
-                                                key={value}
-                                                className={cn(
-                                                   " rounded-2xl border size-8 text-center flex items-center justify-center  bg-pink-200 group",
-                                                    multiSelectVariants({ variant })
-                                                )}
-                                            >
-                                                {IconComponent && (
-                                                    <IconComponent className="h-3 w-3" />
-                                                )}
-                                            </div>
+
+                                                <UserAvatar
+                                                    name={option?.name || ""}
+                                                    src={option?.image}
+                                                    className={`h-6 w-6 text-black`}
+                                                    avatarColor={option?.avatarColor}
+                                                />
                                         );
                                     })}
                                     {selectedValues.length > maxCount && (
                                         <span
                                             className={cn(
-                                                "bg-transparent text-foreground border-foreground/1 hover:bg-transparent  text-sm",
+                                                "bg-transparent text-gray-500 border-foreground/1 hover:bg-transparent  font-normal text-xs",
                                                 multiSelectVariants({ variant })
                                             )}
                                         >
@@ -249,19 +246,19 @@ export const MultiSelect = React.forwardRef<
                 <span className="text-sm text-gray-600 mx-3">
                   {placeholder}
                 </span>
-                                <ChevronDown className="h-4 cursor-pointer text-muted-foreground mx-2" />
+                                <ChevronDown className="h-4 cursor-pointer  mx-2" />
                             </div>
                         )}
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                    className="w-auto p-0 text-black"
+                    className="w-auto p-0 text-gray-500"
                     align="start"
                     onEscapeKeyDown={() => setIsPopoverOpen(false)}
                 >
                     <Command>
                         <CommandInput
-                            className={'text-black'}
+                            className={'text-gray-500'}
                             placeholder="Search..."
                             onKeyDown={handleInputKeyDown}
                         />
@@ -277,7 +274,7 @@ export const MultiSelect = React.forwardRef<
                                         className={cn(
                                             "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-black",
                                             selectedValues.length === options.length
-                                                ? "bg-primary text-black"
+                                                ? "bg-secondary text-gray-500"
                                                 : "opacity-50 [&_svg]:invisible"
                                         )}
                                     >
@@ -286,27 +283,29 @@ export const MultiSelect = React.forwardRef<
                                     <span>Select All</span>
                                 </CommandItem>
                                 {options.map((option) => {
-                                    const isSelected = selectedValues.includes(option.value);
+                                    const isSelected = selectedValues.includes(option.name);
                                     return (
                                         <CommandItem
-                                            key={option.value}
-                                            onSelect={() => toggleOption(option.value)}
+                                            key={option.name}
+                                            onSelect={() => toggleOption(option.name)}
                                             className="cursor-pointer"
                                         >
                                             <div
                                                 className={cn(
-                                                    "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-black",
+                                                    "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-black text-gray-500",
                                                     isSelected
-                                                        ? "bg-primary text-black"
+                                                        ? "bg-secondary text-gray-500"
                                                         : "opacity-50 [&_svg]:invisible"
                                                 )}
                                             >
-                                                <CheckIcon className="h-4 w-4" />
+                                                <UserAvatar
+                                                    name={option?.name || ""}
+                                                    src={option?.image}
+                                                    className={`h-5 w-5 text-black text-xs`}
+                                                    avatarColor={option?.avatarColor}
+                                                />
                                             </div>
-                                            {option.icon && (
-                                                <option.icon className="mr-2 h-4 w-4 text-black" />
-                                            )}
-                                            <span>{option.label}</span>
+                                            <span className={'text-gray-600 text-sm'}>{option.name}</span>
                                         </CommandItem>
                                     );
                                 })}

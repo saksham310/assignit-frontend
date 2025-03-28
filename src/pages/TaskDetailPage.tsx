@@ -11,7 +11,6 @@ import {useState} from "react";
 import {BugType, bugTypes} from "@/types/project.types.ts";
 import {colorMap} from "@/lib/utils.ts";
 import {MultiSelect} from "@/components/ui/multi-select.tsx";
-import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 
 const TaskDetailPage = () => {
     const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
@@ -33,14 +32,16 @@ const TaskDetailPage = () => {
             [category]: Math.max(0, prev[category] - 1),
         }))
     }
-    const frameworksList = [
-        { value: "react", label: "React", icon: User },
-        { value: "angular", label: "Angular", icon: User},
-        { value: "vue", label: "Vue", icon: User},
-        { value: "svelte", label: "Svelte", icon: User },
-        { value: "ember", label: "Ember", icon: User },
+    const membersList = [
+        { id: "1", name: "Saksham Sharma", image: "path_to_image.jpg", avatarColor: '#A7C7FF' }, // Soft Light Blue
+        { id: "2", name: "Jane Smith", image: "", avatarColor: '#FFB3B3' }, // Soft Light Red
+        { id: "3", name: "Alex Brown", image: "path_to_image.jpg", avatarColor: '#A2F2D0' }, // Soft Light Green
+        { id: "4", name: "Ramsay Bruh", image: "path_to_image.jpg", avatarColor: '#FFF5A3' }, // Soft Light Yellow
+        { id: "5", name: "Love Ada", image: "", avatarColor: '#E2AFFF' }, // Soft Light Purple
+        { id: "6", name: "Chris Brown", image: "path_to_image.jpg", avatarColor: '#A1F1E6' }, // Soft Light Teal
     ];
-    const [selectedFrameworks, setSelectedFrameworks] = useState(['react']);
+
+    const [selectedMembers, setSelectedMembers] = useState(['Saksham Sharma']);
 
     return <>
         <div className={'w-screen py-1.5 mx-auto flex flex-col h-screen '}>
@@ -85,11 +86,11 @@ const TaskDetailPage = () => {
                                         className="h-4 w-4"/> Assignee :
                                     </div>
                                     <MultiSelect
-                                        options={frameworksList}
-                                        onValueChange={setSelectedFrameworks}
-                                        defaultValue={selectedFrameworks}
+                                        options={membersList}
+                                        onValueChange={setSelectedMembers}
+                                        defaultValue={selectedMembers}
                                         placeholder="Unassigned"
-                                        maxCount={3}
+                                        maxCount={2}
                                     />
                                 </div>
                             </div>
