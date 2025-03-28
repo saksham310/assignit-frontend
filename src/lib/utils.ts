@@ -17,3 +17,7 @@ export const colorMap: Record<BugType, string> = {
   backend: 'bg-green-50', // Color for backend bugs
   database: 'bg-yellow-50', // Color for database bugs
 };
+export const getStatusColor = (statusName: string,statusList) =>{
+  const status = statusList.find(item => item.name === statusName);
+  return status ? status.color : null;
+}

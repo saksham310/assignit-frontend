@@ -138,7 +138,7 @@ const UserSettings = () => {
                     <p className={'font-semibold'}>Profile Setting</p>
                     <div className={'flex  items-center mt-8 gap-10'}>
                         <div className={'relative  group'} onClick={handleImageClick}>
-                            <UserAvatar className={'size-24   group-hover:opacity-50'} src={previewImage}/>
+                            <UserAvatar className={'size-24  text-lg  group-hover:opacity-50'} src={previewImage} avatarColor={user!.avatarColor} />
                             <p className={'absolute flex flex-col items-center top-[40%] w-full  text-xs  opacity-0' +
                                 '  group-hover:opacity-100'}><Camera className={'size-4'}/>Change image</p>
                             <input ref={imageInputRef} type='file' accept="image/*" className={'hidden'}

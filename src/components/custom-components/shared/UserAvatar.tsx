@@ -7,7 +7,7 @@ interface UserAvatarProps {
     className?: string;
     src?: string;
     name?: string;
-    avatarColor?: string;
+    avatarColor?: string | null;
 }
 
 const UserAvatar = ({className, src, name,avatarColor}: UserAvatarProps) => {
