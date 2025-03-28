@@ -1,7 +1,7 @@
 import {Badge} from "@/components/ui/badge.tsx";
 import {Card, CardContent, CardHeader,} from "@/components/ui/card.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover.tsx";
-import {AlertCircle, MessageSquare, User, History} from "lucide-react";
+import {AlertCircle, MessageSquare, User, History,} from "lucide-react";
 import {Separator} from "@/components/ui/separator.tsx";
 import Editor from "@/editor/Editor.tsx";
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs.tsx";
@@ -10,6 +10,8 @@ import ActivityPage from "@/pages/ActivityPage.tsx";
 import {useState} from "react";
 import {BugType, bugTypes} from "@/types/project.types.ts";
 import {colorMap} from "@/lib/utils.ts";
+import {MultiSelect} from "@/components/ui/multi-select.tsx";
+import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 
 const TaskDetailPage = () => {
     const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
@@ -31,10 +33,18 @@ const TaskDetailPage = () => {
             [category]: Math.max(0, prev[category] - 1),
         }))
     }
+    const frameworksList = [
+        { value: "react", label: "React", icon: User },
+        { value: "angular", label: "Angular", icon: User},
+        { value: "vue", label: "Vue", icon: User},
+        { value: "svelte", label: "Svelte", icon: User },
+        { value: "ember", label: "Ember", icon: User },
+    ];
+    const [selectedFrameworks, setSelectedFrameworks] = useState(['react']);
 
     return <>
-        <div className={'w-screen py-4 mx-auto flex flex-col h-screen '}>
-            <div className={'sticky top-0 bg-background pt-2 pb-4 z-10  flex flex-col gap-6'}>
+        <div className={'w-screen py-1.5 mx-auto flex flex-col h-screen '}>
+            <div className={'sticky top-0 bg-background pt-2 pb-1 pl-2 z-10  flex flex-col gap-6'}>
                 <div className={'flex items-center gap-2 '}>
                     <Badge variant={'outline'}>Task Id</Badge>
                     {totalBugs > 0 && <Badge variant={'outline'}
@@ -54,7 +64,7 @@ const TaskDetailPage = () => {
                 <div className={'space-y-6 flex flex-col h-full overflow-y-auto p-2'}>
                     <Card className={'shadow-none'}>
                         <CardContent className="p-6">
-                            <div className={'grid grid-cols-2 gap-6'}>
+                            <div className={'grid grid-cols-2'}>
                                 <div className={'text-gray-500 gap-4 text-sm flex items-center '}>
                                     <div className={'flex items-center gap-1 text-sm'}><AlertCircle
                                         className="h-4 w-4"/> Status :
@@ -70,28 +80,17 @@ const TaskDetailPage = () => {
                                     </Popover>
                                 </div>
                                 <div className={'text-gray-500 gap-4 text-sm flex items-center'}>
-                                    <div className={'flex items-center gap-1 text-sm'}><User
+                                    <div className={'flex items-center gap-1 text-sm'}>
+                                        <User
                                         className="h-4 w-4"/> Assignee :
                                     </div>
-                                    <Popover>
-                                        <PopoverTrigger>
-                                            <div className={'w-auto flex gap-1 text-sm  items-center'}>
-                                                <div className="flex items-center ">
-                                                    <div
-                                                        className={'rounded-2xl border size-6 text-center  bg-pink-200'}>S
-                                                    </div>
-                                                    <div
-                                                        className={'rounded-2xl border size-6 text-center bg-blue-200'}>A
-                                                    </div>
-                                                </div>
-                                                <span>+ 3</span>
-                                            </div>
-
-                                        </PopoverTrigger>
-                                        <PopoverContent className={'w-auto'}>
-                                            nothing
-                                        </PopoverContent>
-                                    </Popover>
+                                    <MultiSelect
+                                        options={frameworksList}
+                                        onValueChange={setSelectedFrameworks}
+                                        defaultValue={selectedFrameworks}
+                                        placeholder="Unassigned"
+                                        maxCount={3}
+                                    />
                                 </div>
                             </div>
                             <Separator className="my-6"/>
@@ -126,7 +125,7 @@ const TaskDetailPage = () => {
                     </Card>
                     <Editor/>
                 </div>
-                <div className={"md:w-[400px] max-h-[650px] p-2"}>
+                <div className={"md:w-[400px] max-h-[670px] p-2"}>
                     <Card className={'shadow-none w-full h-full'}>
                         <Tabs defaultValue="comments" className="h-full flex flex-col">
                             <CardHeader className=" border-b px-4 py-3">
