@@ -11,6 +11,7 @@ import ResetPasswordPage from "@/pages/ResetPasswordPage.tsx";
 import ErrorPage from "@/pages/ErrorPage.tsx";
 import JoinWorkspacePage from "@/pages/JoinWorkspacePage.tsx";
 import ProjectDashboard from "@/pages/ProjectDashboard.tsx";
+import SprintOverview from "@/pages/SprintOverview.tsx";
 export const router=createBrowserRouter(
     [
         {
@@ -51,8 +52,11 @@ export const router=createBrowserRouter(
                         {
                             path:'project/:projectId',
                             element: <ProjectDashboard/>
+                        },
+                        {
+                            path:'project/:projectId/sprint/:sprintId',
+                            element:<SprintOverview/>
                         }
-
                     ]
                 },
                 {

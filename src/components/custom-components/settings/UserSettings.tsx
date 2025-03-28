@@ -129,7 +129,6 @@ const UserSettings = () => {
         return <Loader/>
     }
 
-    // @ts-ignore
     return (
         <>
             <Form {...form} >

@@ -65,12 +65,13 @@ const ProjectList = () => {
                                 </div>
                                 <CollapsibleContent className="pl-6 pt-2 space-y-3">
                                     {project.sprint.map((sprint) => (
-                                        <div
+                                        <Link
                                             key={sprint.id}
+                                            to={`/project/${project.id}/sprint/${sprint.id}`}
                                             className="text-[12px] text-gray-600  p-2 rounded-md cursor-pointer"
                                         >
                                             {sprint.name}
-                                        </div>
+                                        </Link>
                                     ))}
                                 </CollapsibleContent>
                             </Collapsible>
