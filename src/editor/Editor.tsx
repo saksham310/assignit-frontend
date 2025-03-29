@@ -30,7 +30,6 @@ const Editor = ({initalValue = ""}) => {
     }, [initalValue]);
     const test = () =>{
         const editorContent = quillRef.current!.root.innerHTML;
-        console.log(editorContent);
     }
     return (
         <div className="editor-wrapper h-full max-h-[420px] w-full">

@@ -2,6 +2,7 @@ import {Card, CardFooter,CardTitle,CardContent,CardHeader} from "@/components/ui
 import {AlertCircle, Flag, FlagIcon} from "lucide-react";
 import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 import {cn, priorityFlagMap} from "@/lib/utils.ts";
+import {useDraggable} from "@dnd-kit/core";
 
 
 interface TaskCardProps {
@@ -10,10 +11,18 @@ interface TaskCardProps {
 const TaskCard = ({task}:TaskCardProps) =>{
     const maxCount = 3
     const flagColor = priorityFlagMap[task.priority.toLowerCase()];
+    const {attributes,listeners,setNodeRef,transform} = useDraggable({
+        id: task.id,
+    })
+    const style = transform ? {
+        transform :`translate(${transform.x}px,${transform.y}px)`
+    }: undefined
     return (
-        <Card  className={`cursor-grab shadow-none`}>
+        <Card  ref={setNodeRef} {...listeners} {...attributes}
+               className={`cursor-grab shadow-none`}
+        style={style}>
             <CardHeader className="p-3 pb-0 flex flex-col">
-                <span className={' flex text-xs items-center gap-1'}
+                <span className={' flex text-xs font-medium items-center gap-1'}
                       style={{
                           color: flagColor
                       }}>

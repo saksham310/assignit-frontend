@@ -23,8 +23,7 @@ export const getStatusColor = (statusName: string,statusList) =>{
 }
 
 export const priorityFlagMap:Record<string,string> = {
-  urgent:'red',
-  high:'orange',
-  medium:'green',
-  low:'grey',
+  high:'#D32F2F',
+  medium:'#FB8C00',
+  low:'#43A047',
 }

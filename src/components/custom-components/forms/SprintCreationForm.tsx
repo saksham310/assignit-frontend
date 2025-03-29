@@ -27,7 +27,6 @@ const SprintCreationForm = () => {
     });
 
     const onSubmit = (values: z.infer<typeof ProjectSchema>) => {
-        console.log(values)
         const data = {...values,project_id:projectId};
         mutate(data)
 

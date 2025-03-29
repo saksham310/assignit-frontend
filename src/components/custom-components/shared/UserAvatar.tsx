@@ -15,7 +15,6 @@ const UserAvatar = ({className, src, name,avatarColor}: UserAvatarProps) => {
     const image = src ? src : user?.image ? user?.image : '';
     const username = name ? name : user?.username ? user?.username : ''
     const color = avatarColor ? avatarColor : ''
-    console.log(color)
     return (
 
         <Avatar className={cn(className ? className : "")}>

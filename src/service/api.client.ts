@@ -35,7 +35,6 @@ apiClient.interceptors.response.use((res) => {
     if (err.message === "No authentication token") {
         return Promise.reject(err);
     }
-    console.log(err.response.status === 422);
     if (err.response.status === 422)
     {
         window.location.href= '/error';
