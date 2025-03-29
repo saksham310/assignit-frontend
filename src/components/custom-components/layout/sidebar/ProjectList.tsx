@@ -64,7 +64,7 @@ const ProjectList = () => {
                                     </CollapsibleTrigger>
                                 </div>
                                 <CollapsibleContent className="pl-6 pt-2 space-y-3">
-                                    {project.sprint.map((sprint) => (
+                                    {project.sprint.map((sprint:any) => (
                                         <Link
                                             key={sprint.id}
                                             to={`/project/${project.id}/sprint/${sprint.id}`}

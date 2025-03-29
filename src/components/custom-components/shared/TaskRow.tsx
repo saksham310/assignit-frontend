@@ -2,6 +2,8 @@ import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 import {cn} from "@/lib/utils.ts";
 import {Badge} from "@/components/ui/badge.tsx";
 import {AlertCircle} from "lucide-react";
+import {useDialogStore} from "@/store/dialog.store.ts";
+import TaskDetailPage from "@/pages/TaskDetailPage.tsx";
 
 
 interface TaskRowProps {
@@ -12,9 +14,13 @@ interface TaskRowProps {
 }
 const TaskRow = ({ taskName, assignees, bugCount, priority }:TaskRowProps) => {
    const maxCount = 3;
+    const setOpen = useDialogStore(state => state.openDialog)
+   const openTaskDetailPage = () =>{
+setOpen(TaskDetailPage)
+   }
     return (
         <>
-            <div className={'grid grid-cols-4 border-b p-2'}>
+            <div className={'grid grid-cols-4 border-b p-2'} onDoubleClick={openTaskDetailPage}>
                 <span>{taskName}</span>
                 <div className="flex flex-wrap items-center gap-0.5 ">
                     {assignees.slice(0, maxCount).map((value) => {
