@@ -5,6 +5,7 @@ import {useOutletContext} from "react-router-dom";
 import {useEffect} from "react";
 import {PlusCircle} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import KanbanBoard from "@/pages/KanbanBoard.tsx";
 
 const SprintOverview = () => {
     const setTitle = useOutletContext<(title: string) => void>();
@@ -18,11 +19,9 @@ const SprintOverview = () => {
             component: () => <SprintListView/>,
         },
         {
-            value: "kanban",
-            label: "Kanban",
-            component: () => <>
-                <div>Kanban here</div>
-            </>,
+            value: "board",
+            label: "Board",
+            component: () => <KanbanBoard/>,
         },
     ];
     return (

@@ -1,0 +1,29 @@
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Badge} from "@/components/ui/badge";
+import TaskCard from "@/components/custom-components/shared/TaskCard.tsx";
+
+interface KanbanColumnProps {
+    status: any
+}
+const KanbanColumn = ({status}:KanbanColumnProps) => {
+    return <>
+    <Card className={'shadow-none flex flex-col h-[calc(100vh-200px)] border-primary/900 bg-primary/5'}>
+        <CardHeader className={'pb-2'}>
+            <Badge variant={'outline'} className="border-2  w-fit font-medium"
+            style={{borderColor:status.color}}>
+                {status.name}
+            </Badge>
+        </CardHeader>
+        <CardContent className={"flex-1 overflow-y-auto p-2"}>
+            <div className={'flex flex-col gap-4'}>
+                {status.tasks.map((task) =>{
+                    return <TaskCard task={task} />
+                })}
+            </div>
+
+        </CardContent>
+    </Card>
+    </>
+}
+
+export default KanbanColumn;

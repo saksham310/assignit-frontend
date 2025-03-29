@@ -21,3 +21,10 @@ export const getStatusColor = (statusName: string,statusList) =>{
   const status = statusList.find(item => item.name === statusName);
   return status ? status.color : null;
 }
+
+export const priorityFlagMap:Record<string,string> = {
+  urgent:'red',
+  high:'orange',
+  medium:'green',
+  low:'grey',
+}
