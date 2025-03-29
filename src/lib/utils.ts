@@ -13,9 +13,9 @@ export const refreshPage = ()=>{
 }
 
 export const colorMap: Record<BugType, string> = {
-  frontend: 'bg-blue-50', // Color for frontend bugs
-  backend: 'bg-green-50', // Color for backend bugs
-  database: 'bg-yellow-50', // Color for database bugs
+  frontend: 'bg-blue-100', // Color for frontend bugs
+  backend: 'bg-green-100', // Color for backend bugs
+  database: 'bg-yellow-100', // Color for database bugs
 };
 export const getStatusColor = (statusName: string,statusList) =>{
   const status = statusList.find(item => item.name === statusName);

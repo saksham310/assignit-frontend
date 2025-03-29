@@ -21,7 +21,7 @@ const UserAvatar = ({className, src, name,avatarColor}: UserAvatarProps) => {
         <Avatar className={cn(className ? className : "")}>
             <AvatarImage src={image}/>
             <AvatarFallback
-            style={{background:avatarColor}}
+            style={{background:color}}
             >{username[0].toUpperCase()}</AvatarFallback>
         </Avatar>
 
