@@ -1,6 +1,7 @@
 import KanbanColumn from "@/components/custom-components/shared/KanbanColumn.tsx";
-import {DndContext, DragEndEvent} from "@dnd-kit/core";
+import {DndContext, DragEndEvent, DragOverlay} from "@dnd-kit/core";
 import {useState} from "react";
+import TaskCard from "@/components/custom-components/shared/TaskCard.tsx";
 
 
 const initialTaskStatus = [
@@ -107,6 +108,15 @@ const initialTaskStatus = [
 
 const KanbanBoard = () => {
     const [taskStatus, setTaskStatus] = useState(initialTaskStatus);
+    const [activeTask, setActiveTask] = useState<null | any>(null);
+
+    const handleDragStart = (event: any) => {
+        const taskId = event.active.id;
+        const task = taskStatus
+            .flatMap(col => col.tasks)
+            .find(t => t.id === taskId);
+        setActiveTask(task);
+    };
     const handleDragEnd = (e:DragEndEvent)=>{
        const {active,over} = e;
        if (!over) return;
@@ -124,15 +134,23 @@ const KanbanBoard = () => {
             targetColumn.tasks.push(taskToMove);
         }
         setTaskStatus([...taskStatus]);
+        setActiveTask(null);
     }
     return <>
     <div className={'grid grid-cols-1 gap-2 md:grid-cols-3 p-1 '}>
-        <DndContext onDragEnd={handleDragEnd} >
+        <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} >
         {taskStatus.map((task)=>{
             return (
                <KanbanColumn status={task}/>
             )
         })}
+            <DragOverlay>
+                {activeTask ? (
+                    <TaskCard
+                        task={activeTask}
+                    />
+                ) : null}
+            </DragOverlay>
         </DndContext>
     </div>
     </>

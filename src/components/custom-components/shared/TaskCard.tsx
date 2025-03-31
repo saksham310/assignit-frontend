@@ -3,6 +3,8 @@ import {AlertCircle, Flag, FlagIcon} from "lucide-react";
 import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 import {cn, priorityFlagMap} from "@/lib/utils.ts";
 import {useDraggable} from "@dnd-kit/core";
+import {useDialogStore} from "@/store/dialog.store.ts";
+import TaskDetailPage from "@/pages/TaskDetailPage.tsx";
 
 
 interface TaskCardProps {
@@ -10,6 +12,10 @@ interface TaskCardProps {
 }
 const TaskCard = ({task}:TaskCardProps) =>{
     const maxCount = 3
+    const setOpen = useDialogStore(state => state.openDialog)
+    const openTaskDetailPage = () =>{
+        setOpen(TaskDetailPage)
+    }
     const flagColor = priorityFlagMap[task.priority.toLowerCase()];
     const {attributes,listeners,setNodeRef,transform} = useDraggable({
         id: task.id,
@@ -18,7 +24,7 @@ const TaskCard = ({task}:TaskCardProps) =>{
         transform :`translate(${transform.x}px,${transform.y}px)`
     }: undefined
     return (
-        <Card  ref={setNodeRef} {...listeners} {...attributes}
+        <Card  ref={setNodeRef} {...listeners} {...attributes} onDoubleClick={openTaskDetailPage}
                className={`cursor-grab shadow-none`}
         style={style}>
             <CardHeader className="p-3 pb-0 flex flex-col">
