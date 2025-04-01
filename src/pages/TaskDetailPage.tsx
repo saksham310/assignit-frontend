@@ -63,7 +63,7 @@ const TaskDetailPage = () => {
     const [selectedMembers, setSelectedMembers] = useState(['Saksham Sharma']);
 
     return <>
-        <div className={'w-screen py-1.5 mx-auto flex flex-col h-screen '}>
+        <div className={'w-screen p-2 flex flex-col h-screen '}>
             <div className={'sticky top-0 bg-background pt-2 pb-1 pl-2 z-10  flex flex-col gap-6'}>
                 <div className={'flex items-center gap-2 '}>
                     <Badge variant={'outline'}>Task Id</Badge>
@@ -155,7 +155,7 @@ const TaskDetailPage = () => {
                     </Card>
                     <Editor/>
                 </div>
-                <div className={"md:w-[600px]"}>
+                <div className={""}>
                     <Card className={'shadow-none w-full h-full'}>
                         <Tabs defaultValue="comments" className="h-full flex flex-col">
                             <CardHeader className=" border-b px-4 py-3">
