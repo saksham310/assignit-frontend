@@ -28,7 +28,6 @@
 .ql-container.ql-snow {
     border: 1px solid var(--ql-border);
     border-top: 0;
-    border-radius: 0 0 0.75rem 0.75rem;
     background: var(--ql-bg);
     min-height: 250px;
 }

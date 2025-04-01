@@ -32,8 +32,8 @@ const Editor = ({initalValue = ""}) => {
         const editorContent = quillRef.current!.root.innerHTML;
     }
     return (
-        <div className="editor-wrapper h-full max-h-[420px] w-full">
-            <div ref={editorRef} className="h-64 border border-gray-300"  onBlur={test}/>
+        <div className="editor-wrapper h-full w-ful flex flex-col">
+            <div ref={editorRef} className="flex-1 border border-gray-300"  onBlur={test}/>
         </div>
     );
 };

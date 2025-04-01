@@ -80,10 +80,10 @@ const TaskDetailPage = () => {
                     TASK NAME
                 </h1>
             </div>
-            <div className={'grid md:grid-cols-[2fr_1fr] gap-6 h-full  '}>
-                <div className={'space-y-6 flex flex-col h-full overflow-y-auto p-2'}>
+            <div className={'grid md:grid-cols-[2fr_1fr] gap-6 h-full p-6 '}>
+                <div className={'gap-4 flex flex-col '}>
                     <Card className={'shadow-none'}>
-                        <CardContent className="p-6">
+                        <CardContent className="p-2">
                             <div className={'grid grid-cols-2'}>
                                 <div className={'text-gray-500 gap-4 text-sm flex items-center '}>
                                     <div className={'flex items-center gap-1 text-sm'}><AlertCircle
@@ -155,7 +155,7 @@ const TaskDetailPage = () => {
                     </Card>
                     <Editor/>
                 </div>
-                <div className={"md:w-[400px] max-h-[670px] p-2"}>
+                <div className={"md:w-[600px]"}>
                     <Card className={'shadow-none w-full h-full'}>
                         <Tabs defaultValue="comments" className="h-full flex flex-col">
                             <CardHeader className=" border-b px-4 py-3">
