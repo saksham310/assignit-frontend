@@ -80,9 +80,9 @@ const TaskDetailPage = () => {
                     TASK NAME
                 </h1>
             </div>
-            <div className={'grid md:grid-cols-[2fr_1fr] gap-6 h-full p-6 '}>
+            <div className={'grid md:grid-cols-[2fr_1fr] gap-4 h-full max-h-[1000px] p-6 '}>
                 <div className={'gap-4 flex flex-col '}>
-                    <Card className={'shadow-none'}>
+                    <Card className={'shadow-none w-full'}>
                         <CardContent className="p-2">
                             <div className={'grid grid-cols-2'}>
                                 <div className={'text-gray-500 gap-4 text-sm flex items-center '}>
@@ -156,7 +156,7 @@ const TaskDetailPage = () => {
                     <Editor/>
                 </div>
                 <div className={""}>
-                    <Card className={'shadow-none w-full h-full'}>
+                    <Card className={'shadow-none w-full max-w-[580px] h-full max-h-[865px]'}>
                         <Tabs defaultValue="comments" className="h-full flex flex-col">
                             <CardHeader className=" border-b px-4 py-3">
                                 <TabsList className="grid w-full grid-cols-2 shadow-none bg-slate-50 ">
@@ -170,12 +170,12 @@ const TaskDetailPage = () => {
                                     </TabsTrigger>
                                 </TabsList>
                             </CardHeader>
-                            <TabsContent value="comments" className="flex-1 flex flex-col h-full overflow-hidden">
-                                <CommentPage/>
-                            </TabsContent>
-                            <TabsContent value={'activity'} key="activity" className={'h-full gap-0 overflow-hidden'}>
-                                <ActivityPage/>
-                            </TabsContent>
+                                <TabsContent value="comments" className="flex-1  flex flex-col h-full overflow-hidden">
+                                    <CommentPage/>
+                                </TabsContent>
+                                <TabsContent value={'activity'} key="activity" className={'h-full gap-0 overflow-hidden'}>
+                                    <ActivityPage/>
+                                </TabsContent>
                         </Tabs>
                     </Card>
                 </div>
