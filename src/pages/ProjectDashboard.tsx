@@ -6,12 +6,13 @@ import {PlusCircle} from "lucide-react";
 import {Button} from "@/components/ui/button.tsx";
 import {useDialogStore} from "@/store/dialog.store.ts";
 import SprintCreationForm from "@/components/custom-components/forms/SprintCreationForm.tsx";
+import ProjectListView from "@/components/custom-components/dashboard/ProjectListView.tsx";
 
 const tabConfig: TabConfig[] = [
     {
         value: "list",
         label: "List",
-        component: () => <> <div>TO DO </div></>,
+        component: () => <ProjectListView/>,
     },
     {
         value: "members",

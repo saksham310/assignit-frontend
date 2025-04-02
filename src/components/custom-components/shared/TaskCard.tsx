@@ -25,7 +25,7 @@ const TaskCard = ({task}:TaskCardProps) =>{
     }: undefined
     return (
         <Card  ref={setNodeRef} {...listeners} {...attributes} onDoubleClick={openTaskDetailPage}
-               className={`cursor-grab shadow-none`}
+               className={`cursor-grab shadow-none `}
         style={style}>
             <CardHeader className="p-3 pb-0 flex flex-col">
                 <span className={' flex text-xs font-medium items-center gap-1'}

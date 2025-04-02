@@ -77,10 +77,13 @@ const taskStatus = [
         ]
     }
 ];
+interface  SprintListViewProps {
+    sprint?: any;
+}
 
-const SprintListView = () => {
+const SprintListView = ({sprint}:SprintListViewProps) => {
     return <>
-        <div className={'flex flex-col gap-0.5'}>
+        <div className={'flex flex-col gap-6'}>
             {taskStatus.map((task) => (
                 <TaskListAccordion task={task}/>
             ))}

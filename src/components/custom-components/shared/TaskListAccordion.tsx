@@ -8,12 +8,13 @@ const TaskListAccordion = ({task} ) => {
         <>
             <Accordion type={"single"} collapsible defaultValue={task.name }>
                 <AccordionItem value={task.name}>
-                    <Card className={'shadow-none border-none'}>
-                        <CardHeader className={' border-[#f6f8fb] rounded-lg px-3 py-2 mb-1 hover:bg-[#f6f8fb]'}>
-                            <div className={'flex justify-between items-center'}>
+                    <Card className={'shadow-none '}>
+                        <CardHeader className={' border-[#f6f8fb] rounded-lg px-3 py-2 mb-1 '}>
+                            <div className={'flex gap-2 items-center'}>
+                                <AccordionTrigger/>
                                 <span><Badge variant={'outline'} className={'border-2'} style={{borderColor:task.color,
                                 color:task.color}}>{task.name}</Badge></span>
-                                <AccordionTrigger/>
+
                             </div>
                         </CardHeader>
                         <AccordionContent>
