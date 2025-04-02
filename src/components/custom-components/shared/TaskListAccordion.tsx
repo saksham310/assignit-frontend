@@ -10,11 +10,11 @@ const TaskListAccordion = ({task} ) => {
                 <AccordionItem value={task.name}>
                     <Card className={'shadow-none '}>
                         <CardHeader className={' border-[#f6f8fb] rounded-lg px-3 py-2 mb-1 '}>
-                            <div className={'flex gap-2 items-center'}>
-                                <AccordionTrigger/>
+                            <div className={'flex justify-between  items-center'}>
+
                                 <span><Badge variant={'outline'} className={'border-2'} style={{borderColor:task.color,
                                 color:task.color}}>{task.name}</Badge></span>
-
+                                <AccordionTrigger/>
                             </div>
                         </CardHeader>
                         <AccordionContent>

@@ -93,10 +93,10 @@ const ProjectListView = () => {
                         <AccordionItem value={sprint.name}>
                             <Card className={'shadow-none border-none'}>
                                 <CardHeader className={' border-[#f6f8fb] rounded-lg px-3 py-2 mb-1 hover:bg-[#f6f8fb]'}>
-                                    <div className={'flex gap-2 items-center'}>
-                                        <AccordionTrigger/>
-                                        <CardTitle>{sprint.name.toUpperCase()}</CardTitle>
+                                    <div className={'flex justify-between items-center'}>
 
+                                        <CardTitle>{sprint.name.toUpperCase()}</CardTitle>
+                                        <AccordionTrigger/>
                                     </div>
                                 </CardHeader>
                                 <AccordionContent>

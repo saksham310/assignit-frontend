@@ -1,9 +1,6 @@
 import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
-import {DataGrid} from "@/components/custom-components/shared/DataGrid.tsx";
 import {ColumnDef} from "@tanstack/react-table";
 import {FolderKanban} from "lucide-react";
-import {useGetProjects} from "@/hooks/project.hooks.ts";
-import {Badge} from "@/components/ui/badge.tsx";
 import ProjectSummaryRow from "@/components/custom-components/dashboard/project-insights/ProjectSummaryRow.tsx";
 
 const ProjectSummary=({ columns, data }: { columns: ColumnDef<any>[]; data: unknown[]})=>{
