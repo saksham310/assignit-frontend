@@ -7,6 +7,7 @@ interface ProjectSummaryRowProps {
 const ProjectSummaryRow = (
     {project}:ProjectSummaryRowProps
 )=>{
+    const progress =Math.round((project.completed / project.tasks) * 100) ? Math.round((project.completed / project.tasks) * 100) : 0
     return (<>
 
         <div className={'flex flex-col gap-4'}>
@@ -29,12 +30,12 @@ const ProjectSummaryRow = (
             <div className="mb-4">
                 <div className="flex justify-between text-sm mb-1">
                     <span className="text-gray-500 font-medium">Progress</span>
-                    <span className="font-medium">{Math.round((project.completed / project.tasks) * 100)}%</span>
+                    <span className="font-medium">{progress}%</span>
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-2">
                     <div
                         className="bg-[#9286f9] h-2 rounded-full"
-                        style={{ width: `${Math.round((project.completed / project.tasks) * 100)}%` }}
+                        style={{ width: `${progress}% ` }}
                     ></div>
                 </div>
             </div>

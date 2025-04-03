@@ -3,8 +3,9 @@ import {useEffect} from "react";
 import {useGetWorkspace, useGetWorkspaceMember, useUpdateMemberRole} from "@/hooks/workspace.hooks.ts";
 import {useJoinWorkspaceStore, useWorkspaceRoleStore} from "@/store/workspace.store.ts";
 import {MembersData} from "@/types/workspace.type.ts";
-import {getMembersColumns, projectColumns} from "@/constants/table-columns.constants.tsx";
+import {getMembersColumns} from "@/constants/table-columns.constants.tsx";
 import {WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
+import {useGetProjects} from "@/hooks/project.hooks.ts";
 
 
 export const useDashboardNavigate = () => {
@@ -35,7 +36,7 @@ export const useDashboardData = () => {
     const {id} = useParams();
     const {data} = useGetWorkspaceMember(id);
     const memberData = data as MembersData[];
-    const projectData: unknown[] = [];
+    const {data:project} = useGetProjects();
     useEffect(() => {
         if (!!id) setCurrentRole(id as string)
     }, [id]);
@@ -49,6 +50,6 @@ export const useDashboardData = () => {
     }
     const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole);
     const membersColumns = getMembersColumns(isOwnerAdmin, handleEditMember);
-    return {isOwnerAdmin, memberData, projectData, membersColumns, projectColumns};
+    return {isOwnerAdmin, memberData, project, membersColumns};
 
 }
