@@ -1,9 +1,14 @@
 import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
 import {FolderKanban} from "lucide-react";
 import ProjectSummaryRow from "@/components/custom-components/dashboard/project-insights/ProjectSummaryRow.tsx";
+import {useGetProjects} from "@/hooks/project.hooks.ts";
+import {ProjectResponse} from "@/types/project.types.ts";
+import {useWorkspaceStore} from "@/store/workspace.store.ts";
 
 
-const ProjectSummary=({projects})=>{
+const ProjectSummary=()=>{
+    const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId)
+    const {data:projects} =useGetProjects(currentWorkspaceId as string);
     return <>
             <Card className={' col-span-2  overflow-hidden h-full flex flex-col gap-3 '}>
                 <CardHeader className="text-m font-semibold ">Project Summary
@@ -11,7 +16,7 @@ const ProjectSummary=({projects})=>{
                 <CardContent className={'overflow-y-auto'}>
                     {projects?.length > 0 &&(
                     <div className=" h-full  w-full  flex flex-col gap-6">
-                        {projects.map((project) =>{
+                        {projects.map((project:ProjectResponse) =>{
                             return <ProjectSummaryRow project={project}/>
                         })}
                     </div>  )}

@@ -21,10 +21,10 @@ export const useCreateProject = () => {
     })
 }
 
-export const useGetProjects = () => {
+export const useGetProjects = (id:string|undefined) => {
     return useQuery({
         queryKey:['projects'],
-        queryFn:getProjects,
+        queryFn:() => getProjects(id),
     })
 }
 

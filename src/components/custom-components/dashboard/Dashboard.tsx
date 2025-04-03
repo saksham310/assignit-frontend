@@ -15,13 +15,13 @@ interface DashboardProps {
 }
 
 const Dashboard = ({items}: DashboardProps) => {
-    const {project, memberData, membersColumns, isOwnerAdmin} = useDashboardData();
+    const {memberData, membersColumns, isOwnerAdmin} = useDashboardData();
     const setOpen = useDialogStore(state => state.openDialog);
     const tabConfig: TabConfig[] = [
         {
             value: "projects",
             label: "Projects",
-            component: () => <ProjectInsightsTab projects={project}/>,
+            component: () => <ProjectInsightsTab />,
         },
         {
             value: "members",

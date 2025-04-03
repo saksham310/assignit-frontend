@@ -9,11 +9,14 @@ import { ChevronDown, ChevronsUpDown, Folder } from "lucide-react";
 import {Link, useLocation} from "react-router-dom";
 import {useGetProjects} from "@/hooks/project.hooks.ts";
 import {cn} from "@/lib/utils.ts";
+import {ProjectResponse, SprintList} from "@/types/project.types.ts";
+import {useWorkspaceStore} from "@/store/workspace.store.ts";
 
 
 const ProjectList = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const {data} = useGetProjects()  ;
+    const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId)
+    const {data} =useGetProjects(currentWorkspaceId as string);
     const projects = data ? data : [];
     const [openProjects, setOpenProjects] = useState<{ [key: number]: boolean }>({});
 
@@ -43,7 +46,7 @@ const ProjectList = () => {
                     </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent className=" space-y-4 pl-4 ">
-                    {projects.length > 0 ? projects.map((project) => (
+                    {projects.length > 0 ? projects.map((project:ProjectResponse) => (
                             <Collapsible
                                 open={openProjects[project.id] || false}
                                 onOpenChange={() => toggleProject(project.id)}
@@ -63,8 +66,8 @@ const ProjectList = () => {
                                         </Button>
                                     </CollapsibleTrigger>
                                 </div>
-                                <CollapsibleContent className="pl-6 pt-2 space-y-3">
-                                    {project.sprint.map((sprint:any) => (
+                                <CollapsibleContent className="pl-6 pt-2 space-y-3 flex flex-col">
+                                    {project.sprint.map((sprint:SprintList) => (
                                         <Link
                                             key={sprint.id}
                                             to={`/project/${project.id}/sprint/${sprint.id}`}

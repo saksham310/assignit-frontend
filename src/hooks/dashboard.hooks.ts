@@ -5,7 +5,6 @@ import {useJoinWorkspaceStore, useWorkspaceRoleStore} from "@/store/workspace.st
 import {MembersData} from "@/types/workspace.type.ts";
 import {getMembersColumns} from "@/constants/table-columns.constants.tsx";
 import {WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
-import {useGetProjects} from "@/hooks/project.hooks.ts";
 
 
 export const useDashboardNavigate = () => {
@@ -36,9 +35,8 @@ export const useDashboardData = () => {
     const {id} = useParams();
     const {data} = useGetWorkspaceMember(id);
     const memberData = data as MembersData[];
-    const {data:project} = useGetProjects();
     useEffect(() => {
-        if (!!id) setCurrentRole(id as string)
+        if (id) setCurrentRole(id as string)
     }, [id]);
     const handleEditMember = (memberId: number, value: string) => {
         const data = {
@@ -50,6 +48,6 @@ export const useDashboardData = () => {
     }
     const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole);
     const membersColumns = getMembersColumns(isOwnerAdmin, handleEditMember);
-    return {isOwnerAdmin, memberData, project, membersColumns};
+    return {isOwnerAdmin, memberData, membersColumns};
 
 }

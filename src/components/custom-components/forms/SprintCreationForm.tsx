@@ -12,10 +12,12 @@ import {CalendarIcon} from "lucide-react";
 import {Calendar} from "@/components/ui/calendar.tsx";
 import {useCreateSprint, useGetProjects} from "@/hooks/project.hooks.ts";
 import {useParams} from "react-router-dom";
+import {useWorkspaceStore} from "@/store/workspace.store.ts";
 const SprintCreationForm = () => {
     const {projectId} = useParams()
-    const {data:project} = useGetProjects();
-    const currentProject = project.filter(project => project.id == projectId);
+    const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId)
+    const {data:project} =useGetProjects(currentWorkspaceId as string);
+    const currentProject = project.filter((project:any) => project.id == projectId);
     const {mutate} = useCreateSprint();
     const form = useForm<z.infer<typeof ProjectSchema>>({
         resolver: zodResolver(ProjectSchema),
