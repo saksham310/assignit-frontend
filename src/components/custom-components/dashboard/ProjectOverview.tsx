@@ -1,15 +1,17 @@
 
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
-import {Cell, Pie, PieChart, ResponsiveContainer, Tooltip} from "recharts";
+import {Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {priorityFlagMap} from "@/lib/utils.ts";
 import Analytics from "@/components/custom-components/dashboard/Analytics.tsx";
+import moment from "moment";
+import NoDataDisplay from "@/components/custom-components/shared/NoDataDisplay.tsx";
 
 const ProjectOverview = ({projectSprint}) =>{
 
     const taskStatusData = [
-        { name: "Completed", value: 20, color: "#10b954" }, // Green
-        { name: "In Progress", value: 30, color: "rgba(255,189,56,0.9)" }, // Amber
-        { name: "To Do", value: 50, color: "#8f90ff" }, // Indigo
+        { name: "Completed", value: projectSprint.completed, color: "#10b954" }, // Green
+        { name: "In Progress", value: projectSprint.inProgress, color: "rgba(255,189,56,0.9)" }, // Amber
+        { name: "To Do", value: projectSprint.toDo, color: "#8f90ff" }, // Indigo
     ]
     const taskPriorityData = [
         { name: "High", value: 10, color: priorityFlagMap['High'] }, // Red
@@ -20,24 +22,29 @@ const ProjectOverview = ({projectSprint}) =>{
        {
            name:'Completion Rate',
            info: ` ${projectSprint.tasks != 0 ? projectSprint.completed/ projectSprint.tasks * 100 : 0} %`,
-           subInfo: "Of total tasks completed"
+           subInfo: "Of total tasks completed",
+           iconLabel:'Complete'
        },
        {
            name:'Average Task Per Member',
            info: `${projectSprint.tasks/ projectSprint.members}`,
-           subInfo: "Average workload per member"
+           subInfo: "Average workload per member",
+           iconLabel:'Tasks'
        },
        {
            name:'In Progress',
            info: ` ${projectSprint.tasks != 0 ? projectSprint.inProgress/ projectSprint.tasks * 100 : 0} %`,
-           subInfo: "Of tasks currently active"
+           subInfo: "Of tasks currently active",
+           iconLabel:'Progress'
        },
        {
-           name:'Different',
-           info: ` ${projectSprint.tasks != 0 ? projectSprint.completed/ projectSprint.tasks * 100 : 0} %`,
-           subInfo: "Of total tasks completed"
+           name:'Time Remaining',
+           info: `${moment(projectSprint.dueDate).diff(moment(),'days')}`,
+           subInfo: "Days until deadline",
+           iconLabel:'Due'
        },
    ]
+    const hasData = projectSprint.tasks !=0;
     return (
         <>
         <div className={'flex flex-col gap-10'}>
@@ -49,29 +56,38 @@ const ProjectOverview = ({projectSprint}) =>{
                             <h3 className="text-sm font-medium text-gray-700">Task Priority Distribution</h3>
                             <p className="text-xs text-gray-500">Breakdown of tasks by priority</p>
                         </div>
-                        <div className={'h-[380px] p-4'}>
-                            <ResponsiveContainer width="100%" height="100%">
-                                <PieChart>
-                                    <Pie
-                                        data={taskStatusData}
-                                        cx="50%"
-                                        cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={90}
-                                        dataKey="value"
-                                        startAngle={90}
-                                        endAngle={-270}
-                                    >
-                                        {taskStatusData.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={entry.color} />
-                                        ))}
-                                    </Pie>
-                                    <Tooltip
-                                        formatter={(value) => [`${value}%`, ""]}
-                                        contentStyle={{ border: "none", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}
-                                    />
-                                </PieChart>
-                            </ResponsiveContainer>
+                        <div className={'h-[360px] p-4'}>
+                            {hasData ?
+                                (
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <PieChart>
+                                            <Pie
+                                                data={taskStatusData}
+                                                cx="50%"
+                                                cy="50%"
+                                                innerRadius={60}
+                                                outerRadius={90}
+                                                dataKey="value"
+                                                startAngle={90}
+                                                endAngle={-270}
+                                                cornerRadius={5}
+                                                paddingAngle={2}
+                                            >
+                                                {taskStatusData.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={entry.color} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip
+                                                formatter={(value) => [`${value}%`, ""]}
+                                                contentStyle={{ border: "none", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}
+                                            />
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                ) : (
+                                 <NoDataDisplay/>
+                                )
+                            }
+
                             <div className="flex justify-center gap-6 ">
                                 {taskStatusData.map((entry, index) => (
                                     <div key={index} className="flex items-center gap-2">
@@ -91,29 +107,21 @@ const ProjectOverview = ({projectSprint}) =>{
                             <h3 className="text-sm font-medium text-gray-700">Task Priority Distribution</h3>
                             <p className="text-xs text-gray-500">Breakdown of tasks by priority</p>
                         </div>
-                        <div className="h-[380px] p-4">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <PieChart>
-                                    <Pie
-                                        data={taskPriorityData}
-                                        cx="50%"
-                                        cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={90}
-                                        dataKey="value"
-                                        startAngle={90}
-                                        endAngle={-270}
-                                    >
+                        <div className="h-[360px] p-4">
+                            {hasData ? <ResponsiveContainer width="100%" height="100%">
+                                <BarChart data={taskPriorityData} >
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Bar dataKey="value" barSize={50} radius={[10, 10, 0, 0]}>
                                         {taskPriorityData.map((entry, index) => (
                                             <Cell key={`cell-${index}`} fill={entry.color} />
                                         ))}
-                                    </Pie>
-                                    <Tooltip
-                                        formatter={(value) => [`${value}%`, ""]}
-                                        contentStyle={{ border: "none", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}
-                                    />
-                                </PieChart>
-                            </ResponsiveContainer>
+                                    </Bar>
+                                </BarChart>
+                            </ResponsiveContainer> :
+                            <NoDataDisplay/>
+                            }
 
                             <div className="flex justify-center gap-6  ">
                                 {taskPriorityData.map((entry, index) => (

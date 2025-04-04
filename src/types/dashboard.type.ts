@@ -3,6 +3,7 @@ export interface AnalyticCardProps{
     name: string,
     info: string,
     subInfo?:string,
+    iconLabel: string,
 }
 
 export type TProjectSummary={

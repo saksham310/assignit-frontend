@@ -23,9 +23,16 @@ const WorkspaceDashboard = () => {
     if (!workspaceAnalytics) return;
 
     const analytics = ["Projects", "Members", "Sprints", "Overdue Projects"];
+    const iconLabel = {
+        "Projects":'Projects',
+        "Members":"Members",
+        "Sprints":"Sprints",
+        "Overdue Projects":"Due"
+    }
     const items = analytics.map((key) => ({
         name: key,
-        info: `${workspaceAnalytics[key]}`
+        info: `${workspaceAnalytics[key]}`,
+        iconLabel: iconLabel[key],
     }))
 
 
