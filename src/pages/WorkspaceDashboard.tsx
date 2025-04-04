@@ -25,7 +25,7 @@ const WorkspaceDashboard = () => {
     const analytics = ["Projects", "Members", "Sprints", "Overdue Projects"];
     const items = analytics.map((key) => ({
         name: key,
-        count: workspaceAnalytics[key]
+        info: `${workspaceAnalytics[key]}`
     }))
 
 

@@ -2,10 +2,12 @@ import {Badge} from "@/components/ui/badge.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
 
 interface ProjectSummaryRowProps {
-    project:any
+    project:any,
+    smallBadge?:boolean,
+    isGeneric?:boolean,
 }
 const ProjectSummaryRow = (
-    {project}:ProjectSummaryRowProps
+    {project,smallBadge=true,isGeneric = false}:ProjectSummaryRowProps
 )=>{
     const progress =Math.round((project.completed / project.tasks) * 100) ? Math.round((project.completed / project.tasks) * 100) : 0
     return (<>
@@ -13,19 +15,20 @@ const ProjectSummaryRow = (
         <div className={'flex flex-col gap-4'}>
             <div className={'flex justify-between items-center'}>
                 <div className={'flex items-center gap-4'}>
-                    <div>
+                    {!isGeneric &&  <div>
                         <span className='flex items-center justify-center border bg-indigo-100 text-indigo-600 size-8 rounded p-1'>{project.name.charAt(0)}</span>
                     </div>
+                    }
                     <div>
-                        <h4 className="font-medium">{project.name}</h4>
-                        <p className="text-sm text-gray-500">Due: {project.dueDate.split('T')[0]}</p>
+                        <h4 className="font-medium">{isGeneric ? "Project Progress" :  project.name }</h4>
+                        <p className="text-sm text-gray-500">{isGeneric ? "Overall task completion status" :`Due: ${project.dueDate.split('T')[0]}`}</p>
                     </div>
                 </div>
-                <div className={'flex items-center gap-4'}>
+                { smallBadge && <div className={'flex items-center gap-4'}>
                     <Badge variant={'outline'} className={'bg-green-50 text-green-600 font-normal'}>Completed: {project.completed}</Badge>
                     <Badge variant={'outline'} className={'bg-yellow-50 text-yellow-600 font-normal'}>In Progress:  {project. inProgress}</Badge>
                     <Badge variant={'outline'} className={'bg-gray-50 text-gray-600 font-normal'}>To Do :  {project.toDo}</Badge>
-                </div>
+                </div>}
             </div>
             <div className="mb-4">
                 <div className="flex justify-between text-sm mb-1">
@@ -39,8 +42,25 @@ const ProjectSummaryRow = (
                     ></div>
                 </div>
             </div>
+            {!smallBadge &&
+                <div className="grid grid-cols-3 gap-6 ">
+                    <div className={'rounded-md bg-green-50 text-green-600 font-normal flex flex-col justify-center items-center p-4'}>
+                        <span className={'font-bold text-xl'}>{project.completed}</span>
+                        <span>Completed</span>
+                    </div>
+                    <div className={'rounded-md bg-yellow-50 text-yellow-600 font-normal flex flex-col justify-center items-center p-4'}>
+                        <span className={' font-bold text-xl'}>{project.inProgress}</span>
+                        <span>In Progress</span>
+                    </div>
+                    <div className={'rounded-md bg-gray-50 text-gray-600 font-normal flex flex-col justify-center items-center p-4 '}>
+                        <span className={' font-bold text-xl'}>{project.toDo}</span>
+                        <span>To Do</span>
+                    </div>
+                </div>
+            }
+
         </div>
-    <Separator className={'bg-gray-200'}/>
+        {!isGeneric && <Separator className={'bg-gray-200'}/>}
         </>
     )
 }

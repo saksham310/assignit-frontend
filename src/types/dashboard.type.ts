@@ -1,7 +1,8 @@
 
 export interface AnalyticCardProps{
     name: string,
-    count:number
+    info: string,
+    subInfo?:string,
 }
 
 export type TProjectSummary={
