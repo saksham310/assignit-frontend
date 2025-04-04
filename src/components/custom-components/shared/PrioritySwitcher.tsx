@@ -6,8 +6,8 @@ import {priorityFlagMap} from "@/lib/utils.ts";
 const PrioritySwitcher = () => {
     return <>
         <Select onValueChange={(val) => console.log(val)}>
-            <SelectTrigger className=" font-medium w-fit text-sm border-none shadow-none flex gap-4 ">
-                <SelectValue placeholder='Set Priority'/>
+            <SelectTrigger className="  w-fit   border-none shadow-none flex gap-4 ">
+                <SelectValue className={'font-medium text-xs text-gray-500'} placeholder='Set Priority'/>
             </SelectTrigger>
             <SelectContent className="w-auto">
                 <div className={'max-h-72 flex flex-col'}>

@@ -1,6 +1,6 @@
 import {Badge} from "@/components/ui/badge.tsx";
 import {Card, CardContent, CardHeader,} from "@/components/ui/card.tsx";
-import {AlertCircle, MessageSquare, User, History,} from "lucide-react";
+import {AlertCircle, MessageSquare, User, History, FlagIcon,} from "lucide-react";
 import {Separator} from "@/components/ui/separator.tsx";
 import Editor from "@/editor/Editor.tsx";
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs.tsx";
@@ -8,10 +8,11 @@ import CommentPage from "@/pages/CommentPage.tsx";
 import ActivityPage from "@/pages/ActivityPage.tsx";
 import {useState} from "react";
 import {BugType, bugTypes} from "@/types/project.types.ts";
-import {colorMap, getStatusColor} from "@/lib/utils.ts";
+import {colorMap, getStatusColor, priorityFlagMap} from "@/lib/utils.ts";
 import {MultiSelect} from "@/components/ui/multi-select.tsx";
 import {Select,SelectItem,SelectTrigger,SelectGroup,SelectContent} from "@/components/ui/select.tsx";
 import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
+import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 
 const TaskDetailPage = () => {
     const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
@@ -88,25 +89,26 @@ const TaskDetailPage = () => {
                                     <Select value={taskStatus} onValueChange={(value) => setTaskStatus(value)}>
                                         <SelectTrigger className={'w-fit border-none shadow-none flex items-center gap-1'}>
                                             <Badge variant="outline"
-                                                   className={`p-[0.5rem] h-3 font-semibold w-full`}
+                                                   className={`p-[0.5rem] h-6 font-semibold w-full`}
                                                    style={{borderColor : color,
                                                        color:color,
                                                    }}
                                             >{taskStatus}</Badge>
                                         </SelectTrigger>
                                         <SelectContent className={'w-auto'}>
-                                            <SelectGroup>
-                                                {statusLists.map((status) => (
-                                                    <SelectItem
-                                                        value={status.name}><Badge variant="outline"
-                                                                                   className={`p-[0.2rem]  w-full`}
-                                                                                   style={{borderColor : status.color,
-                                                                                       color:status.color,
-                                                                                   }}
-                                                    >{status.name}</Badge></SelectItem>
-                                                ))}
-                                            </SelectGroup>
-                                        </SelectContent>
+                                            <div className={'max-h-72 flex flex-col'}>
+                                                <ScrollArea className={'flex-1 overflow-y-auto scrollbar'}>
+                                                    {statusLists?.map(
+                                                        (item) => (<SelectItem key={item.name} value={item.name} className={'text-gray-400'}>
+                                                            <Badge variant="outline" className={`p-[0.2rem]  w-full`} style={{borderColor : item.color, color:item.color,}}
+                                                            >{item.name}</Badge>
+                                                            </SelectItem>
+                                                        )
+                                                    )
+                                                    }
+                                                </ScrollArea>
+                                            </div>
+                                            </SelectContent>
                                     </Select>
                                 </div>
                                 <div className={'text-gray-500 gap-4 text-sm flex items-center '}>
