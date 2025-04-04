@@ -10,12 +10,7 @@ import {useState} from "react";
 import {BugType, bugTypes} from "@/types/project.types.ts";
 import {colorMap, getStatusColor} from "@/lib/utils.ts";
 import {MultiSelect} from "@/components/ui/multi-select.tsx";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuRadioGroup, DropdownMenuRadioItem,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
+import {Select,SelectItem,SelectTrigger,SelectGroup,SelectContent} from "@/components/ui/select.tsx";
 
 const TaskDetailPage = () => {
     const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
@@ -40,14 +35,14 @@ const TaskDetailPage = () => {
     const [taskStatus, setTaskStatus] = useState("In Progress")
 
     const membersList = [
-        {id: "1", name: "Saksham Sharma", image: "path_to_image.jpg", avatarColor: '#A7C7FF'}, // Soft Light Blue
-        {id: "2", name: "Jane Smith", image: "", avatarColor: '#FFB3B3'}, // Soft Light Red
-        {id: "3", name: "Alex Brown", image: "path_to_image.jpg", avatarColor: '#A2F2D0'}, // Soft Light Green
-        {id: "4", name: "Ramsay Bruh", image: "path_to_image.jpg", avatarColor: '#FFF5A3'}, // Soft Light Yellow
-        {id: "5", name: "Love Ada", image: "", avatarColor: '#E2AFFF'}, // Soft Light Purple
-        {id: "6", name: "Chris Brown", image: "path_to_image.jpg", avatarColor: '#A1F1E6'}, // Soft Light Teal
-        {id: "7", name: "Love Aa", image: "", avatarColor: '#E2AFAF'}, // Soft Light Purple
-        {id: "8", name: "Chris rown", image: "path_to_image.jpg", avatarColor: '#A1E1E6'}, // Soft Light Teal
+        {id: "1", username: "Saksham Sharma", image: "path_to_image.jpg", avatarColor: '#A7C7FF'}, // Soft Light Blue
+        {id: "2", username: "Jane Smith", image: "", avatarColor: '#FFB3B3'}, // Soft Light Red
+        {id: "3", username: "Alex Brown", image: "path_to_image.jpg", avatarColor: '#A2F2D0'}, // Soft Light Green
+        {id: "4", username: "Ramsay Bruh", image: "path_to_image.jpg", avatarColor: '#FFF5A3'}, // Soft Light Yellow
+        {id: "5", username: "Love Ada", image: "", avatarColor: '#E2AFFF'}, // Soft Light Purple
+        {id: "6", username: "Chris Brown", image: "path_to_image.jpg", avatarColor: '#A1F1E6'}, // Soft Light Teal
+        {id: "7", username: "Love Aa", image: "", avatarColor: '#E2AFAF'}, // Soft Light Purple
+        {id: "8", username: "Chris rown", image: "path_to_image.jpg", avatarColor: '#A1E1E6'}, // Soft Light Teal
     ];
     const statusLists = [
         {name: 'To Do', type: 'To_Do', color: '#90a9d0'},
@@ -89,25 +84,29 @@ const TaskDetailPage = () => {
                                     <div className={'flex items-center gap-1 text-sm'}><AlertCircle
                                         className="h-4 w-4"/> Status :
                                     </div>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger>
+                                    <Select value={taskStatus} onValueChange={(value) => setTaskStatus(value)}>
+                                        <SelectTrigger className={'w-fit border-none shadow-none flex items-center gap-1'}>
                                             <Badge variant="outline"
-                                                   className={`p-[0.5rem]  font-normal w-full`}
-                                                    style={{borderColor : color,
-                                                        color:color,
-                                            }}
+                                                   className={`p-[0.5rem]  font-semibold w-full`}
+                                                   style={{borderColor : color,
+                                                       color:color,
+                                                   }}
                                             >{taskStatus}</Badge>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent className={'w-auto'}>
-                                            <DropdownMenuRadioGroup value={taskStatus}
-                                                                    onValueChange={(value) => changeTaskStatus(value)}>
+                                        </SelectTrigger>
+                                        <SelectContent className={'w-auto'}>
+                                            <SelectGroup>
                                                 {statusLists.map((status) => (
-                                                    <DropdownMenuRadioItem
-                                                        value={status.name}>{status.name}</DropdownMenuRadioItem>
+                                                    <SelectItem
+                                                        value={status.name}><Badge variant="outline"
+                                                                                   className={`p-[0.2rem]  w-full`}
+                                                                                   style={{borderColor : status.color,
+                                                                                       color:status.color,
+                                                                                   }}
+                                                    >{status.name}</Badge></SelectItem>
                                                 ))}
-                                            </DropdownMenuRadioGroup>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                                 <div className={'text-gray-500 gap-4 text-sm flex items-center'}>
                                     <div className={'flex items-center gap-1 text-sm'}>

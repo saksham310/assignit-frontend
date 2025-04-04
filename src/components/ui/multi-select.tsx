@@ -65,7 +65,7 @@ interface MultiSelectProps
         /** The text to display for the option. */
         id: string;
         /** The unique value associated with the option. */
-        name: string;
+        username: string;
         /** Optional icon component to display alongside the option. */
         image?:string;
         avatarColor?: string;
@@ -176,7 +176,7 @@ export const MultiSelect = React.forwardRef<
             if (selectedValues.length === options.length) {
                 handleClear();
             } else {
-                const allValues = options.map((option) => option.name);
+                const allValues = options.map((option) => option.username);
                 setSelectedValues(allValues);
                 onValueChange(allValues);
             }
@@ -204,11 +204,11 @@ export const MultiSelect = React.forwardRef<
                             <div className="flex justify-between items-center w-full">
                                 <div className="flex flex-wrap items-center gap-1">
                                     {selectedValues.slice(0, maxCount).map((value) => {
-                                        const option = options.find((o) => o.name === value);
+                                        const option = options.find((o) => o.username === value);
                                         return (
 
                                                 <UserAvatar
-                                                    name={option?.name || ""}
+                                                    name={option?.username || ""}
                                                     src={option?.image}
                                                     className={`h-6 w-6 text-black`}
                                                     avatarColor={option?.avatarColor}
@@ -243,7 +243,7 @@ export const MultiSelect = React.forwardRef<
                             </div>
                         ) : (
                             <div className="flex items-center justify-between w-full mx-auto">
-                <span className="text-xs text-gray-500 mx-3">
+                <span className="text-xs text-gray-500 ">
                   {placeholder}
                 </span>
                                 <ChevronDown className="h-4 cursor-pointer  mx-2" />
@@ -283,11 +283,11 @@ export const MultiSelect = React.forwardRef<
                                     <span>Select All</span>
                                 </CommandItem>
                                 {options.map((option) => {
-                                    const isSelected = selectedValues.includes(option.name);
+                                    const isSelected = selectedValues.includes(option.username);
                                     return (
                                         <CommandItem
-                                            key={option.name}
-                                            onSelect={() => toggleOption(option.name)}
+                                            key={option.username}
+                                            onSelect={() => toggleOption(option.username)}
                                             className="cursor-pointer"
                                         >
                                             <div
@@ -299,13 +299,13 @@ export const MultiSelect = React.forwardRef<
                                                 )}
                                             >
                                                 <UserAvatar
-                                                    name={option?.name || ""}
+                                                    name={option?.username || ""}
                                                     src={option?.image}
                                                     className={`h-5 w-5 text-black text-xs`}
                                                     avatarColor={option?.avatarColor}
                                                 />
                                             </div>
-                                            <span className={'text-gray-600 text-sm'}>{option.name}</span>
+                                            <span className={'text-gray-600 text-sm'}>{option.username}</span>
                                         </CommandItem>
                                     );
                                 })}

@@ -23,7 +23,7 @@ export const getStatusColor = (statusName: string,statusList) =>{
 }
 
 export const priorityFlagMap:Record<string,string> = {
-  high:'#D32F2F',
-  medium:'#FB8C00',
-  low:'#43A047',
+  High:'#D32F2F',
+  Medium:'#FB8C00',
+  Low:'#43A047',
 }

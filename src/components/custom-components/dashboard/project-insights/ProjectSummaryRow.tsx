@@ -18,7 +18,7 @@ const ProjectSummaryRow = (
                     </div>
                     <div>
                         <h4 className="font-medium">{project.name}</h4>
-                        <p className="text-sm text-gray-500">Due: {project.dueDate}</p>
+                        <p className="text-sm text-gray-500">Due: {project.dueDate.split('T')[0]}</p>
                     </div>
                 </div>
                 <div className={'flex items-center gap-4'}>
