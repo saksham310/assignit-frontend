@@ -15,7 +15,7 @@ const ProjectSummary=()=>{
                 </CardHeader>
                 <CardContent className={'overflow-y-auto'}>
                     {projects?.length > 0 &&(
-                    <div className=" h-full  w-full  flex flex-col gap-6">
+                    <div className=" h-full  w-full  flex flex-col gap-5">
                         {projects.map((project:ProjectResponse) =>{
                             return <ProjectSummaryRow project={project}/>
                         })}
