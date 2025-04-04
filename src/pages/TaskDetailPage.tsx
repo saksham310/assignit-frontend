@@ -11,6 +11,7 @@ import {BugType, bugTypes} from "@/types/project.types.ts";
 import {colorMap, getStatusColor} from "@/lib/utils.ts";
 import {MultiSelect} from "@/components/ui/multi-select.tsx";
 import {Select,SelectItem,SelectTrigger,SelectGroup,SelectContent} from "@/components/ui/select.tsx";
+import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
 
 const TaskDetailPage = () => {
     const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
@@ -59,7 +60,7 @@ const TaskDetailPage = () => {
 
     return <>
         <div className={'w-screen p-2 flex flex-col h-screen '}>
-            <div className={'sticky top-0 bg-background pt-2 pb-1 pl-2 z-10  flex flex-col gap-6'}>
+            <div className={'sticky top-0 bg-background pt-2 pb-1 pl-6 z-10  flex flex-col gap-6'}>
                 <div className={'flex items-center gap-2 '}>
                     <Badge variant={'outline'}>Task Id</Badge>
                     {totalBugs > 0 && <Badge variant={'outline'}
@@ -79,7 +80,7 @@ const TaskDetailPage = () => {
                 <div className={'gap-4 flex flex-col '}>
                     <Card className={'shadow-none w-full'}>
                         <CardContent className="p-2">
-                            <div className={'grid grid-cols-2'}>
+                            <div className={'grid grid-cols-3 space-x-20'}>
                                 <div className={'text-gray-500 gap-4 text-sm flex items-center '}>
                                     <div className={'flex items-center gap-1 text-sm'}><AlertCircle
                                         className="h-4 w-4"/> Status :
@@ -87,7 +88,7 @@ const TaskDetailPage = () => {
                                     <Select value={taskStatus} onValueChange={(value) => setTaskStatus(value)}>
                                         <SelectTrigger className={'w-fit border-none shadow-none flex items-center gap-1'}>
                                             <Badge variant="outline"
-                                                   className={`p-[0.5rem]  font-semibold w-full`}
+                                                   className={`p-[0.5rem] h-3 font-semibold w-full`}
                                                    style={{borderColor : color,
                                                        color:color,
                                                    }}
@@ -108,8 +109,8 @@ const TaskDetailPage = () => {
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <div className={'text-gray-500 gap-4 text-sm flex items-center'}>
-                                    <div className={'flex items-center gap-1 text-sm'}>
+                                <div className={'text-gray-500 gap-4 text-sm flex items-center '}>
+                                    <div className={'flex items-center gap-1 text-sm w-full max-w-[100px]'}>
                                         <User
                                             className="h-4 w-4"/> Assignee :
                                     </div>
@@ -120,6 +121,10 @@ const TaskDetailPage = () => {
                                         placeholder="Unassigned"
                                         maxCount={2}
                                     />
+                                </div>
+                                <div className={'text-gray-500 gap-4 text-sm flex items-center'}>
+                                    Priority :
+                                    <PrioritySwitcher/>
                                 </div>
                             </div>
                             <Separator className="my-6"/>

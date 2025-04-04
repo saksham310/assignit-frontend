@@ -5,6 +5,7 @@ import {useDialogStore} from "@/store/dialog.store.ts";
 import TaskDetailPage from "@/pages/TaskDetailPage.tsx";
 import {MultiSelect} from "@/components/ui/multi-select.tsx";
 import {useState} from "react";
+import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
 
 
 interface TaskRowProps {
@@ -35,7 +36,7 @@ setOpen(TaskDetailPage)
                     <AlertCircle className="size-4"/>
                     <span>{bugCount} {bugCount > 1 ? "Bugs" : "Bug"}</span>
                 </Badge>
-                <span className={'flex items-center gap-2'}><FlagIcon className={'size-4'} fill={priorityFlagMap[priority]}/>{priority}</span>
+                <PrioritySwitcher/>
             </div>
         </>
     )
