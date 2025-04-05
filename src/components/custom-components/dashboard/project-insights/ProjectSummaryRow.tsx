@@ -12,7 +12,7 @@ const ProjectSummaryRow = (
     const progress =Math.round((project.completed / project.tasks) * 100) ? Math.round((project.completed / project.tasks) * 100) : 0
     return (<>
 
-        <div className={'flex flex-col gap-4'}>
+        <div className={'flex flex-col gap-3'}>
             <div className={'flex justify-between items-center'}>
                 <div className={'flex items-center gap-4'}>
                     {!isGeneric &&  <div>
@@ -21,16 +21,16 @@ const ProjectSummaryRow = (
                     }
                     <div>
                         <h4 className="font-medium">{isGeneric ? "Project Progress" :  project.name }</h4>
-                        <p className="text-sm text-gray-500">{isGeneric ? "Overall task completion status" :`Due: ${project.dueDate.split('T')[0]}`}</p>
+                        <p className="text-xs text-gray-500">{isGeneric ? "Overall task completion status" :`Due: ${project.dueDate.split('T')[0]}`}</p>
                     </div>
                 </div>
                 { smallBadge && <div className={'flex items-center gap-4'}>
                     <Badge variant={'outline'} className={'bg-green-50 text-green-600 font-normal'}>Completed: {project.completed}</Badge>
-                    <Badge variant={'outline'} className={'bg-yellow-50 text-yellow-600 font-normal'}>In Progress:  {project. inProgress}</Badge>
-                    <Badge variant={'outline'} className={'bg-gray-50 text-gray-600 font-normal'}>To Do :  {project.toDo}</Badge>
+                    <Badge variant={'outline'} className={'bg-yellow-50 text-amber-600 font-normal'}>In Progress:  {project. inProgress}</Badge>
+                    <Badge variant={'outline'} className={'bg-gray-50 text-blue-600 font-normal'}>To Do :  {project.toDo}</Badge>
                 </div>}
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
                 <div className="flex justify-between text-sm mb-1">
                     <span className="text-gray-500 font-medium">Progress</span>
                     <span className="font-medium">{progress}%</span>
@@ -60,7 +60,7 @@ const ProjectSummaryRow = (
             }
 
         </div>
-        {!isGeneric && <Separator className={'bg-gray-200'}/>}
+        {!isGeneric && <Separator className={'bg-muted'}/>}
         </>
     )
 }

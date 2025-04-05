@@ -1,4 +1,3 @@
-import Analytics from "@/components/custom-components/dashboard/Analytics.tsx";
 import TabLayoutWrapper from "@/components/custom-components/shared/TabLayoutWrapper.tsx";
 import {AnalyticCardProps, TabConfig} from "@/types/dashboard.type.ts";
 import ProjectInsightsTab from "@/components/custom-components/dashboard/project-insights/ProjectInsightsTab.tsx";
@@ -19,9 +18,9 @@ const Dashboard = ({items}: DashboardProps) => {
     const setOpen = useDialogStore(state => state.openDialog);
     const tabConfig: TabConfig[] = [
         {
-            value: "projects",
-            label: "Projects",
-            component: () => <ProjectInsightsTab />,
+            value: "overview",
+            label: "Overview",
+            component: () => <ProjectInsightsTab items={items} />,
         },
         {
             value: "members",
@@ -36,22 +35,20 @@ const Dashboard = ({items}: DashboardProps) => {
         setOpen(ProjectCreationForm)
     }
     return (
+<>
 
-        <div className='flex flex-col gap-10 h-full '>
-            <Analytics items={items}/>
-            <div className={'flex-1'}>
-                <div className={'relative'}>
-                    {isOwnerAdmin &&
-                        <div className={'hidden lg:flex w-auto  items-center gap-x-4 absolute right-1'}>
-                            <Button variant={'outline'} size={'sm'} onClick={() => onAddProject()}><PlusCircle/>Add
-                                Project</Button>
-                            <Button size={'sm'} onClick={() => onInvite()}><Send/>Invite</Button>
-                        </div>}
 
-                    <TabLayoutWrapper tabConfig={tabConfig} isDashboard={true}/></div>
-            </div>
-        </div>
 
+    {isOwnerAdmin &&  <div className={'hidden lg:flex w-auto  items-center gap-x-4 absolute right-8'}>
+        <Button variant={'outline'} size={'sm'} onClick={() => onAddProject()}><PlusCircle/>Add
+            Project</Button>
+        <Button size={'sm'} onClick={() => onInvite()}><Send/>Invite</Button>
+    </div>}
+
+                    <TabLayoutWrapper tabConfig={tabConfig} isDashboard={false}/>
+
+
+</>
     );
 }
 

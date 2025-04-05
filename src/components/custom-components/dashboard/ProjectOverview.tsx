@@ -84,7 +84,7 @@ const ProjectOverview = ({projectSprint}) =>{
                                         </PieChart>
                                     </ResponsiveContainer>
                                 ) : (
-                                 <NoDataDisplay/>
+                                 <NoDataDisplay title={'No Data'} subtitle={'Add tasks to see stats'}/>
                                 )
                             }
 
@@ -120,7 +120,7 @@ const ProjectOverview = ({projectSprint}) =>{
                                     </Bar>
                                 </BarChart>
                             </ResponsiveContainer> :
-                            <NoDataDisplay/>
+                                <NoDataDisplay title={'No Data'} subtitle={'Add tasks to see stats'}/>
                             }
 
                             <div className="flex justify-center gap-6  ">

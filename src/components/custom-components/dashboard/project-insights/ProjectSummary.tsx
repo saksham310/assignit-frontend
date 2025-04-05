@@ -1,19 +1,19 @@
 import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
-import {FolderKanban} from "lucide-react";
 import ProjectSummaryRow from "@/components/custom-components/dashboard/project-insights/ProjectSummaryRow.tsx";
 import {useGetProjects} from "@/hooks/project.hooks.ts";
 import {ProjectResponse} from "@/types/project.types.ts";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";
+import NoDataDisplay from "@/components/custom-components/shared/NoDataDisplay.tsx";
 
 
 const ProjectSummary=()=>{
     const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId)
     const {data:projects} =useGetProjects(currentWorkspaceId as string);
     return <>
-            <Card className={' col-span-2  overflow-hidden h-full flex flex-col gap-3 '}>
+            <Card className={' col-span-2  overflow-hidden h-full flex flex-col gap-3 bg-white shadow-sm border border-gray-100 rounded-lg '}>
                 <CardHeader className="text-m font-semibold ">Project Summary
                 </CardHeader>
-                <CardContent className={'overflow-y-auto'}>
+                <CardContent className={'overflow-y-auto md:h-[380px]'}>
                     {projects?.length > 0 &&(
                     <div className=" h-full  w-full  flex flex-col gap-5">
                         {projects.map((project:ProjectResponse) =>{
@@ -21,10 +21,7 @@ const ProjectSummary=()=>{
                         })}
                     </div>  )}
                     {projects?.length == 0 && (
-                        <div className={'flex md:mt-40 flex-col gap-8 mx-auto items-center justify-center text-gray-400'}>
-                            <FolderKanban className={'md:size-24'}/>
-
-                           <p className={"text-sm "}> Your projects will be shown here</p></div>
+                       <NoDataDisplay title={"No Projects"} subtitle={"Add projects for the summary"}/>
                     )}
                 </CardContent>
             </Card>
