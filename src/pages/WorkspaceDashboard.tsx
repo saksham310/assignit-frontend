@@ -1,44 +1,75 @@
 import Dashboard from "@/components/custom-components/dashboard/Dashboard.tsx";
-import {useOutletContext, useParams} from "react-router-dom";
-import {useEffect} from "react";
-import {useGetWorkspaceAnalytics} from "@/hooks/workspace.hooks.ts";
+import { useOutletContext, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useGetWorkspaceAnalytics } from "@/hooks/workspace.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
+import {AnalyticCardProps, TabConfig} from "@/types/dashboard.type.ts";
+import ProjectInsightsTab from "@/components/custom-components/dashboard/project-insights/ProjectInsightsTab.tsx";
+import MembersTab from "@/components/custom-components/dashboard/MembersTab.tsx";
+import { useDashboardData } from "@/hooks/dashboard.hooks.ts";
+import ProjectCreationForm from "@/components/custom-components/forms/ProjectCreationForm.tsx";
+import SendInvitePage from "@/pages/SendInvitePage.tsx";
+import { useDialogStore } from "@/store/dialog.store.ts";
+import { PlusCircle, Send } from "lucide-react";
 
 
-
-const WorkspaceDashboard = () => {
-    const setTitle = useOutletContext<(title: string) => void>();
-
-    useEffect(() => {
-        setTitle("Workspace Summary")
-    }, [setTitle]);
-
-    const {id} = useParams();
-    const {data: workspaceAnalytics, isLoading} = useGetWorkspaceAnalytics(id);
-
-    if (isLoading) {
-        return <Loader/>
-    }
-
-    if (!workspaceAnalytics) return;
-
-    const analytics = ["Projects", "Members", "Sprints", "Overdue Projects"];
+// Helper function to create analytics items
+const createAnalyticsItems = (analytics: string[], workspaceAnalytics:Record<string,any>): AnalyticCardProps[] => {
     const iconLabel = {
-        "Projects":'Projects',
-        "Members":"Members",
-        "Sprints":"Sprints",
-        "Overdue Projects":"Due"
-    }
-    const items = analytics.map((key) => ({
+        Projects: "Projects",
+        Members: "Members",
+        Sprints: "Sprints",
+        "Overdue Projects": "Due",
+    };
+    return analytics.map((key:string) => ({
         name: key,
         info: `${workspaceAnalytics[key]}`,
         iconLabel: iconLabel[key],
-    }))
+    }));
+};
 
+const WorkspaceDashboard = () => {
+    const setTitle = useOutletContext<(title: string) => void>();
+    const { memberData, membersColumns, isOwnerAdmin } = useDashboardData();
 
-    return (
-        <Dashboard items={items}/>
-    )
-}
+    const { id } = useParams();
+    const { data: workspaceAnalytics, isLoading } = useGetWorkspaceAnalytics(id);
+    const setOpen = useDialogStore((state) => state.openDialog);
+
+    // Set page title on mount
+    useEffect(() => {
+        setTitle("Workspace Summary");
+    }, [setTitle]);
+
+    // Handle loading and error states early
+    if (isLoading) return <Loader />;
+    if (!workspaceAnalytics) return null;
+
+    const analytics = ["Projects", "Members", "Sprints", "Overdue Projects"];
+    const items = createAnalyticsItems(analytics, workspaceAnalytics);
+
+    const onInvite = () => setOpen(SendInvitePage);
+    const onAddProject = () => setOpen(ProjectCreationForm);
+
+    const tabConfig: TabConfig[] = [
+        {
+            value: "overview",
+            label: "Overview",
+            component: () => <ProjectInsightsTab items={items} />,
+        },
+        {
+            value: "members",
+            label: "Members",
+            component: () => <MembersTab columns={membersColumns} data={memberData} />,
+        },
+    ];
+
+    const actions = [
+        { label: "Add Project", icon: <PlusCircle />, onClick: onAddProject },
+        { label: "Invite", icon: <Send />, onClick: onInvite },
+    ];
+
+    return <Dashboard tabConfig={tabConfig} isOwnerAdmin={isOwnerAdmin} actions={actions} />;
+};
 
 export default WorkspaceDashboard;

@@ -1,14 +1,13 @@
-import TabLayoutWrapper from "@/components/custom-components/shared/TabLayoutWrapper.tsx";
 import {TabConfig} from "@/types/dashboard.type.ts";
 import {useOutletContext} from "react-router-dom";
 import {useEffect} from "react";
 import {PlusCircle} from "lucide-react";
-import {Button} from "@/components/ui/button.tsx";
 import {useDialogStore} from "@/store/dialog.store.ts";
 import SprintCreationForm from "@/components/custom-components/forms/SprintCreationForm.tsx";
 import ProjectListView from "@/components/custom-components/dashboard/ProjectListView.tsx";
 import ProjectOverview from "@/components/custom-components/dashboard/ProjectOverview.tsx";
 import {SprintWithTaskStatus} from "@/types/project.types.ts";
+import Dashboard from "@/components/custom-components/dashboard/Dashboard.tsx";
 
 
 
@@ -132,16 +131,17 @@ const ProjectDashboard = () =>{
     useEffect(() => {
         setTitle("Project")
     }, [setTitle]);
+
+
     const onCreateSprint = () => {
         setOpen(SprintCreationForm)
     }
-    return <>
+    const actions = [
+        { label: "Create Sprint", icon: <PlusCircle />, onClick: onCreateSprint },
+    ]
 
-            <div className={'hidden lg:flex w-auto  items-center gap-x-4 absolute right-8'}>
-        <Button variant={'outline'} size={'sm'} onClick={() =>onCreateSprint()}><PlusCircle/>Create
-            Sprint</Button>
-            </div>
-    <TabLayoutWrapper tabConfig={tabConfig}/>
+    return <>
+        <Dashboard tabConfig={tabConfig} actions={actions} isOwnerAdmin={true}/>
     </>
 }
 

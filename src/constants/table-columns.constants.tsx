@@ -9,7 +9,6 @@ import {
     DropdownMenuRadioItem,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import {TProjectSummary} from "@/types/dashboard.type.ts";
 import {WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
 import {useWorkspaceRoleStore} from "@/store/workspace.store.ts";
 
@@ -56,10 +55,3 @@ export const getMembersColumns = (isAdminOwner: boolean, handleEditMember: (id: 
             : [])
     ];
 };
-
-export const projectColumns: ColumnDef<TProjectSummary>[] = [
-    {accessorKey: "projectName", header: "Name", size: 150},
-    {accessorKey: "startDate", header: "Start Date", size: 96},
-    {accessorKey: "endDate", header: "End Date", size: 122},
-    {accessorKey: "progress", header: "Task Progress"},
-];
