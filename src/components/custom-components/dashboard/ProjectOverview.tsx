@@ -1,17 +1,18 @@
 
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Card, CardContent} from "@/components/ui/card.tsx";
 import {Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {priorityFlagMap} from "@/lib/utils.ts";
 import Analytics from "@/components/custom-components/dashboard/Analytics.tsx";
 import moment from "moment";
 import NoDataDisplay from "@/components/custom-components/shared/NoDataDisplay.tsx";
+import {ProjectOverviewData} from "@/types/project.types.ts";
 
-const ProjectOverview = ({projectSprint}) =>{
+const ProjectOverview = ({projectData}: {projectData:ProjectOverviewData }) =>{
 
     const taskStatusData = [
-        { name: "Completed", value: projectSprint.completed, color: "#10b954" }, // Green
-        { name: "In Progress", value: projectSprint.inProgress, color: "rgba(255,189,56,0.9)" }, // Amber
-        { name: "To Do", value: projectSprint.toDo, color: "#8f90ff" }, // Indigo
+        { name: "Completed", value: projectData.completed, color: "#10b954" }, // Green
+        { name: "In Progress", value: projectData.inProgress, color: "rgba(255,189,56,0.9)" }, // Amber
+        { name: "To Do", value: projectData.toDo, color: "#8f90ff" }, // Indigo
     ]
     const taskPriorityData = [
         { name: "High", value: 10, color: priorityFlagMap['High'] }, // Red
@@ -21,30 +22,30 @@ const ProjectOverview = ({projectSprint}) =>{
    const items = [
        {
            name:'Completion Rate',
-           info: ` ${projectSprint.tasks != 0 ? projectSprint.completed/ projectSprint.tasks * 100 : 0} %`,
+           info: ` ${projectData.tasks != 0 ? projectData.completed/ projectData.tasks * 100 : 0} %`,
            subInfo: "Of total tasks completed",
            iconLabel:'Complete'
        },
        {
            name:'Average Task Per Member',
-           info: `${projectSprint.tasks/ projectSprint.members}`,
+           info: `${projectData.tasks/ projectData.members}`,
            subInfo: "Average workload per member",
            iconLabel:'Tasks'
        },
        {
            name:'In Progress',
-           info: ` ${projectSprint.tasks != 0 ? projectSprint.inProgress/ projectSprint.tasks * 100 : 0} %`,
+           info: ` ${projectData.tasks != 0 ? projectData.inProgress/ projectData.tasks * 100 : 0} %`,
            subInfo: "Of tasks currently active",
            iconLabel:'Progress'
        },
        {
            name:'Time Remaining',
-           info: `${moment(projectSprint.dueDate).diff(moment(),'days')}`,
+           info: `${moment(projectData.dueDate).diff(moment(),'days')}`,
            subInfo: "Days until deadline",
            iconLabel:'Due'
        },
    ]
-    const hasData = projectSprint.tasks !=0;
+    const hasData = projectData.tasks !=0;
     return (
         <>
         <div className={'flex flex-col gap-10'}>

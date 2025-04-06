@@ -60,10 +60,26 @@ export interface TaskStatus {
     tasks: Task[];
 }
 
-export interface SprintWithTaskStatus {
+export interface SprintWithTask {
     id: number;
     name: string;
     taskStatus: TaskStatus[];
+}
+
+export interface ProjectOverviewData{
+    id: number;
+    name: string;
+    startDate: string;
+    updatedAt: string;
+    dueDate: string;
+    toDo: number;
+    inProgress: number;
+    completed: number;
+    tasks: number;
+    highPriority: number;
+    lowPriority: number;
+    mediumPriority: number;
+    members: number;
 }
 export const statuses: Status[] = [
 {id:"temp-1",name:'To Do', type:'To_Do', color : '#90a9d0' },

@@ -1,5 +1,6 @@
 import TaskListAccordion from "@/components/custom-components/shared/TaskListAccordion.tsx";
-import {SprintWithTaskStatus, TaskStatus} from "@/types/project.types.ts";
+import {SprintWithTask, TaskStatus} from "@/types/project.types.ts";
+import {Separator} from "@/components/ui/separator";
 
 const taskStatus: TaskStatus[] = [
     {
@@ -79,15 +80,15 @@ const taskStatus: TaskStatus[] = [
     }
 ];
 interface  SprintListViewProps {
-    sprint?: SprintWithTaskStatus;
+    sprint?: SprintWithTask;
 }
 
 const SprintListView = ({sprint}:SprintListViewProps) => {
     const tasks = sprint?.taskStatus ?? taskStatus;
     return <>
-        <div className={'flex flex-col gap-6'}>
+        <div className={'flex flex-col '}>
             {tasks.map((task) => (
-                <TaskListAccordion task={task}/>
+                <><TaskListAccordion task={task}/><Separator/></>
             ))}
         </div>
     </>

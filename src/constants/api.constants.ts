@@ -28,5 +28,6 @@ export const UPDATE_PROFILE = '/user/profile/update';
 
 // Project Management APIs
 export const GET_PROJECTS = (workspaceId:string) =>`projects/${workspaceId}`;
+export const GET_PROJECT_DETAILS = (projectId:string) => `projects/${projectId}/details`;
 export const CREATE_SPRINT = '/projects/sprint';
 export const CREATE_PROJECT = '/projects'

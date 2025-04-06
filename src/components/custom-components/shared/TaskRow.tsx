@@ -23,8 +23,8 @@ setOpen(TaskDetailPage)
     const [selectedMembers, setSelectedMembers] = useState<string[]>([])
     return (
         <>
-            <div className={'grid grid-cols-4 border-b p-2'} onDoubleClick={openTaskDetailPage}>
-                <span>{taskName}</span>
+            <div className={'grid grid-cols-4 border-b p-2 text-xs items-center'} onDoubleClick={openTaskDetailPage}>
+                <span className={'text-xs'}>{taskName}</span>
                     <MultiSelect
                         options={assignees}
                         onValueChange={setSelectedMembers}
@@ -32,7 +32,7 @@ setOpen(TaskDetailPage)
                         placeholder="Unassigned"
                         maxCount={maxCount}
                     />
-                <Badge variant={'outline'} className={'border-red-500 font-normal inline-flex items-center gap-1 bg-red-50 text-red-700 w-fit '}>
+                <Badge variant={'outline'} className={'border-red-500 font-normal inline-flex items-center gap-1 bg-red-50 text-red-700 w-fit h-[24px] '}>
                     <AlertCircle className="size-4"/>
                     <span>{bugCount} {bugCount > 1 ? "Bugs" : "Bug"}</span>
                 </Badge>

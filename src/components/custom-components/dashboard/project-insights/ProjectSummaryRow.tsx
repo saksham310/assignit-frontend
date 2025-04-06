@@ -12,7 +12,7 @@ const ProjectSummaryRow = (
     const progress =Math.round((project.completed / project.tasks) * 100) ? Math.round((project.completed / project.tasks) * 100) : 0
     return (<>
 
-        <div className={'flex flex-col gap-3'}>
+        <div className={'flex flex-col gap-2 border-2 border-gray-200 p-[12px] rounded-md'}>
             <div className={'flex justify-between items-center'}>
                 <div className={'flex items-center gap-4'}>
                     {!isGeneric &&  <div>
@@ -31,8 +31,8 @@ const ProjectSummaryRow = (
                 </div>}
             </div>
             <div className="mb-2">
-                <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-500 font-medium">Progress</span>
+                <div className="flex justify-between text-xs mb-1">
+                    <span className="text-gray-500 font-medium">Project Completion Rate</span>
                     <span className="font-medium">{progress}%</span>
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-2">

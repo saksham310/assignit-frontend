@@ -2,11 +2,12 @@ import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/co
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import SprintListView from "@/components/custom-components/dashboard/SprintListView.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
+import {SprintWithTask} from "@/types/project.types.ts";
 
 
 
 
-const ProjectListView = ({projectSprint}) => {
+const ProjectListView = ({projectSprint}:{projectSprint:SprintWithTask[]}) => {
     return (
         <>
             <div className={'flex flex-col gap-0.5'}>
@@ -23,7 +24,7 @@ const ProjectListView = ({projectSprint}) => {
                                 </CardHeader>
                                 <AccordionContent>
                                     <CardContent className={'flex flex-col space-y-6'}>
-                                        <SprintListView/>
+                                        <SprintListView sprint={sprint}/>
                                     </CardContent>
                                 </AccordionContent>
                             </Card>

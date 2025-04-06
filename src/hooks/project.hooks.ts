@@ -1,5 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {createProject, createSprints, getProjects} from "@/service/project.service.ts";
+import {createProject, createSprints, getProjectDetails, getProjects} from "@/service/project.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
 
@@ -45,3 +45,9 @@ export const useCreateSprint = () => {
     })
 }
 
+export const useGetProjectDetails = (id:string|undefined) => {
+    return useQuery({
+        queryKey:['project',id],
+        queryFn:() => getProjectDetails(id),
+    })
+}
