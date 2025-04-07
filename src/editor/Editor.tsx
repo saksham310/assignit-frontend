@@ -1,7 +1,12 @@
 import { useEffect, useRef } from "react";
 import Quill from "quill";
+import { cn } from "@/lib/utils";
 
-const Editor = ({initalValue = ""}) => {
+interface EditorProps{
+    isCreateMode: boolean;
+    initialValue?: string;
+}
+const Editor = ({initialValue = "<p><span style=\"color: rgb(187, 187, 187);\">Write a description</span></p>",isCreateMode}:EditorProps) => {
     const editorRef = useRef<HTMLDivElement | null>(null);
     const quillRef = useRef<Quill | null>(null);
 
@@ -21,22 +26,25 @@ const Editor = ({initalValue = ""}) => {
                         ],
                     },
                 });
-                quillRef.current.root.innerHTML = initalValue
+                quillRef.current.root.innerHTML = initialValue
+
             }
         }
 
         return () => {
         };
-    }, [initalValue]);
-    const test = () =>{
+    }, [initialValue]);
+    const saveChanges = () =>{
+        if(isCreateMode) return;
         const editorContent = quillRef.current!.root.innerHTML;
+        console.log(editorContent);
     }
     return (
-        <div className="editor-wrapper  h-full max-h-[450px] w-full ">
+        <div className={cn("editor-wrapper  h-full max-h-[480px] w-full ",{"w-[840px] h-[250px]":isCreateMode})}>
 
 
 
-            <div ref={editorRef} className="h-full  border-gray-300 "  onBlur={test}/>
+            <div ref={editorRef} className="h-full  border-gray-300 "  onBlur={saveChanges}/>
 
         </div>
     );
