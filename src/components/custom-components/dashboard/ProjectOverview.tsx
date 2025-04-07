@@ -48,16 +48,16 @@ const ProjectOverview = ({projectData}: {projectData:ProjectOverviewData }) =>{
     const hasData = projectData.tasks !=0;
     return (
         <>
-        <div className={'flex flex-col gap-10'}>
+        <div className={'flex flex-col gap-10 h-full'}>
               <Analytics items={items} className={'p-4 border-2 border-gray-100'}/>
-            <div className={'grid md:grid-cols-2 gap-4'}>
+            <div className={'grid md:grid-cols-2 gap-4 h-full'}>
                 <Card className="bg-white shadow-sm border border-gray-100 rounded-lg">
-                    <CardContent className="p-4 ">
+                    <CardContent className="p-4 flex flex-col h-full ">
                         <div className="space-y-1 mb-4">
                             <h3 className="text-sm font-medium text-gray-700">Task Priority Distribution</h3>
                             <p className="text-xs text-gray-500">Breakdown of tasks by priority</p>
                         </div>
-                        <div className={'h-[360px] p-4'}>
+                        <div className={'flex-1 p-4 h-full'}>
                             {hasData ?
                                 (
                                     <ResponsiveContainer width="100%" height="100%">
@@ -103,12 +103,12 @@ const ProjectOverview = ({projectData}: {projectData:ProjectOverviewData }) =>{
                     </CardContent>
                 </Card>
                 <Card className="bg-white shadow-sm border border-gray-100 rounded-lg">
-                    <CardContent className="p-4">
+                    <CardContent className="p-4 flex flex-col h-full  ">
                         <div className="space-y-1 mb-4">
                             <h3 className="text-sm font-medium text-gray-700">Task Priority Distribution</h3>
                             <p className="text-xs text-gray-500">Breakdown of tasks by priority</p>
                         </div>
-                        <div className="h-[360px] p-4">
+                        <div className="p-4 h-full">
                             {hasData ? <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={taskPriorityData} >
                                     <XAxis dataKey="name" />

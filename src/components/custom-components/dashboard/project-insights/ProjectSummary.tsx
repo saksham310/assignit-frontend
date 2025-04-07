@@ -10,10 +10,10 @@ const ProjectSummary=()=>{
     const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId)
     const {data:projects} =useGetProjects(currentWorkspaceId as string);
     return <>
-            <Card className={' col-span-2  overflow-hidden h-full flex flex-col gap-1 bg-white shadow-sm border border-gray-100 rounded-lg '}>
+            <Card className={'col-span-2  overflow-hidden h-full flex flex-col gap-1 bg-white shadow-sm border border-gray-100 rounded-lg '}>
                 <CardHeader className="text-m font-semibold ">Project Summary
                 </CardHeader>
-                <CardContent className={'overflow-y-auto md:h-[380px]'}>
+                <CardContent className={'overflow-y-auto '}>
                     {projects?.length > 0 &&(
                     <div className=" h-full  w-full  flex flex-col gap-2">
                         {projects.map((project:ProjectResponse) =>{

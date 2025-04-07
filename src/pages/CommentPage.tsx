@@ -27,13 +27,43 @@ const comments: Array<{ name: string, message: string, createdAt: string }> = [
         name: 'Chris Wilson',
         message: "I will review and optimize the frontend performance.",
         createdAt: '2025-03-21T11:15:00Z' // Specific date
+    },
+    {
+        name: 'Michael Brown',
+        message: "I can work on the database schema and models.",
+        createdAt: '2025-03-23T08:45:00Z' // Specific date
+    },
+    {
+        name: 'Emily Davis',
+        message: "I'll take care of the authentication flow.",
+        createdAt: '2025-03-22T16:20:00Z' // Specific date
+    },
+    {
+        name: 'Chris Wilson',
+        message: "I will review and optimize the frontend performance.",
+        createdAt: '2025-03-21T11:15:00Z' // Specific date
+    },
+    {
+        name: 'Michael Brown',
+        message: "I can work on the database schema and models.",
+        createdAt: '2025-03-23T08:45:00Z' // Specific date
+    },
+    {
+        name: 'Emily Davis',
+        message: "I'll take care of the authentication flow.",
+        createdAt: '2025-03-22T16:20:00Z' // Specific date
+    },
+    {
+        name: 'Chris Wilson',
+        message: "I will review and optimize the frontend performance.",
+        createdAt: '2025-03-21T11:15:00Z' // Specific date
     }
 ];
 
 const CommentPage = () => {
     return <>
-    <div className={'h-full flex flex-col p-2 space-y-4'}>
-        <div className="flex-1 min-h-0 overflow-y-auto space-y-7">
+    <div className={'h-full flex flex-col p-2 space-y-4 overflow-hidden'}>
+        <div className="flex-1 min-h-0 n space-y-7">
             {comments.map((comment, i) => (
                 <Comments key={i} comment={comment} type = 'comment' />
             ))}

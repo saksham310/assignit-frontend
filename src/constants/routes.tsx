@@ -12,6 +12,7 @@ import ErrorPage from "@/pages/ErrorPage.tsx";
 import JoinWorkspacePage from "@/pages/JoinWorkspacePage.tsx";
 import ProjectDashboard from "@/pages/ProjectDashboard.tsx";
 import SprintOverview from "@/pages/SprintOverview.tsx";
+import TaskDetailPage from "@/pages/TaskDetailPage.tsx";
 export const router=createBrowserRouter(
     [
         {
@@ -58,6 +59,10 @@ export const router=createBrowserRouter(
                             element:<SprintOverview/>
                         }
                     ]
+                },
+                {
+                  path: 'test',
+                  element: <TaskDetailPage/>
                 },
                 {
                     path:'/create',
