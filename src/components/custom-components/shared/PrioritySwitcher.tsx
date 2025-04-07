@@ -1,4 +1,4 @@
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger} from "@/components/ui/select.tsx";
 import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 import {FlagIcon} from "lucide-react";
 import {priorityFlagMap} from "@/lib/utils.ts";
