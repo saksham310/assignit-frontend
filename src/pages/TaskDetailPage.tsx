@@ -1,31 +1,12 @@
 import {Badge} from "@/components/ui/badge.tsx";
 import {Card, CardContent, CardHeader,} from "@/components/ui/card.tsx";
-import {AlertCircle, User,  FlagIcon, Bug,} from "lucide-react";
-import Editor from "@/editor/Editor.tsx";
+import {Bug,} from "lucide-react";
 import {useState} from "react";
 import {BugType, bugTypes} from "@/types/project.types.ts";
-import {cn, colorMap, getStatusColor,} from "@/lib/utils.ts";
-import {MultiSelect} from "@/components/ui/multi-select.tsx";
-import {Select, SelectItem, SelectTrigger, SelectContent} from "@/components/ui/select.tsx";
-import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
-import {ScrollArea} from "@/components/ui/scroll-area.tsx";
-import {Input} from "@/components/ui/input.tsx";
 import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
 
 const TaskDetailPage = () => {
-    const [taskStatus, setTaskStatus] = useState("In Progress");
-    const statusLists = [
-        {name: 'To Do', type: 'To_Do', color: '#90a9d0'},
-        {name: 'In Progress', type: 'In_Progress', color: '#f9d171'},
-        {name: 'Completed', type: 'Completed', color: '#008844'},
-    ]
-    let color:string = getStatusColor(taskStatus,statusLists);
-    const changeTaskStatus = (status: string) => {
-        setTaskStatus(status)
-        color = getStatusColor(taskStatus,statusLists)
-
-    }
-    const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
+    const [bugCounts] = useState<Record<BugType, number>>({
         frontend: 0,
         backend: 0,
         database: 0,

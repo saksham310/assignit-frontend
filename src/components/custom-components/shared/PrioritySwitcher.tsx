@@ -3,11 +3,18 @@ import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 import {FlagIcon} from "lucide-react";
 import {priorityFlagMap} from "@/lib/utils.ts";
 
-const PrioritySwitcher = () => {
+
+interface PrioritySwitcherProps {
+    value:string;
+    onChange:(value:string) => void;
+}
+const PrioritySwitcher = ({value,onChange}:PrioritySwitcherProps)  => {
     return <>
-        <Select onValueChange={(val) => console.log(val)}>
-            <SelectTrigger className="  w-fit   border-none shadow-none flex gap-4 ">
-                <span className={'text-xs'}>Set a priority</span>
+        <Select value={value} onValueChange={(val) =>{
+            onChange(val)}}>
+            <SelectTrigger className=" w-fit  border-none shadow-none  gap-4 ">
+                <p className={'flex items-center gap-2  text-xs'}>
+                  <FlagIcon className={'size-4'} fill={priorityFlagMap[value]}/> {value}</p>
             </SelectTrigger>
             <SelectContent className="w-auto">
                 <div className={'max-h-72 flex flex-col text-xs'}>

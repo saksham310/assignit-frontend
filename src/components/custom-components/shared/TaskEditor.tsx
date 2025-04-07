@@ -17,6 +17,7 @@ interface TaskEditorType {
 }
 
 const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
+    // TODO  replace with api call to get project's status
     const statusLists = [
         {name: 'To Do', type: 'To_Do', color: '#90a9d0'},
         {name: 'In Progress', type: 'In_Progress', color: '#f9d171'},
@@ -24,7 +25,7 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
     ]
     const [taskStatus, setTaskStatus] = useState(statusLists[0]);
 
-    const handleStatusChange = (value:string) => {
+    const handleStatusChange = (value: string) => {
         const newStatus = statusLists.find(status => status.name === value)
         if (newStatus) {
             setTaskStatus(newStatus)
@@ -32,6 +33,7 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
         console.log(taskStatus)
     }
 
+    // TODO  replace with api call to get task's bug counts
     const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
         frontend: 0,
         backend: 0,
@@ -50,7 +52,7 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
         }))
     }
 
-
+    // TODO  replace with api call to get project's members
     const membersList = [
         {id: "1", username: "Saksham Sharma", image: "path_to_image.jpg", avatarColor: '#A7C7FF'}, // Soft Light Blue
         {id: "2", username: "Jane Smith", image: "", avatarColor: '#FFB3B3'}, // Soft Light Red
@@ -61,11 +63,18 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
         {id: "7", username: "Love Aa", image: "", avatarColor: '#E2AFAF'}, // Soft Light Purple
         {id: "8", username: "Chris rown", image: "path_to_image.jpg", avatarColor: '#A1E1E6'}, // Soft Light Teal
     ];
-    const [selectedMembers, setSelectedMembers] = useState(['Saksham Sharma','Jane Smith']);
+    const [selectedMembers, setSelectedMembers] = useState(['8', '5']);
+
+    const handleAssigneeChange = (value: string[]) => {
+        setSelectedMembers(value);
+    }
+
+    const [priority,setPriority] = useState<string>('High')
+    const value = ''
 
     return <>
         <div className={cn('col-span-2  flex flex-col gap-4 p-2 overflow-y-auto', {"h-[520px]": isCreateMode})}>
-            <Input className={'w-full font-medium border-none shadow-none hover:bg-gray-50 placeholder:font-normal '}
+            <Input defaultValue={value} className={'w-full font-medium border-none shadow-none hover:bg-gray-50 placeholder:font-normal '}
                    style={{
                        fontSize: isCreateMode ? "14px" : "1.1em",
                    }}
@@ -115,7 +124,7 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
                         <FlagIcon className={'w-4 h-4'}/>
                         Priority:
                     </div>
-                    <PrioritySwitcher/>
+                    <PrioritySwitcher value={priority} onChange={setPriority}/>
                 </div>
                 <div className={' gap-2 text-xs flex items-center'}>
                     <div className={'flex items-center gap-1'}>
@@ -124,7 +133,7 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
                     </div>
                     <MultiSelect
                         options={membersList}
-                        onValueChange={setSelectedMembers}
+                        onValueChange={handleAssigneeChange}
                         defaultValue={selectedMembers}
                         placeholder="Unassigned"
                         maxCount={2}/>
@@ -163,7 +172,7 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
                 ))}
             </div>)}
             <div className={' flex-1 '}>
-                <Editor isCreateMode={isCreateMode}/>
+                <Editor isCreateMode={isCreateMode} initialValue={''}/>
             </div>
             {isCreateMode && <Button className={'ml-auto'}>Add Task</Button>}
         </div>

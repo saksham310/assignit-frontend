@@ -6,7 +6,7 @@ interface EditorProps{
     isCreateMode: boolean;
     initialValue?: string;
 }
-const Editor = ({initialValue = "<p><span style=\"color: rgb(187, 187, 187);\">Write a description</span></p>",isCreateMode}:EditorProps) => {
+const Editor = ({initialValue,isCreateMode}:EditorProps) => {
     const editorRef = useRef<HTMLDivElement | null>(null);
     const quillRef = useRef<Quill | null>(null);
 
@@ -26,7 +26,7 @@ const Editor = ({initialValue = "<p><span style=\"color: rgb(187, 187, 187);\">W
                         ],
                     },
                 });
-                quillRef.current.root.innerHTML = initialValue
+                quillRef.current.root.innerHTML = initialValue ? initialValue : "<p><span style=\"color: rgb(187, 187, 187);\">Write a description</span></p>";
 
             }
         }
@@ -40,7 +40,7 @@ const Editor = ({initialValue = "<p><span style=\"color: rgb(187, 187, 187);\">W
         console.log(editorContent);
     }
     return (
-        <div className={cn("editor-wrapper  h-full max-h-[480px] w-full ",{"w-[840px] h-[250px]":isCreateMode})}>
+        <div className={cn("editor-wrapper h-full  max-h-[480px] w-full ",{"w-[840px] h-[250px]":isCreateMode})}>
 
 
 

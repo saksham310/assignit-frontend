@@ -176,7 +176,7 @@ export const MultiSelect = React.forwardRef<
             if (selectedValues.length === options.length) {
                 handleClear();
             } else {
-                const allValues = options.map((option) => option.username);
+                const allValues = options.map((option) => option.id);
                 setSelectedValues(allValues);
                 onValueChange(allValues);
             }
@@ -204,7 +204,7 @@ export const MultiSelect = React.forwardRef<
                             <div className="flex justify-between items-center w-full">
                                 <div className="flex flex-wrap items-center gap-1">
                                     {selectedValues.slice(0, maxCount).map((value) => {
-                                        const option = options.find((o) => o.username === value);
+                                        const option = options.find((o) => o.id === value);
                                         return (
 
                                                 <UserAvatar
@@ -283,11 +283,11 @@ export const MultiSelect = React.forwardRef<
                                     <span>Select All</span>
                                 </CommandItem>
                                 {options.map((option) => {
-                                    const isSelected = selectedValues.includes(option.username);
+                                    const isSelected = selectedValues.includes(option.id);
                                     return (
                                         <CommandItem
-                                            key={option.username}
-                                            onSelect={() => toggleOption(option.username)}
+                                            key={option.id}
+                                            onSelect={() => toggleOption(option.id)}
                                             className="cursor-pointer"
                                         >
                                             <div
