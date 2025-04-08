@@ -61,8 +61,12 @@ export const router=createBrowserRouter(
                     ]
                 },
                 {
-                  path: 'test',
-                  element: <TaskDetailPage/>
+                    path: 'project/:projectId/tasks-details',
+                    element: <TaskDetailPage />
+                },
+                {
+                    path: 'project/:projectId/sprint/:sprintId/tasks-details',
+                    element: <TaskDetailPage />
                 },
                 {
                     path:'/create',

@@ -45,8 +45,8 @@ const taskStatus: TaskStatus[] = [
                 name: 'Fix API endpoint bugs',
                 assignees: [
                     { id: 1, username: "Saksham Sharma", email: "saksham@example.com", image: "path_to_image.jpg", avatarColor: '#A7C7FF' },
-                    { id: 4, username: "Roman Guy", email: "roman@example.com", image: null, avatarColor: '#FFB3B3' },
-                    { id: 2, username: "Jane Smith", email: "jane@example.com", image: null, avatarColor: '#FFB3B3' },
+                    { id: 4, username: "Roman Guy", email: "roman@example.com", image: 'abc', avatarColor: '#FFB3B3' },
+                    { id: 2, username: "Jane Smith", email: "jane@example.com", image: 'abc', avatarColor: '#FFB3B3' },
                     { id: 3, username: "Dean Kyle", email: "dean@example.com", image: "path_to_image.jpg", avatarColor: '#A7C72F' }
                 ],
                 bugCount: 1,

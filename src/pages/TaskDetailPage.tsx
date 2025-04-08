@@ -4,17 +4,58 @@ import {Bug,} from "lucide-react";
 import {useState} from "react";
 import {BugType, bugTypes} from "@/types/project.types.ts";
 import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
+import {useGetProjectStatusMembers} from "@/hooks/project.hooks.ts";
+import Loader from "@/components/custom-components/shared/Loader.tsx";
+import {useParams} from "react-router-dom";
 
 const TaskDetailPage = () => {
+   // TODO replace with fetched data
+    const dummyTask = {
+        id: 1,
+        name: "Fix authentication issues",
+        description: `
+    <h2>Steps to Reproduce</h2>
+    <ol>
+      <li>Go to login page</li>
+      <li>Enter valid credentials</li>
+      <li>See error on redirect</li>
+    </ol>
+    <p><strong>Expected:</strong> Redirect to dashboard</p>
+    <p><strong>Actual:</strong> Stuck on login with 500 error</p>
+  `,
+        sprint_id: 3,
+        status_id: 5,
+        priority: "High",
+        bugCount: 5,
+        FrontendBugCount: 2,
+        BackendBugCount: 2,
+        DatabaseBugCount: 1,
+        status: {
+            id: 5,
+            name: "In Progress",
+            color: "#4f46e5"
+        },
+        assignees:
+            [
+                {
+                    "id": 5,
+                    "imageUrl": "https://res.cloudinary.com/dcoky4dix/image/upload/v1744046907/user_profiles/bztm1631n2vzh4qforil.png",
+                    "avatarColor": null,
+                    "username": "sakshams._"
+                }
+        ]
+    }
     const [bugCounts] = useState<Record<BugType, number>>({
-        frontend: 0,
-        backend: 0,
-        database: 0,
+        frontend: dummyTask.FrontendBugCount,
+        backend: dummyTask.BackendBugCount,
+        database: dummyTask.DatabaseBugCount,
     })
+    const {projectId} = useParams();
     const totalBugs = bugTypes.reduce((acc, index) => acc + bugCounts[index], 0);
-
-
-
+    const {data:projectStatusMember,isLoading} = useGetProjectStatusMembers(projectId)
+    if(isLoading){
+       return  <Loader/>
+    }
     return <>
         <div className={'w-full flex flex-col gap-4 h-screen p-4 '}>
             <div className={'flex flex-col gap-4'}>
@@ -33,7 +74,8 @@ const TaskDetailPage = () => {
             {/*Main Contents*/}
             <div className={'flex-1  grid grid-cols-3  p-2 rounded-lg overflow-hidden'}>
                 {/*Left Section*/}
-               <TaskEditor isCreateMode={false}/>
+               <TaskEditor isCreateMode={false} task={dummyTask}
+                           status={projectStatusMember.projectStatus} members={projectStatusMember.projectMembers}/>
                 {/*Right Section*/}
                 <div className="h-full max-h-full overflow-hidden flex flex-col">
                     <Card className="shadow-none w-full flex flex-col flex-1 overflow-hidden">

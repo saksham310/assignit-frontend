@@ -15,7 +15,6 @@ const ProjectDashboard = () =>{
     const setOpen = useDialogStore(state => state.openDialog)
     const {projectId} = useParams();
     const {data,isLoading} = useGetProjectDetails(projectId)
-    console.log(data)
     useEffect(() => {
         setTitle("Project")
     }, [setTitle]);

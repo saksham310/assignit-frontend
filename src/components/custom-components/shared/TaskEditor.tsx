@@ -11,19 +11,16 @@ import Editor from "@/editor/Editor.tsx";
 import {useState} from "react";
 import {Button} from "@/components/ui/button.tsx";
 
-
 interface TaskEditorType {
     isCreateMode: boolean;
+    task?: any;
+    status?:any;
+    members?:any;
 }
 
-const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
-    // TODO  replace with api call to get project's status
-    const statusLists = [
-        {name: 'To Do', type: 'To_Do', color: '#90a9d0'},
-        {name: 'In Progress', type: 'In_Progress', color: '#f9d171'},
-        {name: 'Completed', type: 'Completed', color: '#008844'},
-    ]
-    const [taskStatus, setTaskStatus] = useState(statusLists[0]);
+const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) => {
+    const statusLists = status
+    const [taskStatus, setTaskStatus] = useState(task?.status ?? statusLists[0]);
 
     const handleStatusChange = (value: string) => {
         const newStatus = statusLists.find(status => status.name === value)
@@ -33,12 +30,10 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
         console.log(taskStatus)
     }
 
-    // TODO  replace with api call to get task's bug counts
     const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
-        frontend: 0,
-        backend: 0,
-        database: 0,
-    })
+        frontend: task?.FrontendBugCount ?? 0,
+        backend: task?.BackendBugCount ?? 0,
+        database: task?.DatabaseBugCount ?? 0,})
     const incrementBug = (category: keyof typeof bugCounts) => {
         setBugCounts((prev) => ({
             ...prev,
@@ -52,29 +47,21 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
         }))
     }
 
-    // TODO  replace with api call to get project's members
-    const membersList = [
-        {id: "1", username: "Saksham Sharma", image: "path_to_image.jpg", avatarColor: '#A7C7FF'}, // Soft Light Blue
-        {id: "2", username: "Jane Smith", image: "", avatarColor: '#FFB3B3'}, // Soft Light Red
-        {id: "3", username: "Alex Brown", image: "path_to_image.jpg", avatarColor: '#A2F2D0'}, // Soft Light Green
-        {id: "4", username: "Ramsay Bruh", image: "path_to_image.jpg", avatarColor: '#FFF5A3'}, // Soft Light Yellow
-        {id: "5", username: "Love Ada", image: "", avatarColor: '#E2AFFF'}, // Soft Light Purple
-        {id: "6", username: "Chris Brown", image: "path_to_image.jpg", avatarColor: '#A1F1E6'}, // Soft Light Teal
-        {id: "7", username: "Love Aa", image: "", avatarColor: '#E2AFAF'}, // Soft Light Purple
-        {id: "8", username: "Chris rown", image: "path_to_image.jpg", avatarColor: '#A1E1E6'}, // Soft Light Teal
-    ];
-    const [selectedMembers, setSelectedMembers] = useState(['8', '5']);
+    const membersList = members
+    const assignedMembersList = task?.assignees.map(assignee => assignee.id as string) ?? [];
+    const [selectedMembers, setSelectedMembers] = useState(assignedMembersList ?? []);
 
     const handleAssigneeChange = (value: string[]) => {
         setSelectedMembers(value);
     }
 
     const [priority,setPriority] = useState<string>('High')
-    const value = ''
+    const value = task?.name ?? ''
+    const initialValue = task?.description ?? ''
 
     return <>
         <div className={cn('col-span-2  flex flex-col gap-4 p-2 overflow-y-auto', {"h-[520px]": isCreateMode})}>
-            <Input defaultValue={value} className={'w-full font-medium border-none shadow-none hover:bg-gray-50 placeholder:font-normal '}
+            <Input defaultValue={value} className={'w-full font-medium border-none shadow-none bg-gray-50 placeholder:font-normal '}
                    style={{
                        fontSize: isCreateMode ? "14px" : "1.1em",
                    }}
@@ -172,7 +159,7 @@ const TaskEditor = ({isCreateMode = true}: TaskEditorType) => {
                 ))}
             </div>)}
             <div className={' flex-1 '}>
-                <Editor isCreateMode={isCreateMode} initialValue={''}/>
+                <Editor isCreateMode={isCreateMode} initialValue={initialValue}/>
             </div>
             {isCreateMode && <Button className={'ml-auto'}>Add Task</Button>}
         </div>

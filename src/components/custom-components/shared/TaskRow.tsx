@@ -3,7 +3,7 @@ import {AlertCircle} from "lucide-react";
 import {MultiSelect} from "@/components/ui/multi-select.tsx";
 import {useState} from "react";
 import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 interface TaskRowProps {
@@ -18,7 +18,7 @@ const TaskRow = ({taskName, assignees, bugCount, priority}: TaskRowProps) => {
     const navigate = useNavigate();
     const [priorityStatus, setPriority] = useState<string>(priority)
     const openTaskDetailPage = () => {
-        navigate('/test')
+        navigate(`tasks-details`)
     }
     const [selectedMembers, setSelectedMembers] = useState<string[]>([])
     return (

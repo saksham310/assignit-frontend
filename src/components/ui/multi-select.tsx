@@ -209,7 +209,7 @@ export const MultiSelect = React.forwardRef<
 
                                                 <UserAvatar
                                                     name={option?.username || ""}
-                                                    src={option?.image}
+                                                    src={option?.image ?? ""}
                                                     className={`h-6 w-6 text-black`}
                                                     avatarColor={option?.avatarColor}
                                                 />

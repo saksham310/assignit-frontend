@@ -1,13 +1,14 @@
 import {TabConfig} from "@/types/dashboard.type.ts";
 import TabLayoutWrapper from "@/components/custom-components/shared/TabLayoutWrapper.tsx";
 import SprintListView from "@/components/custom-components/dashboard/SprintListView.tsx";
-import {useOutletContext} from "react-router-dom";
+import {useOutletContext, useParams} from "react-router-dom";
 import {useEffect} from "react";
-import {PlusCircle} from "lucide-react";
+import {Loader, PlusCircle} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import KanbanBoard from "@/pages/KanbanBoard.tsx";
 import {useDialogStore} from "@/store/dialog.store.ts";
 import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
+import {useGetProjectStatusMembers} from "@/hooks/project.hooks.ts";
 
 const SprintOverview = () => {
     const setTitle = useOutletContext<(title: string) => void>();
@@ -26,9 +27,16 @@ const SprintOverview = () => {
             component: () => <KanbanBoard/>,
         },
     ];
+    const {projectId} = useParams()
+    const {data:projectStatusMember,isLoading} = useGetProjectStatusMembers(projectId)
+
     const setOpen = useDialogStore(state => state.openDialog)
+
+    if(isLoading){
+        return  <Loader/>
+    }
     const openTaskForm = ()=>  {
-        setOpen(TaskEditor)
+        setOpen(() => <TaskEditor isCreateMode={true} status={projectStatusMember.projectStatus} members={projectStatusMember.projectMembers}/>)
     }
     return (
         <>
