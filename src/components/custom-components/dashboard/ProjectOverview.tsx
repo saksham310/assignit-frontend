@@ -15,9 +15,9 @@ const ProjectOverview = ({projectData}: {projectData:ProjectOverviewData }) =>{
         { name: "To Do", value: projectData.toDo, color: "#8f90ff" }, // Indigo
     ]
     const taskPriorityData = [
-        { name: "High", value: 10, color: priorityFlagMap['High'] }, // Red
-        { name: "Medium", value: 8, color: priorityFlagMap['Medium'] }, // Amber
-        { name: "Low", value: 6, color: priorityFlagMap['Low'] }, // Green
+        { name: "High", value: projectData.highPriority, color: priorityFlagMap['High'] }, // Red
+        { name: "Medium", value: projectData.mediumPriority, color: priorityFlagMap['Medium'] }, // Amber
+        { name: "Low", value: projectData.lowPriority, color: priorityFlagMap['Low'] }, // Green
     ]
    const items = [
        {
@@ -54,8 +54,8 @@ const ProjectOverview = ({projectData}: {projectData:ProjectOverviewData }) =>{
                 <Card className="bg-white shadow-sm border border-gray-100 rounded-lg">
                     <CardContent className="p-4 flex flex-col h-full ">
                         <div className="space-y-1 mb-4">
-                            <h3 className="text-sm font-medium text-gray-700">Task Priority Distribution</h3>
-                            <p className="text-xs text-gray-500">Breakdown of tasks by priority</p>
+                            <h3 className="text-sm font-medium text-gray-700">Task Completion Distribution</h3>
+                            <p className="text-xs text-gray-500">Breakdown of tasks by status</p>
                         </div>
                         <div className={'flex-1 p-4 h-full'}>
                             {hasData ?
