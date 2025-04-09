@@ -21,6 +21,7 @@ const createAnalyticsItems = (analytics: string[], workspaceAnalytics:Record<str
         Sprints: "Sprints",
         "Overdue Projects": "Due",
     };
+
     return analytics.map((key:string) => ({
         name: key,
         info: `${workspaceAnalytics[key]}`,

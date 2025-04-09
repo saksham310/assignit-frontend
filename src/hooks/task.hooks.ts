@@ -1,7 +1,8 @@
-import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {createTask} from "@/service/task.service.ts";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {createTask, getSprintTasks} from "@/service/task.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
+import {getProjectDetails} from "@/service/project.service.ts";
 
 export const useCreateTask = () => {
     const queryClient = useQueryClient();
@@ -16,5 +17,12 @@ export const useCreateTask = () => {
                 duration: 2000,
             });
         }
+    })
+}
+
+export const useGetSprintTasks = (id:string) =>{
+    return useQuery({
+        queryKey:['sprint_task',id],
+        queryFn:() => getSprintTasks(id),
     })
 }

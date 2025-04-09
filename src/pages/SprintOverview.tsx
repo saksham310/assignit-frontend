@@ -9,17 +9,21 @@ import KanbanBoard from "@/pages/KanbanBoard.tsx";
 import {useDialogStore} from "@/store/dialog.store.ts";
 import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
 import {useGetProjectStatusMembers} from "@/hooks/project.hooks.ts";
+import {useGetSprintTasks} from "@/hooks/task.hooks.ts";
 
 const SprintOverview = () => {
     const setTitle = useOutletContext<(title: string) => void>();
     useEffect(() => {
         setTitle("Sprint Overview");
     }, [setTitle]);
+    const {projectId,sprintId} = useParams()
+    const {data:projectStatusMember,isLoading} = useGetProjectStatusMembers(projectId)
+    const {data:sprintTasks} = useGetSprintTasks(sprintId ?? '')
     const tabConfig: TabConfig[] = [
         {
             value: "list",
             label: "List",
-            component: () => <SprintListView/>,
+            component: () => <SprintListView sprint={sprintTasks}/>,
         },
         {
             value: "board",
@@ -27,8 +31,6 @@ const SprintOverview = () => {
             component: () => <KanbanBoard/>,
         },
     ];
-    const {projectId} = useParams()
-    const {data:projectStatusMember,isLoading} = useGetProjectStatusMembers(projectId)
 
     const setOpen = useDialogStore(state => state.openDialog)
 

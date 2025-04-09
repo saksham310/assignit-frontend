@@ -32,7 +32,7 @@ export const GET_PROJECT_DETAILS = (projectId:string) => `projects/${projectId}/
 export const GET_PROJECT_STATUS_MEMBERS = (projectId:string) => `projects/${projectId}/status`;
 export const CREATE_SPRINT = '/projects/sprint';
 export const CREATE_PROJECT = '/projects'
-
+export const GET_SPRINT_TASKS = (sprintId:string) => `projects/sprint/${sprintId}/tasks`;
 
 // Task management APIs
 

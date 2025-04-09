@@ -13,10 +13,10 @@ const TaskListAccordion = ({task} ) => {
                             <div className={'flex justify-between  items-center'}>
 
                                 <div className={'flex items-center gap-2'}>
-                                    <span className={'size-5 border-2  rounded-full  flex items-center justify-center'} style={{borderColor:task.color}}>
-                                    <span className={'rounded-full size-3 '} style={{backgroundColor:task.color}}></span>
+                                    <span className={'size-4 border-2  rounded-full  flex items-center justify-center'} style={{borderColor:task.color}}>
+                                    <span className={'rounded-full size-2 '} style={{backgroundColor:task.color}}></span>
                                 </span>
-                                   <span className={'text-sm'}> {task.name}</span></div>
+                                   <span className={'text-sm font-semibold'}> {task.name}</span></div>
 
                                 <AccordionTrigger/>
                             </div>
@@ -24,7 +24,7 @@ const TaskListAccordion = ({task} ) => {
                         <AccordionContent>
                             {task.tasks.length > 0 &&
                                 ( <CardContent className={'flex flex-col space-y-2'}>
-                                    <div className={'grid grid-cols-4 items-center'}>
+                                    <div className={'grid grid-cols-4 items-center text-xs'}>
                                         <span className={'font-semibold'}>Task</span>
                                         <span className={'font-semibold'}>Assignee</span>
                                         <span className={'font-semibold'}>Bug Count</span>
