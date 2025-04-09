@@ -41,7 +41,8 @@ export const useCreateSprint = () => {
         mutationFn:createSprints,
         onSuccess:async (data)=>{
             await queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            await queryClient.invalidateQueries({queryKey:['projects']})
+            await queryClient.invalidateQueries({queryKey:['projects']});
+            await queryClient.invalidateQueries({queryKey:['project']})
             closeDialog();
             toast.success(data.message,{
                 duration: 2000,

@@ -5,11 +5,14 @@ import {Badge} from "@/components/ui/badge.tsx";
 import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
 import {MultiSelect} from "@/components/ui/multi-select.tsx";
-import {BugType, bugTypes} from "@/types/project.types.ts";
+import {BugType, bugTypes, TaskPayload} from "@/types/project.types.ts";
 import {cn, colorMap, getStatusColor} from "@/lib/utils.ts";
 import Editor from "@/editor/Editor.tsx";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {Button} from "@/components/ui/button.tsx";
+import {toast} from "sonner";
+import {useParams} from "react-router-dom";
+import {useCreateTask} from "@/hooks/task.hooks.ts";
 
 interface TaskEditorType {
     isCreateMode: boolean;
@@ -21,13 +24,14 @@ interface TaskEditorType {
 const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) => {
     const statusLists = status
     const [taskStatus, setTaskStatus] = useState(task?.status ?? statusLists[0]);
+    const inputRef = useRef<HTMLInputElement>(null);
+
 
     const handleStatusChange = (value: string) => {
         const newStatus = statusLists.find(status => status.name === value)
         if (newStatus) {
             setTaskStatus(newStatus)
         }
-        console.log(taskStatus)
     }
 
     const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
@@ -55,17 +59,41 @@ const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) =
         setSelectedMembers(value);
     }
 
+
     const [priority,setPriority] = useState<string>('High')
+
     const value = task?.name ?? ''
-    const initialValue = task?.description ?? ''
+    const {sprintId} = useParams();
+    const [initialValue,setInitialValue] = useState(task?.description ?? '')
+    const {mutate} = useCreateTask();
+    const createTask = () => {
+        if(!inputRef.current?.value) {
+            toast.error("Please enter the task name",{
+                duration: 2000,
+                }
+            )
+            return;
+        }
+        const data:TaskPayload = {
+            name: inputRef.current?.value,
+            description: initialValue,
+            assignees: selectedMembers,
+            status: taskStatus.id,
+            priority: priority,
+            sprint_id: sprintId ?? '',
+        }
+        mutate(data)
+
+    }
 
     return <>
-        <div className={cn('col-span-2  flex flex-col gap-4 p-2 overflow-y-auto', {"h-[520px]": isCreateMode})}>
-            <Input defaultValue={value} className={'w-full font-medium border-none shadow-none bg-gray-50 placeholder:font-normal '}
+        <div className={cn('col-span-2 bg-white  rounded-lg  flex flex-col gap-6 p-2 overflow-y-auto', {"h-[520px]": isCreateMode})}>
+            <Input ref={inputRef} defaultValue={value} className={'w-full font-medium border-none shadow-none hover:bg-gray-50 placeholder:font-normal '}
                    style={{
                        fontSize: isCreateMode ? "14px" : "1.1em",
                    }}
-                   placeholder={'Give your task a name'} required/>
+                   placeholder={'Give your task a name'} required={true}/>
+
 
 
             <div className={' border-b grid grid-cols-2 gap-2'}>
@@ -159,9 +187,9 @@ const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) =
                 ))}
             </div>)}
             <div className={' flex-1 '}>
-                <Editor isCreateMode={isCreateMode} initialValue={initialValue}/>
+                <Editor isCreateMode={isCreateMode} initialValue={initialValue} onChange={setInitialValue}/>
             </div>
-            {isCreateMode && <Button className={'ml-auto'}>Add Task</Button>}
+            {isCreateMode && <Button className={'ml-auto'} onClick={createTask}>Add Task</Button>}
         </div>
     </>
 }

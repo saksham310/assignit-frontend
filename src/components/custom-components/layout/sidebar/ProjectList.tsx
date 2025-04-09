@@ -57,7 +57,7 @@ const ProjectList = () => {
                                         to={`/project/${project.id}`}
                                         className="text-[13px] w-full text-gray-800 font-normal hover:text-primary flex items-center gap-2">
 
-                                     <span className='flex items-center justify-center border bg-primary text-white size-6 rounded p-1'>{project.name.charAt(0).toUpperCase()}</span> <p>{project.name}</p>
+                                     <span className='flex items-center justify-center border bg-primary text-white size-6 rounded p-1'>{project.name.charAt(0).toUpperCase()}</span> <p className={'w-fit text-xs'}>{project.name}</p>
                                     </Link>
                                     <CollapsibleTrigger asChild>
                                         <Button variant="ghost" size="sm">

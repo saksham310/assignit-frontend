@@ -5,8 +5,9 @@ import { cn } from "@/lib/utils";
 interface EditorProps{
     isCreateMode: boolean;
     initialValue?: string;
+    onChange?: (value: string) => void;
 }
-const Editor = ({initialValue,isCreateMode}:EditorProps) => {
+const Editor = ({initialValue,isCreateMode,onChange}:EditorProps) => {
     const editorRef = useRef<HTMLDivElement | null>(null);
     const quillRef = useRef<Quill | null>(null);
 
@@ -35,12 +36,14 @@ const Editor = ({initialValue,isCreateMode}:EditorProps) => {
         };
     }, [initialValue]);
     const saveChanges = () =>{
-        if(isCreateMode) return;
+        if(isCreateMode) {
+           onChange && onChange(quillRef.current!.root.innerHTML)
+        };
         const editorContent = quillRef.current!.root.innerHTML;
         console.log(editorContent);
     }
     return (
-        <div className={cn("editor-wrapper h-full  max-h-[480px] w-full ",{"w-[840px] h-[250px]":isCreateMode})}>
+        <div className={cn("editor-wrapper h-full  max-h-[430px] w-full ",{"w-[840px] h-[250px]":isCreateMode})}>
 
 
 

@@ -81,6 +81,14 @@ export interface ProjectOverviewData{
     mediumPriority: number;
     members: number;
 }
+export interface TaskPayload {
+    name: string
+    description: string
+    assignees: string[]
+    priority: string
+    sprint_id: string
+    status: number
+}
 export const statuses: Status[] = [
 {id:"temp-1",name:'To Do', type:'To_Do', color : '#90a9d0' },
 {id:"temp-2",name:'In Progress', type:'In_Progress', color : '#f9d171' },

@@ -23,8 +23,9 @@ const TaskRow = ({taskName, assignees, bugCount, priority}: TaskRowProps) => {
     const [selectedMembers, setSelectedMembers] = useState<string[]>([])
     return (
         <>
-            <div className={'grid grid-cols-4 border-b p-2 text-xs items-center'} onDoubleClick={openTaskDetailPage}>
-                <span className={'text-xs'}>{taskName}</span>
+            <div className={'grid grid-cols-4 gap-2 border-b p-2 text-xs items-center'} onDoubleClick={openTaskDetailPage}>
+                <span className={'text-xs text-nowrap overflow-hidden overflow-ellipsis'}
+                title={taskName}>{taskName}</span>
                 <MultiSelect
                     options={assignees}
                     onValueChange={setSelectedMembers}
