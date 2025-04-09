@@ -11,7 +11,7 @@ const TaskListAccordion = ({task,members} ) => {
                         <CardHeader className={' rounded-lg px-3 py-2 mb-1 '}>
                             <div className={'flex justify-between  items-center'}>
 
-                                <div className={'flex items-center gap-2'}>
+                                <div className={'flex items-center gap-1'}>
                                     <span className={'size-4 border-2  rounded-full  flex items-center justify-center'} style={{borderColor:task.color}}>
                                     <span className={'rounded-full size-2 '} style={{backgroundColor:task.color}}></span>
                                 </span>

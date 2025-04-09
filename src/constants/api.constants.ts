@@ -37,3 +37,4 @@ export const GET_SPRINT_TASKS = (sprintId:string) => `projects/sprint/${sprintId
 // Task management APIs
 
 export const CREATE_TASK = '/tasks'
+export const GET_TASK_DETAILS = (taskId:string) => `tasks/${taskId}`;
