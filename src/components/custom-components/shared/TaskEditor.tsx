@@ -17,11 +17,11 @@ import {useCreateTask} from "@/hooks/task.hooks.ts";
 interface TaskEditorType {
     isCreateMode: boolean;
     task?: any;
-    status?:any;
-    members?:any;
+    status?: any;
+    members?: any;
 }
 
-const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) => {
+const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType) => {
     const statusLists = status
     const [taskStatus, setTaskStatus] = useState(task?.status ?? statusLists[0]);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -37,7 +37,8 @@ const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) =
     const [bugCounts, setBugCounts] = useState<Record<BugType, number>>({
         frontend: task?.FrontendBugCount ?? 0,
         backend: task?.BackendBugCount ?? 0,
-        database: task?.DatabaseBugCount ?? 0,})
+        database: task?.DatabaseBugCount ?? 0,
+    })
     const incrementBug = (category: keyof typeof bugCounts) => {
         setBugCounts((prev) => ({
             ...prev,
@@ -60,21 +61,21 @@ const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) =
     }
 
 
-    const [priority,setPriority] = useState<string>('High')
+    const [priority, setPriority] = useState<string>('High')
 
     const value = task?.name ?? ''
     const {sprintId} = useParams();
-    const [initialValue,setInitialValue] = useState(task?.description ?? '')
+    const [initialValue, setInitialValue] = useState(task?.description ?? '')
     const {mutate} = useCreateTask();
     const createTask = () => {
-        if(!inputRef.current?.value) {
-            toast.error("Please enter the task name",{
-                duration: 2000,
+        if (!inputRef.current?.value) {
+            toast.error("Please enter the task name", {
+                    duration: 2000,
                 }
             )
             return;
         }
-        const data:TaskPayload = {
+        const data: TaskPayload = {
             name: inputRef.current?.value,
             description: initialValue,
             assignees: selectedMembers,
@@ -87,13 +88,14 @@ const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) =
     }
 
     return <>
-        <div className={cn('col-span-2 bg-white  rounded-lg  flex flex-col gap-6 p-2 overflow-y-auto', {"h-[520px]": isCreateMode})}>
-            <Input ref={inputRef} defaultValue={value} className={'w-full font-medium border-none shadow-none hover:bg-gray-50 placeholder:font-normal '}
+        <div
+            className={cn('col-span-2 bg-white  rounded-lg  flex flex-col gap-6 p-2 overflow-y-auto', {"h-[520px]": isCreateMode})}>
+            <Input ref={inputRef} defaultValue={value}
+                   className={'w-full font-medium border-none shadow-none hover:bg-gray-50 placeholder:font-normal '}
                    style={{
                        fontSize: isCreateMode ? "14px" : "1.1em",
                    }}
                    placeholder={'Give your task a name'} required={true}/>
-
 
 
             <div className={' border-b grid grid-cols-2 gap-2'}>
@@ -104,13 +106,13 @@ const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) =
                     <Select value={taskStatus.name} onValueChange={(value) => handleStatusChange(value)}>
                         <SelectTrigger
                             className={'w-fit md:min-w-[170px] border-none shadow-none flex items-center gap-1'}>
-                            <Badge variant="outline"
-                                   className={`p-[0.5rem] text-center h-6 font-semibold w-full`}
-                                   style={{
-                                       borderColor: getStatusColor(taskStatus.name, statusLists),
-                                       color: getStatusColor(taskStatus.name, statusLists),
-                                   }}
-                            >{taskStatus.name}</Badge>
+                            <div className={'flex items-center gap-2'}>
+                                    <span className={'size-4 border-2  rounded-full  flex items-center justify-center'}
+                                          style={{borderColor: getStatusColor(taskStatus.name, statusLists)}}>
+                                    <span className={'rounded-full size-2 '}
+                                          style={{backgroundColor: getStatusColor(taskStatus.name, statusLists)}}></span>
+                                </span>
+                                <span className={'text-xs'}> {taskStatus.name}</span></div>
                         </SelectTrigger>
                         <SelectContent className={'w-full '}>
                             <div className={'max-h-72 flex flex-col'}>
@@ -118,13 +120,16 @@ const TaskEditor = ({isCreateMode = true,task,status,members}: TaskEditorType) =
                                     {statusLists?.map(
                                         (item) => (<SelectItem key={item.name} value={item.name}
                                                                className={'text-gray-400'}>
-                                                <Badge variant="outline" className={`p-[0.2rem]  w-full`}
-                                                       style={{
-                                                           borderColor: item.color,
-                                                           color: item.color,
-                                                           fontSize: "12px"
-                                                       }}
-                                                >{item.name}</Badge>
+
+                                                <div className={'flex items-center gap-2'}>
+                                    <span className={'size-4 border-2  rounded-full  flex items-center justify-center'}
+                                          style={{borderColor: item.color}}>
+                                    <span className={'rounded-full size-2 '}
+                                          style={{backgroundColor: item.color}}></span>
+                                </span>
+                                                    <span className={'text-xs'}> {item.name}</span>
+                                                </div>
+
                                             </SelectItem>
                                         )
                                     )

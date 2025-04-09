@@ -6,7 +6,7 @@ import {useDialogStore} from "@/store/dialog.store.ts";
 import SprintCreationForm from "@/components/custom-components/forms/SprintCreationForm.tsx";
 import ProjectListView from "@/components/custom-components/dashboard/ProjectListView.tsx";
 import ProjectOverview from "@/components/custom-components/dashboard/ProjectOverview.tsx";
-import Dashboard from "@/components/custom-components/dashboard/Dashboard.tsx";
+import Dashboard, {Action} from "@/components/custom-components/dashboard/Dashboard.tsx";
 import {useGetProjectDetails} from "@/hooks/project.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
 
@@ -41,8 +41,8 @@ const ProjectDashboard = () =>{
     const onCreateSprint = () => {
         setOpen(SprintCreationForm)
     }
-    const actions = [
-        { label: "Create Sprint", icon: <PlusCircle />, onClick: onCreateSprint },
+    const actions:Action[] = [
+        { label: "Create Sprint", icon: <PlusCircle />,variant:"default",onClick: onCreateSprint },
     ]
 
     return <>

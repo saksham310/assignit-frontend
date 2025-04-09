@@ -41,7 +41,7 @@ const SprintOverview = () => {
     return (
         <>
             <div className={'hidden lg:flex w-auto  items-center gap-x-4 absolute right-8'}>
-                <Button variant={'outline'} size={'sm'} onClick={openTaskForm}><PlusCircle/>Add
+                <Button variant={'default'} size={'sm'} onClick={openTaskForm}><PlusCircle/>Add
                     Task</Button>
             </div>
             <TabLayoutWrapper tabConfig={tabConfig}/></>

@@ -12,8 +12,12 @@ const TaskListAccordion = ({task} ) => {
                         <CardHeader className={' rounded-lg px-3 py-2 mb-1 '}>
                             <div className={'flex justify-between  items-center'}>
 
-                                <span><Badge variant={'outline'} className={'border-2'} style={{borderColor:task.color,
-                                color:task.color}}>{task.name}</Badge></span>
+                                <div className={'flex items-center gap-2'}>
+                                    <span className={'size-5 border-2  rounded-full  flex items-center justify-center'} style={{borderColor:task.color}}>
+                                    <span className={'rounded-full size-3 '} style={{backgroundColor:task.color}}></span>
+                                </span>
+                                   <span className={'text-sm'}> {task.name}</span></div>
+
                                 <AccordionTrigger/>
                             </div>
                         </CardHeader>

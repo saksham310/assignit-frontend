@@ -1,4 +1,4 @@
-import Dashboard from "@/components/custom-components/dashboard/Dashboard.tsx";
+import Dashboard, {Action} from "@/components/custom-components/dashboard/Dashboard.tsx";
 import { useOutletContext, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useGetWorkspaceAnalytics } from "@/hooks/workspace.hooks.ts";
@@ -64,9 +64,9 @@ const WorkspaceDashboard = () => {
         },
     ];
 
-    const actions = [
-        { label: "Add Project", icon: <PlusCircle />, onClick: onAddProject },
-        { label: "Invite", icon: <Send />, onClick: onInvite },
+    const actions:Action[] = [
+        { label: "Add Project", icon: <PlusCircle />,variant:'default', onClick: onAddProject },
+        { label: "Invite", icon: <Send />,variant:'secondary', onClick: onInvite },
     ];
 
     return <Dashboard tabConfig={tabConfig} isOwnerAdmin={isOwnerAdmin} actions={actions} />;
