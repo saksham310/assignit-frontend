@@ -23,7 +23,7 @@ const SprintOverview = () => {
         {
             value: "list",
             label: "List",
-            component: () => <SprintListView sprint={sprintTasks}/>,
+            component: () => <SprintListView sprint={sprintTasks} members={projectStatusMember.projectMembers}/>,
         },
         {
             value: "board",

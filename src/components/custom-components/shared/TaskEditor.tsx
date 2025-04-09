@@ -1,7 +1,6 @@
 import {Input} from "@/components/ui/input.tsx";
 import {AlertCircle, Bug, FlagIcon, User} from "lucide-react";
 import {Select, SelectContent, SelectItem, SelectTrigger} from "@/components/ui/select.tsx";
-import {Badge} from "@/components/ui/badge.tsx";
 import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
 import {MultiSelect} from "@/components/ui/multi-select.tsx";
@@ -52,7 +51,6 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         }))
     }
 
-    const membersList = members
     const assignedMembersList = task?.assignees.map(assignee => assignee.id as string) ?? [];
     const [selectedMembers, setSelectedMembers] = useState(assignedMembersList ?? []);
 
@@ -152,7 +150,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
                         Assignees:
                     </div>
                     <MultiSelect
-                        options={membersList}
+                        options={members}
                         onValueChange={handleAssigneeChange}
                         defaultValue={selectedMembers}
                         placeholder="Unassigned"

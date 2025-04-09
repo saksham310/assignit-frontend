@@ -45,6 +45,8 @@ const TaskDetailPage = () => {
                 }
         ]
     }
+    const {taskId} = useParams();
+    console.log(taskId);
     const [bugCounts] = useState<Record<BugType, number>>({
         frontend: dummyTask.FrontendBugCount,
         backend: dummyTask.BackendBugCount,

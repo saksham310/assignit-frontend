@@ -61,11 +61,11 @@ export const router=createBrowserRouter(
                     ]
                 },
                 {
-                    path: 'project/:projectId/tasks-details',
+                    path: 'project/:projectId/tasks-details/:taskId',
                     element: <TaskDetailPage />
                 },
                 {
-                    path: 'project/:projectId/sprint/:sprintId/tasks-details',
+                    path: 'project/:projectId/sprint/:sprintId/tasks-details/:taskId',
                     element: <TaskDetailPage />
                 },
                 {

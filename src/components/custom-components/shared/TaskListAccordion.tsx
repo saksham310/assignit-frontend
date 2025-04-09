@@ -1,9 +1,8 @@
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion.tsx";
 import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
-import {Badge} from "@/components/ui/badge.tsx";
 import TaskRow from "@/components/custom-components/shared/TaskRow.tsx";
 
-const TaskListAccordion = ({task} ) => {
+const TaskListAccordion = ({task,members} ) => {
     return (
         <>
             <Accordion type={"single"} collapsible defaultValue={task.name }>
@@ -32,11 +31,13 @@ const TaskListAccordion = ({task} ) => {
                                     </div>
                                     {task.tasks.map(task => (
                                         <TaskRow
+                                            taskId={task.id}
                                             taskName={task.name}
                                             assignees={task.assignees}
                                             key={task.name}
                                             bugCount={task.bugCount}
                                             priority={task.priority}
+                                            members={members}
                                         />
                                     ))}
                                 </CardContent>)

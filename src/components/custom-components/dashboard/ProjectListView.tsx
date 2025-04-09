@@ -3,11 +3,22 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx
 import SprintListView from "@/components/custom-components/dashboard/SprintListView.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
 import {SprintWithTask} from "@/types/project.types.ts";
+import {useGetProjectStatusMembers} from "@/hooks/project.hooks.ts";
+import {useParams} from "react-router-dom";
+import Loader from "@/components/custom-components/shared/Loader.tsx";
 
 
+interface ProjectListViewProps {
+    projectSprint:SprintWithTask[],
+}
 
-
-const ProjectListView = ({projectSprint}:{projectSprint:SprintWithTask[]}) => {
+const ProjectListView = ({projectSprint}:ProjectListViewProps) => {
+    const  {projectId} = useParams()
+    const {data:projectStatusMember,isLoading} = useGetProjectStatusMembers(projectId)
+    if(isLoading){
+        return <Loader/>
+    }
+  const members = projectStatusMember.projectMembers
     return (
         <>
             <div className={'flex flex-col gap-0.5'}>
@@ -24,7 +35,7 @@ const ProjectListView = ({projectSprint}:{projectSprint:SprintWithTask[]}) => {
                                 </CardHeader>
                                 <AccordionContent>
                                     <CardContent className={'flex flex-col space-y-6'}>
-                                        <SprintListView sprint={sprint}/>
+                                        <SprintListView sprint={sprint} members={members}/>
                                     </CardContent>
                                 </AccordionContent>
                             </Card>

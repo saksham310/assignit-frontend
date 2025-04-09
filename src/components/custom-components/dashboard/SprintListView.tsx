@@ -81,14 +81,15 @@ const taskStatus: TaskStatus[] = [
 ];
 interface  SprintListViewProps {
     sprint?: SprintWithTask;
+    members?: any;
 }
 
-const SprintListView = ({sprint}:SprintListViewProps) => {
+const SprintListView = ({sprint,members}:SprintListViewProps) => {
     const tasks = sprint?.taskStatus ?? taskStatus;
     return <>
         <div className={'flex flex-col '}>
             {tasks.map((task) => (
-                <><TaskListAccordion task={task}/><Separator/></>
+                <><TaskListAccordion task={task} members={members}/><Separator/></>
             ))}
         </div>
     </>
