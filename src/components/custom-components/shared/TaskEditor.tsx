@@ -1,5 +1,5 @@
 // 1. Imports
-import { useRef, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 import {
@@ -36,7 +36,7 @@ const TaskEditor = ({ isCreateMode = true, task, status, members }: TaskEditorTy
     const inputRef = useRef<HTMLInputElement>(null);
     const [taskStatus, setTaskStatus] = useState(task?.status ?? statusLists[0]);
     const [priority, setPriority] = useState<string>('High');
-    const [initialValue, setInitialValue] = useState(task?.description ?? '');
+    const [initialValue, setInitialValue] = useState(task?.description);
     const [selectedMembers, setSelectedMembers] = useState(
         task?.assignees?.map(assignee => assignee.id as string) ?? []
     );
@@ -45,6 +45,11 @@ const TaskEditor = ({ isCreateMode = true, task, status, members }: TaskEditorTy
         backend: task?.BackendBugCount ?? 0,
         database: task?.DatabaseBugCount ?? 0,
     });
+    useEffect(() => {
+        if (task?.description) {
+            setInitialValue(task.description);
+        }
+    }, [task]);
 
     // 5. Hooks
     const { mutate } = useCreateTask();

@@ -34,7 +34,19 @@ const Editor = ({initialValue,isCreateMode,onChange}:EditorProps) => {
 
         return () => {
         };
+    }, []);
+
+    useEffect(() => {
+        if (quillRef.current && initialValue) {
+            const currentContent = quillRef.current.root.innerHTML;
+
+            // Only update if content is different to avoid unnecessary DOM updates
+            if (currentContent !== initialValue) {
+                quillRef.current.root.innerHTML = initialValue;
+            }
+        }
     }, [initialValue]);
+
     const saveChanges = () =>{
         if(isCreateMode) {
            onChange && onChange(quillRef.current!.root.innerHTML)
