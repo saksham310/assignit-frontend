@@ -87,7 +87,10 @@ export interface TaskPayload {
     assignees: string[]
     priority: string
     sprint_id: string
-    status: number
+    status_id: number
+    frontendBugCount?: number
+    backendBugCount?: number
+    databaseBugCount?: number
 }
 export const statuses: Status[] = [
 {id:"temp-1",name:'To Do', type:'To_Do', color : '#90a9d0' },

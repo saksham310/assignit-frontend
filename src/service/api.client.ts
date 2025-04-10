@@ -47,6 +47,7 @@ apiClient.interceptors.response.use((res) => {
    else{
         toast.error(err.response?.data?.message || "An error occurred", {
             duration: 2000,
+            id:'error',
         });
     }
     return Promise.reject(err);

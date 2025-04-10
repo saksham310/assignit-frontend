@@ -1,8 +1,9 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {createTask, getSprintTasks, getTaskById} from "@/service/task.service.ts";
+import {createTask, getSprintTasks, getTaskById, updateTask} from "@/service/task.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
 import {getProjectDetails} from "@/service/project.service.ts";
+import {TaskPayload} from "@/types/project.types.ts";
 
 export const useCreateTask = () => {
     const queryClient = useQueryClient();
@@ -31,5 +32,18 @@ export const useGetTaskDetails = (id:string) =>{
     return useQuery({
         queryKey:['task_detail',id],
         queryFn:() => getTaskById(id)
+    })
+}
+
+export const useUpdateTask = () => {
+    return useMutation({
+        mutationFn: ({id, data}: { id: string; data: Partial<TaskPayload> }) =>
+            updateTask(data, id),
+        onSuccess: async (data) => {
+            toast.success(data.message, {
+                duration: 2000,
+                id:'task_update',
+            });
+        }
     })
 }

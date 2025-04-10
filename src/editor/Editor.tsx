@@ -48,10 +48,12 @@ const Editor = ({initialValue,isCreateMode,onChange}:EditorProps) => {
     }, [initialValue]);
 
     const saveChanges = () =>{
-        if(isCreateMode) {
-            onChange?.(quillRef.current!.root.innerHTML)
-        };
         const editorContent = quillRef.current!.root.innerHTML;
+        if(isCreateMode) {
+            onChange?.(editorContent)
+            return;
+        }
+
         console.log(editorContent);
     }
     return (

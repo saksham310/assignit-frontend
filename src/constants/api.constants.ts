@@ -38,3 +38,4 @@ export const GET_SPRINT_TASKS = (sprintId:string) => `projects/sprint/${sprintId
 
 export const CREATE_TASK = '/tasks'
 export const GET_TASK_DETAILS = (taskId:string) => `tasks/${taskId}`;
+export const UPDATE_TASK = (taskId:string) => `tasks/${taskId}`;

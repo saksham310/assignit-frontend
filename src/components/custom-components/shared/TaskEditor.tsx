@@ -15,7 +15,7 @@ import {MultiSelect} from "@/components/ui/multi-select.tsx";
 import { AlertCircle, Bug, FlagIcon, User } from "lucide-react";
 import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
 import Editor from "@/editor/Editor.tsx";
-import { useCreateTask } from "@/hooks/task.hooks.ts";
+import {useCreateTask, useUpdateTask} from "@/hooks/task.hooks.ts";
 import { BugType, bugTypes, TaskPayload } from "@/types/project.types.ts";
 import { cn, colorMap, getStatusColor } from "@/lib/utils.ts";
 
@@ -53,20 +53,89 @@ const TaskEditor = ({ isCreateMode = true, task, status, members }: TaskEditorTy
 
     // 5. Hooks
     const { mutate } = useCreateTask();
+    const {mutate:updateTask} = useUpdateTask();
 
     // 6. Handlers
     const handleStatusChange = (value: string) => {
         const newStatus = statusLists.find(status => status.name === value);
-        if (newStatus) setTaskStatus(newStatus);
+        if (!newStatus) return;
+
+        const previousStatus = taskStatus;
+
+        setTaskStatus(newStatus);
+
+        if (!isCreateMode) {
+            updateTask(
+                {
+                    id: task.id,
+                    data: {
+                        status_id: newStatus.id,
+                    },
+                },
+                {
+                    onError: () => {
+                        // Revert on failure
+                        setTaskStatus(previousStatus);
+                    },
+                }
+            );
+        }
     };
 
-    const handleAssigneeChange = (value: string[]) => setSelectedMembers(value);
+    const handleAssigneeChange = (value: string[]) => {
+        const previousMembers = selectedMembers
+        setSelectedMembers(value);
+        if (!isCreateMode) {
+            updateTask({
+                id:task.id,
+                data: {
+                    assignees: value
+                }
+            },
+                {
+                    onError: () => {
+                        setTaskStatus(previousMembers);
+                    }
+                }
+                )
+        }
 
-    const incrementBug = (type: BugType) =>
-        setBugCounts(prev => ({ ...prev, [type]: prev[type] + 1 }));
+    }
 
-    const decrementBug = (type: BugType) =>
-        setBugCounts(prev => ({ ...prev, [type]: Math.max(0, prev[type] - 1) }));
+    const incrementBug = (type: BugType) => {
+        const previousCount = bugCounts[type];
+
+        setBugCounts(prev => ({ ...prev, [type]: prev[type] +1 }));
+
+        updateTask({
+            id: task.id,
+            data: {
+                [`${type}BugCount`]: previousCount + 1 , // dynamic key
+            },
+        },{
+            onError: () => {
+                setBugCounts(prev => ({ ...prev, [type]: previousCount }));
+            }
+        });
+    };
+
+
+    const decrementBug = (type: BugType) => {
+        const previousCount = bugCounts[type];
+
+        setBugCounts(prev => ({ ...prev, [type]: prev[type] - 1 }));
+
+        updateTask({
+            id: task.id,
+            data: {
+                [`${type}BugCount`]: previousCount - 1, // dynamic key
+            },
+        },{
+            onError: () => {
+                setBugCounts(prev => ({ ...prev, [type]: previousCount }));
+            }
+        });
+    };
 
     const createTask = () => {
         if (!inputRef.current?.value) {
