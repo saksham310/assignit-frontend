@@ -1,5 +1,4 @@
 // React & Routing
-import {useState} from "react";
 import {useParams} from "react-router-dom";
 
 // Custom Hooks
@@ -18,26 +17,17 @@ import Loader from "@/components/custom-components/shared/Loader.tsx";
 import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
 
 // Icons
-import {Bug, MessageSquare, Paperclip, Send} from "lucide-react";
-
-// Types
-import {BugType, bugTypes} from "@/types/project.types.ts";
+import {MessageSquare, Paperclip, Send} from "lucide-react";
 
 const TaskDetailPage = () => {
     const {taskId} = useParams();
     const {projectId} = useParams();
 
-    const {data,isLoading:isTaskDetailsLoading} = useGetTaskDetails(taskId as string);
+    const {data, isLoading: isTaskDetailsLoading} = useGetTaskDetails(taskId as string);
     const dummyTask = data ?? {};
 
-    const [bugCounts] = useState<Record<BugType, number>>({
-        frontend: dummyTask?.FrontendBugCount ?? 0,
-        backend: dummyTask?.BackendBugCount ?? 0,
-        database: dummyTask?.DatabaseBugCount ?? 0,
-    });
 
-    const totalBugs = bugTypes.reduce((acc, index) => acc + bugCounts[index], 0);
-    const {data: projectStatusMember, isLoading:isStatusLoading} = useGetProjectStatusMembers(projectId);
+    const {data: projectStatusMember, isLoading: isStatusLoading} = useGetProjectStatusMembers(projectId);
     const isLoading = isStatusLoading || isTaskDetailsLoading;
     if (isLoading) {
         return <Loader/>
@@ -49,17 +39,6 @@ const TaskDetailPage = () => {
             <div className={'flex flex-col gap-4'}>
                 <div className={'flex items-center gap-2 '}>
                     <Badge variant={'outline'}>Task Id</Badge>
-                    {totalBugs > 0 && (
-                        <Badge
-                            variant={'outline'}
-                            className={'border-red-500 font-normal inline-flex items-center gap-1 bg-red-50 text-red-700'}
-                        >
-                            <Bug className="size-4"/>
-                            <span>
-                                {totalBugs} {totalBugs === 1 ? "Bug" : "Bugs"}
-                            </span>
-                        </Badge>
-                    )}
                 </div>
             </div>
 

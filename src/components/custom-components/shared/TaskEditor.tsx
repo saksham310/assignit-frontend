@@ -45,6 +45,7 @@ const TaskEditor = ({ isCreateMode = true, task, status, members }: TaskEditorTy
         backend: task?.BackendBugCount ?? 0,
         database: task?.DatabaseBugCount ?? 0,
     });
+    const totalBugs = bugTypes.reduce((acc, index) => acc + bugCounts[index], 0);
     useEffect(() => {
         if (task?.description) {
             setInitialValue(task.description);
@@ -147,7 +148,7 @@ const TaskEditor = ({ isCreateMode = true, task, status, members }: TaskEditorTy
             name: inputRef.current.value,
             description: initialValue,
             assignees: selectedMembers,
-            status: taskStatus.id,
+            status_id: taskStatus.id,
             priority,
             sprint_id: sprintId ?? '',
         };
@@ -235,6 +236,12 @@ const TaskEditor = ({ isCreateMode = true, task, status, members }: TaskEditorTy
                         maxCount={2}
                     />
                 </div>
+                <div className="flex items-center gap-2 text-red-700">
+                    <Bug className="w-4 h-4" />
+                    Bug Count:
+                    <span>{totalBugs} {totalBugs === 1 ? "Bug" : "Bugs"}</span>
+                </div>
+
             </div>
 
             {/* Bug Section */}
