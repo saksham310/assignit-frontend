@@ -25,7 +25,7 @@ const TabLayoutWrapper = ({tabConfig, isDashboard}: TabLayoutWrapperProps) => {
                     className={`bg-white p-4 rounded-lg mt-4 ${isDashboard ? 'lg:h-[calc(100dvh-16em)]' : 'h-full'}  overflow-hidden `}>
                     {tabConfig.map((tab) => {
                         return (
-                            <TabsContent key={tab.value} value={tab.value} className="p-1 h-full overflow-y-auto">
+                            <TabsContent key={tab.value} value={tab.value} className="p-1 h-full overflow-y-auto overflow-x-auto">
                                 <tab.component/>
                             </TabsContent>
                         )

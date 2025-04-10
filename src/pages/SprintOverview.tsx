@@ -28,17 +28,18 @@ const SprintOverview = () => {
         {
             value: "board",
             label: "Board",
-            component: () => <KanbanBoard/>,
+            component: () => <KanbanBoard tasks={sprintTasks}/>,
         },
     ];
 
     const setOpen = useDialogStore(state => state.openDialog)
 
-    if(isLoading){
-        return  <Loader/>
-    }
+
     const openTaskForm = ()=>  {
         setOpen(() => <TaskEditor isCreateMode={true} status={projectStatusMember.projectStatus} members={projectStatusMember.projectMembers}/>)
+    }
+    if(isLoading){
+        return  <Loader/>
     }
     return (
         <>

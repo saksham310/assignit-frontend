@@ -11,7 +11,7 @@ const KanbanColumn = ({status}:KanbanColumnProps) => {
         id:status.name
     })
     return <>
-    <Card ref={setNodeRef} className={'shadow-none flex flex-col h-[calc(100vh-200px)] border-primary/900 bg-primary/5'}>
+    <Card ref={setNodeRef} className={'shadow-none flex flex-col h-[calc(100vh-220px)] border-primary/900 bg-primary/5'}>
         <CardHeader className={'pb-2'}>
             <Badge variant={'outline'} className="border-2  w-fit font-medium"
             style={{borderColor:status.color}}>

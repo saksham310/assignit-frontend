@@ -27,7 +27,7 @@ const TaskDetailPage = () => {
     const {taskId} = useParams();
     const {projectId} = useParams();
 
-    const {data} = useGetTaskDetails(taskId as string);
+    const {data,isLoading:isTaskDetailsLoading} = useGetTaskDetails(taskId as string);
     const dummyTask = data ?? {};
 
     const [bugCounts] = useState<Record<BugType, number>>({
@@ -37,8 +37,8 @@ const TaskDetailPage = () => {
     });
 
     const totalBugs = bugTypes.reduce((acc, index) => acc + bugCounts[index], 0);
-    const {data: projectStatusMember, isLoading} = useGetProjectStatusMembers(projectId);
-
+    const {data: projectStatusMember, isLoading:isStatusLoading} = useGetProjectStatusMembers(projectId);
+    const isLoading = isStatusLoading || isTaskDetailsLoading;
     if (isLoading) {
         return <Loader/>
     }
