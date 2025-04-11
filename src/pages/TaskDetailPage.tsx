@@ -18,7 +18,8 @@ import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
 
 // Icons
 import {MessageSquare, Paperclip, Send} from "lucide-react";
-import Comments from "@/components/custom-components/shared/Comments.tsx";
+
+import CommentPage from "@/pages/CommentPage.tsx";
 
 const TaskDetailPage = () => {
     const {taskId} = useParams();
@@ -57,17 +58,14 @@ const TaskDetailPage = () => {
                 <div className="h-full max-h-full overflow-hidden flex flex-col">
                     <Card className="shadow-none border-none w-full flex flex-col flex-1 overflow-hidden">
                         <CardHeader className="px-4 py-4 shrink-0 font-medium flex gap-1">
-                            <CardTitle className={'flex items-center gap-1'}>
+                            <CardTitle className={'flex items-center gap-1 text-primary'}>
                                 <MessageSquare className="h-5 w-5"/>
                                 <p>Comments</p>
                             </CardTitle>
                         </CardHeader>
 
                         <CardContent className="p-4 overflow-y-auto flex-1 flex flex-col gap-3 scrollbar">
-                            <Comments comment={{name:'Nibid',message:'changed the status from low to high',createdAt:new Date().toString()}} type={'activity'} />
-                            {Array(10).fill(0).map((_, index) => (
-                                <Comments comment={{name:'Saksham',message:"I am attemptiong to make a good comment.Please bear with the process.I am attemptiong to make a good comment.Please bear with the process",createdAt : new Date().toString()}} type={'comment'}/>
-                            ))}
+                            <CommentPage id={dummyTask.id as number} />
                         </CardContent>
 
                         <CardContent className={'flex flex-col min-h-[150px] gap-2'}>
@@ -77,9 +75,9 @@ const TaskDetailPage = () => {
                                 className="min-h-[80px] w-full resize-none text-sm"
                                 onChange={(e) => console.log(e.target.value)}
                             />
-                            <div className={'flex items-center gap-1 ml-auto'}>
-                                <Button variant="outline" size="sm" className="h-7 text-xs">
-                                    <Paperclip className="h-3.5 w-3.5 mr-1"/>
+                            <div className={'flex items-center gap-2 ml-auto'}>
+                                <Button variant="outline" size="sm" className=" text-xs">
+                                    <Paperclip />
                                     <span>Attach</span>
                                 </Button>
                                 <Button variant={'default'} size={'sm'}>

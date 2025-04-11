@@ -200,7 +200,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
                     <Select value={taskStatus.name} onValueChange={handleStatusChange}>
                         <SelectTrigger
                             className="w-fit md:min-w-[170px] border-none shadow-none flex items-center gap-1">
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 text-xs">
                                 <span
                                     className="size-4 border-2 rounded-full flex items-center justify-center"
                                     style={{borderColor: getStatusColor(taskStatus.name, statusLists)}}
@@ -217,7 +217,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
                             <ScrollArea className="max-h-72">
                                 {statusLists.map(item => (
                                     <SelectItem key={item.name} value={item.name} className="text-gray-400">
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 text-xs">
                                             <span
                                                 className="size-4 border-2 rounded-full flex items-center justify-center"
                                                 style={{borderColor: item.color}}

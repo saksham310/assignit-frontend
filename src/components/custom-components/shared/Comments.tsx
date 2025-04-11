@@ -1,9 +1,9 @@
 import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 import moment from 'moment';
+import {Comment} from "@/types/project.types.ts";
 
 interface  CommentProps {
-    comment: {name:string,message:string,createdAt: string}
-    type: 'comment' | 'activity'
+    comment: Comment
 }
 
 
@@ -11,10 +11,10 @@ const  getRelativeDate = (date:string) => {
     return moment(date).fromNow(); // Example: "a day ago", "2 hours ago", "Yesterday", etc.
 }
 
-const Comments = ({comment,type}:CommentProps) => {
+const Comments = ({comment}:CommentProps) => {
 
     return <>
-    {type === 'comment' && (
+    {comment.type === 'comment' && (
     <div className={"flex gap-4 items-center p-3 border rounded-lg bg-gray-50 "}>
         <UserAvatar name={comment!.name} className={'size-8 text-sm'}/>
 
@@ -23,17 +23,18 @@ const Comments = ({comment,type}:CommentProps) => {
                     <p>{comment!.name}</p>
                     <span className={'text-xs text-gray-500'}>{getRelativeDate(comment.createdAt)}</span>
                 </div>
-                <p className={'text-xs'}>{comment!.message}</p>
+                <p className={'text-xs text-gray-700'}>{comment!.message}</p>
             </div>
 
     </div>
-    )}{type === 'activity' && (
-            <div className={'flex justify-between items-center text-xs  text-gray-500 p-3  w-full space-y-1'}>
-                <div className={'flex items-center text-xs gap-1 justify-between '}>
-                    <span className={'rounded-full size-1 bg-gray-500'}></span>
-                    <p>{comment!.name} {comment!.message}</p>
+    )}{comment.type === 'activity' && (
+            <div className={'flex justify-between items-center text-xs  text-gray-500 p-3   w-full space-y-1'}>
+                <div className={'flex items-center  gap-2 justify-between '}
+                     style={{fontSize:"11px"}}>
+                    <span className={'rounded-full size-1 min-w-1 bg-gray-500'}></span>
+                    <span>{comment!.name} {comment!.message}</span>
                 </div>
-                <span style={{fontSize:"10px"}}>{getRelativeDate(comment.createdAt)}</span>
+                <span className={'flex-1 text-nowrap'} style={{fontSize:"10px"}}>{getRelativeDate(comment.createdAt)}</span>
             </div>
         )}
     </>

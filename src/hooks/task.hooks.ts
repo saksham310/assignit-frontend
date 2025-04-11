@@ -1,8 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {createTask, getSprintTasks, getTaskById, updateTask} from "@/service/task.service.ts";
+import {createTask, getAllComments, getSprintTasks, getTaskById, updateTask} from "@/service/task.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
-import {getProjectDetails} from "@/service/project.service.ts";
 import {TaskPayload} from "@/types/project.types.ts";
 
 export const useCreateTask = () => {
@@ -45,5 +44,12 @@ export const useUpdateTask = () => {
                 id:'task_update',
             });
         }
+    })
+}
+
+export const useGetAllComments = (id:number) =>{
+    return useQuery({
+        queryKey:['comments',id],
+        queryFn:() => getAllComments(id),
     })
 }

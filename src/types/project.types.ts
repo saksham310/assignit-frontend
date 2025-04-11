@@ -3,11 +3,12 @@ import {User} from "@/types/auth.type.ts";
 export type StatusType = "To_Do" | "In_Progress" | "Completed"
 
 export interface Status {
-    id?: string | number |undefined;
+    id?: string | number | undefined;
     name: string
     type: StatusType
     color: string
 }
+
 export interface ProjectCreationPayload {
     name: string
     startDate: Date
@@ -22,6 +23,7 @@ export interface SprintCreationPayload {
     startDate: Date
     dueDate: Date
 }
+
 export interface SprintList {
     id: number
     name: string
@@ -66,7 +68,7 @@ export interface SprintWithTask {
     taskStatus: TaskStatus[];
 }
 
-export interface ProjectOverviewData{
+export interface ProjectOverviewData {
     id: number;
     name: string;
     startDate: string;
@@ -81,6 +83,7 @@ export interface ProjectOverviewData{
     mediumPriority: number;
     members: number;
 }
+
 export interface TaskPayload {
     name: string
     description: string
@@ -92,11 +95,14 @@ export interface TaskPayload {
     backendBugCount?: number
     databaseBugCount?: number
 }
+
 export const statuses: Status[] = [
-{id:"temp-1",name:'To Do', type:'To_Do', color : '#90a9d0' },
-{id:"temp-2",name:'In Progress', type:'In_Progress', color : '#f9d171' },
-{id:"temp-3",name:'Completed', type:'Completed', color : '#008844' },
+    {id: "temp-1", name: 'To Do', type: 'To_Do', color: '#90a9d0'},
+    {id: "temp-2", name: 'In Progress', type: 'In_Progress', color: '#f9d171'},
+    {id: "temp-3", name: 'Completed', type: 'Completed', color: '#008844'},
 ]
 
 export const bugTypes = ['frontend', 'backend', 'database']
 export type BugType = typeof bugTypes[number]
+
+export type Comment = { id: number, name: string, message: string, createdAt: string,type: 'comment' | 'activity' }

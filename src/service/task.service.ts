@@ -1,5 +1,11 @@
 import {apiClient} from "@/service/api.client.ts";
-import {CREATE_TASK, GET_SPRINT_TASKS, GET_TASK_DETAILS, UPDATE_TASK} from "@/constants/api.constants.ts";
+import {
+    CREATE_TASK,
+    GET_ALL_COMMENTS,
+    GET_SPRINT_TASKS,
+    GET_TASK_DETAILS,
+    UPDATE_TASK
+} from "@/constants/api.constants.ts";
 import {TaskPayload} from "@/types/project.types.ts";
 
 export const createTask = async (data:TaskPayload) =>{
@@ -19,5 +25,10 @@ export const getTaskById = async (id: string) =>{
 
 export const updateTask = async (data:Partial<TaskPayload>,id:string) =>{
     const res = await apiClient.put(UPDATE_TASK(id), data);
+    return res.data
+}
+
+export const getAllComments = async (id:number) =>{
+    const res = await apiClient.get(GET_ALL_COMMENTS(id));
     return res.data
 }
