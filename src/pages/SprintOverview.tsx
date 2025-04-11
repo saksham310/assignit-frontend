@@ -35,13 +35,14 @@ const SprintOverview = () => {
     const setOpen = useDialogStore(state => state.openDialog)
 
 
-    const openTaskForm = ()=>  {
-        setOpen(() => <TaskEditor isCreateMode={true} status={projectStatusMember.projectStatus} members={projectStatusMember.projectMembers}/>)
-    }
     if(isLoading){
         return  <Loader/>
     }
+    const openTaskForm = ()=>  {
+        setOpen(() => <TaskEditor isCreateMode={true} status={projectStatusMember.projectStatus} members={projectStatusMember.projectMembers}/>)
+    }
     return (
+
         <>
             <div className={'hidden lg:flex w-auto  items-center gap-x-4 absolute right-8'}>
                 <Button variant={'default'} size={'sm'} onClick={openTaskForm}><PlusCircle/>Add
