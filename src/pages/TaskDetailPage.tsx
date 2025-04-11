@@ -18,6 +18,7 @@ import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
 
 // Icons
 import {MessageSquare, Paperclip, Send} from "lucide-react";
+import Comments from "@/components/custom-components/shared/Comments.tsx";
 
 const TaskDetailPage = () => {
     const {taskId} = useParams();
@@ -62,8 +63,11 @@ const TaskDetailPage = () => {
                             </CardTitle>
                         </CardHeader>
 
-                        <CardContent className="p-4 overflow-y-auto flex-1 flex flex-col gap-3">
-                            {/* Comments would go here */}
+                        <CardContent className="p-4 overflow-y-auto flex-1 flex flex-col gap-3 scrollbar">
+                            <Comments comment={{name:'Nibid',message:'changed the status from low to high',createdAt:new Date().toString()}} type={'activity'} />
+                            {Array(10).fill(0).map((_, index) => (
+                                <Comments comment={{name:'Saksham',message:"I am attemptiong to make a good comment.Please bear with the process.I am attemptiong to make a good comment.Please bear with the process",createdAt : new Date().toString()}} type={'comment'}/>
+                            ))}
                         </CardContent>
 
                         <CardContent className={'flex flex-col min-h-[150px] gap-2'}>
@@ -78,7 +82,7 @@ const TaskDetailPage = () => {
                                     <Paperclip className="h-3.5 w-3.5 mr-1"/>
                                     <span>Attach</span>
                                 </Button>
-                                <Button variant={'outline'} size={'sm'}>
+                                <Button variant={'default'} size={'sm'}>
                                     <Send/> Comment
                                 </Button>
                             </div>
