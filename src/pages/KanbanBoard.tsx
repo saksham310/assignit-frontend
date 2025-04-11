@@ -42,10 +42,10 @@ const KanbanBoard = ({tasks}:KanbanBoardProps) => {
     return <>
     <div  className={'overflow-x-auto p-2 '}>
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} >
-            <div className="grid grid-cols-4 gap-3">
+            <div className="flex p-3">
                 {taskStatus.map((task) => {
                     return (
-                        <div className="" key={task.type}>
+                        <div className="flex-shrink-0 w-1/4 mr-1" key={task.type}>
                             <KanbanColumn status={task} />
                         </div>
                     );
