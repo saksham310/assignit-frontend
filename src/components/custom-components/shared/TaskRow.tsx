@@ -24,6 +24,7 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
     }
     const assignedMembersList = assignees.map(assignee => assignee.id as string) ?? [];
     const [selectedMembers, setSelectedMembers] = useState(assignedMembersList ?? []);
+    console.log(members)
     return (
         <>
             <div className={'grid grid-cols-4 gap-2 border-b p-2 text-xs items-center'} onDoubleClick={openTaskDetailPage}>

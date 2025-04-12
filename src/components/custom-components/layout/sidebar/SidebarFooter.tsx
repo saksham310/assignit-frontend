@@ -23,7 +23,7 @@ const SidebarFooter=()=>{
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <div className='flex items-center gap-2 justify-center'>
-                <UserAvatar avatarColor={user!.avatarColor} className={'size-8 text-sm'}/> <p className='text-sm font-medium text-gray-600'>
+                <UserAvatar src={user?.image ?? ""} avatarColor={user!.avatarColor} className={'size-8 text-sm'}/> <p className='text-sm font-medium text-gray-600'>
                     {user?.username}
                 </p>
                     <EllipsisVertical  className="m-auto size-4"/>

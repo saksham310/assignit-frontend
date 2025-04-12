@@ -31,6 +31,7 @@ const TaskDetailPage = () => {
 
     const {data: projectStatusMember, isLoading: isStatusLoading} = useGetProjectStatusMembers(projectId);
     const isLoading = isStatusLoading || isTaskDetailsLoading;
+
     if (isLoading) {
         return <Loader/>
     }

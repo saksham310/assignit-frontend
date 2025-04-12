@@ -35,6 +35,7 @@ export const useGetTaskDetails = (id:string) =>{
 }
 
 export const useUpdateTask = () => {
+   const queryClient = useQueryClient();
     return useMutation({
         mutationFn: ({id, data}: { id: string; data: Partial<TaskPayload> }) =>
             updateTask(data, id),
@@ -43,6 +44,8 @@ export const useUpdateTask = () => {
                 duration: 2000,
                 id:'task_update',
             });
+            queryClient.invalidateQueries({queryKey:['task_detail']});
+
         }
     })
 }

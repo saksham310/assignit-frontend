@@ -67,7 +67,7 @@ interface MultiSelectProps
         /** The unique value associated with the option. */
         username: string;
         /** Optional icon component to display alongside the option. */
-        image?:string;
+        imageUrl?:string;
         avatarColor?: string;
     }[];
 
@@ -209,7 +209,7 @@ export const MultiSelect = React.forwardRef<
 
                                                 <UserAvatar
                                                     name={option?.username || ""}
-                                                    src={option?.image ?? ""}
+                                                    src={option?.imageUrl ?? ""}
                                                     className={`h-6 w-6 text-black`}
                                                     avatarColor={option?.avatarColor}
                                                 />
@@ -300,7 +300,7 @@ export const MultiSelect = React.forwardRef<
                                             >
                                                 <UserAvatar
                                                     name={option?.username || ""}
-                                                    src={option?.image}
+                                                    src={option?.imageUrl}
                                                     className={`h-5 w-5 text-black text-xs`}
                                                     avatarColor={option?.avatarColor}
                                                 />

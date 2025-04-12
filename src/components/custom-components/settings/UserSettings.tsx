@@ -36,7 +36,7 @@ const UserSettings = () => {
     const user = useAuthUser<User>();
     const imageInputRef = useRef<HTMLInputElement>(null);
     const {mutate, isPending} = useUpdateProfile();
-    const [previewImage, setPreviewImage] = useState("");
+    const [previewImage, setPreviewImage] = useState(user?.image ?? "");
 
     const defaultValues = {
         username: user?.username ?? '',

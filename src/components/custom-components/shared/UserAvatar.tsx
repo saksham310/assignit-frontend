@@ -12,7 +12,7 @@ interface UserAvatarProps {
 
 const UserAvatar = ({className, src, name,avatarColor}: UserAvatarProps) => {
     const user = useAuthUser<User>();
-    const image = src ? src : user?.image ? user?.image : '';
+    const image = src ? src : '';
     const username = name ? name : user?.username ? user?.username : ''
     const color = avatarColor ? avatarColor : ''
     return (
