@@ -8,7 +8,7 @@ interface KanbanColumnProps {
 }
 const KanbanColumn = ({status}:KanbanColumnProps) => {
     const {setNodeRef} = useDroppable({
-        id:status.name
+        id:status.id
     })
     return <>
     <Card ref={setNodeRef} className={'shadow-none flex flex-col h-[calc(100vh-220px)] border-primary/900 bg-primary/5'}>

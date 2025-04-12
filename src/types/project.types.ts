@@ -56,6 +56,7 @@ export interface Task {
 }
 
 export interface TaskStatus {
+    id: number
     name: string;
     type: 'Completed' | 'In_Progress' | 'To_Do';
     color: string;

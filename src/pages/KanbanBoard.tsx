@@ -11,6 +11,8 @@ const KanbanBoard = ({tasks}:KanbanBoardProps) => {
     const [taskStatus, setTaskStatus] = useState(tasks.taskStatus);
     const [activeTask, setActiveTask] = useState<null | any>(null);
 
+    console.log(taskStatus)
+
     const handleDragStart = (event: any) => {
         const taskId = event.active.id;
         const task = taskStatus
@@ -21,6 +23,8 @@ const KanbanBoard = ({tasks}:KanbanBoardProps) => {
     const handleDragEnd = (e:DragEndEvent)=>{
        const {active,over} = e;
        if (!over) return;
+       console.log(over);
+       console.log(active)
        const taskId = active.id as number;
        const newStatus = over.id as string;
        const column = taskStatus.find(col =>
@@ -29,7 +33,7 @@ const KanbanBoard = ({tasks}:KanbanBoardProps) => {
         const taskToMove = column.tasks.find((task) => task.id === taskId);
         if (!taskToMove) return;
         column.tasks = column.tasks.filter((task) => task.id !== taskId);
-        const targetColumn = taskStatus.find((col) => col.name === newStatus);
+        const targetColumn = taskStatus.find((col) => col.id === newStatus);
 
         if (targetColumn) {
             targetColumn.tasks.push(taskToMove);
@@ -41,11 +45,11 @@ const KanbanBoard = ({tasks}:KanbanBoardProps) => {
 
     return <>
     <div  className={'overflow-x-auto p-2 '}>
-        <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} >
+        <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} autoScroll={true} >
             <div className="flex p-3">
-                {taskStatus.map((task) => {
+                {taskStatus.map((task,index) => {
                     return (
-                        <div className="flex-shrink-0 w-1/4 mr-1" key={task.type}>
+                        <div className="flex-shrink-0 w-1/4 mr-1" key={index}>
                             <KanbanColumn status={task} />
                         </div>
                     );
