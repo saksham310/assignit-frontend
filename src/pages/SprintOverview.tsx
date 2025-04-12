@@ -3,7 +3,8 @@ import TabLayoutWrapper from "@/components/custom-components/shared/TabLayoutWra
 import SprintListView from "@/components/custom-components/dashboard/SprintListView.tsx";
 import {useOutletContext, useParams} from "react-router-dom";
 import {useEffect} from "react";
-import {Loader, PlusCircle} from "lucide-react";
+import { PlusCircle} from "lucide-react";
+import Loader from "@/components/custom-components/shared/Loader.tsx";
 import { Button } from "@/components/ui/button";
 import KanbanBoard from "@/pages/KanbanBoard.tsx";
 import {useDialogStore} from "@/store/dialog.store.ts";

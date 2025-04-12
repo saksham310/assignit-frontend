@@ -114,4 +114,5 @@ export type Comment = {
     userImage:string,
     avatarColor: string,
     type: 'comment' | 'activity'
+    attachment?:string
 }

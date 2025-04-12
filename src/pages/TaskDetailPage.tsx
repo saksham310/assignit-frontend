@@ -17,29 +17,32 @@ import Loader from "@/components/custom-components/shared/Loader.tsx";
 import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
 
 // Icons
-import {Cross, Eye, MessageSquare, Paperclip, Send, Trash, X} from "lucide-react";
+import { MessageSquare, Paperclip, Send, Trash, X} from "lucide-react";
 
 import CommentPage from "@/pages/CommentPage.tsx";
-import {useRef, useState} from "react";
+import { useRef, useState} from "react";
+import {FaSpinner} from "react-icons/fa";
+
 
 const TaskDetailPage = () => {
     const {taskId} = useParams();
     const {projectId} = useParams();
-    const commentRef = useRef<HTMLTextAreaElement>(null);
     const imageRef = useRef<HTMLInputElement>(null);
     const {data, isLoading: isTaskDetailsLoading} = useGetTaskDetails(taskId as string);
     const dummyTask = data ?? {};
     const {data: projectStatusMember, isLoading: isStatusLoading} = useGetProjectStatusMembers(projectId);
     const isLoading = isStatusLoading || isTaskDetailsLoading;
     const [previewImage, setPreviewImage] = useState("");
-    const {mutate} = useAddComment()
+    const [commentText, setCommentText] = useState("");
+    const {mutate,isPending} = useAddComment()
+
     if (isLoading) {
         return <Loader/>
     }
     const saveComment = () => {
-        if (!commentRef.current?.value && !previewImage) return;
+        if (!commentText.trim() && !previewImage) return;
         const form = new FormData(); // 🔄 Create here
-        form.append("message", commentRef.current!.value);
+        form.append("message", commentText.trim());
         form.append("type","comment")
 
         if (imageRef.current?.files?.[0]) {
@@ -49,7 +52,7 @@ const TaskDetailPage = () => {
             id:taskId ? parseInt(taskId) : 0,
             data:form
         })
-        commentRef.current!.value = "";
+        setCommentText('')
         setPreviewImage("");
 
     };
@@ -97,7 +100,8 @@ const TaskDetailPage = () => {
                         <CardContent className={'flex flex-col min-h-[150px] gap-2'}>
                             <Separator/>
                             <Textarea
-                                ref={commentRef}
+                                value={commentText}
+                                onChange={(e) => setCommentText(e.target.value)  }
                                 placeholder="Add a comment..."
                                 className="min-h-[80px] w-full resize-none text-sm"
                             />
@@ -122,8 +126,8 @@ const TaskDetailPage = () => {
                                     <input ref={imageRef} type="file" accept="image/*" hidden
                                            onChange={handleImageChange}/>
                                 </Button>
-                                <Button variant={'default'} size={'sm'} onClick={saveComment}>
-                                    <Send/> Comment
+                                <Button variant={'default'} size={'sm'} onClick={saveComment} disabled={!commentText.trim() && !previewImage}>
+                                    {isPending ? <FaSpinner className={' animate-in spin-in repeat-infinite'}/> : <span className={'flex items-center gap-1'}><Send/> Comment</span>}
                                 </Button>
                             </div>
                         </CardContent>
