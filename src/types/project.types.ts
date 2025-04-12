@@ -106,4 +106,12 @@ export const statuses: Status[] = [
 export const bugTypes = ['frontend', 'backend', 'database']
 export type BugType = typeof bugTypes[number]
 
-export type Comment = { id: number, name: string, message: string, createdAt: string,type: 'comment' | 'activity' }
+export type Comment = {
+    id: number,
+    name: string,
+    message: string,
+    createdAt: string,
+    userImage:string,
+    avatarColor: string,
+    type: 'comment' | 'activity'
+}

@@ -16,7 +16,7 @@ const Comments = ({comment}:CommentProps) => {
     return <>
     {comment.type === 'comment' && (
     <div className={"flex gap-4 items-center p-3 border rounded-lg bg-gray-50 "}>
-        <UserAvatar name={comment!.name} className={'size-8 text-sm'}/>
+        <UserAvatar src={comment.userImage} avatarColor={comment.avatarColor} name={comment!.name} className={'size-8 text-sm'}/>
 
             <div className={'flex-col text-sm w-full space-y-2 '}>
                 <div className={'flex items-center justify-between '}>

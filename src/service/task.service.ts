@@ -1,5 +1,6 @@
 import {apiClient} from "@/service/api.client.ts";
 import {
+    ADD_COMMENT,
     CREATE_TASK,
     GET_ALL_COMMENTS,
     GET_SPRINT_TASKS,
@@ -7,6 +8,7 @@ import {
     UPDATE_TASK
 } from "@/constants/api.constants.ts";
 import {TaskPayload} from "@/types/project.types.ts";
+import {Comment} from "@/types/project.types.ts";
 
 export const createTask = async (data:TaskPayload) =>{
     const res = await apiClient.post(CREATE_TASK, data);
@@ -30,5 +32,10 @@ export const updateTask = async (data:Partial<TaskPayload>,id:string) =>{
 
 export const getAllComments = async (id:number) =>{
     const res = await apiClient.get(GET_ALL_COMMENTS(id));
+    return res.data
+}
+
+export const addComment = async (data:FormData,id:number)=> {
+    const res = await apiClient.post(ADD_COMMENT(id), data);
     return res.data
 }

@@ -44,3 +44,4 @@ export const UPDATE_TASK = (taskId:string) => `tasks/${taskId}`;
 // Comment Management APIs
 
 export const GET_ALL_COMMENTS = (taskId:string|number) => `tasks/${taskId}/all/comments`;
+export const ADD_COMMENT = (taskId:number) => `tasks/${taskId}/comment`;

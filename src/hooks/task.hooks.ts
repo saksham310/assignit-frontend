@@ -1,8 +1,15 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {createTask, getAllComments, getSprintTasks, getTaskById, updateTask} from "@/service/task.service.ts";
+import {
+    addComment,
+    createTask,
+    getAllComments,
+    getSprintTasks,
+    getTaskById,
+    updateTask
+} from "@/service/task.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
-import {TaskPayload} from "@/types/project.types.ts";
+import {Comment, TaskPayload} from "@/types/project.types.ts";
 
 export const useCreateTask = () => {
     const queryClient = useQueryClient();
@@ -54,5 +61,19 @@ export const useGetAllComments = (id:number) =>{
     return useQuery({
         queryKey:['comments',id],
         queryFn:() => getAllComments(id),
+    })
+}
+
+export const useAddComment = () =>{
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({id,data}:{id:number,data:FormData}) => addComment(data,id),
+        onSuccess:async (data)=>{
+            toast.success(data.message, {
+                duration: 2000,
+                id:'comment_add',
+            })
+            queryClient.invalidateQueries({queryKey:['comments']});
+        }
     })
 }

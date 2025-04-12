@@ -21,7 +21,7 @@ const Editor = ({initialValue,isCreateMode,onChange}:EditorProps) => {
                         toolbar: [
                             ["bold", "italic", "underline"],
                             [{ header: 1 }, { header: 2 }, { header: 3 }, { header: 4 }],
-                            ["link", "image"],
+                            ["link"],
                             [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
                             [{ color: [] }, { background: [] }],
                         ],
