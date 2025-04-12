@@ -11,8 +11,8 @@ const  getRelativeDate = (date:string) => {
     return moment(date).fromNow(); // Example: "a day ago", "2 hours ago", "Yesterday", etc.
 }
 
-const Comments = ({comment}:CommentProps) => {
 
+const Comments = ({comment}:CommentProps) => {
     return <>
     {comment.type === 'comment' && (
         <div className={"flex flex-col gap-2 p-2 border rounded-lg bg-gray-50"}>
