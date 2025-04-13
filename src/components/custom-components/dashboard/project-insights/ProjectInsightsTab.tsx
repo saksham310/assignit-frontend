@@ -7,7 +7,7 @@ const ProjectInsightsTab=({items})=>{
     return <>
         <div className={'h-full flex flex-col gap-10'}>
         <Analytics items={items} className={'p-4 border-2 border-gray-100 rounded-lg'}/>
-        <div className={'grid grid-cols-1 lg:grid-cols-3 3xl:grid-cols-1 gap-4 h-full overflow-hidden'}>
+        <div className={'grid grid-cols-1 lg:grid-cols-3 3xl:grid-cols-1 gap-4 h-full md:overflow-hidden'}>
             <ProjectSummary />
             <AssignedTasks/>
         </div>

@@ -49,7 +49,7 @@ const KanbanBoard = ({tasks}:KanbanBoardProps) => {
             <div className="flex p-3">
                 {taskStatus.map((task,index) => {
                     return (
-                        <div className="flex-shrink-0 w-1/4 mr-1" key={index}>
+                        <div className="flex-shrink-0 w-[345px] mr-1" key={index}>
                             <KanbanColumn status={task} />
                         </div>
                     );

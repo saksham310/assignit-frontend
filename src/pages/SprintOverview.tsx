@@ -20,6 +20,14 @@ const SprintOverview = () => {
     const {projectId,sprintId} = useParams()
     const {data:projectStatusMember,isLoading} = useGetProjectStatusMembers(projectId)
     const {data:sprintTasks} = useGetSprintTasks(sprintId ?? '')
+    const setOpen = useDialogStore(state => state.openDialog)
+    
+    const openTaskForm = ()=>  {
+        setOpen(() => <TaskEditor isCreateMode={true} status={projectStatusMember.projectStatus} members={projectStatusMember.projectMembers}/>)
+    }
+    if(isLoading){
+        return  <Loader/>
+    }
     const tabConfig: TabConfig[] = [
         {
             value: "list",
@@ -33,15 +41,9 @@ const SprintOverview = () => {
         },
     ];
 
-    const setOpen = useDialogStore(state => state.openDialog)
 
 
-    if(isLoading){
-        return  <Loader/>
-    }
-    const openTaskForm = ()=>  {
-        setOpen(() => <TaskEditor isCreateMode={true} status={projectStatusMember.projectStatus} members={projectStatusMember.projectMembers}/>)
-    }
+
     return (
 
         <>

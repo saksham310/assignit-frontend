@@ -32,12 +32,13 @@ const Comments = ({comment}:CommentProps) => {
         </div>
     )}{comment.type === 'activity' && (
             <div className={'flex justify-between items-center text-xs  text-gray-500 p-3   w-full space-y-1'}>
-                <div className={'flex items-center  gap-2 justify-between '}
-                     style={{fontSize:"11px"}}>
+                <div className={'flex items-center  gap-2 justify-between text-nowrap overflow-hidden overflow-ellipsis'}
+                     style={{fontSize:"11px"}}
+                title={`${comment!.name} ${comment!.message}`}>
                     <span className={'rounded-full size-1 min-w-1 bg-gray-500'}></span>
-                    <span>{comment!.name} {comment!.message}</span>
+                    <span className={'text-nowrap overflow-hidden overflow-ellipsis'}>{comment!.name} {comment!.message}</span>
                 </div>
-                <span className={'flex-1 text-nowrap'} style={{fontSize:"10px"}}>{getRelativeDate(comment.createdAt)}</span>
+                <span className={' text-nowrap'} style={{fontSize:"10px"}}>{getRelativeDate(comment.createdAt)}</span>
             </div>
         )}
     </>

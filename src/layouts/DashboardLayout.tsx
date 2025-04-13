@@ -24,7 +24,7 @@ const DashboardLayout = () => {
             </div>
             <div className='flex-1 lg:ml-[230px] flex flex-col h-dvh'>
                 <div  className="px-4 py-3 "><TopBar title={title}/></div>
-                <div className='flex-1 p-6 bg-[#f6f8fb] rounded-lg overflow-y-auto scrollbar'>
+                <div className='flex-1 p-6 bg-[#f6f8fb] rounded-lg overflow-y-auto scrollbar w-[calc(100vw-80px)] md:w-[calc(100vw-230px)]'>
                     <Outlet context={setTitle}/>
 
                 </div>
