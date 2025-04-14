@@ -21,13 +21,22 @@ const SprintOverview = () => {
     const {data:projectStatusMember,isLoading} = useGetProjectStatusMembers(projectId)
     const {data:sprintTasks} = useGetSprintTasks(sprintId ?? '')
     const setOpen = useDialogStore(state => state.openDialog)
-    
-    const openTaskForm = ()=>  {
-        setOpen(() => <TaskEditor isCreateMode={true} status={projectStatusMember.projectStatus} members={projectStatusMember.projectMembers}/>)
-    }
-    if(isLoading){
+
+    if(isLoading || !sprintTasks || !projectStatusMember){
         return  <Loader/>
     }
+
+    const openTaskForm = () => {
+        if (!projectStatusMember) return;
+        setOpen(() => (
+            <TaskEditor
+                isCreateMode={true}
+                status={projectStatusMember.projectStatus}
+                members={projectStatusMember.projectMembers}
+            />
+        ));
+    };
+
     const tabConfig: TabConfig[] = [
         {
             value: "list",

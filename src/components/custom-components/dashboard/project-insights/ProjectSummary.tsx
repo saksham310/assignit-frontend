@@ -17,7 +17,7 @@ const ProjectSummary=()=>{
                     {projects?.length > 0 &&(
                     <div className=" h-full  w-full  flex flex-col gap-2">
                         {projects.map((project:ProjectResponse) =>{
-                            return <ProjectSummaryRow project={project}/>
+                           return <ProjectSummaryRow key={project.id} project={project} />
                         })}
                     </div>  )}
                     {projects?.length == 0 && (

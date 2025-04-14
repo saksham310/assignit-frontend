@@ -1,7 +1,7 @@
-import {Avatar, AvatarImage, AvatarFallback} from "@/components/ui/avatar.tsx";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar.tsx";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import {User} from "@/types/auth.type.ts";
-import {cn} from "@/lib/utils.ts";
+import { User } from "@/types/auth.type.ts";
+import { cn } from "@/lib/utils.ts";
 
 interface UserAvatarProps {
     className?: string;
@@ -10,22 +10,20 @@ interface UserAvatarProps {
     avatarColor?: string | null;
 }
 
-const UserAvatar = ({className, src, name,avatarColor}: UserAvatarProps) => {
+const UserAvatar = ({ className, src, name, avatarColor }: UserAvatarProps) => {
     const user = useAuthUser<User>();
-    const image = src ? src : '';
-    const username = name ? name : user?.username ? user?.username : ''
-    const color = avatarColor ? avatarColor : ''
+    const image = src || '';
+    const username = name || user?.username || '';
+    const color = avatarColor || '';
+
     return (
-
-        <Avatar className={cn(className ? className : "")}>
-            <AvatarImage src={image}/>
-            <AvatarFallback
-            style={{background:color}}
-            >{username[0].toUpperCase()}</AvatarFallback>
+        <Avatar className={cn(className)}>
+            <AvatarImage src={image} alt={`${username}'s avatar`} />
+            <AvatarFallback style={{ background: color }}>
+                {username ? username[0].toUpperCase() : "?"}
+            </AvatarFallback>
         </Avatar>
-
-    )
-
-}
+    );
+};
 
 export default UserAvatar;

@@ -36,7 +36,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
     const inputRef = useRef<HTMLInputElement>(null);
     const [taskStatus, setTaskStatus] = useState(task?.status ?? '');
     const [priority, setPriority] = useState<string>('High');
-    const [initialValue, setInitialValue] = useState(task?.description);
+    const [initialValue, setInitialValue] = useState(task?.description ?? '');
     const [selectedMembers, setSelectedMembers] = useState(
         task?.assignees?.map(assignee => assignee.id as string) ?? []
     );
@@ -45,10 +45,17 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         backend: task?.BackendBugCount ?? 0,
         database: task?.DatabaseBugCount ?? 0,
     });
-    const totalBugs = bugTypes.reduce((acc, index) => acc + bugCounts[index], 0);
+    const totalBugs = bugTypes.reduce((acc, type) => acc + bugCounts[type], 0);
+
     useEffect(() => {
         if (task?.description) {
             setInitialValue(task.description);
+        }
+        if (task?.status) {
+            setTaskStatus(task.status);
+        }
+        if (task?.assignees) {
+            setSelectedMembers(task.assignees.map(assignee => assignee.id));
         }
     }, [task]);
 
@@ -62,63 +69,86 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         if (!newStatus) return;
 
         const previousStatus = taskStatus;
-
         setTaskStatus(newStatus);
 
         if (!isCreateMode) {
-            updateTask(
-                {
-                    id: task.id,
-                    data: {
-                        status_id: newStatus.id,
-                    },
+            updateTask({
+                id: task.id,
+                data: {
+                    status_id: newStatus.id,
                 },
-                {
-                    onError: () => {
-                        // Revert on failure
-                        setTaskStatus(previousStatus);
-                    },
-                }
-            );
+            }, {
+                onError: () => {
+                    setTaskStatus(previousStatus);
+                },
+            });
         }
     };
 
     const handleAssigneeChange = (value: string[]) => {
-        const previousMembers = selectedMembers
+        const previousMembers = selectedMembers;
         setSelectedMembers(value);
+
         if (!isCreateMode) {
             updateTask({
-                    id: task.id,
-                    data: {
-                        assignees: value
-                    }
+                id: task.id,
+                data: {
+                    assignees: value,
                 },
-                {
-                    onError: () => {
-                        setSelectedMembers(previousMembers);
-                    }
-                }
-            )
+            }, {
+                onError: () => {
+                    setSelectedMembers(previousMembers);
+                },
+            });
         }
+    };
 
+    const handlePriorityChange = (value: string) => {
+        const previousPriority = priority;
+        setPriority(value);
+        if (!isCreateMode) {
+            updateTask({
+                id: task.id,
+                data: {
+                    priority: value,
+                },
+            },{
+                onError: () => {
+                    setPriority(previousPriority);
+                }
+            })
+        }
     }
 
-    const handleInputChange = (value:string) =>{
-        if(isCreateMode) return;
-       if(!value) {
-            toast.error("Please enter the task name", {duration: 2000,
-            id:'task-detail-name'});
-            return;
-        }
-        updateTask(
-            {
+    const handleDescriptionChange = (value: string) => {
+        const previousDescription = initialValue;
+        setInitialValue(value);
+        if (!isCreateMode) {
+            updateTask({
                 id:task.id,
                 data: {
-                    name:value,
+                    description: value,
                 }
-            }
-        )
+            },{
+                onError: () => {
+                    setInitialValue(previousDescription);
+                }
+            })
+        }
+
     }
+
+    const handleInputChange = (value: string) => {
+        if (isCreateMode || !value.trim()) return;
+        toast.error("Please enter the task name", {duration: 2000, id: 'task-detail-name'});
+
+        updateTask({
+            id: task.id,
+            data: {
+                name: value,
+            },
+        });
+    };
 
     const incrementBug = (type: BugType) => {
         const previousCount = bugCounts[type];
@@ -133,10 +163,9 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         }, {
             onError: () => {
                 setBugCounts(prev => ({...prev, [type]: previousCount}));
-            }
+            },
         });
     };
-
 
     const decrementBug = (type: BugType) => {
         const previousCount = bugCounts[type];
@@ -151,14 +180,13 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         }, {
             onError: () => {
                 setBugCounts(prev => ({...prev, [type]: previousCount}));
-            }
+            },
         });
     };
 
     const createTask = () => {
         if (!inputRef.current?.value.trim()) {
-            toast.error("Please enter the task name", {duration: 2000,
-                id:'task-detail-name'});
+            toast.error("Please enter the task name", {duration: 2000, id: 'task-detail-name'});
             return;
         }
 
@@ -197,7 +225,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
                     <div className="flex items-center gap-1">
                         <AlertCircle className="h-4 w-4"/> Status:
                     </div>
-                    <Select value={taskStatus.name} onValueChange={handleStatusChange}>
+                    <Select value={taskStatus.name} onValueChange={handleStatusChange} >
                         <SelectTrigger
                             className="w-fit md:min-w-[170px] border-none shadow-none flex items-center gap-1">
                             <div className="flex items-center gap-2 text-xs">
@@ -240,7 +268,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
                 <div className="flex items-center gap-2">
                     <FlagIcon className="w-4 h-4"/>
                     Priority:
-                    <PrioritySwitcher value={priority} onChange={setPriority}/>
+                    <PrioritySwitcher value={priority} onChange={handlePriorityChange}/>
                 </div>
 
                 {/* Assignees */}
@@ -300,7 +328,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
 
             {/* Editor */}
             <div className="flex-1">
-                <Editor isCreateMode={isCreateMode} initialValue={initialValue} onChange={setInitialValue}/>
+                <Editor isCreateMode={isCreateMode} initialValue={initialValue} onChange={handleDescriptionChange}/>
             </div>
 
             {/* Action */}

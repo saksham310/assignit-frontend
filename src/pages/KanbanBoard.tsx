@@ -1,70 +1,105 @@
+import { DndContext, DragEndEvent, DragOverlay } from "@dnd-kit/core";
+import { useEffect, useState, useRef } from "react";
 import KanbanColumn from "@/components/custom-components/shared/KanbanColumn.tsx";
-import {DndContext, DragEndEvent, DragOverlay} from "@dnd-kit/core";
-import { useState} from "react";
 import TaskCard from "@/components/custom-components/shared/TaskCard.tsx";
+import { io } from "socket.io-client";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { User } from "@/types/auth.type.ts";
 
+const SOCKET_URL = "http://localhost:8080";
 
 interface KanbanBoardProps {
-    tasks: any
+    tasks: any;
 }
-const KanbanBoard = ({tasks}:KanbanBoardProps) => {
+
+const KanbanBoard = ({ tasks }: KanbanBoardProps) => {
     const [taskStatus, setTaskStatus] = useState(tasks.taskStatus);
     const [activeTask, setActiveTask] = useState<null | any>(null);
+    const socketRef = useRef<any>(null);
+    const user = useAuthUser<User>();
 
-    console.log(taskStatus)
+    useEffect(() => {
+        socketRef.current = io(SOCKET_URL);
+
+        socketRef.current.on("task-status-updated", (data) => {
+            const { taskId, newStatus } = data;
+            handleStatusChange(taskId, newStatus);
+        });
+
+        return () => {
+            socketRef.current.disconnect();
+        };
+    }, []);
 
     const handleDragStart = (event: any) => {
         const taskId = event.active.id;
         const task = taskStatus
-            .flatMap(col => col.tasks)
-            .find(t => t.id === taskId);
+            .flatMap((col) => col.tasks)
+            .find((t) => t.id === taskId);
         setActiveTask(task);
     };
-    const handleDragEnd = (e:DragEndEvent)=>{
-       const {active,over} = e;
-       if (!over) return;
-       console.log(over);
-       console.log(active)
-       const taskId = active.id as number;
-       const newStatus = over.id as string;
-       const column = taskStatus.find(col =>
-       col.tasks.some(task => task.id === taskId))
+
+    const handleDragEnd = (e: DragEndEvent) => {
+        const { active, over } = e;
+        if (!over) return;
+
+        const taskId = active.id as number;
+        const newStatus = over.id as string;
+
+        handleStatusChange(taskId, newStatus);
+
+        if (socketRef.current && user) {
+            const userId = user.id;
+            socketRef.current.emit("update-task-status", { taskId, newStatus, userId });
+        }
+
+        setActiveTask(null);
+    };
+
+    const handleStatusChange = (taskId: number, newStatus: string) => {
+        const clonedStatus = [...taskStatus];
+
+        const column = clonedStatus.find((col) =>
+            col.tasks.some((task) => task.id === taskId)
+        );
         if (!column) return;
+
         const taskToMove = column.tasks.find((task) => task.id === taskId);
         if (!taskToMove) return;
-        column.tasks = column.tasks.filter((task) => task.id !== taskId);
-        const targetColumn = taskStatus.find((col) => col.id === newStatus);
 
+        column.tasks = column.tasks.filter((task) => task.id !== taskId);
+
+        const targetColumn = clonedStatus.find((col) => col.id === newStatus);
         if (targetColumn) {
             targetColumn.tasks.push(taskToMove);
         }
-        setTaskStatus([...taskStatus]);
-        setActiveTask(null);
-    }
 
+        setTaskStatus(clonedStatus);
+    };
 
-    return <>
-    <div  className={'overflow-x-auto p-2 '}>
-        <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} autoScroll={true} >
-            <div className="flex p-3">
-                {taskStatus.map((task,index) => {
-                    return (
-                        <div className="flex-shrink-0 w-[345px] mr-1" key={index}>
+    return (
+        <div className="overflow-x-auto p-2">
+            <DndContext
+                onDragEnd={handleDragEnd}
+                onDragStart={handleDragStart}
+                autoScroll={true}
+            >
+                <div className="flex p-3">
+                    {taskStatus.map((task) => (
+                        <div
+                            className="flex-shrink-0 w-[345px] mr-1"
+                            key={task.id}
+                        >
                             <KanbanColumn status={task} />
                         </div>
-                    );
-                })}
-            </div>
-            <DragOverlay>
-                {activeTask ? (
-                    <TaskCard
-                        task={activeTask}
-                    />
-                ) : null}
-            </DragOverlay>
-        </DndContext>
-    </div>
-    </>
-}
+                    ))}
+                </div>
+                <DragOverlay>
+                    {activeTask ? <TaskCard task={activeTask} /> : null}
+                </DragOverlay>
+            </DndContext>
+        </div>
+    );
+};
 
 export default KanbanBoard;

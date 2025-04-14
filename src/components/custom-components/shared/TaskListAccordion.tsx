@@ -1,8 +1,14 @@
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion.tsx";
 import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
 import TaskRow from "@/components/custom-components/shared/TaskRow.tsx";
+import {TaskStatus} from "@/types/project.types.ts";
 
-const TaskListAccordion = ({task,members} ) => {
+interface TaskListAccordionProps {
+    task: TaskStatus;
+    members?: any // Replace with the actual type you're using
+}
+
+const TaskListAccordion = ({ task, members }: TaskListAccordionProps ) => {
     return (
         <>
             <Accordion type={"single"} collapsible defaultValue={task.name }>
@@ -34,7 +40,7 @@ const TaskListAccordion = ({task,members} ) => {
                                             taskId={task.id}
                                             taskName={task.name}
                                             assignees={task.assignees}
-                                            key={task.name}
+                                            key={task.id}
                                             bugCount={task.bugCount}
                                             priority={task.priority}
                                             members={members}
