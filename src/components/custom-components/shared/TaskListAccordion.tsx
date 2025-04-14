@@ -40,7 +40,7 @@ const TaskListAccordion = ({ task, members }: TaskListAccordionProps ) => {
                                             taskId={task.id}
                                             taskName={task.name}
                                             assignees={task.assignees}
-                                            key={task.name}
+                                            key={task.id}
                                             bugCount={task.bugCount}
                                             priority={task.priority}
                                             members={members}
