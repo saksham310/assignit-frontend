@@ -17,7 +17,6 @@ const CustomStatusForm = ({handleStepChange,handleStatusList}: CustomStatusProps
 
 
     const onStatusChange = (newStatus: Status,isNewStatus:boolean) => {
-
         if (isNewStatus) {
             setStatusList((prev) => [...prev, newStatus]); // Add new status
         }else{
