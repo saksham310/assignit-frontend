@@ -68,7 +68,7 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
                 <div className={'grid md:grid-cols-2 gap-4 h-full'}>
                     {/* Task Completion Distribution */}
                     <Card className="bg-white shadow-sm border border-gray-100 rounded-lg">
-                        <CardContent className="p-4 flex flex-col h-full max-h-[430px] ">
+                        <CardContent className="p-4 flex flex-col h-full  ">
                             <div className="space-y-1 mb-4">
                                 <h3 className="text-sm font-medium text-gray-700">Task Completion Distribution</h3>
                                 <p className="text-xs text-gray-500">Breakdown of tasks by status</p>
@@ -122,7 +122,7 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
                                 <h3 className="text-sm font-medium text-gray-700">Task Priority Distribution</h3>
                                 <p className="text-xs text-gray-500">Breakdown of tasks by priority</p>
                             </div>
-                            <div className="p-4 ">
+                            <div className="flex-1 p-3 ">
                                 {hasData ? (
                                     <div className={'h-[300px] 2xl:h-[600px]'}>
                                         <ResponsiveContainer width="100%" height="100%">
