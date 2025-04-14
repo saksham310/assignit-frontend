@@ -49,12 +49,9 @@ const Editor = ({initialValue,isCreateMode,onChange}:EditorProps) => {
 
     const saveChanges = () =>{
         const editorContent = quillRef.current!.root.innerHTML;
-        if(isCreateMode) {
             onChange?.(editorContent)
             return;
-        }
 
-        console.log(editorContent);
     }
     return (
         <div className={cn("editor-wrapper h-full  max-h-[616px] w-full ",{"w-[840px] h-[250px]":isCreateMode})}>

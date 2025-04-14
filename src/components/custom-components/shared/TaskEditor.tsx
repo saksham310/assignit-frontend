@@ -120,6 +120,24 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         }
     }
 
+    const handleDescriptionChange = (value: string) => {
+        const previousDescription = initialValue;
+        setInitialValue(value);
+        if (!isCreateMode) {
+            updateTask({
+                id:task.id,
+                data: {
+                    description: value,
+                }
+            },{
+                onError: () => {
+                    setInitialValue(previousDescription);
+                }
+            })
+        }
+
+    }
+
     const handleInputChange = (value: string) => {
         if (isCreateMode || !value.trim()) return;
         toast.error("Please enter the task name", {duration: 2000, id: 'task-detail-name'});
@@ -310,7 +328,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
 
             {/* Editor */}
             <div className="flex-1">
-                <Editor isCreateMode={isCreateMode} initialValue={initialValue} onChange={setInitialValue}/>
+                <Editor isCreateMode={isCreateMode} initialValue={initialValue} onChange={handleDescriptionChange}/>
             </div>
 
             {/* Action */}
