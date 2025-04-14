@@ -57,7 +57,7 @@ const Editor = ({initialValue,isCreateMode,onChange}:EditorProps) => {
         console.log(editorContent);
     }
     return (
-        <div className={cn("editor-wrapper h-full  max-h-[616px] w-full ",{"w-[840px] h-[250px]":isCreateMode})}>
+        <div className={cn("editor-wrapper h-full  max-h-[616px] w-full ",{"min-w-[640px] h-[250px]":isCreateMode})}>
 
 
 
