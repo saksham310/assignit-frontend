@@ -103,6 +103,23 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         }
     };
 
+    const handlePriorityChange = (value: string) => {
+        const previousPriority = priority;
+        setPriority(value);
+        if (!isCreateMode) {
+            updateTask({
+                id: task.id,
+                data: {
+                    priority: value,
+                },
+            },{
+                onError: () => {
+                    setPriority(previousPriority);
+                }
+            })
+        }
+    }
+
     const handleInputChange = (value: string) => {
         if (isCreateMode || !value.trim()) return;
         toast.error("Please enter the task name", {duration: 2000, id: 'task-detail-name'});
@@ -190,7 +207,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
                     <div className="flex items-center gap-1">
                         <AlertCircle className="h-4 w-4"/> Status:
                     </div>
-                    <Select value={taskStatus.name} onValueChange={handleStatusChange}>
+                    <Select value={taskStatus.name} onValueChange={handleStatusChange} >
                         <SelectTrigger
                             className="w-fit md:min-w-[170px] border-none shadow-none flex items-center gap-1">
                             <div className="flex items-center gap-2 text-xs">
@@ -233,7 +250,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
                 <div className="flex items-center gap-2">
                     <FlagIcon className="w-4 h-4"/>
                     Priority:
-                    <PrioritySwitcher value={priority} onChange={setPriority}/>
+                    <PrioritySwitcher value={priority} onChange={handlePriorityChange}/>
                 </div>
 
                 {/* Assignees */}

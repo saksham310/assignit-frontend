@@ -27,7 +27,6 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
     const [selectedMembers, setSelectedMembers] = useState(assignedMembersList ?? []);
     const {mutate: updateTask} = useUpdateTask();
 
-    // 6. Handlers
     const handleAssigneeChange = (value: string[]) => {
         const previousMembers = selectedMembers;
         setSelectedMembers(value);
@@ -42,6 +41,21 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
                 },
             });
     };
+    const handlePriorityChange = (value: string) => {
+        const previousPriority = priority;
+        setPriority(value);
+
+            updateTask({
+                id: taskId.toString(),
+                data: {
+                    priority: value,
+                },
+            },{
+                onError: () => {
+                    setPriority(previousPriority);
+                }
+            })
+    }
     return (
         <>
             <div className={'grid grid-cols-4 gap-2 border-b p-2 text-xs items-center'} onDoubleClick={openTaskDetailPage}>
@@ -59,7 +73,7 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
                     <Bug className="size-4"/>
                     <span>{bugCount} {bugCount > 1 ? "Bugs" : "Bug"}</span>
                 </Badge>
-                <PrioritySwitcher value={priorityStatus} onChange={setPriority}/>
+                <PrioritySwitcher value={priorityStatus} onChange={handlePriorityChange}/>
             </div>
         </>
     )
