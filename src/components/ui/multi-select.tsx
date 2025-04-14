@@ -208,6 +208,7 @@ export const MultiSelect = React.forwardRef<
                                         return (
 
                                                 <UserAvatar
+                                                    key={option?.id}
                                                     name={option?.username || ""}
                                                     src={option?.imageUrl ?? ""}
                                                     className={`h-6 w-6 text-black`}
@@ -299,6 +300,7 @@ export const MultiSelect = React.forwardRef<
                                                 )}
                                             >
                                                 <UserAvatar
+                                                    key={option?.id}
                                                     name={option?.username || ""}
                                                     src={option?.imageUrl}
                                                     className={`h-5 w-5 text-black text-xs`}

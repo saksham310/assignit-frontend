@@ -1,9 +1,10 @@
 import {Badge} from "@/components/ui/badge.tsx";
-import {AlertCircle, Bug} from "lucide-react";
+import {Bug} from "lucide-react";
 import {MultiSelect} from "@/components/ui/multi-select.tsx";
 import {useState} from "react";
 import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
 import {useNavigate} from "react-router-dom";
+import {useUpdateTask} from "@/hooks/task.hooks.ts";
 
 
 interface TaskRowProps {
@@ -24,6 +25,23 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
     }
     const assignedMembersList = assignees.map(assignee => assignee.id as string) ?? [];
     const [selectedMembers, setSelectedMembers] = useState(assignedMembersList ?? []);
+    const {mutate: updateTask} = useUpdateTask();
+
+    // 6. Handlers
+    const handleAssigneeChange = (value: string[]) => {
+        const previousMembers = selectedMembers;
+        setSelectedMembers(value);
+            updateTask({
+                id: taskId.toString(),
+                data: {
+                    assignees: value,
+                },
+            }, {
+                onError: () => {
+                    setSelectedMembers(previousMembers);
+                },
+            });
+    };
     return (
         <>
             <div className={'grid grid-cols-4 gap-2 border-b p-2 text-xs items-center'} onDoubleClick={openTaskDetailPage}>
@@ -31,7 +49,7 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
                 title={taskName}>{taskName}</span>
                 <MultiSelect
                     options={members}
-                    onValueChange={setSelectedMembers}
+                    onValueChange={handleAssigneeChange}
                     defaultValue={selectedMembers}
                     placeholder="Unassigned"
                     maxCount={maxCount}

@@ -1,5 +1,5 @@
 import {Input} from "@/components/ui/input.tsx";
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {Status, StatusType} from "@/types/project.types.ts";
 import {Label} from "@/components/ui/label.tsx";
 import ColorPicker from "@/components/custom-components/shared/ColorPicker.tsx";
@@ -41,12 +41,21 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
         onStatusChange({ ...status, [field]: value },false)
     }
 
-    const handleInput = (e: any) => {
-        if (e.code === "Enter") handleNewStatus()
-    }
-    const handleInputEdit = (e: any,status:Status,field:"name",value:string) => {
-        if (e.code === "Enter") onStatusChange({ ...status, [field]: value },false)
-    }
+    const handleInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.code === "Enter") handleNewStatus();
+    };
+
+    const handleInputEdit = (
+        e: React.KeyboardEvent<HTMLInputElement>,
+        status: Status,
+        field: "name"
+    ) => {
+        if (e.code === "Enter") {
+            const value = e.currentTarget.value;
+            onStatusChange({ ...status, [field]: value }, false);
+        }
+    };
+
     return (
         <>
             <div className={'flex flex-col space-y-4'}>
@@ -54,8 +63,17 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
                 {statuses.map((status) => (
                     <div className={'flex items-center gap-3'} key={status.name}>
                         <ColorPicker setColor={(color) => handleStatusChange(status,'color',color)} color={status.color}/>
-                        <Input defaultValue={status.name}
-                               onKeyDown={(e) => handleInputEdit(e,status,'name',e.target.value)}  placeholder={'Add status'} className={'w-full'}/>
+                        <Input
+                            defaultValue={status.name}
+                            onKeyDown={(e) => handleInputEdit(e, status, "name")}
+                            onBlur={(e) =>
+                                handleStatusChange(status, "name", e.currentTarget.value)
+                            }
+                            placeholder="Add status"
+                            className="w-full"
+                        />
+
+
                     </div>
                 ))}
                 <div className={'flex items-center gap-3'}>

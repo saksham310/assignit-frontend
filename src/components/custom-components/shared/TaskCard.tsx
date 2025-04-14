@@ -1,5 +1,5 @@
 import {Card, CardFooter,CardTitle,CardContent,CardHeader} from "@/components/ui/card.tsx";
-import {AlertCircle, Flag, FlagIcon} from "lucide-react";
+import {AlertCircle, FlagIcon} from "lucide-react";
 import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 import {cn, priorityFlagMap} from "@/lib/utils.ts";
 import {useDraggable} from "@dnd-kit/core";
@@ -39,8 +39,8 @@ const TaskCard = ({task}:TaskCardProps) =>{
                 <div className="flex flex-wrap items-center gap-0.5 ">
                     {task.assignees.slice(0, maxCount).map((value) => {
                         return (
-
                             <UserAvatar
+                                key={value.id}
                                 name={value?.name || ""}
                                 src={value?.image}
                                 className={`h-5 w-5 text-black text-xs`}

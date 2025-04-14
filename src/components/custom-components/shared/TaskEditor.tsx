@@ -36,7 +36,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
     const inputRef = useRef<HTMLInputElement>(null);
     const [taskStatus, setTaskStatus] = useState(task?.status ?? '');
     const [priority, setPriority] = useState<string>('High');
-    const [initialValue, setInitialValue] = useState(task?.description);
+    const [initialValue, setInitialValue] = useState(task?.description ?? '');
     const [selectedMembers, setSelectedMembers] = useState(
         task?.assignees?.map(assignee => assignee.id as string) ?? []
     );
@@ -45,10 +45,17 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         backend: task?.BackendBugCount ?? 0,
         database: task?.DatabaseBugCount ?? 0,
     });
-    const totalBugs = bugTypes.reduce((acc, index) => acc + bugCounts[index], 0);
+    const totalBugs = bugTypes.reduce((acc, type) => acc + bugCounts[type], 0);
+
     useEffect(() => {
         if (task?.description) {
             setInitialValue(task.description);
+        }
+        if (task?.status) {
+            setTaskStatus(task.status);
+        }
+        if (task?.assignees) {
+            setSelectedMembers(task.assignees.map(assignee => assignee.id));
         }
     }, [task]);
 
@@ -62,63 +69,51 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         if (!newStatus) return;
 
         const previousStatus = taskStatus;
-
         setTaskStatus(newStatus);
 
         if (!isCreateMode) {
-            updateTask(
-                {
-                    id: task.id,
-                    data: {
-                        status_id: newStatus.id,
-                    },
+            updateTask({
+                id: task.id,
+                data: {
+                    status_id: newStatus.id,
                 },
-                {
-                    onError: () => {
-                        // Revert on failure
-                        setTaskStatus(previousStatus);
-                    },
-                }
-            );
+            }, {
+                onError: () => {
+                    setTaskStatus(previousStatus);
+                },
+            });
         }
     };
 
     const handleAssigneeChange = (value: string[]) => {
-        const previousMembers = selectedMembers
+        const previousMembers = selectedMembers;
         setSelectedMembers(value);
+
         if (!isCreateMode) {
             updateTask({
-                    id: task.id,
-                    data: {
-                        assignees: value
-                    }
-                },
-                {
-                    onError: () => {
-                        setSelectedMembers(previousMembers);
-                    }
-                }
-            )
-        }
-
-    }
-
-    const handleInputChange = (value:string) =>{
-        if(isCreateMode) return;
-       if(!value) {
-            toast.error("Please enter the task name", {duration: 2000,
-            id:'task-detail-name'});
-            return;
-        }
-        updateTask(
-            {
-                id:task.id,
+                id: task.id,
                 data: {
-                    name:value,
-                }
-            }
-        )
-    }
+                    assignees: value,
+                },
+            }, {
+                onError: () => {
+                    setSelectedMembers(previousMembers);
+                },
+            });
+        }
+    };
+
+    const handleInputChange = (value: string) => {
+        if (isCreateMode || !value.trim()) return;
+        toast.error("Please enter the task name", {duration: 2000, id: 'task-detail-name'});
+
+        updateTask({
+            id: task.id,
+            data: {
+                name: value,
+            },
+        });
+    };
 
     const incrementBug = (type: BugType) => {
         const previousCount = bugCounts[type];
@@ -133,10 +128,9 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         }, {
             onError: () => {
                 setBugCounts(prev => ({...prev, [type]: previousCount}));
-            }
+            },
         });
     };
-
 
     const decrementBug = (type: BugType) => {
         const previousCount = bugCounts[type];
@@ -151,14 +145,13 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
         }, {
             onError: () => {
                 setBugCounts(prev => ({...prev, [type]: previousCount}));
-            }
+            },
         });
     };
 
     const createTask = () => {
         if (!inputRef.current?.value.trim()) {
-            toast.error("Please enter the task name", {duration: 2000,
-                id:'task-detail-name'});
+            toast.error("Please enter the task name", {duration: 2000, id: 'task-detail-name'});
             return;
         }
 
