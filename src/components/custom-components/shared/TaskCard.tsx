@@ -3,8 +3,7 @@ import {AlertCircle, Flag, FlagIcon} from "lucide-react";
 import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 import {cn, priorityFlagMap} from "@/lib/utils.ts";
 import {useDraggable} from "@dnd-kit/core";
-import {useDialogStore} from "@/store/dialog.store.ts";
-import TaskDetailPage from "@/pages/TaskDetailPage.tsx";
+import {useNavigate} from "react-router-dom";
 
 
 interface TaskCardProps {
@@ -12,9 +11,9 @@ interface TaskCardProps {
 }
 const TaskCard = ({task}:TaskCardProps) =>{
     const maxCount = 3
-    const setOpen = useDialogStore(state => state.openDialog)
+    const navigate = useNavigate()
     const openTaskDetailPage = () =>{
-        setOpen(TaskDetailPage)
+        navigate(`tasks-details/${task.id}`);
     }
     const flagColor = priorityFlagMap[task.priority.toLowerCase()];
     const {attributes,listeners,setNodeRef,transform} = useDraggable({

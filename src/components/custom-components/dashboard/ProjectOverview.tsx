@@ -63,7 +63,7 @@ const ProjectOverview = ({projectData}: {projectData:ProjectOverviewData }) =>{
                         <div className={'flex-1 p-4 '}>
                             {hasData ?
                                 (
-                                    <ResponsiveContainer width="100%" height={300}>
+                                    <div className={'h-[300px]'}><ResponsiveContainer width="100%" height="100%">
                                         <PieChart>
                                             <Pie
                                                 data={taskStatusData}
@@ -83,7 +83,8 @@ const ProjectOverview = ({projectData}: {projectData:ProjectOverviewData }) =>{
                                             </Pie>
                                             <Tooltip formatter={(value: number, name: string) => [`${value.toFixed(2)}%`, name]}/>
                                         </PieChart>
-                                    </ResponsiveContainer>
+                                    </ResponsiveContainer></div>
+
                                 ) : (
                                  <NoDataDisplay title={'No Data'} subtitle={'Add tasks to see stats'}/>
                                 )
@@ -109,18 +110,19 @@ const ProjectOverview = ({projectData}: {projectData:ProjectOverviewData }) =>{
                             <p className="text-xs text-gray-500">Breakdown of tasks by priority</p>
                         </div>
                         <div className="p-4 ">
-                            {hasData ? <ResponsiveContainer width="100%" height={300}>
-                                <BarChart data={taskPriorityData} >
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip formatter={(value: number, name: string) => [`${value.toFixed(2)}%`, name]} />
-                                    <Bar dataKey="value" barSize={50} radius={[10, 10, 0, 0]}>
-                                        {taskPriorityData.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={entry.color} />
-                                        ))}
-                                    </Bar>
-                                </BarChart>
-                            </ResponsiveContainer> :
+                            {hasData ?
+                              <div className={'h-[300px]'}>  <ResponsiveContainer width="100%" height="100%">
+                                  <BarChart data={taskPriorityData} >
+                                      <XAxis dataKey="name" />
+                                      <YAxis />
+                                      <Tooltip formatter={(value: number, name: string) => [`${value.toFixed(2)}%`, name]} />
+                                      <Bar dataKey="value" barSize={50} radius={[10, 10, 0, 0]}>
+                                          {taskPriorityData.map((entry, index) => (
+                                              <Cell key={`cell-${index}`} fill={entry.color} />
+                                          ))}
+                                      </Bar>
+                                  </BarChart>
+                              </ResponsiveContainer></div> :
                                 <NoDataDisplay title={'No Data'} subtitle={'Add tasks to see stats'}/>
                             }
 
