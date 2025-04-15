@@ -1,5 +1,5 @@
 // React & Routing
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 // Custom Hooks
 import { useAddComment, useGetTaskDetails } from "@/hooks/task.hooks.ts";
@@ -17,7 +17,7 @@ import Loader from "@/components/custom-components/shared/Loader.tsx";
 import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
 
 // Icons
-import { MessageSquare, Paperclip, Send, Trash } from "lucide-react";
+import {MessageSquare, Paperclip, Send, Trash, X} from "lucide-react";
 
 import CommentPage from "@/pages/CommentPage.tsx";
 import { useRef, useState } from "react";
@@ -25,6 +25,7 @@ import { FaSpinner } from "react-icons/fa";
 
 const TaskDetailPage = () => {
     const { taskId, projectId } = useParams();
+    const navigate = useNavigate();
     const endCommentRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLInputElement>(null);
     const { data, isLoading: isTaskDetailsLoading } = useGetTaskDetails(taskId as string);
@@ -78,10 +79,11 @@ const TaskDetailPage = () => {
     return (
         <div className="w-full flex flex-col gap-4 h-screen p-4 bg-gray-50">
             {/* Header */}
-            <div className="flex flex-col gap-4">
+            <div className="flex justify-between gap-4">
                 <div className="flex items-center gap-2">
-                    <Badge variant="outline">Task Id</Badge>
+                    <Badge variant="outline">Task Id :{dummyTask.id}</Badge>
                 </div>
+                <X className={'size-4 cursor-pointer'} onClick={()=> navigate(-1)}/>
             </div>
 
             {/* Main Content */}

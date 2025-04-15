@@ -31,11 +31,11 @@ const ProjectDashboard = () =>{
             label: "List",
             component: () => <ProjectListView projectSprint={data.projectSprintSummary}/>,
         },
-        {
-            value: "members",
-            label: "Members",
-            component: () => <> <div>TO DO </div></>,
-        },
+        // {
+        //     value: "members",
+        //     label: "Members",
+        //     component: () => <> <div>TO DO </div></>,
+        // },
     ];
 
     const onCreateSprint = () => {
