@@ -19,6 +19,8 @@ export const useCreateTask = () => {
         onSuccess:async (data) =>{
             await queryClient.invalidateQueries({queryKey:['projects']});
             await queryClient.invalidateQueries({queryKey:['project_status']});
+            await queryClient.invalidateQueries({queryKey:['sprint_task']});
+
             closeDialog();
             toast.success(data.message,{
                 duration: 2000,
@@ -51,7 +53,8 @@ export const useUpdateTask = () => {
                 duration: 2000,
                 id:'task_update',
             });
-            queryClient.invalidateQueries({queryKey:['task_detail']});
+            await queryClient.invalidateQueries({queryKey:['task_detail']});
+            await queryClient.invalidateQueries({queryKey:['comments']});
 
         }
     })
