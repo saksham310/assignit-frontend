@@ -75,7 +75,7 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
                             </div>
                             <div className={'flex-1 p-4 '}>
                                 {hasData ? (
-                                    <div className={'h-[300px] 2xl:h-[600px]'}>
+                                    <div className={'h-[300px] 2xl:h-[500px]'}>
                                         <ResponsiveContainer width="100%" height="100%">
                                             <PieChart aria-label="Task Completion Distribution">
                                                 <Pie
@@ -124,7 +124,7 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
                             </div>
                             <div className="flex-1 p-3 ">
                                 {hasData ? (
-                                    <div className={'h-[300px] 2xl:h-[600px]'}>
+                                    <div className={'h-[300px] 2xl:h-[500px]'}>
                                         <ResponsiveContainer width="100%" height="100%">
                                             <BarChart data={taskPriorityData}>
                                                 <XAxis dataKey="name" />

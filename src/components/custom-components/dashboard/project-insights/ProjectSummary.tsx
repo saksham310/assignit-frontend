@@ -4,6 +4,7 @@ import {useGetProjects} from "@/hooks/project.hooks.ts";
 import {ProjectResponse} from "@/types/project.types.ts";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";
 import NoDataDisplay from "@/components/custom-components/shared/NoDataDisplay.tsx";
+import {TriangleAlert} from "lucide-react";
 
 
 const ProjectSummary=()=>{
@@ -21,7 +22,11 @@ const ProjectSummary=()=>{
                         })}
                     </div>  )}
                     {projects?.length == 0 && (
-                       <NoDataDisplay title={"No Projects"} subtitle={"Add projects for the summary"}/>
+                        <div className={'flex flex-col justify-center items-center gap-4 h-full w-full p-40'}>
+                            <TriangleAlert className={'size-40 text-gray-300'} />
+                           <span className={'text-gray-400 font-medium text-nowrap'}>Add projects to see the summary</span>
+                        </div>
+                       // <NoDataDisplay title={"No Projects"} subtitle={"Add projects for the summary"}/>
                     )}
                 </CardContent>
             </Card>

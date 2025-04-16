@@ -24,12 +24,12 @@ const ProjectDashboard = () =>{
         {
             value: "overview",
             label: "Overview",
-            component: () => <ProjectOverview projectData = {data.projectOverviewData}/>,
+            component: () => <ProjectOverview projectData = {data?.projectOverviewData}/>,
         },
         {
             value: "list",
             label: "List",
-            component: () => <ProjectListView projectSprint={data.projectSprintSummary}/>,
+            component: () => <ProjectListView projectSprint={data?.projectSprintSummary}/>,
         },
         // {
         //     value: "members",

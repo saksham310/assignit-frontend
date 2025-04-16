@@ -29,7 +29,6 @@ export const useDashboardNavigate = () => {
 }
 
 export const useDashboardData = () => {
-    const currentRole = useWorkspaceRoleStore((state) => state.currentRole);
     const {mutate} = useUpdateMemberRole();
     const setCurrentRole = useWorkspaceRoleStore((state) => state.setCurrentRoles);
     const {id} = useParams();
@@ -38,6 +37,7 @@ export const useDashboardData = () => {
     useEffect(() => {
         if (id) setCurrentRole(id as string)
     }, [id]);
+    const currentRole = useWorkspaceRoleStore((state) => state.currentRole);
     const handleEditMember = (memberId: number, value: string) => {
         const data = {
             workspaceId: id,
