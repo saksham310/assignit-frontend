@@ -3,7 +3,7 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Button } from "@/components/ui/button.tsx";
 import { ChevronDown, ChevronsUpDown, Folder } from "lucide-react";
 import {Link, useLocation} from "react-router-dom";
@@ -20,14 +20,18 @@ const ProjectList = () => {
     const projects = data ? data : [];
     const [openProjects, setOpenProjects] = useState<{ [key: number]: boolean }>({});
 
-
     const toggleProject = (id: number) => {
         setOpenProjects((prev) => ({
             ...prev,
             [id]: !prev[id],
         }));
     };
-        const location = useLocation();
+    useEffect(() => {
+        if(projects.length > 0){
+            setIsOpen(true);
+        }
+    }, [projects.length])
+    const location = useLocation();
 
     return (
         <div className="w-full max-w-md mx-auto">
