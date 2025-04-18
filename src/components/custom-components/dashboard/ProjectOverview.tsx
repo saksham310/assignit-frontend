@@ -5,6 +5,8 @@ import Analytics from "@/components/custom-components/dashboard/Analytics.tsx";
 import moment from "moment";
 import NoDataDisplay from "@/components/custom-components/shared/NoDataDisplay.tsx";
 import { ProjectOverviewData } from "@/types/project.types.ts";
+import {CalendarDays, CircleCheckBig, ListTodo, Loader} from "lucide-react";
+import {AnalyticCardProps} from "@/types/dashboard.type.ts";
 
 const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) => {
 
@@ -28,24 +30,24 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
     ];
 
     // Data for analytics
-    const items = [
+    const items:AnalyticCardProps[] = [
         {
             name: 'Completion Rate',
             info: ` ${projectData.tasks !== 0 ? (projectData.completed / projectData.tasks * 100).toFixed(2) : 0} %`,
             subInfo: "Of total tasks completed",
-            iconLabel: 'Complete'
+            iconLabel: CircleCheckBig
         },
         {
             name: 'Average Task Per Member',
             info: `${projectData.tasks / projectData.members}`,
             subInfo: "Average workload per member",
-            iconLabel: 'Tasks'
+            iconLabel: ListTodo
         },
         {
             name: 'In Progress',
             info: ` ${projectData.tasks !== 0 ? (projectData.inProgress / projectData.tasks * 100).toFixed(2) : 0} %`,
             subInfo: "Of tasks currently active",
-            iconLabel: 'Progress'
+            iconLabel: Loader
         },
         {
             name: 'Time Remaining',
@@ -55,7 +57,7 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
                     : `${moment(projectData.dueDate).diff(moment(), 'days')} days remaining`)
                 : 0}`,
             subInfo: "Days until deadline",
-            iconLabel: 'Due'
+            iconLabel: CalendarDays
         },
     ];
 

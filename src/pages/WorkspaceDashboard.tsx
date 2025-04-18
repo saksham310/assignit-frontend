@@ -10,16 +10,16 @@ import { useDashboardData } from "@/hooks/dashboard.hooks.ts";
 import ProjectCreationForm from "@/components/custom-components/forms/ProjectCreationForm.tsx";
 import SendInvitePage from "@/pages/SendInvitePage.tsx";
 import { useDialogStore } from "@/store/dialog.store.ts";
-import { PlusCircle, Send } from "lucide-react";
+import {CalendarDays, FolderOpenDot, Folders, PlusCircle, Send, UsersRound} from "lucide-react";
 
 
 // Helper function to create analytics items
 const createAnalyticsItems = (analytics: string[], workspaceAnalytics:Record<string,any>): AnalyticCardProps[] => {
     const iconLabel = {
-        Projects: "Projects",
-        Members: "Members",
-        Sprints: "Sprints",
-        "Overdue Projects": "Due",
+        "Projects":FolderOpenDot,
+        "Sprints":Folders,
+        "Members":UsersRound,
+        "Overdue Projects": CalendarDays,
     };
 
     return analytics.map((key:string) => ({
