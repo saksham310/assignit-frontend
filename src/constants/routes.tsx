@@ -13,6 +13,7 @@ import JoinWorkspacePage from "@/pages/JoinWorkspacePage.tsx";
 import ProjectDashboard from "@/pages/ProjectDashboard.tsx";
 import SprintOverview from "@/pages/SprintOverview.tsx";
 import TaskDetailPage from "@/pages/TaskDetailPage.tsx";
+import RetrospectiveSection from "@/pages/RetrospectiveSection.tsx";
 export const router=createBrowserRouter(
     [
         {
@@ -57,6 +58,10 @@ export const router=createBrowserRouter(
                         {
                             path:'project/:projectId/sprint/:sprintId',
                             element:<SprintOverview/>
+                        },
+                        {
+                            path:'/workspaces/:id/retrospective',
+                            element: <RetrospectiveSection/>
                         }
                     ]
                 },

@@ -59,7 +59,7 @@ const getNavigationRoutes = (id: string | null) => [
     },
     {
         label: "Retrospective",
-        path: `/retrospective`,
+        path: `/workspaces/${id}/retrospective`,
         icon: SquareActivity
 
     }

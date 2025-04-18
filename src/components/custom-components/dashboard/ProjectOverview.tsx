@@ -67,7 +67,7 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
                 <Analytics items={items} className={'p-4 border-2 border-gray-100'} />
                 <div className={'grid md:grid-cols-2 gap-4 h-full'}>
                     {/* Task Completion Distribution */}
-                    <Card className="bg-white shadow-sm border border-gray-100 rounded-lg">
+                    <Card className="bg-white shadow-sm border-2 border-gray-100 rounded-lg">
                         <CardContent className="p-4 flex flex-col h-full  ">
                             <div className="space-y-1 mb-4">
                                 <h3 className="text-sm font-medium text-gray-700">Task Completion Distribution</h3>
@@ -116,7 +116,7 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
                     </Card>
 
                     {/* Task Priority Distribution */}
-                    <Card className="bg-white shadow-sm border border-gray-100 rounded-lg">
+                    <Card className="bg-white shadow-sm border-2 border-gray-100 rounded-lg">
                         <CardContent className="p-4 flex flex-col h-full  ">
                             <div className="space-y-1 mb-4">
                                 <h3 className="text-sm font-medium text-gray-700">Task Priority Distribution</h3>
