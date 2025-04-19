@@ -18,7 +18,7 @@ const DashboardLayout = () => {
     }
     return (<>
         <ResponsiveDialog/>
-        <div className='flex h-screen bg-white'>
+        <div className='flex w-screen h-screen bg-white'>
             <div className='fixed top-0 left-0 h-full w-[230px] hidden lg:block p-3'>
                 <Sidebar/>
             </div>

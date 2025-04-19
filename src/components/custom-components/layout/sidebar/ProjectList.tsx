@@ -55,7 +55,7 @@ const ProjectList = () => {
                                 open={openProjects[project.id] || false}
                                 onOpenChange={() => toggleProject(project.id)}
                             >
-                                <div className={cn("flex items-center justify-between p-[2px] cursor-pointer",
+                                <div className={cn("flex items-center justify-between p-[4px] cursor-pointer",
                                     location.pathname == `/project/${project.id}` &&  'bg-secondary rounded-md')}>
                                     <Link
                                         to={`/project/${project.id}`}

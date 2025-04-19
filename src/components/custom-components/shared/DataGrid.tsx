@@ -44,12 +44,13 @@ export function DataGrid<TData>({ columns, data, search = false, searchValue = "
     })
     const handleDbClick = (value:number) =>{
         if(!dbClick) return;
+        console.log(value)
         setOpen(UserProfileAnalytics)
     }
     return (
         <div className="w-full h-full flex flex-col gap-3">
             {search && (
-                <div className="relative w-full md:w-[260px]">
+                <div className="relative w-full md:w-[260px] mb-4">
                     <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
                     <Input
                         className="w-full md:w-[260px] text-xs h-[35px] pl-8"
@@ -62,14 +63,14 @@ export function DataGrid<TData>({ columns, data, search = false, searchValue = "
             <div className="w-full overflow-auto scrollbar [&::-webkit-scrollbar-track]:mt-[3.5rem]">
                 <div className="[&_table]:w-full">
                     <Table>
-                        <TableHeader className="bg-secondary sticky top-0 z-10">
+                        <TableHeader className="bg-[#F5F3FF]  sticky top-0 z-10">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => (
                                         <TableHead
                                             key={header.id}
                                             className={cn(
-                                                "first:rounded-tl-lg last:rounded-tr-lg p-4 text-black text-xs font-medium",
+                                                "first:rounded-tl-lg last:rounded-tr-lg p-4 text-gray-800 text-xs font-medium",
                                                 header.column.getCanSort() && "cursor-pointer select-none",
                                             )}
                                             onClick={header.column.getToggleSortingHandler()}

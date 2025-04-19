@@ -26,12 +26,12 @@ export const useGetMembersColumns = (
     return [
         {
             accessorKey: "name",
-            header: "Name",
-            size: 200,
+            header: () => <span className={'pl-4'}>Name</span>,
+            size: 255,
             cell: ({ row }) => {
                 const member = row.original
                 return (
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 pl-4">
                         <UserAvatar src={member?.imageUrl} avatarColor={member?.avatarColor} name={member?.name} />
                         <div className="flex flex-col">
                             <span className="font-medium">{member.name}</span>
@@ -54,7 +54,7 @@ export const useGetMembersColumns = (
                 // If user can't edit roles, just show a badge
                 if (!canEditRoles || isOwnerOrSameRole) {
                     return (
-                        <Badge variant="outline" className={`font-medium`}>
+                        <Badge variant="outline" className={`font-medium text-gray-500`}>
                             {role.split("_").join(" ")}
                         </Badge>
                     )
@@ -65,7 +65,7 @@ export const useGetMembersColumns = (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline"
-                                className={cn("h-6 font-medium  text-xs px-2 w-fit py-1 flex items-center gap-1 hover:bg-muted/50")}
+                                className={cn("h-6 font-medium text-gray-500 text-xs px-2 w-fit py-1 flex items-center gap-1 hover:bg-muted/50")}
                             >
                                 <span>{role.split("_").join(" ")}</span>
                                 <ChevronDown className="h-3 w-3 opacity-50" />
@@ -81,7 +81,7 @@ export const useGetMembersColumns = (
                                         className="cursor-pointer"
                                     >
                                         <div className="flex items-center gap-2">
-                                            {roleOption === role && <Check className="h-4 w-4 text-primary" />}
+                                            {roleOption === role && <Check className="h-4 w-4 text-gray-400" />}
                                             <span className={roleOption === role ? "font-medium" : ""}>{roleOption}</span>
                                         </div>
                                     </DropdownMenuRadioItem>
@@ -94,7 +94,7 @@ export const useGetMembersColumns = (
         },
         {
             accessorKey: "joinDate",
-            header: "Joined At",
+            header: "Joined On",
             size: 150,
             cell: ({ row }) => {
                 const date = new Date(row.original.joinDate)
