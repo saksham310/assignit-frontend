@@ -14,18 +14,21 @@ import { Search } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
+import UserProfileAnalytics from "@/pages/UserProfileAnalytics.tsx";
+import {useDialogStore} from "@/store/dialog.store.ts";
 
 interface DataTableProps<TData> {
     columns: ColumnDef<any>[]
     data: TData[]
     search?: boolean
     searchValue?: string
+    dbClick?:boolean
 }
 
-export function DataGrid<TData>({ columns, data, search = false, searchValue = "" }: DataTableProps<TData>) {
+export function DataGrid<TData>({ columns, data, search = false, searchValue = "" ,dbClick = false}: DataTableProps<TData>) {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [sorting, setSorting] = useState<SortingState>([])
-
+    const setOpen = useDialogStore(state => state.openDialog)
     const table = useReactTable({
         data,
         columns,
@@ -39,7 +42,10 @@ export function DataGrid<TData>({ columns, data, search = false, searchValue = "
             sorting,
         },
     })
-
+    const handleDbClick = (value:number) =>{
+        if(!dbClick) return;
+        setOpen(UserProfileAnalytics)
+    }
     return (
         <div className="w-full h-full flex flex-col gap-3">
             {search && (
@@ -105,7 +111,7 @@ export function DataGrid<TData>({ columns, data, search = false, searchValue = "
                                                     minWidth: cell.column.columnDef.size,
                                                     maxWidth: cell.column.columnDef.size,
                                                 }}
-                                                onDoubleClick={() => console.log(cell.row.original)}
+                                                onDoubleClick={() => handleDbClick(cell.row.original.id)}
                                             >
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </TableCell>

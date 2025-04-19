@@ -3,7 +3,7 @@ import {useEffect} from "react";
 import {useGetWorkspace, useGetWorkspaceMember, useUpdateMemberRole} from "@/hooks/workspace.hooks.ts";
 import {useJoinWorkspaceStore, useWorkspaceRoleStore} from "@/store/workspace.store.ts";
 import {MembersData} from "@/types/workspace.type.ts";
-import {getMembersColumns} from "@/constants/table-columns.constants.tsx";
+import {useGetMembersColumns} from "@/constants/table-columns.constants.tsx";
 import {WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
 
 
@@ -47,7 +47,7 @@ export const useDashboardData = () => {
         mutate(data)
     }
     const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole) ;
-    const membersColumns = getMembersColumns(true,isOwnerAdmin, handleEditMember);
+    const membersColumns = useGetMembersColumns(true,isOwnerAdmin, handleEditMember);
     return {isOwnerAdmin, memberData, membersColumns};
 
 }

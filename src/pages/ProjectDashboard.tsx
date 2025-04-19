@@ -9,8 +9,7 @@ import ProjectOverview from "@/components/custom-components/dashboard/ProjectOve
 import Dashboard, {Action} from "@/components/custom-components/dashboard/Dashboard.tsx";
 import {useGetProjectDetails, useGetProjectMembers} from "@/hooks/project.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
-import UserProfileAnalytics from "@/pages/UserProfileAnalytics.tsx";
-import {getMembersColumns} from "@/constants/table-columns.constants.tsx";
+import {useGetMembersColumns} from "@/constants/table-columns.constants.tsx";
 import MembersTab from "@/components/custom-components/dashboard/MembersTab.tsx";
 
 
@@ -27,7 +26,7 @@ const ProjectDashboard = () => {
         console.log(memberId, value)
     }
 
-    const membersColumns = getMembersColumns(false, true, handleEditMember);
+    const membersColumns = useGetMembersColumns(false, true, handleEditMember);
 
     if (isLoading || isMemberLoading) return <Loader/>
 
@@ -46,19 +45,19 @@ const ProjectDashboard = () => {
         {
             value: "members",
             label: "Members",
-            component: () => <MembersTab columns={membersColumns} data={projectMembers?.currentMembers}/>,
+            component: () => <MembersTab columns={membersColumns} data={projectMembers?.currentMembers} dbClick={true}/>,
         },
     ];
 
     const onCreateSprint = () => {
         setOpen(SprintCreationForm)
     }
-    const onTest = () => {
-        setOpen(UserProfileAnalytics)
-    }
+    // const onTest = () => {
+    //     setOpen(UserProfileAnalytics)
+    // }
     const actions: Action[] = [
         {label: "Create Sprint", icon: <PlusCircle/>, variant: "default", onClick: onCreateSprint},
-        {label: "Test", icon: <PlusCircle/>, variant: "default", onClick: onTest},
+        // {label: "Test", icon: <PlusCircle/>, variant: "default", onClick: onTest},
     ]
 
     return <>
