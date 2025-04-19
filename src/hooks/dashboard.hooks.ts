@@ -46,8 +46,8 @@ export const useDashboardData = () => {
         }
         mutate(data)
     }
-    const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole);
-    const membersColumns = getMembersColumns(isOwnerAdmin, handleEditMember);
+    const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole) ;
+    const membersColumns = getMembersColumns(true,isOwnerAdmin, handleEditMember);
     return {isOwnerAdmin, memberData, membersColumns};
 
 }

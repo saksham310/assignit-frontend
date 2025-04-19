@@ -9,17 +9,20 @@ import {
     DropdownMenuRadioItem,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import {WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
+import {PROJECT_ROLES, WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
 import {useWorkspaceRoleStore} from "@/store/workspace.store.ts";
 
 
-export const getMembersColumns = (isAdminOwner: boolean, handleEditMember: (id: number, value: string) => void): ColumnDef<MembersData>[] => {
+export const getMembersColumns = (isWorkspace:boolean,isAdminOwner: boolean, handleEditMember: (id: number, value: string) => void): ColumnDef<MembersData>[] => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const currentRole = useWorkspaceRoleStore((state) => state.currentRole);
+    const roles =  isWorkspace ? WORKSPACE_ROLES : PROJECT_ROLES;
     return [
         {accessorKey: "name", header: "Name", size: 80},
         {accessorKey: "email", header: "Email", size: 130},
-        {accessorKey: "role", header: "Role", size: 75},
+        {accessorKey: "role", header: "Role", size: 75,
+        cell: ({row}: { row: Row<MembersData> }) => row.original.role.split("_").join(" ")
+        },
         {accessorKey: "joinDate", header: "Joined At", size: 63},
         ...(isAdminOwner
             ? [{
@@ -38,7 +41,7 @@ export const getMembersColumns = (isAdminOwner: boolean, handleEditMember: (id: 
                                 <DropdownMenuContent className="w-56">
                                     <DropdownMenuRadioGroup value={row.original.role}
                                                             onValueChange={(value) => handleEditMember(row.original.id, value)}>
-                                        {WORKSPACE_ROLES.map((role) =>
+                                        {roles.map((role) =>
                                             <DropdownMenuRadioItem value={role} disabled={isOwnerOrSameRole}
                                                                    className={'text-xs'} key={role}>
                                                 {role}

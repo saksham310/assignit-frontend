@@ -7,42 +7,58 @@ import SprintCreationForm from "@/components/custom-components/forms/SprintCreat
 import ProjectListView from "@/components/custom-components/dashboard/ProjectListView.tsx";
 import ProjectOverview from "@/components/custom-components/dashboard/ProjectOverview.tsx";
 import Dashboard, {Action} from "@/components/custom-components/dashboard/Dashboard.tsx";
-import {useGetProjectDetails} from "@/hooks/project.hooks.ts";
+import {useGetProjectDetails, useGetProjectMembers} from "@/hooks/project.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
+import UserProfileAnalytics from "@/pages/UserProfileAnalytics.tsx";
+import {getMembersColumns} from "@/constants/table-columns.constants.tsx";
+import MembersTab from "@/components/custom-components/dashboard/MembersTab.tsx";
 
-const ProjectDashboard = () =>{
+
+const ProjectDashboard = () => {
     const setTitle = useOutletContext<(title: string) => void>();
     const setOpen = useDialogStore(state => state.openDialog)
     const {projectId} = useParams();
-    const {data,isLoading} = useGetProjectDetails(projectId)
+    const {data, isLoading} = useGetProjectDetails(projectId)
+    const {data: projectMembers, isLoading: isMemberLoading} = useGetProjectMembers(projectId);
     useEffect(() => {
         setTitle("Project")
     }, [setTitle]);
+    const handleEditMember = (memberId: number, value: string) => {
+        console.log(memberId, value)
+    }
 
-    if(isLoading) return <Loader/>
+    const membersColumns = getMembersColumns(false, true, handleEditMember);
+
+    if (isLoading || isMemberLoading) return <Loader/>
+
+
     const tabConfig: TabConfig[] = [
         {
             value: "overview",
             label: "Overview",
-            component: () => <ProjectOverview projectData = {data?.projectOverviewData}/>,
+            component: () => <ProjectOverview projectData={data?.projectOverviewData}/>,
         },
         {
             value: "list",
             label: "List",
             component: () => <ProjectListView projectSprint={data?.projectSprintSummary}/>,
         },
-        // {
-        //     value: "members",
-        //     label: "Members",
-        //     component: () => <> <div>TO DO </div></>,
-        // },
+        {
+            value: "members",
+            label: "Members",
+            component: () => <MembersTab columns={membersColumns} data={projectMembers?.currentMembers}/>,
+        },
     ];
 
     const onCreateSprint = () => {
         setOpen(SprintCreationForm)
     }
-    const actions:Action[] = [
-        { label: "Create Sprint", icon: <PlusCircle />,variant:"default",onClick: onCreateSprint },
+    const onTest = () => {
+        setOpen(UserProfileAnalytics)
+    }
+    const actions: Action[] = [
+        {label: "Create Sprint", icon: <PlusCircle/>, variant: "default", onClick: onCreateSprint},
+        {label: "Test", icon: <PlusCircle/>, variant: "default", onClick: onTest},
     ]
 
     return <>

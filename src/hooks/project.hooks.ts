@@ -2,7 +2,7 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {
     createProject,
     createSprints,
-    getProjectDetails,
+    getProjectDetails, getProjectMembers,
     getProjects,
     getProjectStatus
 } from "@/service/project.service.ts";
@@ -64,5 +64,11 @@ export const useGetProjectStatusMembers = (id:string|undefined) => {
         queryKey:['project_status',id],
         queryFn:() => getProjectStatus(id),
 
+    })
+}
+export const useGetProjectMembers = (id:string|undefined) => {
+    return useQuery({
+        queryKey:['project_members',id],
+        queryFn:() => getProjectMembers(id),
     })
 }

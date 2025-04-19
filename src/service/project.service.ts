@@ -2,7 +2,7 @@ import {apiClient} from "@/service/api.client.ts";
 import {
     CREATE_PROJECT,
     CREATE_SPRINT,
-    GET_PROJECT_DETAILS,
+    GET_PROJECT_DETAILS, GET_PROJECT_MEMBERS,
     GET_PROJECT_STATUS_MEMBERS,
     GET_PROJECTS
 } from "@/constants/api.constants.ts";
@@ -25,6 +25,10 @@ export const createSprints = async (data:SprintCreationPayload) => {
 
 export const getProjectDetails = async (id: string | undefined) => {
     const res = await apiClient.get(GET_PROJECT_DETAILS(id as string));
+    return res.data
+}
+export const getProjectMembers = async (id: string | undefined) => {
+    const res = await apiClient.get(GET_PROJECT_MEMBERS(id as string));
     return res.data
 }
 
