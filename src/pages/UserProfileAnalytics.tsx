@@ -1,7 +1,6 @@
 import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 import {Badge} from "@/components/ui/badge.tsx";
-import {AnalyticCardProps} from "@/types/dashboard.type.ts";
-import {AlertCircle, BarChart2, Bug, CircleCheckBig, Loader, PieChartIcon} from "lucide-react";
+import { BarChart2, Bug, PieChartIcon} from "lucide-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import PerformanceMetric from "@/components/custom-components/PerformanceMetric.tsx";
@@ -15,12 +14,13 @@ const UserProfileAnalytics = () => {
         avatarColor: "#3e6de5",
         imageUrl: "https://res.cloudinary.com/dcoky4dix/image/upload/v1744692627/user_profiles/nhvmqci11qolnht7zzq9.jpg",
         joinDate: "March 15, 2023",
+        sprintCount: 7,
         tasks: {
-            total: 48,
-            completed: 40,
-            inProgress: 6,
+            total: 21,
+            completed: 15,
+            inProgress:3,
             todo: 2,
-            bugs: 4,
+            bugs: 2,
         },
     }
 
@@ -38,40 +38,18 @@ const UserProfileAnalytics = () => {
 
 
     const completionRate = Math.round((memberData.tasks.completed / memberData.tasks.total) * 100)
-    const avgBugsPerTask = Number(memberData.tasks.bugs / memberData.tasks.total).toFixed(2);
+    const avgBugsPerTask = +(memberData.tasks.bugs / memberData.tasks.total).toFixed(2);
     const qualityScore = Math.round(100 * Math.exp(-0.178 * avgBugsPerTask));
 
+    const idealLimit = memberData.sprintCount * 3;
+    const moderateLimit = memberData.sprintCount * 5;
 
     // Colors for charts
     const DONUT_COLORS = ["#10b981", "#e5e7eb"]
     const BAR_COLORS = ["#14b8a6", "#f59e0b"]
 
-    const items: AnalyticCardProps[] = [
-        {
-            name: 'Total Task',
-            info: `${memberData.tasks.total}`,
-            iconLabel: BarChart2
-        },
-        {
-            name: 'Completed',
-            info: `${memberData.tasks.completed}`,
-            subInfo: `${completionRate}% completion`,
-            iconLabel: CircleCheckBig
-        },
-        {
-            name: 'In Progress',
-            info: `${memberData.tasks.inProgress}`,
-            iconLabel: Loader
-        },
-        {
-            name: 'To Do',
-            info: `${memberData.tasks.todo}`,
-            iconLabel: AlertCircle
-        },
-
-    ]
     return <>
-        <div className={'w-full h-full bg-white p-3 flex flex-col space-y-8'}>
+        <div className={' w-full h-full  lg:w-[1240px] bg-white p-3 flex flex-col space-y-8'}>
             <div className={'flex gap-3 items-center'}>
                 <UserAvatar className={'size-20'} name={memberData.name} avatarColor={memberData.avatarColor}
                             src={memberData.imageUrl}/>
@@ -108,18 +86,18 @@ const UserProfileAnalytics = () => {
                             label="Quality Score"
                             value={qualityScore}
                             maxValue={100}
-                            unit=""
+                            unit="%"
                             description={
-                                Number.parseFloat(avgBugsPerTask) <= 0.5
+                               avgBugsPerTask <= 0.5
                                     ? "High quality work with minimal bugs"
-                                    : Number.parseFloat(avgBugsPerTask) <= 0.10
+                                    : avgBugsPerTask <= 0.10
                                         ? "Average quality, some improvements needed"
                                         : "Quality concerns, needs attention"
                             }
                             color={
-                                Number.parseFloat(avgBugsPerTask) <= 0.5
+                                avgBugsPerTask <= 0.5
                                     ? "#10b981"
-                                    : Number.parseFloat(avgBugsPerTask) <= 0.10
+                                    :  avgBugsPerTask <= 0.10
                                         ? "#f59e0b"
                                         : "#ef4444"
                             }
@@ -127,20 +105,20 @@ const UserProfileAnalytics = () => {
 
                         <PerformanceMetric
                             label="Workload Balance"
-                            value={Math.min(100, 100 - (memberData.tasks.inProgress / 15) * 100)}
+                            value={Math.min(100, Math.round((idealLimit / memberData.tasks.total) * 100))}
                             maxValue={100}
-                            unit=""
+                            unit="%"
                             description={
-                                memberData.tasks.inProgress <= 5
+                                memberData.tasks.total <= idealLimit
                                     ? "Balanced workload"
-                                    : memberData.tasks.inProgress <= 10
+                                    : memberData.tasks.total <= moderateLimit
                                         ? "Moderate workload"
                                         : "Heavy workload, consider redistribution"
                             }
                             color={
-                                memberData.tasks.inProgress <= 5
+                                memberData.tasks.total <= idealLimit
                                     ? "#10b981"
-                                    : memberData.tasks.inProgress <= 10
+                                    : memberData.tasks.total <= moderateLimit
                                         ? "#f59e0b"
                                         : "#ef4444"
                             }
@@ -182,7 +160,7 @@ const UserProfileAnalytics = () => {
                                         cornerRadius={5}
                                         paddingAngle={2}
                                     >
-                                        {donutData.map((entry, index) => (
+                                        {donutData.map((_entry, index) => (
                                             <Cell key={`cell-${index}`} fill={DONUT_COLORS[index]}/>
                                         ))}
                                     </Pie>
@@ -229,7 +207,7 @@ const UserProfileAnalytics = () => {
                                     <Tooltip
                                         formatter={(value: number, name: string) => [`${value.toFixed(2)}%`, name]}/>
                                     <Bar dataKey="value" barSize={50} radius={[10, 10, 0, 0]}>
-                                        {barData.map((entry, index) => (
+                                        {barData.map((_entry, index) => (
                                             <Cell key={`cell-${index}`} fill={BAR_COLORS[index]}/>
                                         ))}
                                     </Bar>
@@ -262,8 +240,6 @@ const UserProfileAnalytics = () => {
                                 <CardDescription className={'text-gray-500 text-xs'}>Bug count and
                                     density</CardDescription>
                             </div>
-                            <div
-                                className=" font-medium text-gray-900">{memberData.tasks.todo + memberData.tasks.inProgress}</div>
                         </div>
                     </CardHeader>
                     <CardContent>

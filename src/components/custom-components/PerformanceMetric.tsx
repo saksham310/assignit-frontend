@@ -1,5 +1,12 @@
-
-const PerformanceMetric = ({ label, value, maxValue, unit, description, color }) => {
+interface PerformanceMetricProps {
+    label: string;
+    value: number;
+    maxValue: number;
+    unit: string;
+    description: string;
+    color: string;
+}
+const PerformanceMetric = ({ label, value, maxValue, unit, description, color }:PerformanceMetricProps) => {
     // Ensure value is between 0 and maxValue
     const normalizedValue = Math.max(0, Math.min(maxValue, value))
     const percentage = (normalizedValue / maxValue) * 100
