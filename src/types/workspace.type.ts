@@ -13,5 +13,7 @@ export type MembersData = {
     email: string;
     role: string;
     joinDate: string;
+    avatarColor?: string;
+    imageUrl?: string;
 
 }
