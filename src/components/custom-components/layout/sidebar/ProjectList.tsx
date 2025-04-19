@@ -55,13 +55,13 @@ const ProjectList = () => {
                                 open={openProjects[project.id] || false}
                                 onOpenChange={() => toggleProject(project.id)}
                             >
-                                <div className={cn("flex items-center justify-between p-[4px] cursor-pointer",
+                                <div    title={project.name}  className={cn("flex items-center justify-between p-[1px] pl-[7px]  cursor-pointer",
                                     location.pathname == `/project/${project.id}` &&  'bg-secondary rounded-md')}>
                                     <Link
                                         to={`/project/${project.id}`}
                                         className="text-[13px] w-full text-gray-800 font-normal hover:text-primary flex items-center gap-2">
 
-                                     <span className='flex items-center justify-center border bg-primary text-white size-6 rounded p-1'>{project.name.charAt(0).toUpperCase()}</span> <p className={'w-fit text-xs'}>{project.name}</p>
+                                     <span  className='flex items-center justify-center border bg-primary text-white size-6 rounded p-1'>{project.name.charAt(0).toUpperCase()}</span> <span  className={'w-[100px] text-xs text-nowrap overflow-hidden overflow-ellipsis'}>{project.name}</span>
                                     </Link>
                                     <CollapsibleTrigger asChild>
                                         <Button variant="ghost" size="sm">

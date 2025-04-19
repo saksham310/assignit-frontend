@@ -12,49 +12,49 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
 
     // calculating the project completion percentage
     const calculateProjectCompletionPercentage = (number: number) => {
-        return projectData.tasks !== 0 ? (number / projectData.tasks) * 100 : 0;
+        return projectData?.tasks !== 0 ? (number / projectData?.tasks) * 100 : 0;
     }
 
     // Task Status Data
     const taskStatusData = [
-        { name: "Completed", value: calculateProjectCompletionPercentage(projectData.completed), color: "#10b954" }, // Green
-        { name: "In Progress", value: calculateProjectCompletionPercentage(projectData.inProgress), color: "rgba(255,189,56,0.9)" }, // Amber
-        { name: "To Do", value: calculateProjectCompletionPercentage(projectData.toDo), color: "#8f90ff" }, // Indigo
+        { name: "Completed", value: calculateProjectCompletionPercentage(projectData?.completed), color: "#10b954" }, // Green
+        { name: "In Progress", value: calculateProjectCompletionPercentage(projectData?.inProgress), color: "rgba(255,189,56,0.9)" }, // Amber
+        { name: "To Do", value: calculateProjectCompletionPercentage(projectData?.toDo), color: "#8f90ff" }, // Indigo
     ];
 
     // Task Priority Data
     const taskPriorityData = [
-        { name: "High", value: calculateProjectCompletionPercentage(projectData.highPriority), color: priorityFlagMap['High'] }, // Red
-        { name: "Medium", value: calculateProjectCompletionPercentage(projectData.mediumPriority), color: priorityFlagMap['Medium'] }, // Amber
-        { name: "Low", value: calculateProjectCompletionPercentage(projectData.lowPriority), color: priorityFlagMap['Low'] }, // Green
+        { name: "High", value: calculateProjectCompletionPercentage(projectData?.highPriority), color: priorityFlagMap['High'] }, // Red
+        { name: "Medium", value: calculateProjectCompletionPercentage(projectData?.mediumPriority), color: priorityFlagMap['Medium'] }, // Amber
+        { name: "Low", value: calculateProjectCompletionPercentage(projectData?.lowPriority), color: priorityFlagMap['Low'] }, // Green
     ];
 
     // Data for analytics
     const items:AnalyticCardProps[] = [
         {
             name: 'Completion Rate',
-            info: ` ${projectData.tasks !== 0 ? (projectData.completed / projectData.tasks * 100).toFixed(2) : 0} %`,
+            info: ` ${projectData?.tasks !== 0 ? (projectData?.completed / projectData?.tasks * 100).toFixed(2) : 0} %`,
             subInfo: "Of total tasks completed",
             iconLabel: CircleCheckBig
         },
         {
             name: 'Average Task Per Member',
-            info: `${projectData.tasks / projectData.members}`,
+            info: `${projectData?.tasks / projectData?.members}`,
             subInfo: "Average workload per member",
             iconLabel: ListTodo
         },
         {
             name: 'In Progress',
-            info: ` ${projectData.tasks !== 0 ? (projectData.inProgress / projectData.tasks * 100).toFixed(2) : 0} %`,
+            info: ` ${projectData?.tasks !== 0 ? (projectData?.inProgress / projectData?.tasks * 100).toFixed(2) : 0} %`,
             subInfo: "Of tasks currently active",
             iconLabel: Loader
         },
         {
             name: 'Time Remaining',
-            info: `${moment(projectData.dueDate, "YYYY-MM-DD", true).isValid() ?
-                (moment(projectData.dueDate).diff(moment(), 'days') < 0 ?
-                    `Overdue by ${Math.abs(moment(projectData.dueDate).diff(moment(), 'days'))} days`
-                    : `${moment(projectData.dueDate).diff(moment(), 'days')} days remaining`)
+            info: `${moment(projectData?.dueDate, "YYYY-MM-DD", true).isValid() ?
+                (moment(projectData?.dueDate).diff(moment(), 'days') < 0 ?
+                    `Overdue by ${Math.abs(moment(projectData?.dueDate).diff(moment(), 'days'))} days`
+                    : `${moment(projectData?.dueDate).diff(moment(), 'days')} days remaining`)
                 : 0}`,
             subInfo: "Days until deadline",
             iconLabel: CalendarDays

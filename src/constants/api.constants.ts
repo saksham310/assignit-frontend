@@ -25,6 +25,7 @@ export const JOIN_WORKSPACE = `/workspaces/members/join`;
 
 // User Profile APIs
 export const UPDATE_PROFILE = '/user/profile/update';
+export const USER_ANALYTICS = (projectId:string|undefined,userId:number) => `user/${projectId}/analytics/${userId}`;
 
 // Project Management APIs
 export const GET_PROJECTS = (workspaceId:string) =>`projects/${workspaceId}`;

@@ -45,7 +45,7 @@ export function DataGrid<TData>({ columns, data, search = false, searchValue = "
     const handleDbClick = (value:number) =>{
         if(!dbClick) return;
         console.log(value)
-        setOpen(UserProfileAnalytics)
+        setOpen(()=>UserProfileAnalytics(value))
     }
     return (
         <div className="w-full h-full flex flex-col gap-3">

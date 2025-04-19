@@ -1,5 +1,5 @@
-import {useMutation} from "@tanstack/react-query";
-import {updateProfile} from "@/service/user.service.ts";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {getUserAnalytics, updateProfile} from "@/service/user.service.ts";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import {toast} from "sonner";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
@@ -28,5 +28,12 @@ export const useUpdateProfile=()=>{
             });
             refreshPage();
         }
+    })
+}
+
+export const useUserAnalytics = (projectId:string|undefined,userId:number) => {
+    return useQuery({
+        queryKey:['analytics',projectId,userId],
+        queryFn:() => getUserAnalytics(projectId,userId),
     })
 }

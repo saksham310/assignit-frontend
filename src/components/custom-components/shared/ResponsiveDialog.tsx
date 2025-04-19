@@ -5,26 +5,26 @@ import {Drawer, DrawerContent} from "@/components/ui/drawer.tsx";
 import React from "react";
 
 const ResponsiveDialog = () => {
-    const isDesktop = useMediaQuery("(min-width: 768px)")
+    // const isDesktop = useMediaQuery("(min-width: 768px)")
     const isOpen = useDialogStore((state) => state.isOpen);
     const component = useDialogStore((state) => state.component);
     const closeDialog = useDialogStore((state) => state.closeDialog);
 
-    if (isDesktop) {
+    // if (isDesktop) {
         return (
             <Dialog open={isOpen} onOpenChange={closeDialog} >
-                <DialogContent className="max-w-fit max-h-full" >
+                <DialogContent className="max-w-fit max-h-full overflow-y-auto" >
                     {component ? React.createElement(component) : null}
                 </DialogContent>
             </Dialog>
         )
-    }
-    return (
-        <Drawer open={isOpen} onOpenChange={closeDialog}>
-            <DrawerContent className="">
-                {component ? React.createElement(component) : null}
-            </DrawerContent>
-        </Drawer>
-    )
+    // }
+    // return (
+    //     <Drawer open={isOpen} onOpenChange={closeDialog}>
+    //         <DrawerContent className="">
+    //             {component ? React.createElement(component) : null}
+    //         </DrawerContent>
+    //     </Drawer>
+    // )
 }
 export default ResponsiveDialog;

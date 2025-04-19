@@ -4,25 +4,15 @@ import { BarChart2, Bug, PieChartIcon} from "lucide-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import PerformanceMetric from "@/components/custom-components/PerformanceMetric.tsx";
+import {useUserAnalytics} from "@/hooks/user.hooks.ts";
+import { useParams } from "react-router-dom";
+import Loader from "@/components/custom-components/shared/Loader.tsx";
 
-const UserProfileAnalytics = () => {
-    const memberData = {
-        id: "m-001",
-        name: "Saksham Sharma",
-        role: "Frontend Developer",
-        email: "sakshams982@gmail.com",
-        avatarColor: "#3e6de5",
-        imageUrl: "https://res.cloudinary.com/dcoky4dix/image/upload/v1744692627/user_profiles/nhvmqci11qolnht7zzq9.jpg",
-        joinDate: "March 15, 2023",
-        sprintCount: 7,
-        tasks: {
-            total: 21,
-            completed: 15,
-            inProgress:3,
-            todo: 2,
-            bugs: 2,
-        },
-    }
+const UserProfileAnalytics = (id:number) => {
+    const {projectId}  = useParams();
+    const {data,isLoading} = useUserAnalytics(projectId,id)
+    if(isLoading) return <Loader/>
+    const memberData = data?.details
 
     // Data for donut chart
     const donutData = [
@@ -49,7 +39,7 @@ const UserProfileAnalytics = () => {
     const BAR_COLORS = ["#14b8a6", "#f59e0b"]
 
     return <>
-        <div className={' w-full h-full  lg:w-[1240px] bg-white p-3 flex flex-col space-y-8'}>
+        <div className={' w-auto  h-full  lg:w-[1240px] bg-white p-3 flex flex-col space-y-8'}>
             <div className={'flex gap-3 items-center'}>
                 <UserAvatar className={'size-20'} name={memberData.name} avatarColor={memberData.avatarColor}
                             src={memberData.imageUrl}/>
@@ -66,7 +56,7 @@ const UserProfileAnalytics = () => {
                     <CardDescription className={'text-gray-500 text-xs'}>Overall assessment based on task completion and quality</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <PerformanceMetric
                             label="Task Efficiency"
                             value={completionRate}
@@ -126,9 +116,8 @@ const UserProfileAnalytics = () => {
                     </div>
                 </CardContent>
             </Card>
-            {/*<Analytics items={items} className={'p-1 border-2 border-gray-100'}/>*/}
             {/*Chart Sections*/}
-            <div className={'grid grid-cols-3 gap-6'}>
+            <div className={'grid grid-cols-1 lg:grid-cols-3 gap-6'}>
                 {/* Pie chart Completed vs total*/}
                 <Card className="shadow-sm border border-gray-200 ">
                     <CardHeader className="pb-2">

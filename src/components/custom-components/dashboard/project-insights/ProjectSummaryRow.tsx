@@ -20,7 +20,7 @@ const ProjectSummaryRow = (
                     </div>
                     }
                     <div>
-                        <h4 className="font-medium">{isGeneric ? "Project Progress" :  project.name }</h4>
+                        <span className="font-medium text-[clamp(0.875rem, -1.7813rem + 8.5vw, 3rem)]">{isGeneric ? "Project Progress" :  project.name }</span>
                         <p className="text-xs text-gray-500">{isGeneric ? "Overall task completion status" :`Due: ${project.dueDate.split('T')[0]}`}</p>
                     </div>
                 </div>
