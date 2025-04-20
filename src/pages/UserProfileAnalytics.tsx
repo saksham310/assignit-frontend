@@ -41,11 +41,11 @@ const UserProfileAnalytics = (id:number) => {
     return <>
         <div className={' w-auto  h-full  lg:w-[1240px] bg-white p-3 flex flex-col space-y-8'}>
             <div className={'flex gap-3 items-center'}>
-                <UserAvatar className={'size-20'} name={memberData.name} avatarColor={memberData.avatarColor}
+                <UserAvatar className={'size-20'} name={memberData.username} avatarColor={memberData.avatarColor}
                             src={memberData.imageUrl}/>
                 <div className={'flex flex-col gap-2'}>
-                    <span className={'text-lg font-medium'}>Saksham Sharma</span>
-                    <Badge variant={'secondary'} className={'text-xs font-normal w-fit'}>Frontend Developer</Badge>
+                    <span className={'text-lg font-medium'}>{memberData.username}</span>
+                    <Badge variant={'secondary'} className={'text-xs font-normal w-fit'}>{memberData.role}</Badge>
                     <span className={''}></span>
                 </div>
             </div>

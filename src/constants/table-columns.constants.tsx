@@ -1,13 +1,24 @@
 import { cn } from "@/lib/utils"
 import type { ColumnDef, Row } from "@tanstack/react-table"
-import { Check, ChevronDown, Trash2 } from "lucide-react"
+import {
+    Calendar,
+    Check,
+    CheckCircle2,
+    ChevronDown,
+    CircleDashed,
+    Clock,
+    Edit,
+    Eye,
+    MoreHorizontal,
+    Trash2
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
-    DropdownMenuContent,
+    DropdownMenuContent, DropdownMenuItem,
     DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
+    DropdownMenuRadioItem, DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
@@ -15,6 +26,7 @@ import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx"
 import type { MembersData } from "@/types/workspace.type.ts"
 import {PROJECT_ROLES, WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
 import {useWorkspaceRoleStore} from "@/store/workspace.store.ts";
+import {Progress} from "@/components/ui/progress.tsx";
 
 export const useGetMembersColumns = (
     isWorkspace: boolean,
@@ -138,5 +150,155 @@ export const useGetMembersColumns = (
                 },
             ]
             : []),
+    ]
+}
+interface ProjectColumnOptions {
+    onView: (id: string) => void
+    onEdit: (id: string) => void
+    onDelete: (id: string) => void
+}
+
+export const useProjectColumns = (options: ProjectColumnOptions): ColumnDef<any>[] => {
+    return [
+        {
+            accessorKey: "name",
+            header: () => <span className="pl-4">Project Name</span>,
+            size: 250,
+            cell: ({ row }) => {
+                const project = row.original
+                const progress = Math.round((project.completed / project.tasks) * 100) || 0
+
+                return (
+                    <div className="flex items-center gap-3 pl-4">
+                        <div
+                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary`}
+                        >
+                            <span className="font-semibold text-lg ">{project.name.charAt(0)}</span>
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="font-medium">{project.name}</span>
+                            <div className="flex items-center gap-1 mt-1">
+                                <Progress value={progress} className="h-1.5 w-24" />
+                                <span className="text-xs text-muted-foreground">{progress}%</span>
+                            </div>
+                        </div>
+                    </div>
+                )
+            },
+        },
+        {
+            accessorKey: "completed",
+            header: "Completed",
+            size: 120,
+            cell: ({ row }) => {
+                const completed = row.original.completed
+
+                return (
+                    <div className="flex items-center gap-2">
+                        <Badge
+                            variant="outline"
+                            className="bg-emerald-50 text-emerald-700 border-emerald-200 flex items-center gap-1"
+                        >
+                            <CheckCircle2 className="h-3.5 w-3.5" />
+                            <span>{completed}</span>
+                        </Badge>
+                    </div>
+                )
+            },
+        },
+        {
+            accessorKey: "inProgress",
+            header: "In Progress",
+            size: 120,
+            cell: ({ row }) => {
+                const inProgress = row.original.inProgress
+
+                return (
+                    <div className="flex items-center gap-2">
+                        <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 flex items-center gap-1">
+                            <Clock className="h-3.5 w-3.5" />
+                            <span>{inProgress}</span>
+                        </Badge>
+                    </div>
+                )
+            },
+        },
+        {
+            accessorKey: "toDo",
+            header: "To Do",
+            size: 120,
+            cell: ({ row }) => {
+                const toDo = row.original.toDo
+
+                return (
+                    <div className="flex items-center gap-2">
+                        <Badge variant="outline" className="bg-blue-50 text-gray-700 border-gray-200 flex items-center gap-1">
+                            <CircleDashed className="h-3.5 w-3.5" />
+                            <span>{toDo}</span>
+                        </Badge>
+                    </div>
+                )
+            },
+        },
+        {
+            accessorKey: "dueDate",
+            header: "Due Date",
+            size: 150,
+            cell: ({ row }) => {
+                const dueDate = new Date(row.original.dueDate)
+                const now = new Date()
+                const isPastDue = dueDate < now
+
+                return (
+                    <div className="flex items-center gap-1.5">
+                        <Calendar className="h-3.5 w-3.5 " />
+                        <span className={isPastDue ? "text-rose-600 font-medium" : "text-gray-600"}>
+              {dueDate.toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+              })}
+            </span>
+                    </div>
+                )
+            },
+        },
+        {
+            id: "actions",
+            header: "",
+            size: 70,
+            cell: ({ row }) => {
+                return (
+                    <div className="flex justify-center">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-8 w-8">
+                                    <MoreHorizontal className="h-4 w-4" />
+                                    <span className="sr-only">Open menu</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => options.onView(row.original.id)}>
+                                    <Eye className="mr-2 h-4 w-4" />
+                                    <span>View Details</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => options.onEdit(row.original.id)}>
+                                    <Edit className="mr-2 h-4 w-4" />
+                                    <span>Edit Project</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    onClick={() => options.onDelete(row.original.id)}
+                                    className="text-destructive focus:text-destructive"
+                                >
+                                    <Trash2 className="mr-2 h-4 w-4" />
+                                    <span>Delete Project</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                )
+            },
+        },
     ]
 }
