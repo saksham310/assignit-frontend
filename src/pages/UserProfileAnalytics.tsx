@@ -26,10 +26,11 @@ const UserProfileAnalytics = (id:number) => {
         {name: "To Do", value: memberData.tasks.todo},
     ]
 
-
+    const k = -1.5;
     const completionRate = Math.round((memberData.tasks.completed / memberData.tasks.total) * 100)
     const avgBugsPerTask = +(memberData.tasks.bugs / memberData.tasks.total).toFixed(2);
-    const qualityScore = Math.round(100 * Math.exp(-0.178 * avgBugsPerTask));
+    const qualityScore = avgBugsPerTask === 0 ? 0 :memberData?.role !== "QA" ?  Math.min(100, Math.round(100 * Math.exp(k * avgBugsPerTask)))
+        : Math.min(100, Math.round(100 * Math.exp(-k * avgBugsPerTask)));
 
     const idealLimit = memberData.sprintCount * 3;
     const moderateLimit = memberData.sprintCount * 5;
@@ -45,77 +46,87 @@ const UserProfileAnalytics = (id:number) => {
                             src={memberData.imageUrl}/>
                 <div className={'flex flex-col gap-2'}>
                     <span className={'text-lg font-medium'}>{memberData.username}</span>
-                    <Badge variant={'secondary'} className={'text-xs font-normal w-fit'}>{memberData.role}</Badge>
+                    <Badge variant={'secondary'} className={'text-xs font-normal w-fit'}>{memberData.role.split("_").join(" ")}</Badge>
                     <span className={''}></span>
                 </div>
             </div>
             {/* Performance Analysis */}
-            <Card className="shadow-sm border border-gray-200">
-                <CardHeader>
-                    <CardTitle className="text-base font-medium">Performance Analysis</CardTitle>
-                    <CardDescription className={'text-gray-500 text-xs'}>Overall assessment based on task completion and quality</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <PerformanceMetric
-                            label="Task Efficiency"
-                            value={completionRate}
-                            maxValue={100}
-                            unit="%"
-                            description={
-                                completionRate >= 80
-                                    ? "Excellent task completion rate"
-                                    : completionRate >= 60
-                                        ? "Good progress, keep it up"
-                                        : "Needs improvement"
-                            }
-                            color={completionRate >= 80 ? "#10b981" : completionRate >= 60 ? "#14b8a6" : "#f59e0b"}
-                        />
+            {memberData?.role !== "Project_Manager" && (
+                <Card className="shadow-sm border border-gray-200">
+                    <CardHeader>
+                        <CardTitle className="text-base font-medium">Performance Analysis</CardTitle>
+                        <CardDescription className={'text-gray-500 text-xs'}>Overall assessment based on task completion and quality</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <PerformanceMetric
+                                label="Task Efficiency"
+                                value={completionRate}
+                                maxValue={100}
+                                unit="%"
+                                description={
+                                    completionRate >= 80
+                                        ? "Excellent task completion rate"
+                                        : completionRate >= 60
+                                            ? "Good progress, keep it up"
+                                            : "Needs improvement"
+                                }
+                                color={completionRate >= 80 ? "#10b981" : completionRate >= 60 ? "#14b8a6" : "#f59e0b"}
+                            />
 
-                        <PerformanceMetric
-                            label="Quality Score"
-                            value={qualityScore}
-                            maxValue={100}
-                            unit="%"
-                            description={
-                               avgBugsPerTask <= 0.5
-                                    ? "High quality work with minimal bugs"
-                                    : avgBugsPerTask <= 0.10
-                                        ? "Average quality, some improvements needed"
-                                        : "Quality concerns, needs attention"
-                            }
-                            color={
-                                avgBugsPerTask <= 0.5
-                                    ? "#10b981"
-                                    :  avgBugsPerTask <= 0.10
-                                        ? "#f59e0b"
-                                        : "#ef4444"
-                            }
-                        />
+                            <PerformanceMetric
+                                label={memberData?.role === "QA" ? "Testing Efficiency" : "Quality Score"}
+                                value={qualityScore}
+                                maxValue={100}
+                                unit="%"
+                                description={
+                                    memberData?.role === "QA"
+                                        ? qualityScore >= 85
+                                            ? "Excellent testing efficiency: Thoroughly tested with high detection of critical issues."
+                                            : qualityScore >= 60
+                                                ? "Good testing efficiency: Test coverage is solid, though opportunities for deeper exploration may exist."
+                                                : "Testing efficiency appears lower, but this may reflect high-quality code or limited issues present in the assigned tasks rather than missed defects."
 
-                        <PerformanceMetric
-                            label="Workload Balance"
-                            value={Math.min(100, Math.round((idealLimit / memberData.tasks.total) * 100))}
-                            maxValue={100}
-                            unit="%"
-                            description={
-                                memberData.tasks.total <= idealLimit
-                                    ? "Balanced workload"
-                                    : memberData.tasks.total <= moderateLimit
-                                        ? "Moderate workload"
-                                        : "Heavy workload, consider redistribution"
-                            }
-                            color={
-                                memberData.tasks.total <= idealLimit
-                                    ? "#10b981"
-                                    : memberData.tasks.total <= moderateLimit
-                                        ? "#f59e0b"
-                                        : "#ef4444"
-                            }
-                        />
-                    </div>
-                </CardContent>
-            </Card>
+                                        : (qualityScore >= 85
+                                            ? "High quality work with minimal bugs"
+                                            : qualityScore >= 60
+                                                ? "Average quality, some improvements needed"
+                                                : "Quality concerns, needs attention")
+                                }
+                                color={
+                                    qualityScore >= 85
+                                        ? "#10b981"
+                                        :   qualityScore >= 60
+                                            ? "#f59e0b"
+                                            : "#ef4444"
+                                }
+                            />
+
+                            <PerformanceMetric
+                                label="Workload Balance"
+                                value={Math.min(100, Math.round((idealLimit / memberData.tasks.total) * 100))}
+                                maxValue={100}
+                                unit="%"
+                                description={
+                                    memberData.tasks.total <= idealLimit
+                                        ? "Balanced workload"
+                                        : memberData.tasks.total <= moderateLimit
+                                            ? "Moderate workload"
+                                            : "Heavy workload, consider redistribution"
+                                }
+                                color={
+                                    memberData.tasks.total <= idealLimit
+                                        ? "#10b981"
+                                        : memberData.tasks.total <= moderateLimit
+                                            ? "#f59e0b"
+                                            : "#ef4444"
+                                }
+                            />
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
             {/*Chart Sections*/}
             <div className={'grid grid-cols-1 lg:grid-cols-3 gap-6'}>
                 {/* Pie chart Completed vs total*/}
@@ -259,7 +270,7 @@ const UserProfileAnalytics = (id:number) => {
                                 </div>
                                 <div className="text-center p-4 bg-gray-50 rounded-lg flex-1">
                                     <div className="text-3xl font-semibold text-gray-700">{qualityScore}%</div>
-                                    <div className="text-sm text-gray-500 mt-1">Quality Score</div>
+                                    <div className="text-sm text-gray-500 mt-1">{memberData?.role === "QA" ? "Test Efficiency" : "Quality Score"}</div>
                                 </div>
                             </div>
                         </div>
