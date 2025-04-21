@@ -44,8 +44,8 @@ const RetrospectiveForm = () => {
                     className="min-h-[100px]"
                 />
             </div>
-            <Button type="submit" className="w-full" onClick={handleSubmit}>
-                Submit Feedback Anonymously
+            <Button type="submit" className="ml-auto" onClick={handleSubmit}>
+                Submit Feedback
             </Button>
         </div>
     </>

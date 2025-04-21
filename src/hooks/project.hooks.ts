@@ -3,6 +3,7 @@ import {
     createProject,
     createSprints,
     getProjectDetails, getProjectMembers,
+    getProjectRetrospective,
     getProjects,
     getProjectStatus
 } from "@/service/project.service.ts";
@@ -70,5 +71,12 @@ export const useGetProjectMembers = (id:string|undefined) => {
     return useQuery({
         queryKey:['project_members',id],
         queryFn:() => getProjectMembers(id),
+    })
+}
+export const useGetProjectRetrospective = (id:string|undefined) => {
+    return useQuery({
+        queryKey:['project_retrospective',id],
+        queryFn:() => getProjectRetrospective(id),
+
     })
 }

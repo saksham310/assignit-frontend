@@ -32,6 +32,7 @@ export const GET_PROJECTS = (workspaceId:string) =>`projects/${workspaceId}`;
 export const GET_PROJECT_DETAILS = (projectId:string) => `projects/${projectId}/details`;
 export const GET_PROJECT_MEMBERS = (projectId:string) => `projects/${projectId}/members`;
 export const GET_PROJECT_STATUS_MEMBERS = (projectId:string) => `projects/${projectId}/status`;
+export const GET_PROJECT_RETROSPECTIVE = (workspaceId:string) => `projects/${workspaceId}/retrospective`;
 export const CREATE_SPRINT = '/projects/sprint';
 export const CREATE_PROJECT = '/projects'
 export const GET_SPRINT_TASKS = (sprintId:string) => `projects/sprint/${sprintId}/tasks`;
