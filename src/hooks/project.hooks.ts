@@ -5,7 +5,7 @@ import {
     getProjectDetails, getProjectMembers,
     getProjectRetrospective,
     getProjects,
-    getProjectStatus
+    getProjectStatus, sendProjectRetrospective
 } from "@/service/project.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
@@ -77,6 +77,17 @@ export const useGetProjectRetrospective = (id:string|undefined) => {
     return useQuery({
         queryKey:['project_retrospective',id],
         queryFn:() => getProjectRetrospective(id),
+
+    })
+}
+export const useSubmitFeedback = () => {
+    return useMutation({
+        mutationFn:sendProjectRetrospective,
+        onSuccess:async (data)=>{
+            toast.success(data.message,{
+                duration: 2000,
+            });
+        }
 
     })
 }

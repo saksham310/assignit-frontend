@@ -116,3 +116,22 @@ export type Comment = {
     type: 'comment' | 'activity'
     attachment?:string
 }
+
+export type ProjectRetrospective = {
+    id: number
+  name: string
+  sprint: Sprint[]
+}
+export interface Sprint {
+    id: number
+    name: string
+  }
+
+export interface RetrospectivePayload {
+    sprintId: number
+    wentWell: string
+    toImprove: string
+    actionItems: string
+}
+
+  

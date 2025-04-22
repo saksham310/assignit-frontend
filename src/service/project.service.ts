@@ -5,9 +5,9 @@ import {
     GET_PROJECT_DETAILS, GET_PROJECT_MEMBERS,
     GET_PROJECT_RETROSPECTIVE,
     GET_PROJECT_STATUS_MEMBERS,
-    GET_PROJECTS
+    GET_PROJECTS, SUBMIT_RETROSPECTIVE
 } from "@/constants/api.constants.ts";
-import {ProjectCreationPayload, SprintCreationPayload} from "@/types/project.types.ts";
+import {ProjectCreationPayload, RetrospectivePayload, SprintCreationPayload} from "@/types/project.types.ts";
 
 export const createProject = async (data:ProjectCreationPayload) =>  {
     const res = await apiClient.post(CREATE_PROJECT, data);
@@ -39,5 +39,10 @@ export const getProjectStatus = async (id: string | undefined) => {
 }
 export const getProjectRetrospective = async (id: string | undefined) => {
     const res = await apiClient.get(GET_PROJECT_RETROSPECTIVE(id as string));
+    return res.data
+}
+
+export const sendProjectRetrospective = async (data:RetrospectivePayload) => {
+    const res = await apiClient.post(SUBMIT_RETROSPECTIVE,data)
     return res.data
 }

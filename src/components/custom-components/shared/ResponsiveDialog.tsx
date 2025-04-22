@@ -1,6 +1,7 @@
 import {useDialogStore} from "@/store/dialog.store.ts";
 import {Dialog, DialogContent} from "../../ui/dialog.tsx";
 import React from "react";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 
 const ResponsiveDialog = () => {
@@ -12,6 +13,7 @@ const ResponsiveDialog = () => {
     return (
         <Dialog open={isOpen} onOpenChange={closeDialog} >
             <DialogContent className="max-w-fit max-h-full " >
+              <DialogTitle className="hidden">Dialog</DialogTitle>
                 {component ? React.createElement(component) : null}
             </DialogContent>
         </Dialog>

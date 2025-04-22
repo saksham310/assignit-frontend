@@ -36,6 +36,7 @@ export const GET_PROJECT_RETROSPECTIVE = (workspaceId:string) => `projects/${wor
 export const CREATE_SPRINT = '/projects/sprint';
 export const CREATE_PROJECT = '/projects'
 export const GET_SPRINT_TASKS = (sprintId:string) => `projects/sprint/${sprintId}/tasks`;
+export const SUBMIT_RETROSPECTIVE = `projects/retrospective`;
 
 // Task management APIs
 

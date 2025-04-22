@@ -1,8 +1,9 @@
 import { apiClient } from "@/service/api.client.ts";
 import {UPDATE_PROFILE, USER_ANALYTICS} from "@/constants/api.constants.ts";
 
+
 // Update user profile
-export const updateProfile = async (data: any) => {
+export const updateProfile = async (data:  FormData) => {
         const res = await apiClient.put(UPDATE_PROFILE, data);
         return res.data;
 }
