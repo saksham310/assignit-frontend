@@ -214,6 +214,7 @@ export const MultiSelect = React.forwardRef<
                                                     className={`h-6 w-6 text-black`}
                                                     avatarColor={option?.avatarColor}
                                                 />
+
                                         );
                                     })}
                                     {selectedValues.length > maxCount && (

@@ -38,7 +38,7 @@ if(!data?.responses || data?.responses.length === 0 || isError) {
                     <div className="flex justify-between items-center">
                         <h2 className="font-medium text-gray-800">Feedback</h2>
                         <span className="text-sm font-medium ml-auto text-gray-500">
-                            Submitted on: {res.createdAt || "N/A"}
+                            Submitted on: {res.createdAt.split('T')[0] || "N/A"}
                         </span>
                     </div>
 

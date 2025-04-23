@@ -43,9 +43,12 @@ const RetrospectiveSection = () => {
     const selectedProject = project.projects.find((p: ProjectRetrospective) => p.id === selectedProjectId);
     const sprints = selectedProject?.sprint || [];
     const role = selectedProject?.users[0]?.role;
-    // if(!sprints || sprints?.length === 0) {
-    //     return <EmptyRetrospectiveState hasProject={true} projectId={selectedProjectId as number}/>
-    // }
+    const handleProjectChange = (val:string) => {
+        const newProjectId = +val;
+        const selected = project?.projects?.find((p:ProjectRetrospective) => p.id === newProjectId);
+        setSelectedProjectId(newProjectId);
+        setSelectedSprintId(selected?.sprint?.[0]?.id);
+    }
     const tabconfig: TabConfig[] = [
         {
             value: "submit",
@@ -55,7 +58,7 @@ const RetrospectiveSection = () => {
                 <RetrospectiveForm sprintId={selectedSprintId as number}/>
             ),
         },
-        ...(role === "Project_Manager" ? [{
+        ...((role === "Project_Manager" && sprints.length > 0) ? [{
             value: "view",
             label: "View Response",
             component: () => <ResponseView sprintId={selectedSprintId as number}/>
@@ -70,7 +73,7 @@ const RetrospectiveSection = () => {
                     <div className="flex flex-col gap-3 flex-1">
                         <Label>Select Project</Label>
                         <Select value={selectedProjectId?.toString()}
-                                onValueChange={(val) => setSelectedProjectId(+val)}>
+                                onValueChange={(val) => handleProjectChange(val)}>
                             <SelectTrigger id="project">
                                 <SelectValue placeholder="Select a project"/>
                             </SelectTrigger>

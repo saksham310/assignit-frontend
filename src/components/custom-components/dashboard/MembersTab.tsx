@@ -10,7 +10,7 @@ dbClick:boolean
 const MembersTab=({ columns, data, dbClick = false }:MembersTabProps )=>{
     return <>
         <div className={'grid grid-cols-1 gap-5 h-full overflow-hidden'}>
-                    <div className=" h-full  w-auto overflow-auto ">
+                    <div className=" h-full  w-auto overflow-auto flex flex-col ">
                         <DataGrid columns={columns} data={data} search={true} searchValue={'name'} dbClick={dbClick} />
                     </div>
 

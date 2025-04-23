@@ -66,8 +66,8 @@ const WorkspaceDashboard = () => {
     ];
 
     const actions:Action[] = [
+        { label: "Invite Members", icon: <Send />,variant:'secondary', onClick: onInvite },
         { label: "Add Project", icon: <PlusCircle />,variant:'default', onClick: onAddProject },
-        { label: "Invite", icon: <Send />,variant:'secondary', onClick: onInvite },
     ];
 
     return <Dashboard tabConfig={tabConfig} isOwnerAdmin={isOwnerAdmin} actions={actions} />;
