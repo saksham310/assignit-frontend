@@ -61,7 +61,7 @@ const WorkspaceDashboard = () => {
         {
             value: "members",
             label: "Members",
-            component: () => <MembersTab columns={membersColumns} data={memberData} />,
+            component: () => <MembersTab columns={membersColumns} data={memberData} dbClick={false} />,
         },
     ];
 

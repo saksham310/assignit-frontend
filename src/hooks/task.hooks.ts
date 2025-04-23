@@ -9,7 +9,7 @@ import {
 } from "@/service/task.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
-import {Comment, TaskPayload} from "@/types/project.types.ts";
+import {TaskPayload} from "@/types/project.types.ts";
 
 export const useCreateTask = () => {
     const queryClient = useQueryClient();

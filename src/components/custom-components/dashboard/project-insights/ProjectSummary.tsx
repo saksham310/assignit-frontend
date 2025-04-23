@@ -1,7 +1,7 @@
 import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
 import {useGetProjects} from "@/hooks/project.hooks.ts";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";
-import {TriangleAlert} from "lucide-react";
+import {LayoutTemplate} from "lucide-react";
 import {useProjectColumns} from "@/constants/table-columns.constants.tsx";
 import {DataGrid} from "@/components/custom-components/shared/DataGrid.tsx";
 
@@ -21,7 +21,7 @@ const ProjectSummary=()=>{
                     )}
                     {projects?.length == 0 && (
                         <div className={'flex flex-col justify-center items-center gap-4 h-full w-full p-40'}>
-                            <TriangleAlert className={'size-40 text-gray-300'} />
+                            <LayoutTemplate className={'size-20 text-gray-400'}/>
                            <span className={'text-gray-400 font-medium text-nowrap'}>Add projects to see the summary</span>
                         </div>
                     )}

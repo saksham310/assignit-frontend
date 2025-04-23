@@ -5,7 +5,7 @@ import {
     getProjectDetails, getProjectMembers,
     getProjectRetrospective,
     getProjects,
-    getProjectStatus, sendProjectRetrospective
+    getProjectStatus, getRetrospectiveFeedbacks, sendProjectRetrospective
 } from "@/service/project.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
@@ -19,6 +19,7 @@ export const useCreateProject = () => {
             await queryClient.invalidateQueries({queryKey: ["workspaces"]});
             await queryClient.invalidateQueries({queryKey: ["workspace analytics",String(data.project.workspace_id)]});
             await queryClient.invalidateQueries({queryKey:['projects']})
+            await queryClient.invalidateQueries({queryKey:['project_retrospective']})
             closeDialog();
             toast.success(data.message,{
                 duration: 2000,
@@ -44,6 +45,7 @@ export const useCreateSprint = () => {
             await queryClient.invalidateQueries({queryKey: ["workspaces"]});
             await queryClient.invalidateQueries({queryKey:['projects']});
             await queryClient.invalidateQueries({queryKey:['project']})
+            await queryClient.invalidateQueries({queryKey:['project_retrospective']})
             closeDialog();
             toast.success(data.message,{
                 duration: 2000,
@@ -81,13 +83,21 @@ export const useGetProjectRetrospective = (id:string|undefined) => {
     })
 }
 export const useSubmitFeedback = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn:sendProjectRetrospective,
         onSuccess:async (data)=>{
+            await queryClient.invalidateQueries({queryKey:["project_feedback"]})
             toast.success(data.message,{
                 duration: 2000,
             });
         }
 
+    })
+}
+export const useGetRetrospectiveFeedbacks = (id:number) => {
+    return useQuery({
+        queryKey:['project_feedback',id],
+        queryFn:() => getRetrospectiveFeedbacks(id)
     })
 }

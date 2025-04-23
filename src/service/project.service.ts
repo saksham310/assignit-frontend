@@ -5,7 +5,7 @@ import {
     GET_PROJECT_DETAILS, GET_PROJECT_MEMBERS,
     GET_PROJECT_RETROSPECTIVE,
     GET_PROJECT_STATUS_MEMBERS,
-    GET_PROJECTS, SUBMIT_RETROSPECTIVE
+    GET_PROJECTS, GET_RETROSPECTIVE_FEEDBACKS, SUBMIT_RETROSPECTIVE
 } from "@/constants/api.constants.ts";
 import {ProjectCreationPayload, RetrospectivePayload, SprintCreationPayload} from "@/types/project.types.ts";
 
@@ -44,5 +44,9 @@ export const getProjectRetrospective = async (id: string | undefined) => {
 
 export const sendProjectRetrospective = async (data:RetrospectivePayload) => {
     const res = await apiClient.post(SUBMIT_RETROSPECTIVE,data)
+    return res.data
+}
+export const getRetrospectiveFeedbacks = async (id:number) => {
+    const res = await apiClient.get(GET_RETROSPECTIVE_FEEDBACKS(id));
     return res.data
 }

@@ -37,6 +37,7 @@ export const CREATE_SPRINT = '/projects/sprint';
 export const CREATE_PROJECT = '/projects'
 export const GET_SPRINT_TASKS = (sprintId:string) => `projects/sprint/${sprintId}/tasks`;
 export const SUBMIT_RETROSPECTIVE = `projects/retrospective`;
+export const GET_RETROSPECTIVE_FEEDBACKS = (id:number) => `projects/retrospective/${id}`;
 
 // Task management APIs
 

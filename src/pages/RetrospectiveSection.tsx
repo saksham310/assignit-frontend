@@ -15,6 +15,7 @@ import Loader from "@/components/custom-components/shared/Loader";
 import EmptyRetrospectiveState from "@/components/custom-components/EmptyRetrospective";
 import {ProjectRetrospective, Sprint} from "@/types/project.types";
 import {TabConfig} from "@/types/dashboard.type";
+import ResponseView from "@/components/ResponseView.tsx";
 
 
 const RetrospectiveSection = () => {
@@ -36,25 +37,28 @@ const RetrospectiveSection = () => {
     if (isLoading) return <Loader/>;
 
     if (!project?.projects || project.projects.length === 0) {
-        return <EmptyRetrospectiveState/>
+        return <EmptyRetrospectiveState hasProject={false}/>
     }
 
     const selectedProject = project.projects.find((p: ProjectRetrospective) => p.id === selectedProjectId);
     const sprints = selectedProject?.sprint || [];
     const role = selectedProject?.users[0]?.role;
-
+    // if(!sprints || sprints?.length === 0) {
+    //     return <EmptyRetrospectiveState hasProject={true} projectId={selectedProjectId as number}/>
+    // }
     const tabconfig: TabConfig[] = [
         {
             value: "submit",
             label: "Submit Feedback",
             component: () => (
+                (!sprints || sprints?.length === 0) ?<EmptyRetrospectiveState hasProject={true} projectId={selectedProjectId as number}/> :
                 <RetrospectiveForm sprintId={selectedSprintId as number}/>
             ),
         },
         ...(role === "Project_Manager" ? [{
             value: "view",
             label: "View Response",
-            component: () => <>To View</>,
+            component: () => <ResponseView sprintId={selectedSprintId as number}/>
         }] : [])
     ];
 

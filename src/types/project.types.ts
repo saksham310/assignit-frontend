@@ -18,7 +18,7 @@ export interface ProjectCreationPayload {
 }
 
 export interface SprintCreationPayload {
-    project_id: string | undefined
+    project_id: string | undefined | number
     name: string
     startDate: Date
     dueDate: Date
@@ -128,10 +128,12 @@ export interface Sprint {
   }
 
 export interface RetrospectivePayload {
+    id: number
     sprintId: number
     wentWell: string
     toImprove: string
     actionItems: string
+    createdAt: string
 }
 
   
