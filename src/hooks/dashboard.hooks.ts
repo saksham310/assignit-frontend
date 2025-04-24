@@ -3,7 +3,7 @@ import {useEffect} from "react";
 import {useGetWorkspace, useGetWorkspaceMember, useUpdateMemberRole} from "@/hooks/workspace.hooks.ts";
 import {useJoinWorkspaceStore, useWorkspaceRoleStore} from "@/store/workspace.store.ts";
 import {MembersData} from "@/types/workspace.type.ts";
-import {getMembersColumns} from "@/constants/table-columns.constants.tsx";
+import {useGetMembersColumns} from "@/constants/table-columns.constants.tsx";
 import {WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
 
 
@@ -29,7 +29,6 @@ export const useDashboardNavigate = () => {
 }
 
 export const useDashboardData = () => {
-    const currentRole = useWorkspaceRoleStore((state) => state.currentRole);
     const {mutate} = useUpdateMemberRole();
     const setCurrentRole = useWorkspaceRoleStore((state) => state.setCurrentRoles);
     const {id} = useParams();
@@ -38,6 +37,7 @@ export const useDashboardData = () => {
     useEffect(() => {
         if (id) setCurrentRole(id as string)
     }, [id]);
+    const currentRole = useWorkspaceRoleStore((state) => state.currentRole);
     const handleEditMember = (memberId: number, value: string) => {
         const data = {
             workspaceId: id,
@@ -46,8 +46,8 @@ export const useDashboardData = () => {
         }
         mutate(data)
     }
-    const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole);
-    const membersColumns = getMembersColumns(isOwnerAdmin, handleEditMember);
+    const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole) ;
+    const membersColumns = useGetMembersColumns(true,isOwnerAdmin, handleEditMember);
     return {isOwnerAdmin, memberData, membersColumns};
 
 }

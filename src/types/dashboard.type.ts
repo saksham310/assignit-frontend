@@ -1,9 +1,10 @@
+import {LucideIcon} from "lucide-react";
 
 export interface AnalyticCardProps{
     name: string,
     info: string,
     subInfo?:string,
-    iconLabel: string,
+    iconLabel: LucideIcon,
 }
 
 export type TProjectSummary={

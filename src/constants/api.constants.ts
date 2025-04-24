@@ -25,15 +25,22 @@ export const JOIN_WORKSPACE = `/workspaces/members/join`;
 
 // User Profile APIs
 export const UPDATE_PROFILE = '/user/profile/update';
+export const USER_ANALYTICS = (projectId:string|undefined,userId:number) => `user/${projectId}/analytics/${userId}`;
 
 // Project Management APIs
 export const GET_PROJECTS = (workspaceId:string) =>`projects/${workspaceId}`;
 export const GET_PROJECT_DETAILS = (projectId:string) => `projects/${projectId}/details`;
+export const GET_PROJECT_MEMBERS = (projectId:string) => `projects/${projectId}/members`;
 export const GET_PROJECT_STATUS_MEMBERS = (projectId:string) => `projects/${projectId}/status`;
+export const GET_PROJECT_RETROSPECTIVE = (workspaceId:string) => `projects/${workspaceId}/retrospective`;
 export const CREATE_SPRINT = '/projects/sprint';
 export const CREATE_PROJECT = '/projects'
 export const GET_SPRINT_TASKS = (sprintId:string) => `projects/sprint/${sprintId}/tasks`;
+export const SUBMIT_RETROSPECTIVE = `projects/retrospective`;
+export const GET_RETROSPECTIVE_FEEDBACKS = (id:number) => `projects/retrospective/${id}`;
 
+export const UPDATE_PROJECT_STATUS = (projectId:number) => `projects/${projectId}/status/update`;
+export const UPDATE_PROJECT = (projectId:number) => `projects/${projectId}`
 // Task management APIs
 
 export const CREATE_TASK = '/tasks'

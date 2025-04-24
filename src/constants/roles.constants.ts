@@ -3,3 +3,13 @@ export const WORKSPACE_ROLES = [
     'Admin',
     'Member'
 ]
+export const PROJECT_ROLES = [
+    "Project Manager",
+    "Team Lead",
+    "Frontend",
+    "Backend",
+    "QA",
+    "Designer",
+    "Database",
+    "System Admin"
+]

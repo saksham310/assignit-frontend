@@ -13,11 +13,12 @@ import {Calendar} from "@/components/ui/calendar.tsx";
 import {useCreateSprint, useGetProjects} from "@/hooks/project.hooks.ts";
 import {useParams} from "react-router-dom";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";
-const SprintCreationForm = () => {
+const SprintCreationForm = ({id}:{id?:number}) => {
     const {projectId} = useParams()
+    const currentProjectId = projectId ?? id
     const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId)
     const {data:project} =useGetProjects(currentWorkspaceId as string);
-    const currentProject = project.filter((project:any) => project.id == projectId);
+    const currentProject = project.filter((project:any) => project.id == currentProjectId);
     const {mutate} = useCreateSprint();
     const form = useForm<z.infer<typeof ProjectSchema>>({
         resolver: zodResolver(ProjectSchema),
@@ -29,7 +30,7 @@ const SprintCreationForm = () => {
     });
 
     const onSubmit = (values: z.infer<typeof ProjectSchema>) => {
-        const data = {...values,project_id:projectId};
+        const data = {...values,project_id:currentProjectId};
         mutate(data)
 
     }
@@ -46,7 +47,7 @@ const SprintCreationForm = () => {
                         <FormItem>
                             <FormLabel>Sprint Name</FormLabel>
                             <FormControl>
-                                <Input  placeholder="Enter your project name" {...field}/>
+                                <Input  placeholder="Enter your project name" {...field} disabled={true}/>
                             </FormControl>
                         </FormItem>
                     )}

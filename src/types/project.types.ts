@@ -3,7 +3,7 @@ import {User} from "@/types/auth.type.ts";
 export type StatusType = "To_Do" | "In_Progress" | "Completed"
 
 export interface Status {
-    id?: string | number | undefined;
+    id?: string | number | undefined |null;
     name: string
     type: StatusType
     color: string
@@ -18,7 +18,7 @@ export interface ProjectCreationPayload {
 }
 
 export interface SprintCreationPayload {
-    project_id: string | undefined
+    project_id: string | undefined | number
     name: string
     startDate: Date
     dueDate: Date
@@ -116,3 +116,24 @@ export type Comment = {
     type: 'comment' | 'activity'
     attachment?:string
 }
+
+export type ProjectRetrospective = {
+    id: number
+  name: string
+  sprint: Sprint[]
+}
+export interface Sprint {
+    id: number
+    name: string
+  }
+
+export interface RetrospectivePayload {
+    id: number
+    sprintId: number
+    wentWell: string
+    toImprove: string
+    actionItems: string
+    createdAt: string
+}
+
+  

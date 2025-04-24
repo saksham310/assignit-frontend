@@ -94,7 +94,7 @@ html, body, #root {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Prevent root-level scrolling */
+    overflow: hidden;
     font-family: "Poppins", serif;
 }
 input:-webkit-autofill,

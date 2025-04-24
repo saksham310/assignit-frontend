@@ -121,6 +121,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
     }
 
     const handleDescriptionChange = (value: string) => {
+      if ( initialValue == value) return;
         const previousDescription = initialValue;
         setInitialValue(value);
         if (!isCreateMode) {

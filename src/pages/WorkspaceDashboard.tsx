@@ -10,16 +10,16 @@ import { useDashboardData } from "@/hooks/dashboard.hooks.ts";
 import ProjectCreationForm from "@/components/custom-components/forms/ProjectCreationForm.tsx";
 import SendInvitePage from "@/pages/SendInvitePage.tsx";
 import { useDialogStore } from "@/store/dialog.store.ts";
-import { PlusCircle, Send } from "lucide-react";
+import {CalendarDays, FolderOpenDot, Folders, PlusCircle, Send, UsersRound} from "lucide-react";
 
 
 // Helper function to create analytics items
 const createAnalyticsItems = (analytics: string[], workspaceAnalytics:Record<string,any>): AnalyticCardProps[] => {
     const iconLabel = {
-        Projects: "Projects",
-        Members: "Members",
-        Sprints: "Sprints",
-        "Overdue Projects": "Due",
+        "Projects":FolderOpenDot,
+        "Sprints":Folders,
+        "Members":UsersRound,
+        "Overdue Projects": CalendarDays,
     };
 
     return analytics.map((key:string) => ({
@@ -61,13 +61,13 @@ const WorkspaceDashboard = () => {
         {
             value: "members",
             label: "Members",
-            component: () => <MembersTab columns={membersColumns} data={memberData} />,
+            component: () => <MembersTab columns={membersColumns} data={memberData} dbClick={false} />,
         },
     ];
 
     const actions:Action[] = [
+        { label: "Invite Members", icon: <Send />,variant:'secondary', onClick: onInvite },
         { label: "Add Project", icon: <PlusCircle />,variant:'default', onClick: onAddProject },
-        { label: "Invite", icon: <Send />,variant:'secondary', onClick: onInvite },
     ];
 
     return <Dashboard tabConfig={tabConfig} isOwnerAdmin={isOwnerAdmin} actions={actions} />;
