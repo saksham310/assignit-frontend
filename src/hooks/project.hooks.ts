@@ -5,10 +5,11 @@ import {
     getProjectDetails, getProjectMembers,
     getProjectRetrospective,
     getProjects,
-    getProjectStatus, getRetrospectiveFeedbacks, sendProjectRetrospective
+    getProjectStatus, getRetrospectiveFeedbacks, sendProjectRetrospective, updateStatus
 } from "@/service/project.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
+import {Status} from "@/types/project.types.ts";
 
 export const useCreateProject = () => {
     const queryClient = useQueryClient();
@@ -66,6 +67,7 @@ export const useGetProjectStatusMembers = (id:string|undefined) => {
     return useQuery({
         queryKey:['project_status',id],
         queryFn:() => getProjectStatus(id),
+        enabled:!!id
 
     })
 }
@@ -99,5 +101,18 @@ export const useGetRetrospectiveFeedbacks = (id:number) => {
     return useQuery({
         queryKey:['project_feedback',id],
         queryFn:() => getRetrospectiveFeedbacks(id)
+    })
+}
+export const useUpdateStatus = () =>{
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn :({data,id}:{data:Status[],id:number}) => updateStatus(data,id),
+        onSuccess:async (data)=>{
+            await queryClient.invalidateQueries({queryKey:["project"]})
+            await queryClient.invalidateQueries({queryKey:["project_status"]})
+            toast.success(data.message,{
+                duration: 2000,
+            });
+        }
     })
 }

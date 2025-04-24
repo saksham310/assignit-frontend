@@ -72,8 +72,6 @@ const StatusList = ({title, statuses, onStatusChange}: StatusListProps) => {
                             placeholder="Add status"
                             className="w-full"
                         />
-
-
                     </div>
                 ))}
                 <div className={'flex items-center gap-3'}>

@@ -16,14 +16,39 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import {Separator} from "@/components/ui/separator.tsx";
+import {useDialogStore} from "@/store/dialog.store.ts";
+import CustomStatusForm from "@/components/custom-components/forms/CustomStatusForm.tsx";
+import {Status} from "@/types/project.types.ts";
+import {useParams} from "react-router-dom";
+import {useGetProjectStatusMembers, useUpdateStatus} from "@/hooks/project.hooks.ts";
+import Loader from "@/components/custom-components/shared/Loader.tsx";
 
 const ProjectSettings = () => {
+    const {projectId} = useParams();
+    const { data: projectStatusMember,isLoading} = useGetProjectStatusMembers(projectId);
+    const {mutate} = useUpdateStatus();
     const [projectName, setProjectName] = useState("Final Year Project");
     const [sprintTasks, setSprintTasks] = useState(3);
+    const setOpen = useDialogStore(state => state.openDialog)
+
+    if(isLoading){
+        return  <Loader/>
+    }
+
+    const handleStatusChange = (status:Status[]) => {
+        mutate({
+            data:status,
+            id:projectId ? Number(projectId) : 0
+        })
+
+    }
+    const handleManageStatus = () =>{
+        setOpen(() => <CustomStatusForm handleStatusList={handleStatusChange} projectStatus={projectStatusMember?.projectStatus}/>)
+    }
 
     return (
         <div className="flex flex-col gap-4 w-auto h-full overflow-y-auto no-scrollbar xl:space-y-5">
-            <p className="font-semibold text-xl">Project Settings</p>
+            <p className="font-semibold">Project Settings</p>
 
               <div className="flex items-center gap-10">
                   <Avatar className="size-20 lg:size-24 rounded-lg border-2 border-gray-200">
@@ -58,6 +83,7 @@ const ProjectSettings = () => {
                     variant="outline"
                     size="sm"
                     className="flex items-center gap-2"
+                    onClick={handleManageStatus}
                 >
                     <Settings2 className="h-4 w-4"/>
                     Manage Status
@@ -65,11 +91,11 @@ const ProjectSettings = () => {
             </div>
 
             <Separator/>
-           <div className="flex items-center justify-between mb-4">
-               <p className="font-semibold text-red-700 mb-4">Danger Zone</p>
+           <div className="flex  justify-between   mb-4">
+
                <AlertDialog>
                    <AlertDialogTrigger asChild>
-                       <Button variant="destructive" className="flex items-center bg-red-700 gap-2">
+                       <Button variant="destructive" className="flex mr-auto items-center bg-red-700 gap-2">
                            <Trash2 className="h-4 w-4"/>
                            Delete Project
                        </Button>
@@ -90,6 +116,9 @@ const ProjectSettings = () => {
                        </AlertDialogFooter>
                    </AlertDialogContent>
                </AlertDialog>
+               <div className={'flex justify-end mt-2 mr-2'}>
+                   <Button >Save</Button>
+               </div>
            </div>
         </div>
     );

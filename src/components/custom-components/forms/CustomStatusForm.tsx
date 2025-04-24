@@ -8,13 +8,13 @@ import {ChevronLeft} from "lucide-react";
 interface CustomStatusProps {
     handleStepChange?: (value : string) => void;
     handleStatusList: (status :Status[]) => void;
+    projectStatus?:Status[]
 }
-const CustomStatusForm = ({handleStepChange,handleStatusList}: CustomStatusProps) => {
-    const [statusList, setStatusList] = useState<Status[]>(statuses);
+const CustomStatusForm = ({handleStepChange,handleStatusList,projectStatus}: CustomStatusProps) => {
+    const [statusList, setStatusList] = useState<Status[]>(projectStatus ?? statuses);
     const todoList = statusList.filter(status => status.type === 'To_Do');
     const inprogressList = statusList.filter(status => status.type === 'In_Progress');
     const completedList = statusList.filter(status => status.type === 'Completed');
-
 
     const onStatusChange = (newStatus: Status,isNewStatus:boolean) => {
         if (isNewStatus) {
@@ -30,9 +30,9 @@ const CustomStatusForm = ({handleStepChange,handleStatusList}: CustomStatusProps
     const saveCustomStatus = () => {
         const formattedStatusList = statusList.map(({ id, ...rest }) => ({
             ...rest,
-            id: typeof id === "string" && id?.startsWith("temp-") ? undefined : id, // Remove only temporary IDs
+            id: typeof id === "string" && id?.startsWith("temp-") ? null : id,
         }));
-
+        console.log(statusList)
         handleStatusList(formattedStatusList)
 
         handleStepChange?.('default')

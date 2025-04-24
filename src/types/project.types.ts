@@ -3,7 +3,7 @@ import {User} from "@/types/auth.type.ts";
 export type StatusType = "To_Do" | "In_Progress" | "Completed"
 
 export interface Status {
-    id?: string | number | undefined;
+    id?: string | number | undefined |null;
     name: string
     type: StatusType
     color: string
