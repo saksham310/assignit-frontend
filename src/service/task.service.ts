@@ -8,7 +8,6 @@ import {
     UPDATE_TASK
 } from "@/constants/api.constants.ts";
 import {TaskPayload} from "@/types/project.types.ts";
-import {Comment} from "@/types/project.types.ts";
 
 export const createTask = async (data:TaskPayload) =>{
     const res = await apiClient.post(CREATE_TASK, data);

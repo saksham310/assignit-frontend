@@ -5,7 +5,7 @@ import {
     GET_PROJECT_DETAILS, GET_PROJECT_MEMBERS,
     GET_PROJECT_RETROSPECTIVE,
     GET_PROJECT_STATUS_MEMBERS,
-    GET_PROJECTS, GET_RETROSPECTIVE_FEEDBACKS, SUBMIT_RETROSPECTIVE, UPDATE_PROJECT_STATUS
+    GET_PROJECTS, GET_RETROSPECTIVE_FEEDBACKS, SUBMIT_RETROSPECTIVE, UPDATE_PROJECT, UPDATE_PROJECT_STATUS
 } from "@/constants/api.constants.ts";
 import {ProjectCreationPayload, RetrospectivePayload, SprintCreationPayload, Status} from "@/types/project.types.ts";
 
@@ -54,4 +54,9 @@ export const getRetrospectiveFeedbacks = async (id:number) => {
 export const updateStatus = async (data:Status[],id:number) => {
 const res = await apiClient.post(UPDATE_PROJECT_STATUS(id),{customStatus:data});
 return res.data
+}
+
+export const updateProject = async (id:number,payload:{'name':string;'idealTaskCount':number}) => {
+    const res = await apiClient.put(UPDATE_PROJECT(id),payload);
+    return res.data
 }

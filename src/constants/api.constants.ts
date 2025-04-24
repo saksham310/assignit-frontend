@@ -40,7 +40,7 @@ export const SUBMIT_RETROSPECTIVE = `projects/retrospective`;
 export const GET_RETROSPECTIVE_FEEDBACKS = (id:number) => `projects/retrospective/${id}`;
 
 export const UPDATE_PROJECT_STATUS = (projectId:number) => `projects/${projectId}/status/update`;
-
+export const UPDATE_PROJECT = (projectId:number) => `projects/${projectId}`
 // Task management APIs
 
 export const CREATE_TASK = '/tasks'

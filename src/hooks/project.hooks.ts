@@ -5,7 +5,7 @@ import {
     getProjectDetails, getProjectMembers,
     getProjectRetrospective,
     getProjects,
-    getProjectStatus, getRetrospectiveFeedbacks, sendProjectRetrospective, updateStatus
+    getProjectStatus, getRetrospectiveFeedbacks, sendProjectRetrospective, updateProject, updateStatus
 } from "@/service/project.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
@@ -109,6 +109,7 @@ export const useUpdateStatus = () =>{
         mutationFn :({data,id}:{data:Status[],id:number}) => updateStatus(data,id),
         onSuccess:async (data)=>{
             await queryClient.invalidateQueries({queryKey:["project"]})
+            await queryClient.invalidateQueries({queryKey:["projects"]})
             await queryClient.invalidateQueries({queryKey:["project_status"]})
             toast.success(data.message,{
                 duration: 2000,
@@ -116,3 +117,20 @@ export const useUpdateStatus = () =>{
         }
     })
 }
+
+export const useUpdateProject = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: ({ id, payload }: { id: number; payload: { name: string; idealTaskCount: number } }) =>
+            updateProject(id, payload),
+
+        onSuccess: async (data) => {
+            await queryClient.invalidateQueries({ queryKey: ["project"] });
+            await queryClient.invalidateQueries({ queryKey: ["projects"] });
+            toast.success(data.message, {
+                duration: 2000,
+            });
+        },
+    });
+};

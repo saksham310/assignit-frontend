@@ -15,6 +15,7 @@ const CustomStatusForm = ({handleStepChange,handleStatusList,projectStatus}: Cus
     const todoList = statusList.filter(status => status.type === 'To_Do');
     const inprogressList = statusList.filter(status => status.type === 'In_Progress');
     const completedList = statusList.filter(status => status.type === 'Completed');
+    const title = projectStatus ? "Edit Project Status" : "Add Project Status";
 
     const onStatusChange = (newStatus: Status,isNewStatus:boolean) => {
         if (isNewStatus) {
@@ -40,7 +41,7 @@ const CustomStatusForm = ({handleStepChange,handleStatusList,projectStatus}: Cus
     return (
         <>
             <div className={'w-full md:w-[480px] h-[580px] flex flex-col space-y-6 gap-4 overflow-auto scrollbar'}>
-                <h1 className={'font-semibold text-lg flex items-center gap-6'}><ChevronLeft className={'cursor-pointer'} onClick={() => handleStepChange?.('default')}/> Add Custom Status</h1>
+                <h1 className={'font-semibold text-lg flex items-center gap-6'}><ChevronLeft className={'cursor-pointer'} onClick={() => handleStepChange?.('default')}/> {title}</h1>
                 <StatusList title={'To Do'} statuses={todoList} onStatusChange={onStatusChange} />
                 <StatusList title={'In Progress'} statuses={inprogressList} onStatusChange={onStatusChange}/>
                 <StatusList title={'Completed'} statuses={completedList} onStatusChange={onStatusChange}/>

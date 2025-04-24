@@ -1,17 +1,17 @@
 import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 import {Badge} from "@/components/ui/badge.tsx";
-import { BarChart2, Bug, PieChartIcon} from "lucide-react";
+import {BarChart2, Bug, PieChartIcon} from "lucide-react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import PerformanceMetric from "@/components/custom-components/PerformanceMetric.tsx";
 import {useUserAnalytics} from "@/hooks/user.hooks.ts";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
 
-const UserProfileAnalytics = (id:number) => {
-    const {projectId}  = useParams();
-    const {data,isLoading} = useUserAnalytics(projectId,id)
-    if(isLoading) return <Loader/>
+const UserProfileAnalytics = (id: number) => {
+    const {projectId} = useParams();
+    const {data, isLoading} = useUserAnalytics(projectId, id)
+    if (isLoading) return <Loader/>
     const memberData = data?.details
 
     // Data for donut chart
@@ -29,11 +29,11 @@ const UserProfileAnalytics = (id:number) => {
     const k = -1.5;
     const completionRate = Math.round((memberData.tasks.completed / memberData.tasks.total) * 100)
     const avgBugsPerTask = +(memberData.tasks.bugs / memberData.tasks.total).toFixed(2);
-    const qualityScore = avgBugsPerTask === 0 ? 0 :memberData?.role !== "QA" ?  Math.min(100, Math.round(100 * Math.exp(k * avgBugsPerTask)))
+    const qualityScore = avgBugsPerTask === 0 ? 0 : memberData?.role !== "QA" ? Math.min(100, Math.round(100 * Math.exp(k * avgBugsPerTask)))
         : Math.min(100, Math.round(100 * Math.exp(-k * avgBugsPerTask)));
 
-    const idealLimit = memberData.sprintCount * 3;
-    const moderateLimit = memberData.sprintCount * 5;
+    const idealLimit = memberData.sprintCount * memberData.idealLimit;
+    const moderateLimit = memberData.sprintCount * memberData.idealLimit + 2;
 
     // Colors for charts
     const DONUT_COLORS = ["#10b981", "#e5e7eb"]
@@ -46,7 +46,8 @@ const UserProfileAnalytics = (id:number) => {
                             src={memberData.imageUrl}/>
                 <div className={'flex flex-col gap-2'}>
                     <span className={'text-lg font-medium'}>{memberData.username}</span>
-                    <Badge variant={'secondary'} className={'text-xs font-normal w-fit'}>{memberData.role.split("_").join(" ")}</Badge>
+                    <Badge variant={'secondary'}
+                           className={'text-xs font-normal w-fit'}>{memberData.role.split("_").join(" ")}</Badge>
                     <span className={''}></span>
                 </div>
             </div>
@@ -55,7 +56,8 @@ const UserProfileAnalytics = (id:number) => {
                 <Card className="shadow-sm border border-gray-200">
                     <CardHeader>
                         <CardTitle className="text-base font-medium">Performance Analysis</CardTitle>
-                        <CardDescription className={'text-gray-500 text-xs'}>Overall assessment based on task completion and quality</CardDescription>
+                        <CardDescription className={'text-gray-500 text-xs'}>Overall assessment based on task completion
+                            and quality</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -96,7 +98,7 @@ const UserProfileAnalytics = (id:number) => {
                                 color={
                                     qualityScore >= 85
                                         ? "#10b981"
-                                        :   qualityScore >= 60
+                                        : qualityScore >= 60
                                             ? "#f59e0b"
                                             : "#ef4444"
                                 }
@@ -270,7 +272,8 @@ const UserProfileAnalytics = (id:number) => {
                                 </div>
                                 <div className="text-center p-4 bg-gray-50 rounded-lg flex-1">
                                     <div className="text-3xl font-semibold text-gray-700">{qualityScore}%</div>
-                                    <div className="text-sm text-gray-500 mt-1">{memberData?.role === "QA" ? "Test Efficiency" : "Quality Score"}</div>
+                                    <div
+                                        className="text-sm text-gray-500 mt-1">{memberData?.role === "QA" ? "Test Efficiency" : "Quality Score"}</div>
                                 </div>
                             </div>
                         </div>
