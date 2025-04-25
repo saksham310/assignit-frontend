@@ -30,8 +30,9 @@ const ProjectDashboard = () => {
     const membersColumns = useGetMembersColumns(false, true, handleEditMember);
 
     if (isLoading || isMemberLoading) return <Loader/>
+    console.log("Members",projectMembers)
 
-    const role = projectMembers?.userRole;
+    const roleHasAccess = projectMembers?.userRole === 'Project_Manager';
     const tabConfig: TabConfig[] = [
         {
             value: "overview",
@@ -46,9 +47,9 @@ const ProjectDashboard = () => {
         {
             value: "members",
             label: "Members",
-            component: () => <MembersTab columns={membersColumns} data={projectMembers?.currentMembers} dbClick={true}/>,
+            component: () => <MembersTab remainingMembers={projectMembers?.remainingMembers} columns={membersColumns} data={projectMembers?.currentMembers} showAddMembers={true} dbClick={roleHasAccess}/>,
         },
-        ...(role === "Project_Manager" ?
+        ...(roleHasAccess ?
         [
             {
                 value:"settings",

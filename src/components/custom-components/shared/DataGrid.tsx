@@ -44,7 +44,6 @@ export function DataGrid<TData>({ columns, data, search = false, searchValue = "
     })
     const handleDbClick = (value:number) =>{
         if(!dbClick) return;
-        console.log(value)
         setOpen(()=>UserProfileAnalytics(value))
     }
     return (

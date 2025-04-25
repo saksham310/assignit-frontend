@@ -37,7 +37,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "date-fns": "^3.6.0",
-    "framer-motion": "^12.4.10",
+    "framer-motion": "^12.9.1",
     "input-otp": "^1.4.1",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.464.0",
