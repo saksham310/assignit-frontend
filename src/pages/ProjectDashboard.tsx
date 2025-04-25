@@ -1,7 +1,7 @@
 import {TabConfig} from "@/types/dashboard.type.ts";
 import {useOutletContext, useParams} from "react-router-dom";
 import {useEffect} from "react";
-import {PlusCircle, UserPlusIcon} from "lucide-react";
+import {PlusCircle } from "lucide-react";
 import {useDialogStore} from "@/store/dialog.store.ts";
 import SprintCreationForm from "@/components/custom-components/forms/SprintCreationForm.tsx";
 import ProjectListView from "@/components/custom-components/dashboard/ProjectListView.tsx";
@@ -11,7 +11,6 @@ import {useGetProjectDetails, useGetProjectMembers} from "@/hooks/project.hooks.
 import Loader from "@/components/custom-components/shared/Loader.tsx";
 import {useGetMembersColumns} from "@/constants/table-columns.constants.tsx";
 import MembersTab from "@/components/custom-components/dashboard/MembersTab.tsx";
-import AddProjectMembers from "@/pages/AddProjectMembers.tsx";
 import ProjectSettings from "@/components/custom-components/settings/ProjectSettings.tsx";
 
 
@@ -63,12 +62,8 @@ const ProjectDashboard = () => {
     const onCreateSprint = () => {
         setOpen(SprintCreationForm)
     }
-    const onAddMember = () => {
-        setOpen(()=><AddProjectMembers memberList={projectMembers?.remainingMembers}/>)
-    }
 
     const actions: Action[] = [
-        {label: "Add Members", icon: <UserPlusIcon/>, variant: "secondary", onClick: onAddMember},
         {label: "Create Sprint", icon: <PlusCircle/>, variant: "default", onClick: onCreateSprint},
     ]
 
