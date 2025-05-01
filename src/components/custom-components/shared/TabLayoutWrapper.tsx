@@ -1,5 +1,6 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {TabConfig} from "@/types/dashboard.type.ts";
+import {useSearchParams} from "react-router-dom";
 
 interface TabLayoutWrapperProps {
     tabConfig: TabConfig[];
@@ -7,9 +8,12 @@ interface TabLayoutWrapperProps {
 }
 
 const TabLayoutWrapper = ({tabConfig, isDashboard}: TabLayoutWrapperProps) => {
+    const [queryParameters] = useSearchParams();
+    const defaultTab = queryParameters.get('tab') ?? tabConfig[0].value;
+
     return (
         <div className={'h-full flex flex-col'}>
-            <Tabs defaultValue={tabConfig[0].value} className="w-full  h-full flex flex-col  gap-0.5">
+            <Tabs defaultValue={defaultTab} className="w-full  h-full flex flex-col  gap-0.5">
                 <div>
                     < TabsList className="gap-2 bg-[#f6f8fb] space-x-2">
                         {tabConfig.map((tab) => {

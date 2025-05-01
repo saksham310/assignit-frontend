@@ -60,11 +60,10 @@ export const useGetMembersColumns = (
             cell: ({ row }) => {
                 const role = row.original.role
                 const isOwnerOrSameRole = role === "Owner" || role === currentRole
-                const canEditRoles = isAdminOwner || role === "Project_Manager"
 
 
                 // If user can't edit roles, just show a badge
-                if (!canEditRoles || isOwnerOrSameRole) {
+                if (!isAdminOwner || isOwnerOrSameRole) {
                     return (
                         <Badge variant="outline" className={`font-medium text-gray-500`}>
                             {role.split("_").join(" ")}
@@ -155,7 +154,6 @@ export const useGetMembersColumns = (
 interface ProjectColumnOptions {
     onView: (id: string) => void
     onEdit: (id: string) => void
-    onDelete: (id: string) => void
 }
 
 export const useProjectColumns = (options: ProjectColumnOptions): ColumnDef<any>[] => {
@@ -268,6 +266,7 @@ export const useProjectColumns = (options: ProjectColumnOptions): ColumnDef<any>
             header: "",
             size: 70,
             cell: ({ row }) => {
+                const isPm = row.original.role === 'Project_Manager'
                 return (
                     <div className="flex justify-center">
                         <DropdownMenu>
@@ -282,18 +281,16 @@ export const useProjectColumns = (options: ProjectColumnOptions): ColumnDef<any>
                                     <Eye className="mr-2 h-4 w-4" />
                                     <span>View Details</span>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => options.onEdit(row.original.id)}>
-                                    <Edit className="mr-2 h-4 w-4" />
-                                    <span>Edit Project</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem
-                                    onClick={() => options.onDelete(row.original.id)}
-                                    className="text-destructive focus:text-destructive"
-                                >
-                                    <Trash2 className="mr-2 h-4 w-4" />
-                                    <span>Delete Project</span>
-                                </DropdownMenuItem>
+                                {isPm && (
+                                    <>
+                                        <DropdownMenuItem onClick={() => options.onEdit(row.original.id)}>
+                                            <Edit className="mr-2 h-4 w-4" />
+                                            <span>Edit Project</span>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuSeparator />
+                                    </>
+                                )}
+
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>

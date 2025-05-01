@@ -4,12 +4,18 @@ import {useWorkspaceStore} from "@/store/workspace.store.ts";
 import {LayoutTemplate} from "lucide-react";
 import {useProjectColumns} from "@/constants/table-columns.constants.tsx";
 import {DataGrid} from "@/components/custom-components/shared/DataGrid.tsx";
+import {useNavigate} from "react-router-dom";
 
 
 const ProjectSummary=()=>{
     const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId)
     const {data:projects} =useGetProjects(currentWorkspaceId as string);
-    const columns = useProjectColumns(projects)
+    const navigate = useNavigate();
+    const ProjectColumnOptions = {
+        onView: (id: string) =>navigate(`/project/${id}`),
+        onEdit: (id: string) =>navigate(`/project/${id}/?tab=settings`),
+    }
+    const columns = useProjectColumns(ProjectColumnOptions)
     return <>
             <Card className={'col-span-2  overflow-hidden h-full flex flex-col gap-1 bg-white shadow-sm border border-gray-100 rounded-lg '}>
                 <CardHeader className="p-4 ml-2 text-m font-semibold ">Project Summary
