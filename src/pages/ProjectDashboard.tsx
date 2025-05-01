@@ -26,13 +26,12 @@ const ProjectDashboard = () => {
     const handleEditMember = (memberId: number, value: string) => {
         console.log(memberId, value)
     }
-
-    const membersColumns = useGetMembersColumns(false, true, handleEditMember);
+    const roleHasAccess = projectMembers?.userRole === 'Project_Manager' || false;
+    const membersColumns = useGetMembersColumns(false, roleHasAccess, handleEditMember);
 
     if (isLoading || isMemberLoading) return <Loader/>
     console.log("Members",projectMembers)
 
-    const roleHasAccess = projectMembers?.userRole === 'Project_Manager';
     const tabConfig: TabConfig[] = [
         {
             value: "overview",
@@ -69,7 +68,7 @@ const ProjectDashboard = () => {
     ]
 
     return <>
-        <Dashboard tabConfig={tabConfig} actions={actions} isOwnerAdmin={true}/>
+        <Dashboard tabConfig={tabConfig} actions={actions} isOwnerAdmin={roleHasAccess}/>
     </>
 }
 
