@@ -32,8 +32,11 @@ const UserProfileAnalytics = (id: number) => {
     const qualityScore = avgBugsPerTask === 0 ? 0 : memberData?.role !== "QA" ? Math.min(100, Math.round(100 * Math.exp(k * avgBugsPerTask)))
         : Math.min(100, Math.round(100 * Math.exp(-k * avgBugsPerTask)));
 
-    const idealLimit = memberData.sprintCount * memberData.idealLimit;
-    const moderateLimit = memberData.sprintCount * memberData.idealLimit + 2;
+    const idealLimit = memberData.sprintCount * memberData.idealTaskCount;
+    const moderateLimit = memberData.sprintCount * memberData.idealTaskCount + 2;
+
+
+
 
     // Colors for charts
     const DONUT_COLORS = ["#10b981", "#e5e7eb"]
