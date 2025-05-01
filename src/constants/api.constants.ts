@@ -41,8 +41,10 @@ export const GET_RETROSPECTIVE_FEEDBACKS = (id:number) => `projects/retrospectiv
 
 export const UPDATE_PROJECT_STATUS = (projectId:number) => `projects/${projectId}/status/update`;
 export const UPDATE_PROJECT = (projectId:number) => `projects/${projectId}`
-// Task management APIs
 
+export const ADD_PROJECT_MEMBER = (projectId:number) => `projects/${projectId}/members/add`;
+export const UPDATE_PROJECT_MEMBER = (projectId:number) => `projects/${projectId}/members/role`;
+// Task management APIs
 export const CREATE_TASK = '/tasks'
 export const GET_TASK_DETAILS = (taskId:string) => `tasks/${taskId}`;
 export const UPDATE_TASK = (taskId:string) => `tasks/${taskId}`;

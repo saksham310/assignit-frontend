@@ -2,12 +2,14 @@
 import {DataGrid} from "@/components/custom-components/shared/DataGrid.tsx";
 import { Button } from "@/components/ui/button";
 import {ColumnDef} from "@tanstack/react-table";
-import {UserPlusIcon, X} from "lucide-react";
+import {Check, UserPlusIcon, X} from "lucide-react";
 import {useState} from "react";
 import AddProjectMembers from "@/pages/AddProjectMembers.tsx";
 import {cn} from "@/lib/utils.ts";
 import { motion, AnimatePresence } from "framer-motion";
 import {MembersData} from "@/types/workspace.type.ts";
+import {useAddProjectMember} from "@/hooks/project.hooks.ts";
+import {useParams} from "react-router-dom";
 
 
 interface MembersTabProps {
@@ -19,9 +21,17 @@ remainingMembers: unknown[];
 }
 const MembersTab=({ columns, data, dbClick = false ,showAddMembers = false, remainingMembers = []}:MembersTabProps )=>{
    const [showAddMember,setShowAddMember]=useState<boolean>(false)
-   const [newMembers,setNewMembers]=useState<MembersData[]>([]);
-
-   console.log("Members",newMembers);
+   const [newMembers,setNewMembers]=useState<number[]>([]);
+   const {mutate} = useAddProjectMember();
+   const {projectId} = useParams();
+   const handleAddMember=()=>{
+       setShowAddMember(false);
+       mutate({
+           id:Number(projectId),
+           data:newMembers
+       })
+       console.log(newMembers);
+   }
     return <>
         <div className={'grid grid-cols-1 gap-5 h-full overflow-hidden'}>
                     <div className=" h-full  w-auto overflow-auto flex flex-col ">
@@ -34,6 +44,7 @@ const MembersTab=({ columns, data, dbClick = false ,showAddMembers = false, rema
                                     exit="hidden"
                                     className={'flex items-center gap-2'}>
                                     <AddProjectMembers memberList={remainingMembers} handleMember={setNewMembers}/>
+                                    {newMembers.length >0 && <Check className={'size-4 text-muted-foreground cursor-pointer'}  onClick={handleAddMember}/>}
                                     <X className={'size-4 text-muted-foreground cursor-pointer'}
                                        onClick={() => setShowAddMember(!showAddMember)}/>
                                 </motion.div>}

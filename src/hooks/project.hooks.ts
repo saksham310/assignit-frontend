@@ -1,11 +1,12 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {
+    addProjectMember,
     createProject,
     createSprints,
     getProjectDetails, getProjectMembers,
     getProjectRetrospective,
     getProjects,
-    getProjectStatus, getRetrospectiveFeedbacks, sendProjectRetrospective, updateProject, updateStatus
+    getProjectStatus, getRetrospectiveFeedbacks, sendProjectRetrospective, updateMemberRole, updateProject, updateStatus
 } from "@/service/project.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
@@ -134,3 +135,33 @@ export const useUpdateProject = () => {
         },
     });
 };
+
+export const useAddProjectMember = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn:({id,data}:{id:number,data:number[]}) => addProjectMember(id,data),
+        onSuccess:async (data)=>{
+            await queryClient.invalidateQueries({queryKey:["project_members"]});
+            await queryClient.invalidateQueries({queryKey:["project"]});
+            toast.success(data.message, {
+                duration: 2000,
+            });
+        },
+
+    })
+}
+
+export const useUpdateMember = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn:({id,data}:{id:number,data:{memberId:number,role:string}}) => updateMemberRole(id,data),
+        onSuccess:async (data)=>{
+            await queryClient.invalidateQueries({queryKey:["project_members"]});
+            await queryClient.invalidateQueries({queryKey:["project"]});
+            toast.success(data.message, {
+                duration: 2000,
+            })
+        }
+
+    })
+}

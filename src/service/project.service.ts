@@ -1,11 +1,18 @@
 import {apiClient} from "@/service/api.client.ts";
 import {
+    ADD_PROJECT_MEMBER,
     CREATE_PROJECT,
     CREATE_SPRINT,
-    GET_PROJECT_DETAILS, GET_PROJECT_MEMBERS,
+    GET_PROJECT_DETAILS,
+    GET_PROJECT_MEMBERS,
     GET_PROJECT_RETROSPECTIVE,
     GET_PROJECT_STATUS_MEMBERS,
-    GET_PROJECTS, GET_RETROSPECTIVE_FEEDBACKS, SUBMIT_RETROSPECTIVE, UPDATE_PROJECT, UPDATE_PROJECT_STATUS
+    GET_PROJECTS,
+    GET_RETROSPECTIVE_FEEDBACKS,
+    SUBMIT_RETROSPECTIVE,
+    UPDATE_PROJECT,
+    UPDATE_PROJECT_MEMBER,
+    UPDATE_PROJECT_STATUS
 } from "@/constants/api.constants.ts";
 import {ProjectCreationPayload, RetrospectivePayload, SprintCreationPayload, Status} from "@/types/project.types.ts";
 
@@ -58,5 +65,14 @@ return res.data
 
 export const updateProject = async (id:number,payload:{'name':string;'idealTaskCount':number}) => {
     const res = await apiClient.put(UPDATE_PROJECT(id),payload);
+    return res.data
+}
+
+export const addProjectMember = async (id:number,data:number[]) =>{
+    const res = await apiClient.post(ADD_PROJECT_MEMBER(id),data)
+    return res.data
+}
+export const updateMemberRole = async (id:number,data:{memberId:number,role:string}) =>{
+    const res = await apiClient.put(UPDATE_PROJECT_MEMBER(id),data)
     return res.data
 }

@@ -7,7 +7,7 @@ import SprintCreationForm from "@/components/custom-components/forms/SprintCreat
 import ProjectListView from "@/components/custom-components/dashboard/ProjectListView.tsx";
 import ProjectOverview from "@/components/custom-components/dashboard/ProjectOverview.tsx";
 import Dashboard, {Action} from "@/components/custom-components/dashboard/Dashboard.tsx";
-import {useGetProjectDetails, useGetProjectMembers} from "@/hooks/project.hooks.ts";
+import {useGetProjectDetails, useGetProjectMembers, useUpdateMember} from "@/hooks/project.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
 import {useGetMembersColumns} from "@/constants/table-columns.constants.tsx";
 import MembersTab from "@/components/custom-components/dashboard/MembersTab.tsx";
@@ -18,19 +18,25 @@ const ProjectDashboard = () => {
     const setTitle = useOutletContext<(title: string) => void>();
     const setOpen = useDialogStore(state => state.openDialog)
     const {projectId} = useParams();
+    const {mutate} = useUpdateMember();
     const {data, isLoading} = useGetProjectDetails(projectId)
     const {data: projectMembers, isLoading: isMemberLoading} = useGetProjectMembers(projectId);
     useEffect(() => {
         setTitle("Project")
     }, [setTitle]);
     const handleEditMember = (memberId: number, value: string) => {
-        console.log(memberId, value)
+        mutate({
+            id:Number(projectId),
+            data:{
+                memberId:memberId,
+                role:value
+            }
+        })
     }
     const roleHasAccess = projectMembers?.userRole === 'Project_Manager' || false;
     const membersColumns = useGetMembersColumns(false, roleHasAccess, handleEditMember);
 
     if (isLoading || isMemberLoading) return <Loader/>
-    console.log("Members",projectMembers)
 
     const tabConfig: TabConfig[] = [
         {

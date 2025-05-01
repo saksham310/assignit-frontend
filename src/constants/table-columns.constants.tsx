@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils"
 import type { ColumnDef, Row } from "@tanstack/react-table"
 import {
     Calendar,
-    Check,
     CheckCircle2,
     ChevronDown,
     CircleDashed,
@@ -83,7 +82,7 @@ export const useGetMembersColumns = (
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="start" className="w-48">
-                            <DropdownMenuRadioGroup value={role} onValueChange={(value) => handleEditMember(row.original.id, value)}>
+                            <DropdownMenuRadioGroup value={role.split('_').join(' ')} onValueChange={(value) => handleEditMember(row.original.id, value)}>
                                 {roles.map((roleOption) => (
                                     <DropdownMenuRadioItem
                                         key={roleOption}
@@ -92,8 +91,7 @@ export const useGetMembersColumns = (
                                         className="cursor-pointer"
                                     >
                                         <div className="flex items-center gap-2">
-                                            {roleOption === role && <Check className="h-4 w-4 text-gray-400" />}
-                                            <span className={roleOption === role ? "font-medium" : ""}>{roleOption}</span>
+                                            <span className={roleOption === role.split('_').join(' ') ? "font-medium" : ""}>{roleOption}</span>
                                         </div>
                                     </DropdownMenuRadioItem>
                                 ))}
