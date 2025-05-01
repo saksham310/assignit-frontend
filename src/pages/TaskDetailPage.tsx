@@ -29,7 +29,7 @@ const TaskDetailPage = () => {
     const endCommentRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLInputElement>(null);
     const { data, isLoading: isTaskDetailsLoading } = useGetTaskDetails(taskId as string);
-    const dummyTask = data ?? {};
+    const taskList = data ?? {};
     const { data: projectStatusMember, isLoading: isStatusLoading } = useGetProjectStatusMembers(projectId);
     const isLoading = isStatusLoading || isTaskDetailsLoading;
 
@@ -81,7 +81,7 @@ const TaskDetailPage = () => {
             {/* Header */}
             <div className="flex justify-between gap-4">
                 <div className="flex items-center gap-2">
-                    <Badge variant="outline">Task Id :{dummyTask.id}</Badge>
+                    <Badge variant="outline">Task Id :{taskList.id}</Badge>
                 </div>
                 <X className={'size-4 cursor-pointer'} onClick={()=> navigate(-1)}/>
             </div>
@@ -91,7 +91,7 @@ const TaskDetailPage = () => {
                 {/* Left Section - TaskEditor */}
                 <TaskEditor
                     isCreateMode={false}
-                    task={dummyTask}
+                    task={taskList}
                     status={projectStatusMember?.projectStatus}
                     members={projectStatusMember?.projectMembers}
                 />
@@ -107,7 +107,14 @@ const TaskDetailPage = () => {
                         </CardHeader>
 
                         <CardContent className="p-4 overflow-y-auto flex-1 flex flex-col gap-3 scrollbar">
-                            <CommentPage id={dummyTask.id as number} endCommentRef={endCommentRef} />
+                            <CommentPage
+                                id={taskList.id as number}
+                                endCommentRef={endCommentRef}
+                                setCommentText={setCommentText}
+                                setPreviewImage={setPreviewImage}
+                                commentMessage={commentText}
+                                commentImage={previewImage}
+                            />
                         </CardContent>
 
                         <CardContent className="flex flex-col min-h-[150px] gap-2">

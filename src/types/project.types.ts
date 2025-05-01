@@ -115,6 +115,7 @@ export type Comment = {
     avatarColor: string,
     type: 'comment' | 'activity'
     attachment?:string
+    userId:number
 }
 
 export type ProjectRetrospective = {
