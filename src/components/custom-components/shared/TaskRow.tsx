@@ -58,11 +58,14 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
     }
     return (
         <>
-            <div className={'grid grid-cols-4 gap-4 border-b p-3 text-xs items-center'}
+            <div className={'grid grid-cols-4 min-w-[800px] gap-4 border-b p-3 text-xs items-center'}
+                 style={{
+                     gridTemplateColumns: '2fr 2fr 1fr 1fr'
+                 }}
                  onDoubleClick={openTaskDetailPage}>
-                <span className={'text-sm font-medium text-nowrap overflow-hidden overflow-ellipsis'}
+                <span className={'text-sm font-medium text-nowrap overflow-hidden overflow-ellipsis min-w-[200px]'}
                       title={taskName}>{taskName}</span>
-                <div className="min-w-[150px]">
+                <div className="min-w-[200px]">
                     <MultiSelect
                         options={members}
                         onValueChange={handleAssigneeChange}
@@ -76,7 +79,7 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
                     <Bug className="size-4"/>
                     <span>{bugCount} {bugCount > 1 ? "Bugs" : "Bug"}</span>
                 </Badge>
-                <div className="flex justify-start">
+                <div className="flex justify-start min-w-[120px]">
                     <PrioritySwitcher value={priorityStatus} onChange={handlePriorityChange}/>
                 </div>
             </div>

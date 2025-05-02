@@ -32,24 +32,33 @@ const TaskListAccordion = ({ task, members }: TaskListAccordionProps ) => {
                         </CardHeader>
                         <AccordionContent>
                             {task.tasks.length > 0 ? (
-                                <CardContent className={'flex flex-col space-y-2 p-4'}>
-                                    <div className={'grid grid-cols-4 gap-4 items-center text-xs bg-gray-50 p-3 rounded-md'}>
-                                        <span className={'font-semibold text-gray-700'}>Task</span>
-                                        <span className={'font-semibold text-gray-700'}>Assignee</span>
-                                        <span className={'font-semibold text-gray-700'}>Bug Count</span>
-                                        <span className={'font-semibold text-gray-700'}>Priority</span>
+                                <CardContent className={'p-0'}>
+                                    <div className="overflow-x-auto w-full">
+                                        <div className="min-w-[800px] w-full">
+                                            <div className={'grid grid-cols-4 gap-4 items-center text-xs bg-gray-50 p-3 sticky left-0'}
+                                                 style={{
+                                                     gridTemplateColumns: '2fr 2fr 1fr 1fr'
+                                                 }}>
+                                                <span className={'font-semibold text-gray-700'}>Task</span>
+                                                <span className={'font-semibold text-gray-700'}>Assignee</span>
+                                                <span className={'font-semibold text-gray-700'}>Bug Count</span>
+                                                <span className={'font-semibold text-gray-700'}>Priority</span>
+                                            </div>
+                                            <div className="w-full">
+                                                {task.tasks.map(task => (
+                                                    <TaskRow
+                                                        taskId={task.id}
+                                                        taskName={task.name}
+                                                        assignees={task.assignees}
+                                                        key={task.id}
+                                                        bugCount={task.bugCount}
+                                                        priority={task.priority}
+                                                        members={members}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
-                                    {task.tasks.map(task => (
-                                        <TaskRow
-                                            taskId={task.id}
-                                            taskName={task.name}
-                                            assignees={task.assignees}
-                                            key={task.id}
-                                            bugCount={task.bugCount}
-                                            priority={task.priority}
-                                            members={members}
-                                        />
-                                    ))}
                                 </CardContent>
                             ) : (
                                 <CardContent className="p-8 text-center text-gray-500">

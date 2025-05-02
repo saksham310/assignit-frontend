@@ -61,23 +61,23 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
         },
     ];
 
-    const hasData = projectData.tasks !== 0;
+    const hasData = projectData.tasks !== 0 && projectData.members !== 0;
 
     return (
         <>
-            <div className={'flex flex-col gap-10 h-full'}>
-                <Analytics items={items} className={'p-4 border-2 border-gray-100'} />
-                <div className={'grid md:grid-cols-2 gap-4 h-full'}>
+            <div className={'flex flex-col gap-4 md:gap-10 h-full p-2 md:p-0'}>
+                <Analytics items={items} className={'p-2 md:p-4 border-2 border-gray-100'} />
+                <div className={'grid grid-cols-1 md:grid-cols-2 gap-4 h-full'}>
                     {/* Task Completion Distribution */}
                     <Card className="bg-white shadow-sm border-2 border-gray-100 rounded-lg">
-                        <CardContent className="p-4 flex flex-col h-full  ">
-                            <div className="space-y-1 mb-4">
+                        <CardContent className="p-2 md:p-4 flex flex-col h-full">
+                            <div className="space-y-1 mb-2 md:mb-4">
                                 <h3 className="text-sm font-medium text-gray-700">Task Completion Distribution</h3>
                                 <p className="text-xs text-gray-500">Breakdown of tasks by status</p>
                             </div>
-                            <div className={'flex-1 p-4 '}>
+                            <div className={'flex-1'}>
                                 {hasData ? (
-                                    <div className={'h-[300px] 2xl:h-[500px]'}>
+                                    <div className={'h-[250px] md:h-[300px] 2xl:h-[500px]'}>
                                         <ResponsiveContainer width="100%" height="100%">
                                             <PieChart aria-label="Task Completion Distribution">
                                                 <Pie
@@ -101,13 +101,17 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
                                         </ResponsiveContainer>
                                     </div>
                                 ) : (
-                                    <NoDataDisplay title={'No Data'} subtitle={'Add tasks to see stats'} />
+                                    <NoDataDisplay 
+                                        title={'No Tasks Available'} 
+                                        subtitle={'Add tasks and members to see statistics'} 
+                                        containerClassName="h-[250px] md:h-[300px] 2xl:h-[500px]"
+                                    />
                                 )}
-                                <div className="flex justify-center gap-6 ">
+                                <div className="flex flex-wrap justify-center gap-3 md:gap-6 mt-2">
                                     {taskStatusData.map((entry, index) => (
                                         <div key={index} className="flex items-center gap-2">
-                                            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }}></div>
-                                            <span className="text-sm text-gray-600">
+                                            <div className="w-2 md:w-3 h-2 md:h-3 rounded-full" style={{ backgroundColor: entry.color }}></div>
+                                            <span className="text-xs md:text-sm text-gray-600">
                                                 {entry.name}: {entry.value.toFixed(2)}%
                                             </span>
                                         </div>
@@ -119,14 +123,14 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
 
                     {/* Task Priority Distribution */}
                     <Card className="bg-white shadow-sm border-2 border-gray-100 rounded-lg">
-                        <CardContent className="p-4 flex flex-col h-full  ">
-                            <div className="space-y-1 mb-4">
+                        <CardContent className="p-2 md:p-4 flex flex-col h-full">
+                            <div className="space-y-1 mb-2 md:mb-4">
                                 <h3 className="text-sm font-medium text-gray-700">Task Priority Distribution</h3>
                                 <p className="text-xs text-gray-500">Breakdown of tasks by priority</p>
                             </div>
-                            <div className="flex-1 p-3 ">
+                            <div className="flex-1">
                                 {hasData ? (
-                                    <div className={'h-[300px] 2xl:h-[500px]'}>
+                                    <div className={'h-[250px] md:h-[300px] 2xl:h-[500px]'}>
                                         <ResponsiveContainer width="100%" height="100%">
                                             <BarChart data={taskPriorityData}>
                                                 <XAxis dataKey="name" />
@@ -141,13 +145,17 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
                                         </ResponsiveContainer>
                                     </div>
                                 ) : (
-                                    <NoDataDisplay title={'No Data'} subtitle={'Add tasks to see stats'} />
+                                    <NoDataDisplay 
+                                        title={'No Tasks Available'} 
+                                        subtitle={'Add tasks and members to see statistics'} 
+                                        containerClassName="h-[250px] md:h-[300px] 2xl:h-[500px]"
+                                    />
                                 )}
-                                <div className="flex justify-center gap-6 ">
+                                <div className="flex flex-wrap justify-center gap-3 md:gap-6 mt-2">
                                     {taskPriorityData.map((entry, index) => (
                                         <div key={index} className="flex items-center gap-2">
-                                            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: entry.color }}></div>
-                                            <span className="text-sm text-gray-600">
+                                            <div className="w-2 md:w-3 h-2 md:h-3 rounded-full" style={{ backgroundColor: entry.color }}></div>
+                                            <span className="text-xs md:text-sm text-gray-600">
                                                 {entry.name}: {entry.value.toFixed(2)}%
                                             </span>
                                         </div>

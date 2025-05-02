@@ -28,7 +28,7 @@ const ProjectListView = ({ projectSprint }: ProjectListViewProps) => {
     const members = projectStatusMember.projectMembers;
 
     return (
-        <div className="flex flex-col gap-0.5">
+        <div className="flex flex-col gap-0.5 max-w-full">
             {projectSprint.length === 0 ? (
                 <div className="flex items-center justify-center min-h-[50vh]">
                     <Card className="shadow-none border-none w-[400px]">
@@ -71,7 +71,7 @@ const ProjectListView = ({ projectSprint }: ProjectListViewProps) => {
                                     </div>
                                 </CardHeader>
                                 <AccordionContent>
-                                    <CardContent className="flex flex-col space-y-6">
+                                    <CardContent className="flex flex-col space-y-6 p-0 overflow-hidden">
                                         <SprintListView sprint={sprint} members={members} />
                                     </CardContent>
                                 </AccordionContent>
