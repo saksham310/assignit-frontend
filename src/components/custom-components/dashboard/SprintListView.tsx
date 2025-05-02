@@ -14,7 +14,7 @@ const SprintListView = ({sprint,members}:SprintListViewProps) => {
             {tasks.map((task) => (
                 <div key={task.id}>
                     <TaskListAccordion task={task} members={members}/>
-                    <Separator className="mt-4"/>
+                
                 </div>
             ))}
         </div>

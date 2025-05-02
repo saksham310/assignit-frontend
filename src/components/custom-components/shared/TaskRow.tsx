@@ -63,7 +63,7 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
                      gridTemplateColumns: '2fr 2fr 1fr 1fr'
                  }}
                  onDoubleClick={openTaskDetailPage}>
-                <span className={'text-sm font-medium text-nowrap overflow-hidden overflow-ellipsis min-w-[200px]'}
+                <span className={'text-xs font-medium text-nowrap overflow-hidden overflow-ellipsis min-w-[200px]'}
                       title={taskName}>{taskName}</span>
                 <div className="min-w-[200px]">
                     <MultiSelect

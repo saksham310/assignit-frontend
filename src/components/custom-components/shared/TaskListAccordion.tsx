@@ -32,7 +32,7 @@ const TaskListAccordion = ({ task, members }: TaskListAccordionProps ) => {
                         </CardHeader>
                         <AccordionContent>
                             {task.tasks.length > 0 ? (
-                                <CardContent className={'p-0'}>
+                                <CardContent className={'p-2'}>
                                     <div className="overflow-x-auto w-full">
                                         <div className="min-w-[800px] w-full">
                                             <div className={'grid grid-cols-4 gap-4 items-center text-xs bg-gray-50 p-3 sticky left-0'}
