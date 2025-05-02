@@ -17,7 +17,6 @@ interface CommentProps {
     isEditing?: boolean;
     isBlur?: boolean;
     onEdit?: () => void;
-    onCancelEdit?: () => void;
     editText: string;
     editImage: string;
 }
