@@ -58,22 +58,27 @@ const TaskRow = ({taskId,taskName, assignees, bugCount, priority,members}: TaskR
     }
     return (
         <>
-            <div className={'grid grid-cols-4 gap-2 border-b p-2 text-xs items-center'} onDoubleClick={openTaskDetailPage}>
-                <span className={'text-xs text-nowrap overflow-hidden overflow-ellipsis'}
-                title={taskName}>{taskName}</span>
-                <MultiSelect
-                    options={members}
-                    onValueChange={handleAssigneeChange}
-                    defaultValue={selectedMembers}
-                    placeholder="Unassigned"
-                    maxCount={maxCount}
-                />
+            <div className={'grid grid-cols-4 gap-4 border-b p-3 text-xs items-center'}
+                 onDoubleClick={openTaskDetailPage}>
+                <span className={'text-sm font-medium text-nowrap overflow-hidden overflow-ellipsis'}
+                      title={taskName}>{taskName}</span>
+                <div className="min-w-[150px]">
+                    <MultiSelect
+                        options={members}
+                        onValueChange={handleAssigneeChange}
+                        defaultValue={selectedMembers}
+                        placeholder="Unassigned"
+                        maxCount={maxCount}
+                    />
+                </div>
                 <Badge variant={'outline'}
-                       className={'border-red-500 font-normal inline-flex items-center gap-1 bg-red-50 text-red-700 w-fit h-[24px] '}>
+                      className={'border-red-500 font-normal inline-flex items-center gap-1.5 bg-red-50/50 text-red-700 w-fit h-[26px] px-3'}>
                     <Bug className="size-4"/>
                     <span>{bugCount} {bugCount > 1 ? "Bugs" : "Bug"}</span>
                 </Badge>
-                <PrioritySwitcher value={priorityStatus} onChange={handlePriorityChange}/>
+                <div className="flex justify-start">
+                    <PrioritySwitcher value={priorityStatus} onChange={handlePriorityChange}/>
+                </div>
             </div>
         </>
     )

@@ -10,9 +10,12 @@ interface  SprintListViewProps {
 const SprintListView = ({sprint,members}:SprintListViewProps) => {
     const tasks = sprint?.taskStatus ?? [];
     return <>
-        <div className={'flex flex-col '}>
+        <div className={'flex flex-col space-y-4 p-2'}>
             {tasks.map((task) => (
-                <div><TaskListAccordion key={task.id} task={task} members={members}/><Separator/></div>
+                <div key={task.id}>
+                    <TaskListAccordion task={task} members={members}/>
+                    <Separator className="mt-4"/>
+                </div>
             ))}
         </div>
     </>
