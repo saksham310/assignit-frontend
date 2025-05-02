@@ -9,12 +9,13 @@ interface CommentPageProps {
     endCommentRef: Ref<HTMLDivElement>;
     setPreviewImage:React.Dispatch<React.SetStateAction<string>>;
     setCommentText:React.Dispatch<React.SetStateAction<string>>;
+    setCommentId:React.Dispatch<React.SetStateAction<number|null>>;
     commentMessage:string;
     commentImage:string
 
 }
 
-const CommentPage = ({id, endCommentRef,setCommentText,setPreviewImage,commentMessage,commentImage}: CommentPageProps) => {
+const CommentPage = ({id,endCommentRef,setCommentText,setCommentId,setPreviewImage,commentMessage,commentImage}: CommentPageProps) => {
     const {data, isLoading, isError} = useGetAllComments(id);
     const [editCommentId, setEditCommentId] = useState<number | null>(null);
     // Early return for loading state
@@ -41,6 +42,7 @@ const CommentPage = ({id, endCommentRef,setCommentText,setPreviewImage,commentMe
                         setEditCommentId(comment.id)
                         setCommentText(comment.message)
                         setPreviewImage(comment.attachment ?? '')
+                        setCommentId(comment.id)
 
                     }}
                     onCancelEdit={() => {

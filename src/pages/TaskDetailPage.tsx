@@ -2,15 +2,15 @@
 import {useNavigate, useParams} from "react-router-dom";
 
 // Custom Hooks
-import { useAddComment, useGetTaskDetails } from "@/hooks/task.hooks.ts";
-import { useGetProjectStatusMembers } from "@/hooks/project.hooks.ts";
+import {useAddComment, useGetTaskDetails} from "@/hooks/task.hooks.ts";
+import {useGetProjectStatusMembers} from "@/hooks/project.hooks.ts";
 
 // UI Components
-import { Badge } from "@/components/ui/badge.tsx";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card.tsx";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea.tsx";
-import { Separator } from "@/components/ui/separator";
+import {Badge} from "@/components/ui/badge.tsx";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Button} from "@/components/ui/button";
+import {Textarea} from "@/components/ui/textarea.tsx";
+import {Separator} from "@/components/ui/separator";
 
 // Custom Components
 import Loader from "@/components/custom-components/shared/Loader.tsx";
@@ -20,24 +20,26 @@ import TaskEditor from "@/components/custom-components/shared/TaskEditor.tsx";
 import {MessageSquare, Paperclip, Send, Trash, X} from "lucide-react";
 
 import CommentPage from "@/pages/CommentPage.tsx";
-import { useRef, useState } from "react";
-import { FaSpinner } from "react-icons/fa";
+import {useRef, useState} from "react";
+import {FaSpinner} from "react-icons/fa";
 
 const TaskDetailPage = () => {
-    const { taskId, projectId } = useParams();
+    const {taskId, projectId} = useParams();
     const navigate = useNavigate();
     const endCommentRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLInputElement>(null);
-    const { data, isLoading: isTaskDetailsLoading } = useGetTaskDetails(taskId as string);
+    const {data, isLoading: isTaskDetailsLoading} = useGetTaskDetails(taskId as string);
     const taskList = data ?? {};
-    const { data: projectStatusMember, isLoading: isStatusLoading } = useGetProjectStatusMembers(projectId);
+    const {data: projectStatusMember, isLoading: isStatusLoading} = useGetProjectStatusMembers(projectId);
     const isLoading = isStatusLoading || isTaskDetailsLoading;
-
+    const [commentId, setCommentId] = useState<number | null>(null);
     const [previewImage, setPreviewImage] = useState<string>('');
     const [commentText, setCommentText] = useState<string>('');
-    const { mutate, isPending } = useAddComment();
+    const {mutate, isPending} = useAddComment();
 
-    if (isLoading) return <Loader />;
+    if (isLoading || !projectStatusMember?.projectStatus) return <Loader/>;
+
+    const buttonLabel = commentId ? "Update" : "Add";
 
     const saveComment = () => {
         if (!commentText.trim() && !previewImage) return; // Prevent submitting empty comment
@@ -49,23 +51,26 @@ const TaskDetailPage = () => {
             form.append("attachment", imageRef.current.files[0]);
         }
 
-        mutate(
-            {
-                id: taskId ? parseInt(taskId) : 0,
-                data: form,
-            },
-            {
-                onSuccess: () => {
-                    setTimeout(() => {
-                        endCommentRef.current?.scrollIntoView({ behavior: 'smooth' });
-                    }, 300);
+        if (commentId) {
+            console.log(form.get('attachment'));
+        } else {
+            mutate(
+                {
+                    id: taskId ? parseInt(taskId) : 0,
+                    data: form,
                 },
-            }
-        );
-
-        setCommentText('');
-        setPreviewImage('');
-        imageRef.current && (imageRef.current.value = ''); // Reset the file input
+                {
+                    onSuccess: () => {
+                        setTimeout(() => {
+                            endCommentRef.current?.scrollIntoView({behavior: 'smooth'});
+                        }, 300);
+                    },
+                }
+            );
+            setCommentText('');
+            setPreviewImage('');
+            imageRef.current && (imageRef.current.value = ''); // Reset the file input
+        }
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +88,7 @@ const TaskDetailPage = () => {
                 <div className="flex items-center gap-2">
                     <Badge variant="outline">Task Id :{taskList.id}</Badge>
                 </div>
-                <X className={'size-4 cursor-pointer'} onClick={()=> navigate(-1)}/>
+                <X className={'size-4 cursor-pointer'} onClick={() => navigate(-1)}/>
             </div>
 
             {/* Main Content */}
@@ -101,7 +106,7 @@ const TaskDetailPage = () => {
                     <Card className="shadow-none border-none w-full flex flex-col flex-1 overflow-hidden">
                         <CardHeader className="px-4 py-4 shrink-0 font-medium flex gap-1">
                             <CardTitle className="flex items-center gap-1 text-primary">
-                                <MessageSquare className="h-5 w-5" />
+                                <MessageSquare className="h-5 w-5"/>
                                 <p>Comments</p>
                             </CardTitle>
                         </CardHeader>
@@ -114,11 +119,12 @@ const TaskDetailPage = () => {
                                 setPreviewImage={setPreviewImage}
                                 commentMessage={commentText}
                                 commentImage={previewImage}
+                                setCommentId={setCommentId}
                             />
                         </CardContent>
 
                         <CardContent className="flex flex-col min-h-[150px] gap-2">
-                            <Separator />
+                            <Separator/>
                             <Textarea
                                 value={commentText}
                                 onChange={(e) => setCommentText(e.target.value)}
@@ -128,11 +134,13 @@ const TaskDetailPage = () => {
 
                             {previewImage && (
                                 <div className="relative group cursor-pointer" onClick={() => setPreviewImage('')}>
-                  <span className="absolute cursor-pointer left-14 opacity-0 top-8 group-hover:opacity-100 group-hover:cursor-pointer">
-                    <Trash size={18} />
+                  <span
+                      className="absolute cursor-pointer left-14 opacity-0 top-8 group-hover:opacity-100 group-hover:cursor-pointer">
+                    <Trash size={18}/>
                   </span>
                                     <div className="grid grid-cols-3 gap-2">
-                                        <img src={previewImage} alt="Preview" className="border group-hover:opacity-20" />
+                                        <img src={previewImage} alt="Preview"
+                                             className="border group-hover:opacity-20"/>
                                     </div>
                                 </div>
                             )}
@@ -145,7 +153,7 @@ const TaskDetailPage = () => {
                                     disabled={!!previewImage}
                                     onClick={() => imageRef.current?.click()}
                                 >
-                                    <Paperclip />
+                                    <Paperclip/>
                                     <span>Attach</span>
                                     <input
                                         ref={imageRef}
@@ -155,6 +163,14 @@ const TaskDetailPage = () => {
                                         onChange={handleImageChange}
                                     />
                                 </Button>
+
+                                {commentId && <Button
+                                    variant="secondary"
+                                    size="sm"
+                                    onClick={()=>{}}>
+                                    <span className="flex items-center gap-1">Cancel</span>
+                                </Button>
+                                }
                                 <Button
                                     variant="default"
                                     size="sm"
@@ -162,11 +178,11 @@ const TaskDetailPage = () => {
                                     disabled={!commentText.trim() && !previewImage}
                                 >
                                     {isPending ? (
-                                        <FaSpinner className="animate-in spin-in repeat-infinite" />
+                                        <FaSpinner className="animate-in spin-in repeat-infinite"/>
                                     ) : (
                                         <span className="flex items-center gap-1">
-                      <Send />
-                      Comment
+                      <Send/>
+                                            {buttonLabel}
                     </span>
                                     )}
                                 </Button>

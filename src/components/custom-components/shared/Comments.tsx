@@ -4,6 +4,13 @@ import {Comment} from "@/types/project.types.ts";
 import {Button} from "@/components/ui/button.tsx";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import {User} from "@/types/auth.type.ts";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu.tsx";
+import {MoreHorizontal} from "lucide-react";
 
 interface CommentProps {
     comment: Comment;
@@ -39,27 +46,38 @@ const Comments = ({comment, isBlur, isEditing, onEdit, editImage, editText}: Com
                             className="size-8 text-sm"
                         />
                         <div className="flex-col text-sm w-full space-y-2">
-                            <div className="flex items-center justify-between">
-                                <p>{comment.name}</p>
-                                <span className="text-xs text-gray-500">{getRelativeDate(comment.createdAt)}</span>
-                            </div>
+                          <div className={'flex items-center justify-between'}>
+                              <div className="flex items-center gap-2">
+                                  <p>{comment.name}</p>
+                                  <span className="text-xs text-gray-500">{getRelativeDate(comment.createdAt)}</span>
+                              </div>
+                              {!isEditing && comment.userId === currentUserId && (
+                                  <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                          <Button size="icon" variant="ghost">
+                                              <MoreHorizontal className="h-4 w-4" />
+                                          </Button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end">
+                                          <DropdownMenuItem onSelect={onEdit}>Edit</DropdownMenuItem>
+                                          <DropdownMenuItem onSelect={()=>{}} className="text-red-500">Delete</DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                  </DropdownMenu>
+                              )}
+                          </div>
                             <p className="text-sm text-gray-700">{isEditing ? editText : comment.message}</p>
                         </div>
                     </div>
-                    {!isEditing && comment.userId === currentUserId && (
-                        <div className="flex justify-end">
-                            <Button size="sm" variant="ghost" onClick={onEdit}>Edit</Button>
-                        </div>
-                    )}
                     {comment.attachment && (
-                        <div className="items-center justify-center grid grid-cols-1">
+                        <div className="items-center border-2 border-dotted  p-4 grid grid-cols-1">
                             <img src={isEditing ? editImage : comment.attachment} alt="Attachment"/>
                         </div>
                     )}
                 </div>
             )}
             {comment.type === 'activity' && (
-                <div className="flex justify-between items-center text-xs text-gray-500 p-3 w-full space-y-1">
+                <div className={`flex justify-between items-center text-xs text-gray-500 p-3 w-full space-y-1 ${
+                    isBlur ? "opacity-20 bg-gray-100 pointer-events-none" : ""}`}>
                     <div
                         className="flex items-center gap-2 justify-between text-nowrap overflow-hidden overflow-ellipsis"
                         style={{fontSize: "11px"}}
