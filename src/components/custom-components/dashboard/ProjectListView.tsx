@@ -29,9 +29,36 @@ const ProjectListView = ({ projectSprint }: ProjectListViewProps) => {
 
     return (
         <div className="flex flex-col gap-0.5">
-            {/* Ensure projectSprint is not empty before rendering .map() */}
             {projectSprint.length === 0 ? (
-                <div>No sprints available for this project.</div>
+                <div className="flex items-center justify-center min-h-[50vh]">
+                    <Card className="shadow-none border-none w-[400px]">
+                        <CardContent className="px-6 py-10">
+                            <div className="flex flex-col items-center justify-center text-center space-y-4">
+                                <div className="h-20 w-20 rounded-full bg-gray-100 flex items-center justify-center">
+                                    <svg
+                                        className="h-10 w-10 text-gray-400"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={1.5}
+                                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 0 002-2M9 5a2 2 0 012-2h2a2 0 012 2"
+                                        />
+                                    </svg>
+                                </div>
+                                <div className="space-y-2">
+                                    <h3 className="text-xl font-semibold text-gray-800">No Sprints Available</h3>
+                                    <p className="text-gray-500 text-sm max-w-[300px]">
+                                        Get started by creating your first sprint to organize and track your project tasks.
+                                    </p>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
             ) : (
                 projectSprint.map((sprint) => (
                     <Accordion type="single" collapsible defaultValue={sprint.name} key={sprint.id}>
