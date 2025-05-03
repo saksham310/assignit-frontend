@@ -207,7 +207,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
     return (
         <div
             className={cn(
-                'col-span-2 bg-white rounded-lg flex flex-col gap-6 p-2 overflow-y-auto',
+                'col-span-2 bg-white rounded-lg flex flex-col gap-4 p-2 overflow-y-auto',
                 {'h-[520px]': isCreateMode}
             )}
         >

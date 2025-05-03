@@ -54,11 +54,11 @@ const Editor = ({initialValue,isCreateMode,onChange}:EditorProps) => {
 
     }
     return (
-        <div className={cn("editor-wrapper h-full  max-h-[460px] xl:max-h-[600px] w-full ",{"min-w-[640px] h-[250px]":isCreateMode})}>
+        <div className={cn("editor-wrapper h-full  max-h-[480px]  w-full ",{"min-w-[640px] h-[250px]":isCreateMode})}>
 
 
 
-            <div ref={editorRef} className="h-full  border-gray-300 "  onBlur={saveChanges}/>
+            <div ref={editorRef} className=" h-full border-gray-300 "  onBlur={saveChanges}/>
 
         </div>
     );
