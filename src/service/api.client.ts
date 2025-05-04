@@ -28,27 +28,47 @@ apiClient.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
+// Flag to prevent continuous error messages
+let isBackendDown = false;
+
 // Response interceptor for handling errors
 apiClient.interceptors.response.use((res) => {
-    return res; // Return the response if successful
+    // Reset the flag if the response is successful
+    isBackendDown = false;
+    return res;
 }, (err) => {
     if (err.message === "No authentication token") {
         return Promise.reject(err);
     }
-    if (err.response.status === 422)
-    {
-        window.location.href= '/error';
+
+    // Handle network errors or backend unavailability
+    if (!err.response) {
+        if (!isBackendDown) {
+            isBackendDown = true;
+            window.location.href = '/error';
+            setTimeout(()=>{
+                toast.error("The backend is currently unreachable. Please try again later.", {
+                    duration: 3000,
+                    id: 'backend-down',
+                });
+            },1000)
+        }
+        return Promise.reject(new Error("Backend is unreachable"));
     }
-   else if (err.response.status === 401)
-    {
+
+    // Handle specific HTTP status codes
+    if (err.response.status === 422) {
+        window.location.href = '/error';
+    } else if (err.response.status === 401) {
         toast.warning("Session expired. Please re-login again.");
-        window.location.href= '/login';
-    }
-   else{
+        window.location.href = '/login';
+    } else {
         toast.error(err.response?.data?.message || "An error occurred", {
             duration: 2000,
-            id:'error',
+            id: 'error',
         });
+        window.location.href = '/error';
     }
+
     return Promise.reject(err);
 });
