@@ -8,18 +8,19 @@ interface ResponseViewProps {
 }
 
 const ResponseView = ({ sprintId }: ResponseViewProps) => {
-    const { data, isLoading} = useGetRetrospectiveFeedbacks(sprintId);
-    const columns =  useGetRetrospectiveColumns ();
+    const { data, isLoading } = useGetRetrospectiveFeedbacks(sprintId);
+    const columns = useGetRetrospectiveColumns();
 
     if (isLoading) {
         return <Loader />;
     }
 
     return (
-        <div className="max-h-[450px]">
-            <DataGrid columns={columns} data={data.responses}/>
+        <div className="px-1 max-h-[450px]">
+            <div className="bg-white rounded-lg border">
+                <DataGrid columns={columns} data={data.responses}/>
+            </div>
         </div>
-        
     );
 };
 

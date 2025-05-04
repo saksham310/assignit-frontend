@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import type { ColumnDef, Row } from "@tanstack/react-table"
 import {
+    AlertTriangle,
     Calendar,
     CheckCircle2,
     ChevronDown,
@@ -9,6 +10,8 @@ import {
     Edit,
     Eye,
     MoreHorizontal,
+    Target,
+    ThumbsUp,
     Trash2
 } from "lucide-react"
 
@@ -300,47 +303,54 @@ export const useProjectColumns = (options: ProjectColumnOptions): ColumnDef<any>
 }
 export const useGetRetrospectiveColumns = (): ColumnDef<any>[] => {
     return [
-      {
-        accessorKey: "wentWell",
-        header: () => (
-          <div className="bg-slate-100 dark:bg-slate-800 py-3 px-4 font-medium text-base rounded-tl-md">
-            What Went Well
-          </div>
-        ),
-        cell: ({ row }) => {
-          return (
-            <Card className="border-0 shadow-none p-4 h-full">
-              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{row.original.wentWell}</p>
-            </Card>
-          )
+      
+        {
+            accessorKey: "wentWell",
+            header: ({ table }) => (
+                <div className="w-full flex justify-between gap-1">
+                    <span className="font-medium">What Went Well</span>
+                    <span className="text-xs text-muted-foreground">
+                        {table.getFilteredRowModel().rows.length} responses
+                    </span>
+                </div>
+            ),
+            cell: ({ row }) => (
+                <div className="p-4">
+                    <p className="text-sm text-gray-700">{row.original.wentWell}</p>
+                </div>
+            ),
         },
-      },
-      {
-        accessorKey: "toImprove",
-        header: () => (
-          <div className="bg-slate-100 dark:bg-slate-800 py-3 px-4 font-medium text-base">Areas for Improvement</div>
-        ),
-        cell: ({ row }) => {
-          return (
-            <Card className="border-0 shadow-none p-4 h-full">
-              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{row.original.toImprove}</p>
-            </Card>
-          )
+        {
+            accessorKey: "toImprove",
+            header: ({ table }) => (
+                <div className="w-full flex justify-between gap-1">
+                    <span className="font-medium">To Improve</span>
+                    <span className="text-xs text-muted-foreground">
+                        {table.getFilteredRowModel().rows.length} responses
+                    </span>
+                </div>
+            ),
+            cell: ({ row }) => (
+                <div className="p-4 border-x">
+                    <p className="text-sm text-gray-700">{row.original.toImprove}</p>
+                </div>
+            ),
         },
-      },
-      {
-        accessorKey: "actionItems",
-        header: () => (
-          <div className="bg-slate-100 dark:bg-slate-800 py-3 px-4 font-medium text-base rounded-tr-md">Action Items</div>
-        ),
-        cell: ({ row }) => {
-          return (
-            <Card className="border-0 shadow-none p-4 h-full">
-              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{row.original.actionItems}</p>
-            </Card>
-          )
+        {
+            accessorKey: "actionItems",
+            header: ({ table }) => (
+                <div className="w-full flex justify-between gap-1">
+                    <span className="font-medium">Action Items</span>
+                    <span className="text-xs text-muted-foreground">
+                        {table.getFilteredRowModel().rows.length} responses
+                    </span>
+                </div>
+            ),
+            cell: ({ row }) => (
+                <div className="p-4">
+                    <p className="text-sm text-gray-700">{row.original.actionItems}</p>
+                </div>
+            ),
         },
-      },
     ]
-  }
-  
+}
