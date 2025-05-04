@@ -26,6 +26,7 @@ import type { MembersData } from "@/types/workspace.type.ts"
 import {PROJECT_ROLES, WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
 import {useWorkspaceRoleStore} from "@/store/workspace.store.ts";
 import {Progress} from "@/components/ui/progress.tsx";
+import { Card } from "@/components/ui/card"
 
 export const useGetMembersColumns = (
     isWorkspace: boolean,
@@ -297,3 +298,49 @@ export const useProjectColumns = (options: ProjectColumnOptions): ColumnDef<any>
         },
     ]
 }
+export const useGetRetrospectiveColumns = (): ColumnDef<any>[] => {
+    return [
+      {
+        accessorKey: "wentWell",
+        header: () => (
+          <div className="bg-slate-100 dark:bg-slate-800 py-3 px-4 font-medium text-base rounded-tl-md">
+            What Went Well
+          </div>
+        ),
+        cell: ({ row }) => {
+          return (
+            <Card className="border-0 shadow-none p-4 h-full">
+              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{row.original.wentWell}</p>
+            </Card>
+          )
+        },
+      },
+      {
+        accessorKey: "toImprove",
+        header: () => (
+          <div className="bg-slate-100 dark:bg-slate-800 py-3 px-4 font-medium text-base">Areas for Improvement</div>
+        ),
+        cell: ({ row }) => {
+          return (
+            <Card className="border-0 shadow-none p-4 h-full">
+              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{row.original.toImprove}</p>
+            </Card>
+          )
+        },
+      },
+      {
+        accessorKey: "actionItems",
+        header: () => (
+          <div className="bg-slate-100 dark:bg-slate-800 py-3 px-4 font-medium text-base rounded-tr-md">Action Items</div>
+        ),
+        cell: ({ row }) => {
+          return (
+            <Card className="border-0 shadow-none p-4 h-full">
+              <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{row.original.actionItems}</p>
+            </Card>
+          )
+        },
+      },
+    ]
+  }
+  
