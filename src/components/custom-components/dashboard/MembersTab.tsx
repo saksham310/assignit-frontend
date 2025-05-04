@@ -34,8 +34,8 @@ const MembersTab=({ columns, data, dbClick = false ,showAddMembers = false, rema
    }
     return <>
         <div className={'grid grid-cols-1 gap-5 h-full overflow-hidden'}>
-                    <div className=" h-full  w-auto overflow-auto flex flex-col ">
-                        {showAddMembers && <div className={'ml-auto flex items-center gap-6 min-h-[35px]'}>
+                    <div className=" h-full  w-auto overflow-auto flex flex-col relative ">
+                        {showAddMembers && <div className={'ml-auto flex items-center gap-6 min-h-[35px] absolute right-0 top-0'}>
                             <AnimatePresence>
                                 {showAddMember && <motion.div
                                     initial={{ opacity: 0, x: 0}}
