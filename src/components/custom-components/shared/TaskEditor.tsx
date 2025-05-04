@@ -35,7 +35,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
     // 4. Refs & States
     const inputRef = useRef<HTMLInputElement>(null);
     const [taskStatus, setTaskStatus] = useState(task?.status ?? '');
-    const [priority, setPriority] = useState<string>('High');
+    const [priority, setPriority] = useState<string>(task?.priority ?? 'Low');
     const [initialValue, setInitialValue] = useState(task?.description ?? '');
     const [selectedMembers, setSelectedMembers] = useState(
         task?.assignees?.map(assignee => assignee.id as string) ?? []
