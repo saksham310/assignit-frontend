@@ -8,10 +8,11 @@ import ProjectCreationForm from "@/components/custom-components/forms/ProjectCre
 
 interface EmptyRetrospectiveProps {
     hasProject: boolean,
-    projectId?:number
+    projectId?:number,
+    showBtn?: boolean
 }
 
-const EmptyRetrospectiveState = ({hasProject = false,projectId}: EmptyRetrospectiveProps) => {
+const EmptyRetrospectiveState = ({hasProject = false,projectId,showBtn=false}: EmptyRetrospectiveProps) => {
     const setOpen = useDialogStore((state) => state.openDialog);
     const handleButtonClick = () =>
     {
@@ -32,7 +33,7 @@ const EmptyRetrospectiveState = ({hasProject = false,projectId}: EmptyRetrospect
                 </CardDescription>
             </CardHeader>
             <CardContent className="flex items-center justify-center">
-                <Button className={'flex items-center gap-2'} onClick={handleButtonClick}> <CirclePlus/>{hasProject ? "Create a sprint" : "Add a Project"}</Button>
+             {showBtn &&  <Button className={'flex items-center gap-2'} onClick={handleButtonClick}> <CirclePlus/>{hasProject ? "Create a sprint" : "Add a Project"}</Button>}
             </CardContent>
         </Card>
 

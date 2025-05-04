@@ -316,7 +316,7 @@ export const useGetRetrospectiveColumns = (): ColumnDef<any>[] => {
             ),
             cell: ({ row }) => (
                 <div className="p-4">
-                    <p className="text-sm text-gray-700">{row.original.wentWell}</p>
+                    <p className="text-sm text-gray-700 text-justify">{row.original.wentWell}</p>
                 </div>
             ),
         },
@@ -332,7 +332,7 @@ export const useGetRetrospectiveColumns = (): ColumnDef<any>[] => {
             ),
             cell: ({ row }) => (
                 <div className="p-4 border-x">
-                    <p className="text-sm text-gray-700">{row.original.toImprove}</p>
+                    <p className="text-sm text-gray-700 text-justify">{row.original.toImprove}</p>
                 </div>
             ),
         },
@@ -348,7 +348,7 @@ export const useGetRetrospectiveColumns = (): ColumnDef<any>[] => {
             ),
             cell: ({ row }) => (
                 <div className="p-4">
-                    <p className="text-sm text-gray-700">{row.original.actionItems}</p>
+                    <p className="text-sm text-gray-700 text-justify">{row.original.actionItems}</p>
                 </div>
             ),
         },

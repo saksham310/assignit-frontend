@@ -16,11 +16,13 @@ import EmptyRetrospectiveState from "@/components/custom-components/EmptyRetrosp
 import {ProjectRetrospective, Sprint} from "@/types/project.types";
 import {TabConfig} from "@/types/dashboard.type";
 import ResponseView from "@/components/ResponseView.tsx";
+import { useDashboardData } from "@/hooks/dashboard.hooks";
 
 
 const RetrospectiveSection = () => {
     const {id} = useParams();
     const {data: project, isLoading} = useGetProjectRetrospective(id);
+    const {isOwnerAdmin} = useDashboardData();
 
     const [selectedProjectId, setSelectedProjectId] = useState<number>();
     const [selectedSprintId, setSelectedSprintId] = useState<number>();
@@ -37,7 +39,7 @@ const RetrospectiveSection = () => {
     if (isLoading) return <Loader/>;
 
     if (!project?.projects || project.projects.length === 0) {
-        return <EmptyRetrospectiveState hasProject={false}/>
+        return <EmptyRetrospectiveState hasProject={false} showBtn={isOwnerAdmin}/>
     }
 
     const selectedProject = project.projects.find((p: ProjectRetrospective) => p.id === selectedProjectId);
@@ -54,7 +56,9 @@ const RetrospectiveSection = () => {
             value: "submit",
             label: "Submit Feedback",
             component: () => (
-                (!sprints || sprints?.length === 0) ?<EmptyRetrospectiveState hasProject={true} projectId={selectedProjectId as number}/> :
+                (!sprints || sprints?.length === 0) ?<EmptyRetrospectiveState hasProject={true}
+                showBtn={role}
+                 projectId={selectedProjectId as number}/> :
                 <RetrospectiveForm sprintId={selectedSprintId as number}/>
             ),
         },
@@ -105,7 +109,7 @@ const RetrospectiveSection = () => {
                     </div>
                 </div>
 
-                <TabLayoutWrapper tabConfig={tabconfig}/>
+                <TabLayoutWrapper tabConfig={tabconfig} className="mt-0"/>
             </div>
         </div>
     );
