@@ -2,6 +2,7 @@ import {apiClient} from "@/service/api.client.ts";
 import {
     ADD_COMMENT,
     CREATE_TASK,
+    DELETE_COMMENT,
     GET_ALL_COMMENTS,
     GET_SPRINT_TASKS,
     GET_TASK_DETAILS,
@@ -37,4 +38,9 @@ export const getAllComments = async (id:number) =>{
 export const addComment = async (data:FormData,id:number)=> {
     const res = await apiClient.post(ADD_COMMENT(id), data);
     return res.data
+}
+
+export const deleteComment = async (taskId: number, commentId: number) => {
+    const res = await apiClient.delete(DELETE_COMMENT(taskId, commentId));
+    return res.data;
 }

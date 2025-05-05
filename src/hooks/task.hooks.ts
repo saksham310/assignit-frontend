@@ -5,7 +5,8 @@ import {
     getAllComments,
     getSprintTasks,
     getTaskById,
-    updateTask
+    updateTask,
+    deleteComment
 } from "@/service/task.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
@@ -79,4 +80,18 @@ export const useAddComment = () =>{
             queryClient.invalidateQueries({queryKey:['comments']});
         }
     })
+}
+
+export const useDeleteComment = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({taskId, commentId}: {taskId: number, commentId: number}) => deleteComment(taskId, commentId),
+        onSuccess: async (data) => {
+            toast.success(data.message, {
+                duration: 2000,
+                id: 'comment_delete'
+            });
+            await queryClient.invalidateQueries({queryKey: ['comments']});
+        }
+    });
 }
