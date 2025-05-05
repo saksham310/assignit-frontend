@@ -4,10 +4,11 @@ import UserAvatar from "@/components/custom-components/shared/UserAvatar.tsx";
 import {cn, priorityFlagMap} from "@/lib/utils.ts";
 import {useDraggable} from "@dnd-kit/core";
 import {useNavigate} from "react-router-dom";
+import {Task} from "@/types/project.types.ts";
 
 
 interface TaskCardProps {
-    task:any
+    task: Task;
 }
 const TaskCard = ({task}:TaskCardProps) =>{
     const maxCount = 3
@@ -41,7 +42,7 @@ const TaskCard = ({task}:TaskCardProps) =>{
                         return (
                             <UserAvatar
                                 key={value.id}
-                                name={value?.name || ""}
+                                name={value?.username || ""}
                                 src={value?.image}
                                 className={`h-5 w-5 text-black text-xs`}
                                 avatarColor={value?.avatarColor}
@@ -61,8 +62,8 @@ const TaskCard = ({task}:TaskCardProps) =>{
                 <div className="flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" />
                     <span className="text-xs">
-                        {task.bugCount} {task.bugCount > 1 ? "Bug" : "Bugs"}
-          </span>
+                        {task.bugCount || 0} {(task.bugCount || 0) > 1 ? "Bugs" : "Bug"}
+                    </span>
                 </div>
             </CardFooter>
         </Card>

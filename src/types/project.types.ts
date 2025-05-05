@@ -1,5 +1,3 @@
-import {User} from "@/types/auth.type.ts";
-
 export type StatusType = "To_Do" | "In_Progress" | "Completed"
 
 export interface Status {
@@ -52,9 +50,19 @@ export interface ProjectResponse {
 export interface Task {
     id: number;
     name: string;
-    assignees: User[];
-    bugCount: number;
+    description?: string;
     priority: 'Low' | 'Medium' | 'High';
+    status?: Status;
+    assignees: {
+        id: number;
+        username: string;
+        image: string;
+        avatarColor: string;
+    }[];
+    bugCount?: number;
+    FrontendBugCount?: number;
+    BackendBugCount?: number;
+    DatabaseBugCount?: number;
 }
 
 export interface TaskStatus {
@@ -114,11 +122,11 @@ export type Comment = {
     name: string,
     message: string,
     createdAt: string,
-    userImage:string,
-    avatarColor: string,
-    type: 'comment' | 'activity'
-    attachment?:string
-    userId:number
+    userImage: string,
+    avatarColor: string | null,
+    type: 'comment' | 'activity',
+    attachment?: string | null,
+    userId: number
 }
 
 export type ProjectRetrospective = {

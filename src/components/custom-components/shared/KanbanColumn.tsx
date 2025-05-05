@@ -2,9 +2,10 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
 import { Badge } from "@/components/ui/badge";
 import TaskCard from "@/components/custom-components/shared/TaskCard.tsx";
 import { useDroppable } from "@dnd-kit/core";
+import { TaskStatus } from "@/types/project.types.ts";
 
 interface KanbanColumnProps {
-    status: any;
+    status: TaskStatus;
 }
 
 const KanbanColumn = ({ status }: KanbanColumnProps) => {

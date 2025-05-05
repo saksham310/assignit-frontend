@@ -5,11 +5,12 @@ import TaskCard from "@/components/custom-components/shared/TaskCard.tsx";
 import { io } from "socket.io-client";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { User } from "@/types/auth.type.ts";
+import { SprintWithTask, TaskStatus } from "@/types/project.types.ts";
 
 const SOCKET_URL = "http://localhost:8080";
 
 interface KanbanBoardProps {
-    tasks: any;
+    tasks: SprintWithTask;
 }
 
 const KanbanBoard = ({ tasks }: KanbanBoardProps) => {
