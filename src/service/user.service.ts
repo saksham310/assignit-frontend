@@ -8,7 +8,7 @@ export const updateProfile = async (data:  FormData) => {
         return res.data;
 }
 
-export const getUserAnalytics = async (projectId: string|undefined,userId:number)  => {
-        const res = await  apiClient.get(USER_ANALYTICS(projectId,userId));
+export const getUserAnalytics = async (projectId: string|undefined, userId:number, sprintId?: number)  => {
+        const res = await apiClient.get(USER_ANALYTICS(projectId, userId, sprintId));
         return res.data;
 }

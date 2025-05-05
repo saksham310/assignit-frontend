@@ -25,7 +25,8 @@ export const JOIN_WORKSPACE = `/workspaces/members/join`;
 
 // User Profile APIs
 export const UPDATE_PROFILE = '/user/profile/update';
-export const USER_ANALYTICS = (projectId:string|undefined,userId:number) => `user/${projectId}/analytics/${userId}`;
+export const USER_ANALYTICS = (projectId: string | undefined, userId: number, sprintId?: number) => 
+    `/user/${projectId}/analytics/${userId}${sprintId ? `/${sprintId}` : ''}`;
 
 // Project Management APIs
 export const GET_PROJECTS = (workspaceId:string) =>`projects/${workspaceId}`;
@@ -54,3 +55,4 @@ export const UPDATE_TASK = (taskId:string) => `tasks/${taskId}`;
 
 export const GET_ALL_COMMENTS = (taskId:string|number) => `tasks/${taskId}/all/comments`;
 export const ADD_COMMENT = (taskId:number) => `tasks/${taskId}/comment`;
+export const DELETE_COMMENT = (taskId: number, commentId: number) => `tasks/${taskId}/comment/${commentId}`;

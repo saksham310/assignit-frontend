@@ -31,9 +31,9 @@ export const useUpdateProfile=()=>{
     })
 }
 
-export const useUserAnalytics = (projectId:string|undefined,userId:number) => {
+export const useUserAnalytics = (projectId: string|undefined, userId: number, sprintId?: number) => {
     return useQuery({
-        queryKey:['analytics',projectId,userId],
-        queryFn:() => getUserAnalytics(projectId,userId),
+        queryKey: ['analytics', projectId, userId, sprintId],
+        queryFn: () => getUserAnalytics(projectId, userId, sprintId),
     })
 }

@@ -67,7 +67,6 @@ apiClient.interceptors.response.use((res) => {
             duration: 2000,
             id: 'error',
         });
-        window.location.href = '/error';
     }
 
     return Promise.reject(err);

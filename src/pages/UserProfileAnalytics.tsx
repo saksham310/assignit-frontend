@@ -7,12 +7,16 @@ import PerformanceMetric from "@/components/custom-components/PerformanceMetric.
 import {useUserAnalytics} from "@/hooks/user.hooks.ts";
 import {useParams} from "react-router-dom";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {useState} from "react";
 
 const UserProfileAnalytics = (id: number) => {
     const {projectId} = useParams();
-    const {data, isLoading} = useUserAnalytics(projectId, id)
+    const [selectedSprintId, setSelectedSprintId] = useState<number>();
+    const {data, isLoading} = useUserAnalytics(projectId, id, selectedSprintId);
+
     if (isLoading) return <Loader/>
-    const memberData = data?.details
+    const memberData = data?.details;
 
     // Data for donut chart
     const donutData = [
@@ -35,23 +39,40 @@ const UserProfileAnalytics = (id: number) => {
     const idealLimit = memberData.sprintCount * memberData.idealTaskCount;
     const moderateLimit = memberData.sprintCount * memberData.idealTaskCount + 2;
 
-
-
-
     // Colors for charts
     const DONUT_COLORS = ["#10b981", "#e5e7eb"]
     const BAR_COLORS = ["#14b8a6", "#f59e0b"]
 
     return <>
-        <div className={' w-auto  h-full  lg:w-[1240px] bg-white p-3 flex flex-col space-y-8'}>
-            <div className={'flex gap-3 items-center'}>
-                <UserAvatar className={'size-20'} name={memberData.username} avatarColor={memberData.avatarColor}
-                            src={memberData.imageUrl}/>
-                <div className={'flex flex-col gap-2'}>
-                    <span className={'text-lg font-medium'}>{memberData.username}</span>
-                    <Badge variant={'secondary'}
-                           className={'text-xs font-normal w-fit'}>{memberData.role.split("_").join(" ")}</Badge>
-                    <span className={''}></span>
+        <div className={'w-auto h-full lg:w-[1240px] bg-white p-3 flex flex-col space-y-8'}>
+            <div className={'flex justify-between items-center'}>
+                <div className={'flex gap-3 items-center'}>
+                    <UserAvatar className={'size-20'} name={memberData.username} avatarColor={memberData.avatarColor}
+                                src={memberData.imageUrl}/>
+                    <div className={'flex flex-col gap-2'}>
+                        <span className={'text-lg font-medium'}>{memberData.username}</span>
+                        <Badge variant={'secondary'}
+                               className={'text-xs font-normal w-fit'}>{memberData.role.split("_").join(" ")}</Badge>
+                        <span className={''}></span>
+                    </div>
+                </div>
+                <div className="w-[200px]">
+                    <Select
+                        value={selectedSprintId?.toString()}
+                        onValueChange={(value) => setSelectedSprintId(value ? Number(value) : undefined)}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="All Sprints" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="undefined">All Sprints</SelectItem>
+                            {memberData.sprints.map((sprint) => (
+                                <SelectItem key={sprint.id} value={sprint.id.toString()}>
+                                    {sprint.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
             </div>
             {/* Performance Analysis */}
