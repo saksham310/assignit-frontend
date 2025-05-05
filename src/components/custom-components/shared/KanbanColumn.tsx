@@ -18,13 +18,15 @@ const KanbanColumn = ({ status }: KanbanColumnProps) => {
             className="shadow-none flex flex-col h-[calc(100vh-280px)] border-primary/900 bg-primary/5"
         >
             <CardHeader className="pb-2">
-                <Badge
-                    variant="outline"
-                    className="border-2 w-fit font-medium"
-                    style={{ borderColor: status.color }}
-                >
-                    {status.name}
-                </Badge>
+            <div className="flex items-center gap-2">
+            <span className={'size-4 border-2 rounded-full flex items-center justify-center'} 
+                                          style={{borderColor:status.color}}>
+                                        <span className={'rounded-full size-2'} 
+                                              style={{backgroundColor:status.color}}></span>
+                                    </span>
+                                    <span className={'text-xs font-medium'}>{status.name}</span>
+            </div>
+        
             </CardHeader>
 
             <CardContent className="flex-1 overflow-y-auto overflow-x-hidden p-2">

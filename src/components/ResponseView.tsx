@@ -43,7 +43,8 @@ const ResponseView = ({ sprintId }: ResponseViewProps) => {
 
     return (
         <div className="px-1 grid grid-cols-1 gap-4 max-h-[450px]">
-            <Button variant={'secondary'} size={'sm'} 
+            <Button variant={'secondary'} size={'sm'}
+            disabled={!data?.responses?.length} 
             className='ml-auto flex gap-1 items-center text-muted-foreground hover:bg-secondary'
             onClick={handleExport}
             ><FileX/> Export to excel</Button>

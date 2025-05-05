@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils"
 import type { ColumnDef, Row } from "@tanstack/react-table"
 import {
-    AlertTriangle,
     Calendar,
     CheckCircle2,
     ChevronDown,
@@ -10,8 +9,6 @@ import {
     Edit,
     Eye,
     MoreHorizontal,
-    Target,
-    ThumbsUp,
     Trash2
 } from "lucide-react"
 
@@ -29,7 +26,17 @@ import type { MembersData } from "@/types/workspace.type.ts"
 import {PROJECT_ROLES, WORKSPACE_ROLES} from "@/constants/roles.constants.ts";
 import {useWorkspaceRoleStore} from "@/store/workspace.store.ts";
 import {Progress} from "@/components/ui/progress.tsx";
-import { Card } from "@/components/ui/card"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export const useGetMembersColumns = (
     isWorkspace: boolean,
@@ -136,15 +143,36 @@ export const useGetMembersColumns = (
 
                         return (
                             <div className="flex justify-center">
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8 text-muted-foreground hover:text-destructive"
-                                    onClick={() => handleEditMember(row.original.id, "Remove")}
-                                >
-                                    <Trash2 className="h-4 w-4" />
-                                    <span className="sr-only">Remove member</span>
-                                </Button>
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                            <span className="sr-only">Remove member</span>
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Remove Member</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                Are you sure you want to remove {row.original.name} from the team? 
+                                                This action cannot be undone.
+                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogAction
+                                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                                onClick={() => handleEditMember(row.original.id, "Remove")}
+                                            >
+                                                Remove
+                                            </AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
                             </div>
                         )
                     },
@@ -310,7 +338,8 @@ export const useGetRetrospectiveColumns = (): ColumnDef<any>[] => {
                 <div className="w-full flex justify-between gap-1">
                     <span className="font-medium">What Went Well</span>
                     <span className="text-xs text-muted-foreground">
-                        {table.getFilteredRowModel().rows.length} responses
+                    {table.getFilteredRowModel().rows.length} {table.getFilteredRowModel().rows.length > 1 ? 'responses' : 'response'}
+
                     </span>
                 </div>
             ),
@@ -326,7 +355,7 @@ export const useGetRetrospectiveColumns = (): ColumnDef<any>[] => {
                 <div className="w-full flex justify-between gap-1">
                     <span className="font-medium">To Improve</span>
                     <span className="text-xs text-muted-foreground">
-                        {table.getFilteredRowModel().rows.length} responses
+                    {table.getFilteredRowModel().rows.length} {table.getFilteredRowModel().rows.length > 1 ? 'responses' : 'response'}
                     </span>
                 </div>
             ),
@@ -342,7 +371,8 @@ export const useGetRetrospectiveColumns = (): ColumnDef<any>[] => {
                 <div className="w-full flex justify-between gap-1">
                     <span className="font-medium">Action Items</span>
                     <span className="text-xs text-muted-foreground">
-                        {table.getFilteredRowModel().rows.length} responses
+                    {table.getFilteredRowModel().rows.length} {table.getFilteredRowModel().rows.length > 1 ? 'responses' : 'response'}
+
                     </span>
                 </div>
             ),
