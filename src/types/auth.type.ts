@@ -8,6 +8,8 @@ interface UserData {
     id: number;
     username: string;
     email: string;
+    image: string | null;
+    avatarColor: string | null;
 }
 
 export interface AuthResponse {
