@@ -11,6 +11,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu.tsx";
 import {MoreHorizontal} from "lucide-react";
+import { useDeleteComment } from "@/hooks/task.hooks.ts";
 
 interface CommentProps {
     comment: Comment;
@@ -19,15 +20,25 @@ interface CommentProps {
     onEdit?: () => void;
     editText: string;
     editImage: string;
+    taskId: number;
 }
 
 const getRelativeDate = (date: string) => {
     return moment(date).fromNow(); // Example: "a day ago", "2 hours ago", "Yesterday", etc.
 }
 
-const Comments = ({comment, isBlur, isEditing, onEdit, editImage, editText}: CommentProps) => {
+const Comments = ({comment, isBlur, isEditing, onEdit, editImage, editText, taskId}: CommentProps) => {
     const user = useAuthUser<User>();
+    const deleteComment = useDeleteComment();
     const currentUserId = user?.id;
+
+    const handleDelete = () => {
+        deleteComment.mutate({
+            taskId,
+            commentId: comment.id
+        });
+    }
+
     if (!comment) return null;
 
     return (
@@ -36,7 +47,7 @@ const Comments = ({comment, isBlur, isEditing, onEdit, editImage, editText}: Com
                 <div className={`flex flex-col gap-2 p-2 border rounded-lg ${
                     isBlur ? "opacity-20 bg-gray-100 pointer-events-none" : ""}
                     ${isEditing ? "bg-white" : "bg-gray-50"}
-                    `}>
+                `}>
                     <div className="flex gap-4 items-center">
                         <UserAvatar
                             src={comment.userImage}
@@ -45,25 +56,30 @@ const Comments = ({comment, isBlur, isEditing, onEdit, editImage, editText}: Com
                             className="size-8 text-sm"
                         />
                         <div className="flex-col text-sm w-full space-y-2">
-                          <div className={'flex items-center justify-between'}>
-                              <div className="flex items-center gap-2">
-                                  <p>{comment.name}</p>
-                                  <span className="text-xs text-gray-500">{getRelativeDate(comment.createdAt)}</span>
-                              </div>
-                              {!isEditing && comment.userId === currentUserId && (
-                                  <DropdownMenu>
-                                      <DropdownMenuTrigger asChild>
-                                          <Button size="icon" variant="ghost">
-                                              <MoreHorizontal className="h-4 w-4" />
-                                          </Button>
-                                      </DropdownMenuTrigger>
-                                      <DropdownMenuContent align="end">
-                                          <DropdownMenuItem onSelect={onEdit}>Edit</DropdownMenuItem>
-                                          <DropdownMenuItem onSelect={()=>{}} className="text-red-500">Delete</DropdownMenuItem>
-                                      </DropdownMenuContent>
-                                  </DropdownMenu>
-                              )}
-                          </div>
+                            <div className={'flex items-center justify-between'}>
+                                <div className="flex items-center gap-2">
+                                    <p>{comment.name}</p>
+                                    <span className="text-xs text-gray-500">{getRelativeDate(comment.createdAt)}</span>
+                                </div>
+                                {!isEditing && comment.userId === currentUserId && (
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button size="icon" variant="ghost">
+                                                <MoreHorizontal className="h-4 w-4" />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            <DropdownMenuItem onSelect={onEdit}>Edit</DropdownMenuItem>
+                                            <DropdownMenuItem 
+                                                onSelect={handleDelete}
+                                                className="text-red-500"
+                                            >
+                                                Delete
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                )}
+                            </div>
                             <p className="text-sm text-gray-700">{isEditing ? editText : comment.message}</p>
                         </div>
                     </div>
