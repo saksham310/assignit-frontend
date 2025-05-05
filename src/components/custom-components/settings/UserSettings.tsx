@@ -27,7 +27,7 @@ import {useRef, useState} from "react";
 import {FormFieldProps} from "@/types/form.type.ts";
 import {MdMail} from "react-icons/md";
 import {FaEye, FaEyeSlash} from "react-icons/fa";
-import {useUpdateProfile} from "@/hooks/user.hooks.ts";
+import {useUpdateProfile, useDeleteUser} from "@/hooks/user.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
 
 
@@ -36,6 +36,7 @@ const UserSettings = () => {
     const user = useAuthUser<User>();
     const imageInputRef = useRef<HTMLInputElement>(null);
     const {mutate, isPending} = useUpdateProfile();
+    const {mutate: deleteAccount, isPending: isDeleting} = useDeleteUser();
     const [previewImage, setPreviewImage] = useState(user?.image ?? "");
 
     const defaultValues = {
@@ -125,7 +126,7 @@ const UserSettings = () => {
         setShowPassword(!showPassword);
     }
 
-    if (isPending) {
+    if (isPending || isDeleting) {
         return <Loader/>
     }
 
@@ -215,7 +216,10 @@ const UserSettings = () => {
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction
-                                    className={'bg-destructive hover:bg-destructive/80 text-destructive-foreground'}>Continue</AlertDialogAction>
+                                    onClick={() => deleteAccount()}
+                                    className={'bg-destructive hover:bg-destructive/80 text-destructive-foreground'}>
+                                    Continue
+                                </AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>

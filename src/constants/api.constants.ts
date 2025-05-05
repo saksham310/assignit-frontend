@@ -25,6 +25,7 @@ export const JOIN_WORKSPACE = `/workspaces/members/join`;
 
 // User Profile APIs
 export const UPDATE_PROFILE = '/user/profile/update';
+export const DELETE_USER = '/user/delete';
 export const USER_ANALYTICS = (projectId: string | undefined, userId: number, sprintId?: number) => 
     `/user/${projectId}/analytics/${userId}${sprintId ? `/${sprintId}` : ''}`;
 
@@ -41,7 +42,8 @@ export const SUBMIT_RETROSPECTIVE = `projects/retrospective`;
 export const GET_RETROSPECTIVE_FEEDBACKS = (id:number) => `projects/retrospective/${id}`;
 
 export const UPDATE_PROJECT_STATUS = (projectId:number) => `projects/${projectId}/status/update`;
-export const UPDATE_PROJECT = (projectId:number) => `projects/${projectId}`
+export const UPDATE_PROJECT = (projectId:number) => `projects/${projectId}`;
+export const DELETE_PROJECT = (projectId: number) => `projects/${projectId}`;
 
 export const ADD_PROJECT_MEMBER = (projectId:number) => `projects/${projectId}/members/add`;
 export const UPDATE_PROJECT_MEMBER = (projectId:number) => `projects/${projectId}/members/role`;

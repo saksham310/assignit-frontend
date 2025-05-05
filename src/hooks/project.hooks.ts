@@ -6,11 +6,12 @@ import {
     getProjectDetails, getProjectMembers,
     getProjectRetrospective,
     getProjects,
-    getProjectStatus, getRetrospectiveFeedbacks, sendProjectRetrospective, updateMemberRole, updateProject, updateStatus
+    getProjectStatus, getRetrospectiveFeedbacks, sendProjectRetrospective, updateMemberRole, updateProject, updateStatus, deleteProject
 } from "@/service/project.service.ts";
 import {toast} from "sonner";
 import {useDialogStore} from "@/store/dialog.store.ts";
 import {Status} from "@/types/project.types.ts";
+
 
 export const useCreateProject = () => {
     const queryClient = useQueryClient();
@@ -164,4 +165,20 @@ export const useUpdateMember = () => {
         }
 
     })
+}
+
+export const useDeleteProject = () => {
+    const queryClient = useQueryClient();
+
+    
+    return useMutation({
+        mutationFn: (projectId: number) => deleteProject(projectId),
+        onSuccess: (data) => {
+            toast.success(data.message, {
+                duration: 2000,
+            });
+            window.location.href='/';
+            queryClient.invalidateQueries({ queryKey: ['projects'] });
+        }
+    });
 }

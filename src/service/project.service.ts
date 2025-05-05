@@ -3,6 +3,7 @@ import {
     ADD_PROJECT_MEMBER,
     CREATE_PROJECT,
     CREATE_SPRINT,
+    DELETE_PROJECT,
     GET_PROJECT_DETAILS,
     GET_PROJECT_MEMBERS,
     GET_PROJECT_RETROSPECTIVE,
@@ -75,4 +76,9 @@ export const addProjectMember = async (id:number,data:number[]) =>{
 export const updateMemberRole = async (id:number,data:{memberId:number,role:string}) =>{
     const res = await apiClient.put(UPDATE_PROJECT_MEMBER(id),data)
     return res.data
+}
+
+export const deleteProject = async (projectId: number) => {
+    const res = await apiClient.delete(DELETE_PROJECT(projectId));
+    return res.data;
 }

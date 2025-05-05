@@ -20,7 +20,7 @@ import {useDialogStore} from "@/store/dialog.store.ts";
 import CustomStatusForm from "@/components/custom-components/forms/CustomStatusForm.tsx";
 import {Status} from "@/types/project.types.ts";
 import {useParams} from "react-router-dom";
-import {useGetProjectStatusMembers, useUpdateProject, useUpdateStatus} from "@/hooks/project.hooks.ts";
+import {useDeleteProject, useGetProjectStatusMembers, useUpdateProject, useUpdateStatus} from "@/hooks/project.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
 
 const ProjectSettings = () => {
@@ -32,6 +32,7 @@ const ProjectSettings = () => {
     const [sprintTasks, setSprintTasks] = useState(0);
     const setOpen = useDialogStore(state => state.openDialog)
     const {mutate:updateProject} = useUpdateProject()
+    const {mutate:deleteProject} = useDeleteProject()
     useEffect(() => {
         if(projectStatusMember && !isLoading) {
             setProjectName(projectStatusMember?.name)
@@ -48,6 +49,9 @@ const ProjectSettings = () => {
             id: projectId ? Number(projectId) : 0
         })
 
+    }
+    const handleDeleteProject = () => {
+        deleteProject(Number(projectId));
     }
     const handleManageStatus = () => {
         setOpen(() => <CustomStatusForm handleStatusList={handleStatusChange}
@@ -143,7 +147,7 @@ const ProjectSettings = () => {
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction className="bg-red-700">
+                            <AlertDialogAction className="bg-red-700" onClick={handleDeleteProject}>
                                 Delete Project
                             </AlertDialogAction>
                         </AlertDialogFooter>
