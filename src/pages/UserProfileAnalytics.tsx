@@ -12,7 +12,7 @@ import {useState} from "react";
 
 const UserProfileAnalytics = (id: number) => {
     const {projectId} = useParams();
-    const [selectedSprintId, setSelectedSprintId] = useState<number>();
+    const [selectedSprintId, setSelectedSprintId] = useState<number|undefined>();
     const {data, isLoading} = useUserAnalytics(projectId, id, selectedSprintId);
 
     if (isLoading) return <Loader/>
@@ -31,8 +31,8 @@ const UserProfileAnalytics = (id: number) => {
     ]
 
     const k = -1.5;
-    const completionRate = Math.round((memberData.tasks.completed / memberData.tasks.total) * 100)
-    const avgBugsPerTask = +(memberData.tasks.bugs / memberData.tasks.total).toFixed(2);
+    const completionRate = memberData.tasks.total === 0 ? 0 : Math.round((memberData.tasks.completed / memberData.tasks.total) * 100)
+    const avgBugsPerTask = memberData.tasks.total === 0 ? 0  : +(memberData.tasks.bugs / memberData.tasks.total).toFixed(2);
     const qualityScore = avgBugsPerTask === 0 ? 0 : memberData?.role !== "QA" ? Math.min(100, Math.round(100 * Math.exp(k * avgBugsPerTask)))
         : Math.min(100, Math.round(100 * Math.exp(-k * avgBugsPerTask)));
 
@@ -58,14 +58,16 @@ const UserProfileAnalytics = (id: number) => {
                 </div>
                 <div className="w-[200px]">
                     <Select
-                        value={selectedSprintId?.toString()}
-                        onValueChange={(value) => setSelectedSprintId(value ? Number(value) : undefined)}
+                        value={selectedSprintId?.toString() ?? "All Sprints"}
+                        onValueChange={(value) => setSelectedSprintId(value && value != 'all' ? Number(value) : undefined)}
                     >
                         <SelectTrigger>
-                            <SelectValue placeholder="All Sprints" />
+                            <SelectValue>
+                                {selectedSprintId === undefined ? "All Sprints" : memberData.sprints.find(s => s.id === selectedSprintId)?.name}
+                            </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="undefined">All Sprints</SelectItem>
+                            <SelectItem value={"all"}>All Sprints</SelectItem>
                             {memberData.sprints.map((sprint) => (
                                 <SelectItem key={sprint.id} value={sprint.id.toString()}>
                                     {sprint.name}
