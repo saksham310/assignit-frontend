@@ -134,21 +134,27 @@ export const useJoinWorkspace = () => {
     const navigate = useNavigate();
     return useMutation({
         mutationFn: joinWorkspace,
-        onSuccess:  (data) => {
-            window.location.href ='/login';
+        onSuccess: (data) => {
+            // Invalidate queries to refetch workspaces
             queryClient.invalidateQueries({queryKey: ["workspaces"]});
-            queryClient.invalidateQueries({queryKey: ["workspace analytics", data.newWorkspace.id]});
-            toast.success("Successfully joined workspace",{
+            
+            // Access the workspace_id from the response for better caching
+            if (data.user && data.user.workspace_id) {
+                queryClient.invalidateQueries({queryKey: ["workspace analytics", data.user.workspace_id.toString()]});
+                queryClient.invalidateQueries({queryKey: ["workspace member", data.user.workspace_id.toString()]});
+            }
+            
+            toast.success("Successfully joined workspace", {
                 duration: 2000,
             });
-            navigate("/");
+            
+            // Redirect to login page as per current implementation
+            window.location.href = '/login';
         },
         onError: () => {
             navigate("/")
         }
-
-        }
-    )
+    });
 }
 
 export const useUpdateMemberRole = () => {

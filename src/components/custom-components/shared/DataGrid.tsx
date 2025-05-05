@@ -18,11 +18,11 @@ import UserProfileAnalytics from "@/pages/UserProfileAnalytics.tsx";
 import {useDialogStore} from "@/store/dialog.store.ts";
 
 interface DataTableProps<TData> {
-    columns: ColumnDef<any>[]
+    columns: ColumnDef<TData>[]
     data: TData[]
     search?: boolean
     searchValue?: string
-    dbClick?:boolean
+    dbClick?: boolean
 }
 
 export function DataGrid<TData>({ columns, data, search = false, searchValue = "" ,dbClick = false}: DataTableProps<TData>) {
@@ -42,7 +42,7 @@ export function DataGrid<TData>({ columns, data, search = false, searchValue = "
             sorting,
         },
     })
-    const handleDbClick = (value:number) =>{
+    const handleDbClick = (value:number) => {
         if(!dbClick) return;
         setOpen(()=>UserProfileAnalytics(value))
     }

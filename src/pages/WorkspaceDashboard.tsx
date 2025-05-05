@@ -11,18 +11,18 @@ import ProjectCreationForm from "@/components/custom-components/forms/ProjectCre
 import SendInvitePage from "@/pages/SendInvitePage.tsx";
 import { useDialogStore } from "@/store/dialog.store.ts";
 import {CalendarDays, FolderOpenDot, Folders, PlusCircle, Send, UsersRound} from "lucide-react";
-
+import { WorkspaceAnalyticsData } from "@/types/workspace.type.ts";
 
 // Helper function to create analytics items
-const createAnalyticsItems = (analytics: string[], workspaceAnalytics:Record<string,any>): AnalyticCardProps[] => {
+const createAnalyticsItems = (analytics: string[], workspaceAnalytics: WorkspaceAnalyticsData): AnalyticCardProps[] => {
     const iconLabel = {
-        "Projects":FolderOpenDot,
-        "Sprints":Folders,
-        "Members":UsersRound,
+        "Projects": FolderOpenDot,
+        "Sprints": Folders,
+        "Members": UsersRound,
         "Overdue Projects": CalendarDays,
     };
 
-    return analytics.map((key:string) => ({
+    return analytics.map((key: keyof WorkspaceAnalyticsData) => ({
         name: key,
         info: `${workspaceAnalytics[key]}`,
         iconLabel: iconLabel[key],
@@ -46,7 +46,7 @@ const WorkspaceDashboard = () => {
     if (isLoading) return <Loader />;
     if (!workspaceAnalytics) return null;
 
-    const analytics = ["Projects", "Members", "Sprints", "Overdue Projects"];
+    const analytics = ["Projects", "Members", "Sprints", "Overdue Projects"] as const;
     const items = createAnalyticsItems(analytics, workspaceAnalytics);
 
     const onInvite = () => setOpen(SendInvitePage);
@@ -65,9 +65,9 @@ const WorkspaceDashboard = () => {
         },
     ];
 
-    const actions:Action[] = [
-        { label: "Invite Members", icon: <Send />,variant:'secondary', onClick: onInvite },
-        { label: "Add Project", icon: <PlusCircle />,variant:'default', onClick: onAddProject },
+    const actions: Action[] = [
+        { label: "Invite Members", icon: <Send />, variant: 'secondary', onClick: onInvite },
+        { label: "Add Project", icon: <PlusCircle />, variant: 'default', onClick: onAddProject },
     ];
 
     return <Dashboard tabConfig={tabConfig} isOwnerAdmin={isOwnerAdmin} actions={actions} />;
