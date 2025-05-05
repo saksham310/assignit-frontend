@@ -29,7 +29,7 @@ const ProjectDashboard = () => {
             id:Number(projectId),
             data:{
                 memberId:memberId,
-                role:value
+                role:value.split(" ").join("_")
             }
         })
     }
