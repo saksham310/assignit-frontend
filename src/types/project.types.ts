@@ -44,6 +44,8 @@ export interface ProjectResponse {
     toDo: number
     inProgress: number
     completed: number
+    tasks: number
+    role: string
 }
 
 
@@ -83,6 +85,7 @@ export interface ProjectOverviewData {
     lowPriority: number;
     mediumPriority: number;
     members: number;
+    idealTaskCount?: number;
 }
 
 export interface TaskPayload {
@@ -120,21 +123,63 @@ export type Comment = {
 
 export type ProjectRetrospective = {
     id: number
-  name: string
-  sprint: Sprint[]
+    name: string
+    sprint: Sprint[]
+    users: [{role: string}]
 }
+
 export interface Sprint {
     id: number
     name: string
-  }
+}
 
 export interface RetrospectivePayload {
-    id: number
+    id?: number
     sprintId: number
     wentWell: string
     toImprove: string
     actionItems: string
-    createdAt: string
+    createdAt?: string
 }
 
-  
+export interface ProjectStatusMembersResponse {
+    name: string;
+    idealTaskCount: number;
+    projectStatus: Status[];
+    projectMembers: {
+        id: number;
+        imageUrl: string;
+        avatarColor: string;
+        username: string;
+    }[];
+}
+
+export interface ProjectMembersResponse {
+    currentMembers: {
+        id: number;
+        name: string;
+        email: string;
+        joinDate: string;
+        role: string;
+        avatarColor: string;
+        imageUrl: string;
+    }[];
+    remainingMembers: {
+        id: number;
+        username: string;
+        email: string;
+        avatarColor: string;
+        imageUrl: string;
+    }[];
+    userRole: string;
+}
+
+export interface ProjectDetailsResponse {
+    projectOverviewData: ProjectOverviewData;
+    projectSprintSummary: SprintWithTask[];
+}
+
+export interface RetrospectiveResponse {
+    responses: RetrospectivePayload[];
+}
+
