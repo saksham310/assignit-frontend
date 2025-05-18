@@ -26,13 +26,16 @@ const RetrospectiveSection = () => {
 
     const [selectedProjectId, setSelectedProjectId] = useState<number>();
     const [selectedSprintId, setSelectedSprintId] = useState<number>();
+    const [selectedSprintDate, setSelectedSprintDate] = useState<string>();
 
     // Set default project and sprint after data is loaded
     useEffect(() => {
         if (project?.projects?.length && project?.projects?.length > 0) {
-            const defaultProject: ProjectRetrospective = project?.projects[0];
+            const defaultProject: ProjectRetrospective = project.projects[0];
             setSelectedProjectId(defaultProject.id);
             setSelectedSprintId(defaultProject.sprint?.[0]?.id);
+            const date = defaultProject?.sprint?.[0]?.endDate;
+            setSelectedSprintDate(date)
         }
     }, [project]);
 
@@ -50,6 +53,15 @@ const RetrospectiveSection = () => {
         const selected = project?.projects?.find((p:ProjectRetrospective) => p.id === newProjectId);
         setSelectedProjectId(newProjectId);
         setSelectedSprintId(selected?.sprint?.[0]?.id);
+        const date = selected?.sprint?.[0].endDate;
+        console.log(date)
+        setSelectedSprintDate(date)
+    }
+    const handleSprintChange = (val:string) => {
+        const newSprintId = +val;
+        const selected = sprints.find((s:Sprint) => s.id === newSprintId);
+        setSelectedSprintId(newSprintId);
+        setSelectedSprintDate(selected?.endDate)
     }
     const tabconfig: TabConfig[] = [
         {
@@ -57,9 +69,9 @@ const RetrospectiveSection = () => {
             label: "Submit Feedback",
             component: () => (
                 (!sprints || sprints?.length === 0) ?<EmptyRetrospectiveState hasProject={true}
-                showBtn={role}
+                showBtn={!!role}
                  projectId={selectedProjectId as number}/> :
-                <RetrospectiveForm sprintId={selectedSprintId as number}/>
+                <RetrospectiveForm sprintId={selectedSprintId as number} sprintDate={selectedSprintDate}/>
             ),
         },
         ...((role === "Project_Manager" && sprints.length > 0) ? [{
@@ -94,7 +106,7 @@ const RetrospectiveSection = () => {
                     {/* Sprint Selection */}
                     <div className="flex flex-col gap-3 flex-1">
                         <Label>Select Sprint</Label>
-                        <Select value={selectedSprintId?.toString()} onValueChange={(val) => setSelectedSprintId(+val)}>
+                        <Select value={selectedSprintId?.toString()} onValueChange={(val) => handleSprintChange(val)}>
                             <SelectTrigger id="sprint">
                                 <SelectValue placeholder="Select a sprint"/>
                             </SelectTrigger>

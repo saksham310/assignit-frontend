@@ -139,6 +139,7 @@ export type ProjectRetrospective = {
 export interface Sprint {
     id: number
     name: string
+    endDate: string
 }
 
 export interface RetrospectivePayload {
