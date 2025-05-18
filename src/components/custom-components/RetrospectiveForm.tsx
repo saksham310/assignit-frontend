@@ -17,7 +17,9 @@ const RetrospectiveForm = ({sprintId,sprintDate}:RetrospectiveFormProps) => {
         toImprove:'',
         actionItems:''
     });
-    const isSprintOver = moment().isAfter(moment(sprintDate));
+    const isSprintOver = sprintDate && moment(sprintDate).isValid() 
+        ? moment().isAfter(moment(sprintDate)) 
+        : false;
     const {mutate} = useSubmitFeedback()
     const handleSubmit = () => {
         if(!feedback.wentWell || !feedback.toImprove || !feedback.actionItems) return
