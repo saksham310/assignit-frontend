@@ -29,8 +29,8 @@ const RetrospectiveSection = () => {
 
     // Set default project and sprint after data is loaded
     useEffect(() => {
-        if (project?.projects?.length > 0) {
-            const defaultProject: ProjectRetrospective = project.projects[0];
+        if (project?.projects?.length && project?.projects?.length > 0) {
+            const defaultProject: ProjectRetrospective = project?.projects[0];
             setSelectedProjectId(defaultProject.id);
             setSelectedSprintId(defaultProject.sprint?.[0]?.id);
         }
