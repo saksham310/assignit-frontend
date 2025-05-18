@@ -54,7 +54,6 @@ const RetrospectiveSection = () => {
         setSelectedProjectId(newProjectId);
         setSelectedSprintId(selected?.sprint?.[0]?.id);
         const date = selected?.sprint?.[0].endDate;
-        console.log(date)
         setSelectedSprintDate(date)
     }
     const handleSprintChange = (val:string) => {
