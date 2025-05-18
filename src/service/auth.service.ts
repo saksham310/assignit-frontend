@@ -16,7 +16,7 @@ export const register = async (data: RegisterInput) => {
 
 // Send OTP API call
 export const sendOTP = async (email: string) => {
-        const res = await apiClient.post(SEND_OTP,  email );
+        const res = await apiClient.post(SEND_OTP, { email });
         return res.data;
 };
 

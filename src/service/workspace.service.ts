@@ -8,22 +8,22 @@ import {
     UPDATE_WORKSPACE
 } from "@/constants/api.constants.ts";
 import { apiClient } from "@/service/api.client.ts";
-import { CreateWorkspaceData } from "@/types/workspace.type.ts";
+import { CreateWorkspaceData, JoinWorkspaceResponse, MembersData, WorkspaceAnalyticsData, WorkspaceData } from "@/types/workspace.type.ts";
 
 // Fetch all workspaces
-export const getWorkspaces = async () => {
+export const getWorkspaces = async (): Promise<WorkspaceData[]> => {
     const res = await apiClient.get(GET_WORKSPACES);
     return res.data;
 };
 
 // Fetch workspace analytics by ID
-export const getWorkspaceAnalytics = async (id: string | undefined) => {
+export const getWorkspaceAnalytics = async (id: string | undefined): Promise<WorkspaceAnalyticsData> => {
     const res = await apiClient.get(GET_WORKSPACE_ANALYTICS(id as string));
     return res.data.workspaceAnalytics;
 };
 
 // Fetch workspace members by workspace ID
-export const getWorkspaceMember = async (id: string | undefined) => {
+export const getWorkspaceMember = async (id: string | undefined): Promise<MembersData[]> => {
     const res = await apiClient.get(GET_MEMBERS(id as string));
     return res.data.userList;
 };
@@ -54,20 +54,19 @@ export const leaveWorkspace = async (id: string | null) => {
 };
 
 // Update the role of the user
-export const updateMemberRole = async (data :{ id: number ; newRole: string;workspaceId:string|undefined }) => {
-    const res = await apiClient.put(UPDATE_MEMBERS(data.workspaceId as string),data);
+export const updateMemberRole = async (data: { id: number; newRole: string; workspaceId: string | undefined }) => {
+    const res = await apiClient.put(UPDATE_MEMBERS(data.workspaceId as string), data);
     return res.data;
-}
-
+};
 
 // Invite Member to the workspace
-export  const inviteMember = async (data :{id: string | null; emails: string []}) => {
-    const res = await  apiClient.post(INVITE_USER(data.id as string), data);
+export const inviteMember = async (data: { id: string | null; emails: string[] }) => {
+    const res = await apiClient.post(INVITE_USER(data.id as string), data);
     return res.data;
-}
+};
 
 // Join the workspace
-export const joinWorkspace = async (inviteCode:string) => {
-    const res = await apiClient.post(JOIN_WORKSPACE,{inviteCode});
+export const joinWorkspace = async (inviteCode: string): Promise<JoinWorkspaceResponse> => {
+    const res = await apiClient.post(JOIN_WORKSPACE, { inviteCode });
     return res.data;
-}
+};

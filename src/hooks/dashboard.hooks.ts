@@ -23,7 +23,7 @@ export const useDashboardNavigate = () => {
                 navigate(`/workspaces/${id}`);
             }
         }
-    }, [isFetching, workspaces, navigate]);
+    }, [isFetching, workspaces, navigate, location.pathname, setRedirectUrl]);
 
     return {isLoading, isFetching};
 }
@@ -36,7 +36,7 @@ export const useDashboardData = () => {
     const memberData = data as MembersData[];
     useEffect(() => {
         if (id) setCurrentRole(id as string)
-    }, [id]);
+    }, [id, setCurrentRole]);
     const currentRole = useWorkspaceRoleStore((state) => state.currentRole);
     const handleEditMember = (memberId: number, value: string) => {
         const data = {
@@ -49,5 +49,4 @@ export const useDashboardData = () => {
     const isOwnerAdmin = WORKSPACE_ROLES.filter(role => role != 'Member').includes(currentRole) ;
     const membersColumns = useGetMembersColumns(true,isOwnerAdmin, handleEditMember);
     return {isOwnerAdmin, memberData, membersColumns};
-
 }

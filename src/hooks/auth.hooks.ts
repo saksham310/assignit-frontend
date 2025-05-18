@@ -53,8 +53,7 @@ export const useRegister=()=>{
 
 export  const useGetOTP=()=>{
     return useMutation({
-        mutationFn:sendOTP
-
+        mutationFn: (data: {email: string}) => sendOTP(data.email)
     })
 }
 

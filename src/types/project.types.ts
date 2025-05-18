@@ -1,5 +1,3 @@
-import {User} from "@/types/auth.type.ts";
-
 export type StatusType = "To_Do" | "In_Progress" | "Completed"
 
 export interface Status {
@@ -44,15 +42,27 @@ export interface ProjectResponse {
     toDo: number
     inProgress: number
     completed: number
+    tasks: number
+    role: string
 }
 
 
 export interface Task {
     id: number;
     name: string;
-    assignees: User[];
-    bugCount: number;
+    description?: string;
     priority: 'Low' | 'Medium' | 'High';
+    status?: Status;
+    assignees: {
+        id: number;
+        username: string;
+        image: string;
+        avatarColor: string;
+    }[];
+    bugCount?: number;
+    FrontendBugCount?: number;
+    BackendBugCount?: number;
+    DatabaseBugCount?: number;
 }
 
 export interface TaskStatus {
@@ -83,6 +93,7 @@ export interface ProjectOverviewData {
     lowPriority: number;
     mediumPriority: number;
     members: number;
+    idealTaskCount?: number;
 }
 
 export interface TaskPayload {
@@ -111,30 +122,72 @@ export type Comment = {
     name: string,
     message: string,
     createdAt: string,
-    userImage:string,
-    avatarColor: string,
-    type: 'comment' | 'activity'
-    attachment?:string
-    userId:number
+    userImage: string,
+    avatarColor: string | null,
+    type: 'comment' | 'activity',
+    attachment?: string | null,
+    userId: number
 }
 
 export type ProjectRetrospective = {
     id: number
-  name: string
-  sprint: Sprint[]
+    name: string
+    sprint: Sprint[]
+    users: [{role: string}]
 }
+
 export interface Sprint {
     id: number
     name: string
-  }
+}
 
 export interface RetrospectivePayload {
-    id: number
+    id?: number
     sprintId: number
     wentWell: string
     toImprove: string
     actionItems: string
-    createdAt: string
+    createdAt?: string
 }
 
-  
+export interface ProjectStatusMembersResponse {
+    name: string;
+    idealTaskCount: number;
+    projectStatus: Status[];
+    projectMembers: {
+        id: number;
+        imageUrl: string;
+        avatarColor: string;
+        username: string;
+    }[];
+}
+
+export interface ProjectMembersResponse {
+    currentMembers: {
+        id: number;
+        name: string;
+        email: string;
+        joinDate: string;
+        role: string;
+        avatarColor: string;
+        imageUrl: string;
+    }[];
+    remainingMembers: {
+        id: number;
+        username: string;
+        email: string;
+        avatarColor: string;
+        imageUrl: string;
+    }[];
+    userRole: string;
+}
+
+export interface ProjectDetailsResponse {
+    projectOverviewData: ProjectOverviewData;
+    projectSprintSummary: SprintWithTask[];
+}
+
+export interface RetrospectiveResponse {
+    responses: RetrospectivePayload[];
+}
+

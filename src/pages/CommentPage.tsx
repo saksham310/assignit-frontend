@@ -12,7 +12,6 @@ import {FaSpinner} from "react-icons/fa";
 
 interface CommentPageProps {
     id: number;
-
 }
 
 const CommentPage = ({id}: CommentPageProps) => {
@@ -54,7 +53,9 @@ const CommentPage = ({id}: CommentPageProps) => {
             onCancelEdit();
             setCommentText('');
             setPreviewImage('');
-            imageRef.current && (imageRef.current.value = ''); // Reset the file input
+            if (imageRef.current) {
+                imageRef.current.value = '';
+            }
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,6 +99,7 @@ const CommentPage = ({id}: CommentPageProps) => {
                             editText={commentText}
                             editImage={previewImage}
                             isBlur={editCommentId !== null && editCommentId !== comment.id}
+                            taskId={id}
                             onEdit={() => {
                                 setEditCommentId(comment.id)
                                 setCommentText(comment.message)

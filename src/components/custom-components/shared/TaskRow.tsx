@@ -10,7 +10,12 @@ import {useUpdateTask} from "@/hooks/task.hooks.ts";
 interface TaskRowProps {
     taskId: number;
     taskName: string;
-    assignees: [{ id: string, username: string, image: string, avatarColor: string }];
+    assignees: {
+        id: number;
+        username: string;
+        image: string;
+        avatarColor: string;
+    }[];
     bugCount: number;
     priority: string;
     members?: any;

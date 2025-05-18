@@ -16,14 +16,14 @@ import {AlertCircle, Bug, FlagIcon, User} from "lucide-react";
 import PrioritySwitcher from "@/components/custom-components/shared/PrioritySwitcher.tsx";
 import Editor from "@/editor/Editor.tsx";
 import {useCreateTask, useUpdateTask} from "@/hooks/task.hooks.ts";
-import {BugType, bugTypes, TaskPayload} from "@/types/project.types.ts";
+import {BugType, bugTypes, TaskPayload, Task, Status} from "@/types/project.types.ts";
 import {cn, colorMap, getStatusColor} from "@/lib/utils.ts";
 
 // 2. Props Interface
 interface TaskEditorType {
     isCreateMode: boolean;
-    task?: any;
-    status?: any;
+    task?: Task;
+    status?: Status[];
     members?: any;
 }
 
