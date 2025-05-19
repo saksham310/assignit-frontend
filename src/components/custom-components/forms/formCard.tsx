@@ -20,6 +20,7 @@ const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLinkText,
         resolver: zodResolver(schema),
         defaultValues
     });
+    const {isSubmitting} = form.formState;
     const navigateTo=(footerLinkText && footerLinkText==='Sign Up')?'/sign-up':'/login';
     const [showPassword, setShowPassword] = useState(false);
 const togglePass=(val:string)=>{
@@ -67,8 +68,8 @@ const togglePass=(val:string)=>{
                                 <div className={'text-xs flex justify-end'}>Forgot password ?</div>
                             </Link>
                         )}
-                        <Button type="submit" disabled={form.formState.isSubmitting}>
-                            {form.formState.isSubmitting ? (
+                        <Button type="submit" disabled={isSubmitting}>
+                            {isSubmitting ? (
                                 <FaSpinner className="animate-in spin-in repeat-infinite" />
                             ) : (
                                 btnText
