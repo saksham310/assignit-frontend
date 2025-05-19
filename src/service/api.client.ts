@@ -3,7 +3,7 @@ import { toast } from "sonner";
 
 // Axios client instance setup
 export const apiClient = axios.create({
-    baseURL: 'http://localhost:8080/api',
+    baseURL: 'https://assignit-backend.onrender.com'
 });
 
 // Function to set or remove the Authorization header
