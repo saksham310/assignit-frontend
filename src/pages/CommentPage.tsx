@@ -32,7 +32,11 @@ const CommentPage = ({id}: CommentPageProps) => {
 
         if (imageRef.current?.files?.[0]) {
             form.append("attachment", imageRef.current.files[0]);
+        }else if (editCommentId && previewImage) {
+            // Only send this if it's an existing image that hasn't been changed
+            form.append("existing_attachment", previewImage);
         }
+
 
         if (editCommentId) {
             form.append('comment_id',editCommentId.toString())
