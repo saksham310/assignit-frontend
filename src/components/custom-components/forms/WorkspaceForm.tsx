@@ -18,13 +18,19 @@ const fields:FormFieldProps[]=[{
     const title=  isOnboarding ? " Give your workspace a name to get started." : 'Choose a Name for Your Workspace'
 const {mutate}=useCreateWorkspace()
 const closeDialog=useDialogStore((state) => state.closeDialog)              ;
-const onSubmit = (val: CreateWorkspaceData) => {
-    mutate(val,{
-        onSuccess:()=>{
-            closeDialog();
-        }
-    });
-}
+const onSubmit = async (val: CreateWorkspaceData) => {
+        return new Promise((resolve, reject) => {
+            mutate(val, {
+                onSuccess: () => {
+                    closeDialog();
+                    resolve(true);
+                },
+                onError: (err) => {
+                    reject(err);
+                },
+            });
+        });
+    };
 
 return (
     <>              <FormCard

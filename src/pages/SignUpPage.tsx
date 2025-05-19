@@ -13,7 +13,12 @@ import {RegisterInput} from "@/types/auth.type.ts";
 const SignUpPage = () => {
 const {mutate}=useRegister();
     const onSubmit = (val: RegisterInput) => {
-       mutate(val);
+        return new Promise((resolve, reject) => {
+            mutate(val, {
+                onSuccess: () => resolve(true),
+                onError: (err) => reject(err)
+            });
+        });
     }
     const fields:FormFieldProps[]=[
         {
