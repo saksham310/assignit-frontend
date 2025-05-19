@@ -17,13 +17,14 @@ import CustomStatusForm from "@/components/custom-components/forms/CustomStatusF
 import {Status} from "@/types/project.types.ts";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";
 import {useCreateProject} from "@/hooks/project.hooks.ts";
+import {FaSpinner} from "react-icons/fa";
 
 const ProjectCreationForm = () => {
     const [step, setStep] = useState(0);
     const [statusList, setStatusList] = useState<Status[]>([]);
     const [value, setValue] = useState<string>('default');
     const currentWorkspaceId = useWorkspaceStore(state => state.currentWorkspaceId);
-    const {mutate} = useCreateProject();
+    const {mutate, isPending} = useCreateProject();
     const form = useForm<z.infer<typeof ProjectSchema>>({
         resolver: zodResolver(ProjectSchema)
     });
@@ -158,7 +159,13 @@ const ProjectCreationForm = () => {
                                 </div>
                             </RadioGroup>
                         </div>
-                        <Button className={'ml-auto'}>Create</Button>
+                        <Button className={'ml-auto'}>
+                              {isPending ? (
+                                                    <FaSpinner className="animate-in spin-in repeat-infinite" />
+                                                ) : (
+                                                    "Create"
+                                                )}
+                        </Button>
                     </form>
                 </Form>
             </div>

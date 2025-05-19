@@ -13,13 +13,14 @@ import {Calendar} from "@/components/ui/calendar.tsx";
 import {useCreateSprint, useGetProjects} from "@/hooks/project.hooks.ts";
 import {useParams} from "react-router-dom";
 import {useWorkspaceStore} from "@/store/workspace.store.ts";
+import {FaSpinner} from "react-icons/fa";
 const SprintCreationForm = ({id}:{id?:number}) => {
     const {projectId} = useParams()
     const currentProjectId = projectId ?? id
     const currentWorkspaceId = useWorkspaceStore((state) => state.currentWorkspaceId)
     const {data:project} =useGetProjects(currentWorkspaceId as string);
     const currentProject = project.filter((project:any) => project.id == currentProjectId);
-    const {mutate} = useCreateSprint();
+    const {mutate, isPending} = useCreateSprint();
     const form = useForm<z.infer<typeof ProjectSchema>>({
         resolver: zodResolver(ProjectSchema),
         defaultValues:{
@@ -126,7 +127,13 @@ const SprintCreationForm = ({id}:{id?:number}) => {
                         )}
                     />
                 </div>
-                <Button className={'ml-auto'}>Create</Button>
+                <Button className={'ml-auto'} disabled={isPending} type="submit">
+                    {isPending ? (
+                        <FaSpinner className="animate-in spin-in repeat-infinite" />
+                    ) : (
+                        "Create"
+                    )}
+                </Button>
             </form>
         </Form>
     </div>

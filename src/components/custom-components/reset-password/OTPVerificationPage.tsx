@@ -10,6 +10,7 @@ import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useVerifyOTP} from "@/hooks/auth.hooks.ts";
 import {toast} from "sonner";
+import {FaSpinner} from "react-icons/fa";
 
 interface OTPVerificationPageProps {
     handleStepChange: (step: number) => void;
@@ -22,7 +23,7 @@ const OTPVerificationPage = ({handleStepChange, email} :OTPVerificationPageProps
             'otp':""
         }
     });
-    const {mutate}=useVerifyOTP();
+    const {mutate, isPending}=useVerifyOTP();
     const onSubmit = (values:any)=>{
         const data={...values,email:email};
         mutate(data,{
@@ -71,7 +72,13 @@ const OTPVerificationPage = ({handleStepChange, email} :OTPVerificationPageProps
                             </FormItem>
                         )}
                     />
-                    <Button disabled={!form.formState.isDirty}>Verify OTP</Button>
+                    <Button disabled={!form.formState.isDirty || isPending}>
+                        {isPending ? (
+                            <FaSpinner className="animate-in spin-in repeat-infinite" />
+                        ) : (
+                            "Verify OTP"
+                        )}
+                    </Button>
                 </form>
             </Form>
         </CardContent>

@@ -8,7 +8,7 @@ import {useForm} from "react-hook-form";
 import {FormCardProps} from "@/types/form.type.ts";
 import {z} from 'zod';
 import  {useState} from "react";
-import {FaEyeSlash} from "react-icons/fa";
+import {FaEyeSlash, FaSpinner} from "react-icons/fa";
 import {Link} from "react-router-dom";
 
 const FormCard = ({title, schema, onSubmit, btnText, footerText, footerLinkText, fields ,forgotPasswordLink}: FormCardProps) => {
@@ -67,7 +67,13 @@ const togglePass=(val:string)=>{
                                 <div className={'text-xs flex justify-end'}>Forgot password ?</div>
                             </Link>
                         )}
-                        <Button type="submit"  disabled={form.formState.isSubmitting}>{btnText}</Button>
+                        <Button type="submit" disabled={form.formState.isSubmitting}>
+                            {form.formState.isSubmitting ? (
+                                <FaSpinner className="animate-in spin-in repeat-infinite" />
+                            ) : (
+                                btnText
+                            )}
+                        </Button>
                     </form>
                 </Form>
             </CardContent>
