@@ -18,6 +18,7 @@ import Editor from "@/editor/Editor.tsx";
 import {useCreateTask, useUpdateTask} from "@/hooks/task.hooks.ts";
 import {BugType, bugTypes, TaskPayload, Task, Status} from "@/types/project.types.ts";
 import {cn, colorMap, getStatusColor} from "@/lib/utils.ts";
+import {FaSpinner} from "react-icons/fa";
 
 // 2. Props Interface
 interface TaskEditorType {
@@ -60,7 +61,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
     }, [task]);
 
     // 5. Hooks
-    const {mutate} = useCreateTask();
+    const {mutate, isPending} = useCreateTask();
     const {mutate: updateTask} = useUpdateTask();
 
     // 6. Handlers
@@ -333,7 +334,11 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
             </div>
 
             {/* Action */}
-            {isCreateMode && <Button className="ml-auto" onClick={createTask}>Add Task</Button>}
+            {isCreateMode && (
+                <Button className="ml-auto" onClick={createTask} disabled={isPending}>
+                    {isPending ? <FaSpinner className="animate-in spin-in repeat-infinite" /> : "Add Task"}
+                </Button>
+            )}
         </div>
     );
 };

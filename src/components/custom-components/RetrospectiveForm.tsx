@@ -6,6 +6,7 @@ import {useSubmitFeedback} from "@/hooks/project.hooks.ts";
 import {RetrospectivePayload} from "@/types/project.types.ts";
 import moment from "moment";
 import {Card, CardContent} from "@/components/ui/card.tsx";
+import {FaSpinner} from "react-icons/fa";
 
 interface RetrospectiveFormProps {
     sprintId:number;
@@ -20,7 +21,7 @@ const RetrospectiveForm = ({sprintId,sprintDate}:RetrospectiveFormProps) => {
     const isSprintOver = sprintDate && moment(sprintDate).isValid() 
         ? moment().isAfter(moment(sprintDate)) 
         : false;
-    const {mutate} = useSubmitFeedback()
+    const {mutate, isPending} = useSubmitFeedback()
     const handleSubmit = () => {
         if(!feedback.wentWell || !feedback.toImprove || !feedback.actionItems) return
        const payload = {
@@ -99,8 +100,12 @@ const RetrospectiveForm = ({sprintId,sprintDate}:RetrospectiveFormProps) => {
                     className="min-h-[100px]"
                 />
             </div>
-            <Button type="submit" className="ml-auto" onClick={handleSubmit} disabled={isDisabled}>
-                Submit Feedback
+            <Button type="submit" className="ml-auto" onClick={handleSubmit} disabled={isDisabled || isPending}>
+                {isPending ? (
+                    <FaSpinner className="animate-in spin-in repeat-infinite" />
+                ) : (
+                    "Submit Feedback"
+                )}
             </Button>
         </div>
     </>
