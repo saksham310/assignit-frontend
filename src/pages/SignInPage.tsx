@@ -13,7 +13,12 @@ import {LoginInput} from "@/types/auth.type.ts";
 const SignInPage = () => {
 const {mutate}=useLogin();
     const onSubmit = (val: LoginInput) => {
-        mutate(val);
+        return new Promise((resolve, reject) => {
+            mutate(val, {
+                onSuccess: () => resolve(true),
+                onError: (err) => reject(err)
+            });
+        });
     }
     const fields:FormFieldProps[]=[
         {
