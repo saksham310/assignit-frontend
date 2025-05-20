@@ -4,12 +4,13 @@ import {Avatar} from "@radix-ui/react-avatar";
 import {AvatarFallback} from "@/components/ui/avatar.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useJoinWorkspace} from "@/hooks/workspace.hooks.ts";
+import {FaSpinner} from "react-icons/fa";
 
 const JoinWorkspacePage = () =>{
     const [queryParameters] = useSearchParams();
     const {code} = useParams();
     const workspaceName = queryParameters.get('name')
-    const {mutate} = useJoinWorkspace();
+    const {mutate,isPending} = useJoinWorkspace();
     const onSubmit = () =>{
         if(!!code)
         mutate(code);
@@ -30,8 +31,17 @@ const JoinWorkspacePage = () =>{
                         <p className={'font-semibold'}>{workspaceName}</p>
                         <p className={'text-sm text-gray-500 w-full whitespace-nowrap '}>Join AssignIt to collaborate with your team and access shared resources.</p>
                        <div className={'flex  items-center justify-center gap-4  w-full'}>
-                           <Button variant={'outline'} className={'flex-1'} onClick={()=>onDecline()}>Decline</Button>
-                           <Button type={"button"} className={'flex-1'} onClick={()=>onSubmit()}>Accept Invitation</Button>
+                           <Button variant={'outline'} className={'flex-1'} onClick={()=>onDecline()}
+                                   disabled={isPending}
+                           >Decline</Button>
+                           <Button type={"button"} className={'flex-1'}
+                                   disabled={isPending}
+                                   onClick={()=>onSubmit()}>
+                               {isPending ? (
+                                   <FaSpinner className="animate-in spin-in repeat-infinite" />
+                               ) : (
+                                  " Accept Invitation"
+                               )}</Button>
                        </div>
                     </CardContent>
                 </Card>
