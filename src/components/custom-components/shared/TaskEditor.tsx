@@ -243,8 +243,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
                                 <span>{taskStatus.name}</span>
                             </div>
                         </SelectTrigger>
-                        <SelectContent>
-                            <ScrollArea className="max-h-72 lg:max-h-90">
+                        <SelectContent className="max-h-72">
                                 {statusLists.map(item => (
                                     <SelectItem key={item.name} value={item.name} className="text-gray-400">
                                         <div className="flex items-center gap-2 text-xs">
@@ -261,7 +260,6 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
                                         </div>
                                     </SelectItem>
                                 ))}
-                            </ScrollArea>
                         </SelectContent>
                     </Select>
                 </div>
