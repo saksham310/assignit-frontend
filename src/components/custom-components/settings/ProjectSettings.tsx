@@ -22,6 +22,7 @@ import {Status} from "@/types/project.types.ts";
 import {useParams} from "react-router-dom";
 import {useDeleteProject, useGetProjectStatusMembers, useUpdateProject, useUpdateStatus} from "@/hooks/project.hooks.ts";
 import Loader from "@/components/custom-components/shared/Loader.tsx";
+import {FaSpinner} from "react-icons/fa";
 
 const ProjectSettings = () => {
     const {projectId} = useParams();
@@ -31,7 +32,7 @@ const ProjectSettings = () => {
     const [projectName, setProjectName] = useState('');
     const [sprintTasks, setSprintTasks] = useState(0);
     const setOpen = useDialogStore(state => state.openDialog)
-    const {mutate:updateProject} = useUpdateProject()
+    const {mutate:updateProject,isPending} = useUpdateProject()
     const {mutate:deleteProject} = useDeleteProject()
     useEffect(() => {
         if(projectStatusMember && !isLoading) {
@@ -154,7 +155,11 @@ const ProjectSettings = () => {
                     </AlertDialogContent>
                 </AlertDialog>
                 <div className={'flex justify-end mt-2 mr-2'}>
-                    <Button disabled={disableButton} onClick={handleSubmit}>Save</Button>
+                    <Button disabled={disableButton} onClick={handleSubmit}>{isPending ? (
+                        <FaSpinner className="animate-in spin-in repeat-infinite" />
+                    ) : (
+                       Save
+                    )}</Button>
                 </div>
             </div>
         </div>
