@@ -112,6 +112,7 @@ export const statuses: Status[] = [
     {id: "temp-1", name: 'To Do', type: 'To_Do', color: '#90a9d0'},
     {id: "temp-2", name: 'In Progress', type: 'In_Progress', color: '#f9d171'},
     {id: "temp-3", name: 'Completed', type: 'Completed', color: '#008844'},
+    {id:'temp-4',name:"Bug", type:"In_Progress", color: "#DC2626"},
 ]
 
 export const bugTypes = ['frontend', 'backend', 'database']
