@@ -158,7 +158,7 @@ const ProjectSettings = () => {
                     <Button disabled={disableButton} onClick={handleSubmit}>{isPending ? (
                         <FaSpinner className="animate-in spin-in repeat-infinite" />
                     ) : (
-                       Save
+                      "Save"
                     )}</Button>
                 </div>
             </div>
