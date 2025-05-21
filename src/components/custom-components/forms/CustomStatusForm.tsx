@@ -33,7 +33,6 @@ const CustomStatusForm = ({handleStepChange,handleStatusList,projectStatus}: Cus
             ...rest,
             id: typeof id === "string" && id?.startsWith("temp-") ? null : id,
         }));
-        console.log(statusList)
         handleStatusList(formattedStatusList)
 
         handleStepChange?.('default')
