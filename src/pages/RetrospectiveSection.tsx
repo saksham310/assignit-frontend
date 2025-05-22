@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useOutletContext, useParams} from "react-router-dom";
 import {Label} from "@/components/ui/label";
 import {
     Select,
@@ -27,6 +27,10 @@ const RetrospectiveSection = () => {
     const [selectedProjectId, setSelectedProjectId] = useState<number>();
     const [selectedSprintId, setSelectedSprintId] = useState<number>();
     const [selectedSprintDate, setSelectedSprintDate] = useState<string>();
+    const setTitle = useOutletContext<(title: string) => void>();
+    useEffect(() => {
+        setTitle("Retrospective Section")
+    }, [setTitle]);
 
     // Set default project and sprint after data is loaded
     useEffect(() => {
