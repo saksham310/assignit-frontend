@@ -35,7 +35,7 @@ const WorkspaceSettings=()=> {
     });
     const {mutate,isPending} = useUpdateWorkspace();
     const {mutate: leaveMutate} = useLeaveWorkspace(currentWorkspaceId);
-    const {mutate: deleteMutate} = useDeleteWorkspace();
+    const {mutate: deleteMutate,isPending:deletePending} = useDeleteWorkspace();
     const handleLeaveWorkspace = () => {
     leaveMutate(currentWorkspaceId)
     }
@@ -49,7 +49,7 @@ const WorkspaceSettings=()=> {
         }
              mutate(data)
     }
-    if (isPending) {
+    if (isPending || deletePending) {
         return <Loader/>
     }
     return (
