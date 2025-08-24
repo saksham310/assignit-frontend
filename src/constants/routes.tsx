@@ -14,8 +14,12 @@ import ProjectDashboard from "@/pages/ProjectDashboard.tsx";
 import SprintOverview from "@/pages/SprintOverview.tsx";
 import TaskDetailPage from "@/pages/TaskDetailPage.tsx";
 import RetrospectiveSection from "@/pages/RetrospectiveSection.tsx";
+import LandingPage from "@/pages/LandingPage.tsx";
 export const router=createBrowserRouter(
     [
+        {path:'/about',
+        element:<LandingPage/>
+        },
         {
             element:<AuthLayout/>,
             children:[

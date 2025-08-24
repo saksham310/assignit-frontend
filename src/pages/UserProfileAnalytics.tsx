@@ -18,13 +18,13 @@ const UserProfileAnalytics = (id: number) => {
     if (isLoading) return <Loader/>
     const memberData = data?.details;
 
-    // Data for donut chart
+    // Data.tsx for donut chart
     const donutData = [
         {name: "Completed", value: memberData.tasks.completed},
         {name: "Remaining", value: memberData.tasks.total - memberData.tasks.completed},
     ]
 
-    // Data for bar chart
+    // Data.tsx for bar chart
     const barData = [
         {name: "In Progress", value: memberData.tasks.inProgress},
         {name: "To Do", value: memberData.tasks.todo},

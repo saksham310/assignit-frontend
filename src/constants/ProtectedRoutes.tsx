@@ -11,7 +11,7 @@ if(!isAuthenticated){
     if(!!code){
       setRedirectUrl(location.pathname + location.search);
     }
-    return  <Navigate to="/login" replace={true} />;
+    return  <Navigate to="/about" replace={true} />;
 }
 return <Outlet />;
 
