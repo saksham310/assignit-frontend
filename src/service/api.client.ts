@@ -1,9 +1,11 @@
 import axios from "axios";
 import { toast } from "sonner";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
+import {useQueryClient} from "@tanstack/react-query";
 
 // Axios client instance setup
 export const apiClient = axios.create({
-    baseURL: 'http://localhost:8080/api'
+    baseURL: 'https://assignit-backend.onrender.com/api'
 });
 
 // Function to set or remove the Authorization header
@@ -11,6 +13,13 @@ export const setHeader = (header: string) => {
     apiClient.defaults.headers.Authorization = header ? header : ''; // Set or remove token
 };
 
+const signOut = () =>{
+    const query=useQueryClient();
+    const signOut = useSignOut()
+    query.clear();
+    signOut();
+    window.location.href = '/login';
+}
 // List of public routes that don’t require authentication
 const PUBLIC_ROUTES = ["/auth/login", "/auth/signup", "/auth/reset-password"];
 
@@ -62,7 +71,10 @@ apiClient.interceptors.response.use((res) => {
     } else if (err.response.status === 401) {
         toast.warning("Session expired. Please re-login again.");
         window.location.href = '/login';
-    } else {
+    } else if (err.response.status === 440) {
+        signOut();
+    }
+    else {
         toast.error(err.response?.data?.message || "An error occurred", {
             duration: 2000,
             id: 'error',

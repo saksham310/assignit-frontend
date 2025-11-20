@@ -39,7 +39,7 @@ const ProjectOverview = ({ projectData }: { projectData: ProjectOverviewData }) 
         },
         {
             name: 'Average Task Per Member',
-            info: `${projectData?.tasks / projectData?.members}`,
+            info: `${(projectData?.tasks / projectData?.members).toFixed(2)}`,
             subInfo: "Average workload per member",
             iconLabel: ListTodo
         },

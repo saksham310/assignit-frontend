@@ -2,6 +2,8 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import {BugType} from "@/types/project.types.ts";
 
+import { store } from "react-auth-kit";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -27,3 +29,4 @@ export const priorityFlagMap:Record<string,string> = {
   Medium:'#FB8C00',
   Low:'#43A047',
 }
+

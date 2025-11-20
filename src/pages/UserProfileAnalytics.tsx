@@ -33,7 +33,7 @@ const UserProfileAnalytics = (id: number) => {
     const k = -1.5;
     const completionRate = memberData.tasks.total === 0 ? 0 : Math.round((memberData.tasks.completed / memberData.tasks.total) * 100)
     const avgBugsPerTask = memberData.tasks.total === 0 ? 0  : +(memberData.tasks.bugs / memberData.tasks.total).toFixed(2);
-    const qualityScore = avgBugsPerTask === 0 ? 0 : memberData?.role !== "QA" ? Math.min(100, Math.round(100 * Math.exp(k * avgBugsPerTask)))
+    const qualityScore = avgBugsPerTask === 0 ? (memberData?.role === "QA" ? 0 : 100) : memberData?.role !== "QA" ? Math.min(100, Math.round(100 * Math.exp(k * avgBugsPerTask)))
         : Math.min(100, Math.round(100 * Math.exp(-k * avgBugsPerTask)));
 
     const idealLimit = memberData.sprintCount * memberData.idealTaskCount;

@@ -56,7 +56,7 @@ const TaskEditor = ({isCreateMode = true, task, status, members}: TaskEditorType
             setTaskStatus(task.status);
         }
         if (task?.assignees) {
-            setSelectedMembers(task.assignees.map(assignee => assignee.id));
+            setSelectedMembers(task?.assignees.map(assignee => assignee.id as string));
         }
     }, [task]);
 
