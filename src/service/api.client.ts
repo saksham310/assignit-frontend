@@ -5,7 +5,7 @@ import {useQueryClient} from "@tanstack/react-query";
 
 // Axios client instance setup
 export const apiClient = axios.create({
-    baseURL: 'https://assignit-backend.onrender.com/api'
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'https://assignit-backend.onrender.com/api'
 });
 
 // Function to set or remove the Authorization header
