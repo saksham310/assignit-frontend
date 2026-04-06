@@ -7,7 +7,7 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { User } from "@/types/auth.type.ts";
 import { SprintWithTask, TaskStatus } from "@/types/project.types.ts";
 
-const SOCKET_URL = "https://assignit-backend.onrender.com";
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "https://assignit-backend.onrender.com";
 
 interface KanbanBoardProps {
     tasks: SprintWithTask;
