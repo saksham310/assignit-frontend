@@ -10,5 +10,5 @@ services:
       - ./:/app
     restart: unless-stopped
     ports:
-      - "3191:5173"
+      - 3191:5173
     command: ["npm","start"]
