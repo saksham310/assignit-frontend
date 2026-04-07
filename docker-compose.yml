@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
   assignit_frontend:
-    image: node:20
+    image: nginx
     #build: .
     container_name: assignit_frontend
-    working_dir: /app
     volumes:
-      - ./:/app
+      - ./dist:/usr/share/nginx/html
+      - ./default.conf:/etc/nginx/conf.d/default.conf
     restart: unless-stopped
     ports:
-      - 3191:5173
-    command: ["npm","start"]
+      - 3191:80
+#    command: ["npm","start"]
