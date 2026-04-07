@@ -28,6 +28,9 @@ const handleLogout = () => {
 // List of public routes that don't require authentication
 const PUBLIC_ROUTES = ["/auth/login", "/auth/signup", "/auth/reset-password", "/auth/forgot-password", "/auth/verify-otp"];
 
+// Routes that shouldn't show error toasts (valid to have no data)
+const SILENT_ERROR_ROUTES = ["/project"];
+
 // Request interceptor for aborting requests without a token
 apiClient.interceptors.request.use((config) => {
     const token = config.headers.Authorization;
@@ -81,6 +84,8 @@ apiClient.interceptors.response.use((res) => {
 
     // Handle specific HTTP status codes
     const status = err.response.status;
+    const url = err.config?.url || "";
+    const isSilentRoute = SILENT_ERROR_ROUTES.some(route => url.includes(route));
     
     if (status === 401 || status === 440) {
         // Handle authentication/authorization errors
@@ -115,8 +120,8 @@ apiClient.interceptors.response.use((res) => {
             duration: 3000,
             id: 'server-error',
         });
-    } else {
-        // Generic error handling for other status codes
+    } else if (!isSilentRoute) {
+        // Generic error handling for other status codes (skip for silent routes)
         toast.error(err.response?.data?.message || "An error occurred", {
             duration: 3000,
             id: 'error',

@@ -43,6 +43,7 @@ export const useGetProjects = (id:string|undefined) => {
     return useQuery({
         queryKey:['projects'],
         queryFn:() => getProjects(id),
+        retry: false,
     })
 }
 
@@ -69,6 +70,7 @@ export const useGetProjectDetails = (id:string|undefined) => {
     return useQuery({
         queryKey:['project',id],
         queryFn:() => getProjectDetails(id),
+        retry: false,
     })
 }
 
@@ -76,7 +78,8 @@ export const useGetProjectStatusMembers = (id:string|undefined) => {
     return useQuery({
         queryKey:['project_status',id],
         queryFn:() => getProjectStatus(id),
-        enabled:!!id
+        enabled:!!id,
+        retry: false,
     })
 }
 
@@ -84,6 +87,7 @@ export const useGetProjectMembers = (id:string|undefined) => {
     return useQuery({
         queryKey:['project_members',id],
         queryFn:() => getProjectMembers(id),
+        retry: false,
     })
 }
 
@@ -91,6 +95,7 @@ export const useGetProjectRetrospective = (id:string|undefined) => {
     return useQuery({
         queryKey:['project_retrospective',id],
         queryFn:() => getProjectRetrospective(id),
+        retry: false,
     })
 }
 
@@ -110,7 +115,8 @@ export const useSubmitFeedback = () => {
 export const useGetRetrospectiveFeedbacks = (id:number) => {
     return useQuery({
         queryKey:['project_feedback',id],
-        queryFn:() => getRetrospectiveFeedbacks(id)
+        queryFn:() => getRetrospectiveFeedbacks(id),
+        retry: false,
     })
 }
 

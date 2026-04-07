@@ -9,7 +9,14 @@ import AuthProvider from "react-auth-kit";
 import App from "@/App.tsx";
 import {store} from "@/store/auth.store.ts";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry: 1,
+            refetchOnWindowFocus: false,
+        },
+    },
+})
 createRoot(document.getElementById('root')!).render(
 
         <QueryClientProvider client={queryClient}>
